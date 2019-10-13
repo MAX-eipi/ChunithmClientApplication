@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "DataManager", "DataManager\DataManager.njsproj", "{FA1E7DFF-C2D6-4BBF-B0C0-5B2F0109461C}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "VerificationReportForm", "VerificationReportForm\VerificationReportForm.njsproj", "{49B069E3-8570-470C-8957-4BC43FAA8B39}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA1E7DFF-C2D6-4BBF-B0C0-5B2F0109461C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA1E7DFF-C2D6-4BBF-B0C0-5B2F0109461C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA1E7DFF-C2D6-4BBF-B0C0-5B2F0109461C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA1E7DFF-C2D6-4BBF-B0C0-5B2F0109461C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49B069E3-8570-470C-8957-4BC43FAA8B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49B069E3-8570-470C-8957-4BC43FAA8B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49B069E3-8570-470C-8957-4BC43FAA8B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49B069E3-8570-470C-8957-4BC43FAA8B39}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C270652D-87F7-4ED1-ADBC-39ED6881CD86}
+	EndGlobalSection
+EndGlobal
