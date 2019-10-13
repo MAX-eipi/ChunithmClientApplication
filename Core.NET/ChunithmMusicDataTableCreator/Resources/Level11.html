@@ -1,0 +1,2363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- 基本Head内容を読み込み -->
+<meta charset="UTF-8" />
+<meta name="viewport" id="viewport" content="width=480,user-scalable=yes" />
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8; IE=EmulateIE9" />
+<meta http-equiv="Pragma" CONTENT="no-cache">
+<meta http-equiv="Cache-Control" CONTENT="no-cache">
+<meta http-equiv="Expires" CONTENT="-1">
+<meta name="robots" content="INDEX, FOLLOW" />
+<meta name="auther" content="(C) SEGA">
+<meta name="copyright" content="&copy;SEGA">
+<meta name="description" content="【新音ゲー】 maimai チームが贈る、セガの新作音楽ゲーム「CHUNITHM（チュウニズム）」">
+<meta name="keywords" content="チュウニズム,チューニズム,CHUNITHM,セガ,maimai,音ゲー">
+
+<title>CHUNITHM ■ CHUNITHM-NET</title>
+<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
+<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
+<link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
+
+<link rel="stylesheet" href="common/css/common.css" />
+<link rel="stylesheet" href="common/css/submenu.css" />
+<link rel="stylesheet" href="common/css/contents.css" />
+<link rel="stylesheet" href="common/css/pc.css" />
+
+<script src="common/js/jquery-1.7.2.min.js"></script>
+<script src="common/js/jquery.marquee.js"></script>
+<script src="common/js/common.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68439863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+<div id="wrap">
+	<!--▼ヘッダ-->
+	<h1 id="header">
+	</h1>
+	<!--▲ヘッダ-->
+
+	<!--▼メインメニュー-->
+		<div id="main_menu">
+		<ul>
+			<li class="btn_home"				onClick="location.href='./Home.html';"></li>
+			<li class="btn_record_on"			onClick="location.href='./MapInfo.html';"></li>
+			<li class="btn_collection"	onClick="location.href='./Character.html';"></li>
+			<li class="btn_friend"			onClick="location.href='./Friendlist.html';"></li>
+			<li class="btn_ranking"		onClick="JavaScript:document.music_ranking.submit();">
+				<form name="music_ranking" action="MusicRanking.html" method="POST">
+					<input type="hidden" name="menu" value="link">
+				</form>
+			</li>
+			<li class="btn_worldsend"		onClick="location.href='./WorldsEndMusic.html';"></li>
+			<li class="btn_course"			onClick="location.href='./Course.html';"></li>
+			<li class="btn_irodori" onClick="window.open('http://chunithm.sega.jp/irodorimidori/live/','_blank')"></li>
+		</ul>
+	</div>
+
+	<!--▲メインメニュー-->
+
+	<!--▼コンテンツ-->
+	<div id="inner">
+		<div class="frame01 w460">
+			<div class="frame01_inside w450">
+				<div id="submenu">
+					<ul>
+						<li class="submenu_map" onClick="location.href='./MapInfo.html';"><a href="#">マップ</a></li>
+						<li class="submenu_play" onClick="location.href='./Playlog.html';"><a href="#">プレイ履歴</a></li>
+						<li class="submenu_record_on"><a href="#">楽曲別レコード</a></li>
+						<li class="submenu_pilgrimage" onClick="location.href='./Region.html';"><a href="#">全国行脚</a></li>
+					</ul>
+				</div>
+
+				<!--●ページタイトル-->
+				<h2 id="page_title">楽曲別レコード</h2>
+
+
+				<div class="narrow_block clearfix">
+					<div class="btn_genre" onClick="location.href='./MusicGenre.html';"><a href="#">ジャンル</a></div>
+					<div class="btn_narrow_on"><a href="#">絞り込み</a></div>
+					<div class="btn_latest10" onClick="location.href='./MusicRecent.html';"><a href="#">最新10曲</a></div>
+				</div>
+
+				<hr class="line_dot_black w420" />
+
+				<div class="box02 w420 mb_20">
+					<div class="narrow_block clearfix">
+						<div class="btn_aiueo" onClick="location.href='./MusicWord.html';"><a href="#">あいうえお順</a></div>
+						<div class="btn_level_on"><a href="#">レベル</a></div>
+					</div>
+
+					<div class="narrow_block clearfix">
+						<form onSubmit="return false">
+							<select name="level" class="narrow01 w280" onChange="JavaScript:changeSelecter(this);">
+<option value="1" class="narrow01 w280 option">LEVEL 1</option>
+<option value="2" class="narrow01 w280 option">LEVEL 2</option>
+<option value="3" class="narrow01 w280 option">LEVEL 3</option>
+<option value="4" class="narrow01 w280 option">LEVEL 4</option>
+<option value="5" class="narrow01 w280 option">LEVEL 5</option>
+<option value="6" class="narrow01 w280 option">LEVEL 6</option>
+<option value="7" class="narrow01 w280 option">LEVEL 7</option>
+<option value="8" class="narrow01 w280 option">LEVEL 8</option>
+<option value="9" class="narrow01 w280 option">LEVEL 9</option>
+<option value="10" class="narrow01 w280 option">LEVEL 10</option>
+<option value="11" selected="selected" class="narrow01 w280 option">LEVEL 11</option>
+<option value="12" class="narrow01 w280 option">LEVEL 12</option>
+<option value="13" class="narrow01 w280 option">LEVEL 13</option>
+<option value="14" class="narrow01 w280 option">LEVEL 14</option>
+</select>
+
+						</form>
+					</div>
+				</div>
+
+				<!--●各種集計データ-->
+				<div id="scoreList_result">
+					<div class="box01 w420">
+						<div class="narrow_block clearfix">
+							<div class="score_list">
+								<div class="score_list_left"><img src="common/images/icon_clear.png"></div>
+								<div id="ScoreListClear" class="score_list_right">153 / 153</div>
+							</div>
+							<div class="score_list">
+								<div class="score_list_left"><img src="common/images/icon_rank_8.png"></div>
+								<div id="ScoreListClear" class="score_list_right">153 / 153</div>
+							</div>
+							<div class="score_list">
+								<div class="score_list_left"><img src="common/images/icon_rank_9.png"></div>
+								<div id="ScoreListClear" class="score_list_right">153 / 153</div>
+							</div>
+							<div class="score_list">
+								<div class="score_list_left"><img src="common/images/icon_rank_10.png"></div>
+								<div id="ScoreListClear" class="score_list_right">153 / 153</div>
+							</div>
+							<div class="score_list">
+								<div class="score_list_left"><img src="common/images/icon_fullcombo.png"></div>
+								<div id="ScoreListClear" class="score_list_right">153 / 153</div>
+							</div>
+							<div class="score_list">
+								<div class="score_list_left"><img src="common/images/icon_alljustice.png"></div>
+								<div id="ScoreListClear" class="score_list_right">153 / 153</div>
+							</div>
+							<div class="score_list">
+								<div class="score_list_left"><img src="common/images/icon_fullchain2.png"></div>
+								<div id="ScoreListClear" class="score_list_right">5 / 153</div>
+							</div>
+							<div class="score_list">
+								<div class="score_list_left"><img src="common/images/icon_fullchain.png"></div>
+								<div id="ScoreListClear" class="score_list_right">5 / 153</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<form id="music_detail" action="return false;">
+															<div class="box01 w420">
+						<div class="box01_title">LEVEL 11</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_422');">MEMORIA</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,911</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_424');">MIRU key way</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,935</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_360');">夢想歌</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,966</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_363');">true my heart -Lovable mix-</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,942</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																								<!-- ◆フルチェインプラチナ -->
+								<img src="common/images/icon_fullchain.png" />
+															</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_348');">Jumping!!</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,908</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_343');">Daydream café</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,764</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_269');">僕らの翼</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,937</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_312');">ぶいえす!!らいばる!!</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,883</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_313');">ひだまりデイズ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,927</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_315');">オラシオン</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,915</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_37');">鳥の詩</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,927</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																								<!-- ◆フルチェインプラチナ -->
+								<img src="common/images/icon_fullchain.png" />
+															</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_299');">secret base ～君がくれたもの～ (10 years after Ver.)</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,984</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_55');">夏祭り</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,700</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_36');">届かない恋 '13</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,939</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_126');">Heart To Heart</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,839</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_125');">Little Busters! ～TV animation ver.～</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,826</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_255');">激情！ミルキィ大作戦</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,984</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_209');">君色シグナル</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,965</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_231');">カラフル。</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,868</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_185');">楽園の翼</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,830</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_42');">oath sign</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,840</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_129');">Hacking to the Gate</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,756</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_14');">コネクト</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,887</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_110');">Magia</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,740</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_111');">staple stable</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,766</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_60');">only my railgun</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,837</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_112');">マジLOVE1000%</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,880</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_5');">Scatman (Ski Ba Bop Ba Dop Bop)</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,752</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_375');">だんだん早くなる</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,885</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_367');">いーあるふぁんくらぶ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,811</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_275');">愛言葉</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,895</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_281');">ラクガキスト</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,908</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_286');">Tell Your World</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,929</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_278');">からくりピエロ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,821</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_316');">みくみくにしてあげる♪【してやんよ】</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,964</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_223');">カミサマネジマキ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,868</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_224');">恋愛裁判</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,838</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_179');">すろぉもぉしょん</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,759</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_156');">FREELY TOMORROW</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,875</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_133');">シリョクケンサ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,853</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_114');">Sweet Devil</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,621</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_38');">天ノ弱</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,749</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_113');">ストリーミングハート</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,772</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_18');">千本桜</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,882</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_117');">M.S.S.Planet</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,859</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_426');">華鳥風月</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,917</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_377');">泡沫、哀のまほろば</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,915</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_380');">Starlight Dance Floor</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,917</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_187');">患部で止まってすぐ溶ける～狂気の優曇華院</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,921</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_305');">幻想のサテライト</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,768</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_91');">Yet Another ”drizzly rain”</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,705</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_98');">魔理沙は大変なものを盗んでいきました</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,762</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_41');">sweet little sister</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,959</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_115');">Dreaming</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,759</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_204');">ちくわパフェだよ☆CKP</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,844</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_232');">Elemental Creation</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,764</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_89');">JET</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,862</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_169');">elegante</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,640</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_19');">DRAGONLADY</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,863</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_137');">Angel dust</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,916</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_302');">Strahv</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,878</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_328');">★LittlE HearTs★</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,786</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_389');">Name of oath</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,846</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_393');">Dengeki Tube</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,830</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_176');">Dance!</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,800</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_290');">檄!帝国華撃団</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,886</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_158');">フォルテシモBELL</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,912</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_170');">DETARAME ROCK&ROLL THEORY</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,760</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_245');">Help me, あーりん！</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,918</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_488');">夢と夢～あの日のメロディ～</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,992</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_160');">言ノ葉遊戯</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,888</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_227');">洗脳</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,716</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_403');">りばーぶ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,967</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_397');">Like the Wind [Reborn]</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,951</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_202');">GEMINI -C-</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,795</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_79');">ＧＯ！ＧＯ！ラブリズム♥</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,693</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_148');">Theme of SeelischTact</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,644</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_163');">幾四音-Ixion-</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,674</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_65');">Anemone</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,928</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_74');">リリーシア</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,918</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_67');">昵懇レファレンス</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,917</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_68');">乗り切れ受験ウォーズ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,941</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_52');">Cyberozar</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,758</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_61');">GOLDEN RULE</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,757</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_267');">心象蜃気楼</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,928</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_288');">First Twinkle</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,952</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_259');">Oshama Scramble! (Cranky Remix)</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,814</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_414');">We Gonna Party -Feline Groove Mix-</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,888</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_274');">願い星</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,865</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_310');">覚醒楽奏メタフィクション</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,963</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_335');">Supersonic Generation</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,935</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_435');">JIGOKU STATION CENTRAL GATE</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,824</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+						
+					</div>
+																				<div class="box01 w420">
+						<div class="box01_title">LEVEL 11+</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_421');">前前前世</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,964</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_358');">My Soul,Your Beats!</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,973</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_359');">Thousand Enemies</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,858</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_357');">ぐーちょきパレード</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,834</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_394');">若い力 -SEGA HARD GIRLS MIX-</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,940</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_344');">ノーポイッ!</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,910</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_345');">ムーンライト伝説</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,906</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_311');">Be My Friend</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,776</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_314');">This game</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,913</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_238');">フレンズ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,810</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_308');">fake!fake!</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,854</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_214');">青春はNon-Stop！</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,770</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_247');">絶世スターゲイト</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,907</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																								<!-- ◆フルチェインプラチナ -->
+								<img src="common/images/icon_fullchain.png" />
+															</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_130');">スカイクラッドの観測者</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,865</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_444');">エレクトロサチュレイタ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,939</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_369');">エイリアンエイリアン</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,946</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_272');">有頂天ビバーチェ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,765</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_282');">アカツキアライヴァル</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,725</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_280');">リモコン</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,801</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_273');">ビバハピ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,852</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_279');">深海少女</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,894</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_287');">ロミオとシンデレラ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,950</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_263');">Hand in Hand</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,935</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_217');">楽園ファンファーレ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,884</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_213');">星屑ユートピア</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,825</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_166');">裏表ラバーズ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,842</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																								<!-- ◆フルチェインプラチナ -->
+								<img src="common/images/icon_fullchain.png" />
+															</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_168');">ネトゲ廃人シュプレヒコール</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,832</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_504');">Calamity Fortune</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,896</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_191');">幽闇に目醒めしは</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,882</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_186');">ってゐ！　～えいえんてゐVer～</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,900</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_149');">緋色のDance</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,809</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_21');">ナイト・オブ・ナイツ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,834</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_96');">チルノのパーフェクトさんすう教室</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,824</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_48');">Unlimited Spark!</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,830</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																								<!-- ◆フルチェインプラチナ -->
+								<img src="common/images/icon_fullchain.png" />
+															</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_3');">B.B.K.K.B.K.K.</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,864</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_134');">HAELEQUIN (Original Remaster)</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,774</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_197');">Jack-the-Ripper◆</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,739</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_196');">FREEDOM DiVE</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,824</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_10');">All I Want</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,528</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_206');">Signs Of Love (“Never More” ver.)</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,533</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_207');">Your Affection (Daisuke Asakura Remix)</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,667</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_304');">In The Blue Sky '01</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,899</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_395');">レッツゴー!陰陽師</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,864</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_145');">Change Our MIRAI！</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,954</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_150');">brilliant better</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,830</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_337');">Tic Tac DREAMIN’</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,829</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_99');">言ノ葉カルマ</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,765</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_398');">天国と地獄 -言ノ葉リンネ-</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,914</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_75');">Counselor</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,904</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_140');">Guilty</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,868</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_76');">luna blu</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,702</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_141');">閃鋼のブリューナク</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,862</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_63');">Gate of Fate</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,859</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_69');">The wheel to the right</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,732</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_152');">Gustav Battle</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,859</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_146');">夕暮れワンルーム</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,817</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_103');">エンドマークに希望と涙を添えて</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,826</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_90');">L'épisode</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,743</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_254');">その群青が愛しかったようだった</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,920</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_expert">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_250');">Philosopher</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,893</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+												<div class="w388 musiclist_box bg_master">
+							<div class="block_underline music_title" onclick="JavaScript:formSubmitAddParam('music_detail','musicId_339');">RevolutionGame</div>
+														<!-- ◆スコア -->
+							<div class="play_musicdata_highscore">
+								HIGH SCORE：<span class="text_b">1,009,849</span>
+							</div>
+							<div class="play_musicdata_icon clearfix">
+								<!-- ◆クリア -->
+								<img src="common/images/icon_clear.png">								<!-- ◆ランク -->
+								<img src="common/images/icon_rank_10.png" />
+																<!-- ◆オールジャスティス -->
+								<img src="common/images/icon_alljustice.png" />
+																							</div>
+													</div>
+						
+					</div>
+										
+				</form>
+
+			</div>
+		</div>
+	</div>
+	<!--▲コンテンツ-->
+
+	<div id="setting" onClick="location.href='./Config.html';"></div>
+</div>
+
+<!--▼フッタ-->
+<div id="footer">
+<!-- footer内容を読み込み -->
+	<div class="footer_banner clearfix">
+		<a href="http://maimai.sega.jp/" target="_blank"><img src="common/images/banner_maimai_official.jpg" /></a><br>
+		<a href="http://chunithm.sega.jp/" target="_blank"><img src="common/images/banner_chunithm_official.jpg" /></a><br>
+		<a href="https://my-aime.net/" target="_blank"><img src="common/images/banner_aime_l.jpg" /></a><br>
+	</div>
+	<div class="footer_menu">
+		<ul>
+			<li>｜<a href="./Agreement.html">利用規約</a>｜</li>
+			<li>｜<a href="./Right.html">利用権について</a>｜</li>
+			<li>｜<a href="./Environment.html">推奨環境</a>｜</li>
+			<li>｜<a href="./Contact.html">ご意見/お問い合わせ</a>｜</li>
+		</ul>
+	</div>
+	<div class="footer_attention">
+			<div id="footer_copy">
+				<a href="https://sega.jp/" target="_blank">
+					<img src="common/images/logo_sega.png" /><br>
+				</a>
+				&copy; SEGA
+			</div>
+			</div>
+</div>
+<!--▲フッタ-->
+</body>
+</html>
