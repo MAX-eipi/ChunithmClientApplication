@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <?!= HtmlService.createHtmlOutputFromFile("html/common.css").getContent(); ?>
+    <script>
+        function transition(reportId) {
+            window.open("%approvalPageUrl%&reportId=" + reportId, "_top");
+        }
+    </script>
+    <base target="_top" />
+</head>
+<body>
+    <div class="box_1">
+        <div class="box_1_title">承認待ち検証報告リスト</div>
+        <div class="box_2">
+            <div class="box_2_title"></div>
+            %list%
+        </div>
+        <div class="text_center">
+            <a href="%topPageUrl%">TOP</a>
+        </div>
+    </div>
+</body>
+</html>
