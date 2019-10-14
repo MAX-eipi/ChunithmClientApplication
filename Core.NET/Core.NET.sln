@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmClientViewer", "Chu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmMusicDataTableCreator", "ChunithmMusicDataTableCreator\ChunithmMusicDataTableCreator.csproj", "{655953AC-5005-458E-95BF-18A866066002}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChunithmMusicDataTableCreator_Core", "ChunithmMusicDataTableCreator_Core\ChunithmMusicDataTableCreator_Core.csproj", "{DB4657C8-A50A-47F4-99F7-206DB02A9987}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChunithmMusicDataTableUpdater", "ChunithmMusicDataTableUpdater\ChunithmMusicDataTableUpdater.csproj", "{DB4657C8-A50A-47F4-99F7-206DB02A9987}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmNetConnetorTest", "ChunithmNetConnetorTest\ChunithmNetConnetorTest.csproj", "{A0C1FAF1-0C2E-464B-8885-FEEA7BD64D39}"
 EndProject
