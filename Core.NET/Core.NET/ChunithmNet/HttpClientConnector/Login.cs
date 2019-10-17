@@ -21,6 +21,11 @@ namespace ChunithmClientLibrary.ChunithmNet.HttpClientConnector
             public AimeList AimeList { get; set; }
 
             public LoginResponse(HttpResponseMessage message) : base(message) { }
+
+            public void OnInvalidAimeList()
+            {
+                Success = false;
+            }
         }
 
         public Task<ILoginResponse> LoginAsync(string segaId, string password)
@@ -58,6 +63,10 @@ namespace ChunithmClientLibrary.ChunithmNet.HttpClientConnector
             {
                 var aimeListParser = new AimeListParser();
                 response.AimeList = aimeListParser.Parse(response.DocumentText);
+                if (response.AimeList == null)
+                {
+                    response.OnInvalidAimeList();
+                }
             }
 
             return response;

@@ -1,11 +1,13 @@
-using ChunithmClientLibrary;
+﻿using ChunithmClientLibrary;
+using ChunithmClientLibrary.ChunithmMusicDatabase.API;
 using ChunithmClientLibrary.ChunithmMusicDatabase.HttpClientConnector;
 using ChunithmClientLibrary.ChunithmNet.API;
 using ChunithmClientLibrary.ChunithmNet.HttpClientConnector;
 using ChunithmClientLibrary.MusicData;
 using System;
-using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 namespace ChunithmMusicDataTableCreator
 {
@@ -13,21 +15,21 @@ namespace ChunithmMusicDataTableCreator
     public class UserInfo
     {
         [DataMember]
-        private string segaId;
+        private string segaId = "";
         [IgnoreDataMember]
         public string SegaId => segaId;
-        
+
         [DataMember]
-        private string password;
+        private string password = "";
         [IgnoreDataMember]
         public string Password => password;
-        
+
         [DataMember]
-        private int aimeId;
+        private int aimeId = 0;
         [IgnoreDataMember]
         public int AimeId => aimeId;
     }
-    
+
     class Program
     {
         private class Argument
@@ -37,9 +39,6 @@ namespace ChunithmMusicDataTableCreator
             public string SegaId { get; private set; } = "";
             public string Password { get; private set; } = "";
             public int AimeId { get; private set; } = 0;
-
-            public bool OutputJson { get; private set; } = false;
-            public string OutputDirectoryPath { get; private set; } = "./Outputs";
 
             public int MaxLevel { get; private set; } = 21;
 
@@ -62,15 +61,6 @@ namespace ChunithmMusicDataTableCreator
                             SetUserInfo(args[i + 1]);
                             i += 2;
                             break;
-                        case "--output_json":
-                            OutputJson = true;
-                            i++;
-                            break;
-                        case "--output_directory_path":
-                            OutputDirectoryPath = args[i + 1];
-                            i += 2;
-                            break;
-
                         case "--max_level":
                             MaxLevel = int.Parse(args[i + 1]);
                             i += 2;
@@ -83,125 +73,104 @@ namespace ChunithmMusicDataTableCreator
                     }
                 }
             }
-            
+
             private void SetUserInfo(string path)
             {
                 var source = Utility.LoadStringContent(path);
                 var userInfo = Utility.DeserializeFromJson<UserInfo>(source);
                 SegaId = userInfo.SegaId;
                 Password = userInfo.Password;
-                AimeId = userInfo.AimeId;   
-            }
-
-            public string GetOutputFilePath(string fileName)
-            {
-                return Path.Combine(OutputDirectoryPath, fileName);
+                AimeId = userInfo.AimeId;
             }
         }
 
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            var argument = new Argument(args);
+            try
+            {
+                var argument = new Argument(args);
 
-            var musicDataTable = new MusicDataTable();
-            using (var connector = new ChunithmNetHttpClientConnector())
-            using (var databaseConnector = new ChunithmMusicDatabaseHttpClientConnector(argument.Host))
-            {   
-                Console.WriteLine("get current table... ");
-                var currentTableGet = databaseConnector.GetTableAsync().Result;
-                if (currentTableGet.Success)
+                var musicDataTable = new MusicDataTable();
+                using (var connector = new ChunithmNetHttpClientConnector())
+                using (var databaseConnector = new ChunithmMusicDatabaseHttpClientConnector(argument.Host))
                 {
-                }
-                
-                Console.Write("login... ");
-                var login = connector.LoginAsync(argument.SegaId, argument.Password).Result;
-                if (login.Success)
-                {
-                    Console.WriteLine("success.");
-                }
-                else
-                {
-                    Console.WriteLine("failure.");
-                    WriteLineChunithmNetConnectionError(login);
-                    return;
-                }
+                    var currentTable = databaseConnector.GetTableAsync().GetMusicDatabaseApiResult("get current table... ");
 
-                Console.Write("selecting aime... ");
-                var aimeSelct = connector.SelectAimeAsync(argument.AimeId).Result;
-                if (aimeSelct.Success)
-                {
-                    Console.WriteLine("success.");
-                }
-                else
-                {
-                    Console.WriteLine("failure.");
-                    WriteLineChunithmNetConnectionError(login);
-                    return;
-                }
+                    connector.LoginAsync(argument.SegaId, argument.Password).GetNetApiResult("login... ");
+                    connector.SelectAimeAsync(argument.AimeId).GetNetApiResult("selecting aime... ");
 
-                {
-                    Console.Write("downloading music list... ");
-                    var musicGenre = connector.GetMusicGenreAsync(Genre.All, Difficulty.Master).Result;
-                    if (musicGenre.Success)
-                    {
-                        Console.WriteLine("success.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("failure.");
-                        WriteLineChunithmNetConnectionError(musicGenre);
-                        return;
-                    }
+                    var musicGenre = connector.GetMusicGenreAsync(Genre.All, Difficulty.Master).GetNetApiResult("downloading music list... ");
                     musicDataTable.Add(musicGenre.MusicGenre);
-                }
-                {
+
+                    if (currentTable.MusicDataTable.GetTableUnits().Count() == musicDataTable.GetTableUnits().Count())
+                    {
+                        Console.WriteLine("skip update.");
+                        return 0;
+                    }
+
                     for (var i = 0; i < argument.MaxLevel; i++)
                     {
-                        Console.Write("downloading level info ({0}/{1})... ", i + 1, argument.MaxLevel);
-                        var musicLevel = connector.GetMusicLevelAsync(i).Result;
-                        if (musicLevel.Success)
-                        {
-                            Console.WriteLine("success.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("failure.");
-                            WriteLineChunithmNetConnectionError(musicLevel);
-                            return;
-                        }
+                        var musicLevel = connector.GetMusicLevelAsync(i).GetNetApiResult($"downloading level info ({i + 1}/{argument.MaxLevel})", false);
                         musicDataTable.Add(musicLevel.MusicLevel);
                     }
-                }
-                
-                if (argument.OutputJson)
-                {
-                    Console.Write("outputting table file... ");
-                    var writer = new MusicDataTableJsonWriter();
-                    writer.Set(musicDataTable);
-                    writer.Write(argument.GetOutputFilePath("table.json"));
-                    Console.WriteLine("done.");
-                }
-                
-                Console.Write("sending table... ");
 
-                var result = databaseConnector.UpdateTableAsync(musicDataTable.MusicDatas).Result;
-                if (result.Success)
+                    databaseConnector.UpdateTableAsync(musicDataTable.MusicDatas).GetMusicDatabaseApiResult("sending table... ");
+
+                    Console.WriteLine("completed.");
+                    return 0;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return 1;
+            }
+        }
+    }
+
+    public static class Extensions
+    {
+        public static TResponse GetNetApiResult<TResponse>(this Task<TResponse> request, string message, bool showSuccess = true)
+            where TResponse : IChunithmNetApiResponse
+        {
+            Console.WriteLine(message);
+
+            var response = request.Result;
+            if (response.Success)
+            {
+                if (showSuccess)
                 {
                     Console.WriteLine("success.");
                 }
-                else
-                {
-                    Console.WriteLine("failure.");
-                }
-
-                Console.WriteLine("completed.");
             }
+            else
+            {
+                Console.WriteLine("failure.");
+                Console.WriteLine("[Error Code]");
+                Console.WriteLine(response.ErrorCode);
+                Console.WriteLine("[Error Message]");
+                Console.WriteLine(response.ErrorMessage);
+                throw new ApplicationException();
+            }
+            return response;
         }
 
-        private static void WriteLineChunithmNetConnectionError(IChunithmNetApiResponse response)
+        public static TResponse GetMusicDatabaseApiResult<TResponse>(this Task<TResponse> request, string message)
+            where TResponse : IChunithmMusicDatabaseApiResponse
         {
-            Console.WriteLine(response.ErrorCode);
-            Console.WriteLine(response.ErrorMessage);
+            Console.WriteLine(message);
+
+            var result = request.Result;
+            if (result.Success)
+            {
+                Console.WriteLine("success.");
+            }
+            else
+            {
+                Console.WriteLine("failure.");
+                throw new ApplicationException();
+            }
+            return result;
         }
     }
 }
