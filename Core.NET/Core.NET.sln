@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.NET", "Core.NET\Core.N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmClientViewer", "ChunithmClientViewer\ChunithmClientViewer.csproj", "{F8B0A431-41DA-418F-B962-DC875140B745}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmMusicDataTableCreator", "ChunithmMusicDataTableCreator\ChunithmMusicDataTableCreator.csproj", "{655953AC-5005-458E-95BF-18A866066002}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChunithmMusicDataTableUpdater", "ChunithmMusicDataTableUpdater\ChunithmMusicDataTableUpdater.csproj", "{DB4657C8-A50A-47F4-99F7-206DB02A9987}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmNetConnetorTest", "ChunithmNetConnetorTest\ChunithmNetConnetorTest.csproj", "{A0C1FAF1-0C2E-464B-8885-FEEA7BD64D39}"
@@ -22,6 +20,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HatenaBlogTableOutput", "HatenaBlogTableOutput\HatenaBlogTableOutput.csproj", "{DC146B31-0A68-465D-84C9-DDC629DA7C56}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecentSimulator", "RecentSimulator\RecentSimulator.csproj", "{2BFAE482-7900-4D29-A4D9-385ED6EA0918}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmMusicDataTableCreator", "ChunithmMusicDataTableCreator\ChunithmMusicDataTableCreator.csproj", "{CC81E9C5-50C9-4731-9B14-C35982BDCAC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,6 @@ Global
 		{F8B0A431-41DA-418F-B962-DC875140B745}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8B0A431-41DA-418F-B962-DC875140B745}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8B0A431-41DA-418F-B962-DC875140B745}.Release|Any CPU.Build.0 = Release|Any CPU
-		{655953AC-5005-458E-95BF-18A866066002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{655953AC-5005-458E-95BF-18A866066002}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{655953AC-5005-458E-95BF-18A866066002}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{655953AC-5005-458E-95BF-18A866066002}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DB4657C8-A50A-47F4-99F7-206DB02A9987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DB4657C8-A50A-47F4-99F7-206DB02A9987}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB4657C8-A50A-47F4-99F7-206DB02A9987}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,6 +65,10 @@ Global
 		{2BFAE482-7900-4D29-A4D9-385ED6EA0918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BFAE482-7900-4D29-A4D9-385ED6EA0918}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BFAE482-7900-4D29-A4D9-385ED6EA0918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC81E9C5-50C9-4731-9B14-C35982BDCAC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC81E9C5-50C9-4731-9B14-C35982BDCAC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC81E9C5-50C9-4731-9B14-C35982BDCAC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC81E9C5-50C9-4731-9B14-C35982BDCAC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
