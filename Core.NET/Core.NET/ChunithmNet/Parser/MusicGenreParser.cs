@@ -1,4 +1,4 @@
-﻿using AngleSharp.Dom;
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ChunithmClientLibrary.ChunithmNet.Data;
 using ChunithmClientLibrary.Parser;
@@ -254,7 +254,6 @@ namespace ChunithmClientLibrary.ChunithmNet.Parser
             unit.Id = GetId(content);
             unit.Name = GetName(content);
             unit.Genre = GetGenre(content);
-            unit.GenreText = GetGenreText(content);
             unit.Difficulty = GetDifficulty(content);
             unit.Score = GetScore(content);
             unit.Rank = GetRank(content);
@@ -275,18 +274,12 @@ namespace ChunithmClientLibrary.ChunithmNet.Parser
             return HtmlParseUtility.GetMusicTitle(content);
         }
 
-        [Obsolete]
-        private Genre GetGenre(IElement content)
-        {
-            return Utility.ToGenre(GetGenreText(content));
-        }
-
-        private string GetGenreText(IElement content)
+        private string GetGenre(IElement content)
         {
             var genreName = content.ParentElement.ParentElement.GetElementsByClassName("genre")?.FirstOrDefault()?.TextContent;
             if (string.IsNullOrEmpty(genreName))
             {
-                return DefaultParameter.GenreText;
+                return DefaultParameter.Genre;
             }
 
             return genreName;

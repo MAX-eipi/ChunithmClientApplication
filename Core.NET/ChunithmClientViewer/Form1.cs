@@ -102,7 +102,7 @@ namespace ChunithmClientViewer
             var loadNum = maxLevel + 1;
             Console.WriteLine($"楽曲の取得中... (1/{loadNum})");
 
-            var musicGenre = chunithmNetBackgroundConnector.GetMusicGenreAsync(Genre.All, Difficulty.Master);
+            var musicGenre = chunithmNetBackgroundConnector.GetMusicGenreAsync(Utility.GENRE_ALL_CODE, Difficulty.Master);
             await musicGenre;
             if (!musicGenre.Result.Success)
             {
@@ -181,7 +181,7 @@ namespace ChunithmClientViewer
 
         private async void musicGenreGetAllMASTERToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            await chunithmNetConnector.GetMusicGenreAsync(Genre.All, Difficulty.Master);
+            await chunithmNetConnector.GetMusicGenreAsync(Utility.GENRE_ALL_CODE, Difficulty.Master);
         }
 
         private async void musicLevelGet13ToolStripMenuItem_Click(object sender, EventArgs e)

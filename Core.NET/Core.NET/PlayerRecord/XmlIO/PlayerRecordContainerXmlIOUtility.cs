@@ -53,11 +53,11 @@ namespace ChunithmClientLibrary.PlayerRecord.XmlIO
         {
             AddColumn(Parameter.Id, DEFAULT_ID_TEXT);
             AddColumn(Parameter.Name, DEFAULT_NAME_TEXT);
+            AddColumn(Parameter.Genre, DEFAULT_GENRE_TEXT);
+            AddColumn(Parameter.Difficulty, DEFAULT_DIFFICULTY_TEXT);
             AddColumn(Parameter.Score, DEFAULT_SCORE_TEXT);
             AddColumn(Parameter.BaseRating, DEFAULT_BASE_RATING_TEXT);
             AddColumn(Parameter.Rating, DEFAULT_RATING_TEXT);
-            AddColumn(Parameter.Difficulty, DEFAULT_DIFFICULTY_TEXT);
-            AddColumn(Parameter.Genre, DEFAULT_GENRE_TEXT);
         }
 
         private void AddColumn(Parameter parameter, string text)

@@ -54,7 +54,7 @@ namespace ChunithmClientViewer.PlayerRecord
             highScoreRecords[Difficulty.Expert].Name = name;
             highScoreRecords[Difficulty.Master].Name = name;
 
-            var genre = GetField(row, ref index, Utility.ToGenre);
+            var genre = GetTextField(row, ref index);
             highScoreRecords[Difficulty.Basic].Genre = genre;
             highScoreRecords[Difficulty.Advanced].Genre = genre;
             highScoreRecords[Difficulty.Expert].Genre = genre;

@@ -66,7 +66,7 @@ namespace RecentSimulator.Analysis
                 { "No", u => u.Number },
                 { "Id", u => u.Id },
                 { "楽曲名", u => u.Name },
-                { "ジャンル", u => Utility.ToGenreText(u.Genre) },
+                { "ジャンル", u => u.Genre },
                 { "難易度", u => Utility.ToDifficultyText(u.Difficulty) },
                 { "スコア", u => u.Score },
                 { "ランク", u => u.Rank },

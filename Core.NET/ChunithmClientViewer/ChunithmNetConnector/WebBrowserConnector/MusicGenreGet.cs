@@ -13,8 +13,6 @@ namespace ChunithmClientViewer.ChunithmNetConnector.WebBrowserConnector
     {
         private class MusicGenreGetRequest : IMusicGenreGetRequest
         {
-            [System.Obsolete]
-            public Genre Genre { get; set; }
             public int GenreCode { get; set; }
             public Difficulty Difficulty { get; set; }
         }
@@ -24,12 +22,6 @@ namespace ChunithmClientViewer.ChunithmNetConnector.WebBrowserConnector
             public MusicGenre MusicGenre { get; set; }
 
             public MusicGenreGetResponse(WebBrowser webBrowser) : base(webBrowser) { }
-        }
-
-        [System.Obsolete]
-        public Task<IMusicGenreGetResponse> GetMusicGenreAsync(Genre genre, Difficulty difficulty)
-        {
-            return GetMusicGenreAsync(Utility.ToGenreCode(genre), difficulty);
         }
 
         public Task<IMusicGenreGetResponse> GetMusicGenreAsync(int genreCode, Difficulty difficulty)

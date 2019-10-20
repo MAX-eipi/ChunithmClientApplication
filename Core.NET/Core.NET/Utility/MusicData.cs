@@ -10,13 +10,6 @@ namespace ChunithmClientLibrary
             return (musicData != null) ? musicData.Id : -1;
         }
 
-        [Obsolete]
-        public static Genre GetGenre(int id)
-        {
-            var musicData = globalMusicDataTable?.GetTableUnit(id);
-            return (musicData != null) ? musicData.Genre : Genre.Invalid;
-        }
-
         public static double GetBaseRating(int id, Difficulty difficulty)
         {
             var musicData = globalMusicDataTable?.GetTableUnit(id);

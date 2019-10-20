@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary;
+using ChunithmClientLibrary;
 using ChunithmClientLibrary.ChunithmNet.API;
 using ChunithmClientLibrary.ChunithmNet.HttpClientConnector;
 using System;
@@ -57,7 +57,7 @@ namespace ChunithmNetConnetorTest
         private static void Test_MusicGenre()
         {
             Console.Write("Select genre (int) --> ");
-            if (!int.TryParse(Console.ReadLine(), out int genreIndex))
+            if (!int.TryParse(Console.ReadLine(), out int genreCode))
             {
                 Console.WriteLine("Warning!! Invalid input data");
             }
@@ -68,9 +68,8 @@ namespace ChunithmNetConnetorTest
                 Console.WriteLine("Warning!! Invalid input data");
             }
 
-            var genre = (Genre)genreIndex;
             var difficulty = (Difficulty)difficultyIndex;
-            MusicGenre(genre, difficulty);
+            MusicGenre(genreCode, difficulty);
             Console.ReadLine();
         }
 

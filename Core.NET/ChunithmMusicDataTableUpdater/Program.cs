@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary;
+using ChunithmClientLibrary;
 using ChunithmClientLibrary.ChunithmMusicDatabase.API;
 using ChunithmClientLibrary.ChunithmMusicDatabase.HttpClientConnector;
 using ChunithmClientLibrary.ChunithmNet.API;
@@ -83,6 +83,8 @@ namespace ChunithmMusicDataTableCreator
                 AimeId = userInfo.AimeId;
             }
         }
+        
+        private const int GENRE_CODE_ALL = 99;
 
         static int Main(string[] args)
         {
@@ -99,7 +101,7 @@ namespace ChunithmMusicDataTableCreator
                     connector.LoginAsync(argument.SegaId, argument.Password).GetNetApiResult("login... ");
                     connector.SelectAimeAsync(argument.AimeId).GetNetApiResult("selecting aime... ");
 
-                    var musicGenre = connector.GetMusicGenreAsync(Genre.All, Difficulty.Master).GetNetApiResult("downloading music list... ");
+                    var musicGenre = connector.GetMusicGenreAsync(GENRE_CODE_ALL, Difficulty.Master).GetNetApiResult("downloading music list... ");
                     musicDataTable.Add(musicGenre.MusicGenre);
 
                     if (currentTable.MusicDataTable.GetTableUnits().Count() == musicDataTable.GetTableUnits().Count())

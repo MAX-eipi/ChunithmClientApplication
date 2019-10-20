@@ -157,7 +157,7 @@ namespace ChunithmMusicDataTableCreator
         {
             Append(csv, unit.Id);
             Append(csv, unit.Name);
-            Append(csv, Utility.ToGenreText(unit.Genre));
+            Append(csv, unit.Genre);
             Append(csv, unit.GetBaseRating(Difficulty.Basic));
             Append(csv, unit.GetBaseRating(Difficulty.Advanced));
             Append(csv, unit.GetBaseRating(Difficulty.Expert));

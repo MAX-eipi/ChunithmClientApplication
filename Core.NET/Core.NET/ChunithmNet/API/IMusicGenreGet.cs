@@ -10,15 +10,11 @@ namespace ChunithmClientLibrary.ChunithmNet.API
     public interface IMusicGenreGet
     {
         Task<IMusicGenreGetResponse> GetMusicGenreAsync(int genreCode, Difficulty difficulty);
-        [System.Obsolete]
-        Task<IMusicGenreGetResponse> GetMusicGenreAsync(Genre genre, Difficulty difficulty);
         Task<IMusicGenreGetResponse> GetMusicGenreAsync(IMusicGenreGetRequest request);
     }
 
     public interface IMusicGenreGetRequest : IChunithmNetApiRequest
     {
-        [System.Obsolete]
-        Genre Genre { get; }
         int GenreCode { get; }
         Difficulty Difficulty { get; }
     }

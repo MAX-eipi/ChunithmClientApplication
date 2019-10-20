@@ -49,7 +49,7 @@ namespace ChunithmClientLibrary.MusicData
                 worksheet.Cell(row, header[Header.Parameter.Id].Index).Value = musicDatas[i].Id;
                 worksheet.Cell(row, header[Header.Parameter.Name].Index).Value = musicDatas[i].Name;
                 worksheet.Cell(row, header[Header.Parameter.Name].Index).DataType = XLDataType.Text;
-                worksheet.Cell(row, header[Header.Parameter.Genre].Index).Value = Utility.ToGenreText(musicDatas[i].Genre);
+                worksheet.Cell(row, header[Header.Parameter.Genre].Index).Value = musicDatas[i].Genre;
                 worksheet.Cell(row, header[Header.Parameter.Basic].Index).Value = musicDatas[i].GetBaseRating(Difficulty.Basic);
                 worksheet.Cell(row, header[Header.Parameter.Advanced].Index).Value = musicDatas[i].GetBaseRating(Difficulty.Advanced);
                 worksheet.Cell(row, header[Header.Parameter.Expert].Index).Value = musicDatas[i].GetBaseRating(Difficulty.Expert);

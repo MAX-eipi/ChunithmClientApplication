@@ -45,7 +45,7 @@ namespace ChunithmClientViewer
             {
                 DebugLogger.WriteLine($"{difficulty} の取得");
 
-                var musicGenre = chunithmNetConnector.GetMusicGenreAsync(Genre.All, difficulty);
+                var musicGenre = chunithmNetConnector.GetMusicGenreAsync(Utility.GENRE_ALL_CODE, difficulty);
                 await musicGenre;
                 if (!musicGenre.Result.Success)
                 {

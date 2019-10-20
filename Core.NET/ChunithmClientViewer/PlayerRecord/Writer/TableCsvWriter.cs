@@ -52,7 +52,7 @@ namespace ChunithmClientViewer.PlayerRecord
 
                 Append(builder, unit.Id);
                 Append(builder, unit.Name);
-                Append(builder, Utility.ToGenreText(unit.Genre));
+                Append(builder, unit.Genre);
 
                 music.TryGetValue(Difficulty.Basic, out var basic);
                 music.TryGetValue(Difficulty.Advanced, out var advanced);

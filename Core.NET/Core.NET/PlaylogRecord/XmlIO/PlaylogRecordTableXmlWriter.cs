@@ -47,7 +47,7 @@ namespace ChunithmClientLibrary.PlaylogRecord
                 var row = i + 2;
                 worksheet.Cell(row, header[Header.Parameter.Id].Index).Value = playlogRecordUnits[i].Id;
                 worksheet.Cell(row, header[Header.Parameter.Name].Index).Value = playlogRecordUnits[i].Name;
-                worksheet.Cell(row, header[Header.Parameter.Genre].Index).Value = Utility.ToGenreText(playlogRecordUnits[i].Genre);
+                worksheet.Cell(row, header[Header.Parameter.Genre].Index).Value = playlogRecordUnits[i].Genre;
                 worksheet.Cell(row, header[Header.Parameter.Difficulty].Index).Value = Utility.ToDifficultyText(playlogRecordUnits[i].Difficulty);
                 worksheet.Cell(row, header[Header.Parameter.Score].Index).Value = playlogRecordUnits[i].Score;
                 worksheet.Cell(row, header[Header.Parameter.Rank].Index).Value = Utility.ToRankText(Utility.GetRank(playlogRecordUnits[i].Score));
