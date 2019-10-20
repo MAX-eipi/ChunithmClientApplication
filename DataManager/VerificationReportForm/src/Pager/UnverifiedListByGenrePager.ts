@@ -66,21 +66,21 @@ class Filter {
         return false;
     }
 
-    public enabledGenre(genre: DataManager.Genre): boolean {
+    public enabledGenre(genre: string): boolean {
         switch (genre) {
-            case DataManager.Genre.POPS_AND_ANIME:
+            case "POPS & ANIME":
                 return this.enabled_POPS_AND_ANIME;
-            case DataManager.Genre.niconico:
+            case "niconico":
                 return this.enabled_niconico;
-            case DataManager.Genre.東方Project:
+            case "東方Project":
                 return this.enabled_東方Project;
-            case DataManager.Genre.VARIETY:
+            case "VARIETY":
                 return this.enabled_VARIETY;
-            case DataManager.Genre.イロドリミドリ:
+            case "イロドリミドリ":
                 return this.enabled_イロドリミドリ;
-            case DataManager.Genre.言ノ葉Project:
+            case "言ノ葉Project":
                 return this.enabled_言ノ葉Project;
-            case DataManager.Genre.ORIGINAL:
+            case "ORIGINAL":
                 return this.enabled_ORIGINAL;
         }
         return false;
@@ -90,7 +90,7 @@ class Filter {
 class MusicData {
     public name: string;
     public difficulty: DataManager.Difficulty;
-    public genre: DataManager.Genre;
+    public genre: string;
     public level: number;
 
     public setByMusicData(musicData: DataManager.MusicData, difficulty: DataManager.Difficulty): void {
@@ -126,13 +126,13 @@ export class UnverifiedListByGenrePager implements Pager {
             source = source.replace(/%checked_expert%/g, filter.enabledDifficulty(DataManager.Difficulty.Expert) ? "checked" : "");
             source = source.replace(/%checked_master%/g, filter.enabledDifficulty(DataManager.Difficulty.Master) ? "checked" : "");
 
-            source = source.replace(/%checked_genre_1%/g, filter.enabledGenre(DataManager.Genre.POPS_AND_ANIME) ? "checked" : "");
-            source = source.replace(/%checked_genre_2%/g, filter.enabledGenre(DataManager.Genre.niconico) ? "checked" : "");
-            source = source.replace(/%checked_genre_3%/g, filter.enabledGenre(DataManager.Genre.東方Project) ? "checked" : "");
-            source = source.replace(/%checked_genre_4%/g, filter.enabledGenre(DataManager.Genre.VARIETY) ? "checked" : "");
-            source = source.replace(/%checked_genre_5%/g, filter.enabledGenre(DataManager.Genre.イロドリミドリ) ? "checked" : "");
-            source = source.replace(/%checked_genre_6%/g, filter.enabledGenre(DataManager.Genre.言ノ葉Project) ? "checked" : "");
-            source = source.replace(/%checked_genre_7%/g, filter.enabledGenre(DataManager.Genre.ORIGINAL) ? "checked" : "");
+            source = source.replace(/%checked_genre_1%/g, filter.enabledGenre("POPS & ANIME") ? "checked" : "");
+            source = source.replace(/%checked_genre_2%/g, filter.enabledGenre("niconico") ? "checked" : "");
+            source = source.replace(/%checked_genre_3%/g, filter.enabledGenre("東方Project") ? "checked" : "");
+            source = source.replace(/%checked_genre_4%/g, filter.enabledGenre("VARIETY") ? "checked" : "");
+            source = source.replace(/%checked_genre_5%/g, filter.enabledGenre("イロドリミドリ") ? "checked" : "");
+            source = source.replace(/%checked_genre_6%/g, filter.enabledGenre("言ノ葉Project") ? "checked" : "");
+            source = source.replace(/%checked_genre_7%/g, filter.enabledGenre("ORIGINAL") ? "checked" : "");
 
             source = source.replace(/%list%/g, this.getListHtml(filter));
         }
@@ -159,13 +159,13 @@ export class UnverifiedListByGenrePager implements Pager {
 
     private getListHtml(filter: Filter): string {
         let genres = [
-            DataManager.Genre.POPS_AND_ANIME,
-            DataManager.Genre.niconico,
-            DataManager.Genre.東方Project,
-            DataManager.Genre.VARIETY,
-            DataManager.Genre.イロドリミドリ,
-            DataManager.Genre.言ノ葉Project,
-            DataManager.Genre.ORIGINAL,
+            "POPS & ANIME",
+            "niconico",
+            "東方Project",
+            "VARIETY",
+            "イロドリミドリ",
+            "言ノ葉Project",
+            "ORIGINAL",
         ];
         let self = this;
         let unverifiedMusicDatas = this.getUnverifiedMusicDatas();
@@ -177,7 +177,7 @@ export class UnverifiedListByGenrePager implements Pager {
         return listHtml;
     }
 
-    private getGenreListHtml(musicDatas: MusicData[], genre: DataManager.Genre, filter): string {
+    private getGenreListHtml(musicDatas: MusicData[], genre: string, filter): string {
         if (!filter.enabledGenre(genre)) {
             return "";
         }
@@ -190,7 +190,7 @@ export class UnverifiedListByGenrePager implements Pager {
 
         return `
 <div class='box_2'>
-    <div class='box_2_title'>${DataManager.toGenreText(genre)}</div>
+    <div class='box_2_title'>${genre}</div>
     ${html}
 </div>`;
     }
@@ -206,7 +206,7 @@ export class UnverifiedListByGenrePager implements Pager {
         return musicDatas.filter(function (d) { return filter.enabledDifficulty(d.difficulty); });
     }
 
-    private filterByGenre(musicDatas: MusicData[], genre: DataManager.Genre, filter: Filter): MusicData[] {
+    private filterByGenre(musicDatas: MusicData[], genre: string, filter: Filter): MusicData[] {
         if (!musicDatas || musicDatas.length == 0) {
             return [];
         }

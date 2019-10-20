@@ -152,20 +152,20 @@ ORIGINAL:${musicCounts[7]}`;
         var list = form.getItems(FormApp.ItemType.LIST);
 
         let genres = [
-            DataManager.Genre.All,
-            DataManager.Genre.POPS_AND_ANIME,
-            DataManager.Genre.niconico,
-            DataManager.Genre.東方Project,
-            DataManager.Genre.VARIETY,
-            DataManager.Genre.イロドリミドリ,
-            DataManager.Genre.言ノ葉Project,
-            DataManager.Genre.ORIGINAL,
+            "All",
+            "POPS & ANIME",
+            "niconico",
+            "東方Project",
+            "VARIETY",
+            "イロドリミドリ",
+            "言ノ葉Project",
+            "ORIGINAL",
         ];
         let musicCounts: number[] = new Array();
         for (var i = 0; i < genres.length; i++) {
             let genre = genres[i];
             let musicList = list[i + 1].asListItem();
-            let filteredMusicDatas = musicDatas.filter(function (m) { return genre == DataManager.Genre.All ? true : m.Genre == genre; });
+            let filteredMusicDatas = musicDatas.filter(function (m) { return genre == "ALL" ? true : m.Genre == genre; });
             if (filteredMusicDatas.length > 0) {
                 musicList.setChoiceValues(filteredMusicDatas.map(function (m) { return m.Name; }));
             }

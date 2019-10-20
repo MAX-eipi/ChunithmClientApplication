@@ -41,7 +41,7 @@ function enabledLevel(parameter: UnverifiedListByLevelPageParameter, levelText: 
 class MusicData {
     public name: string;
     public difficulty: DataManager.Difficulty;
-    public genre: DataManager.Genre;
+    public genre: string;
     public level: number;
 
     public setByMusicData(musicData: DataManager.MusicData, difficulty: DataManager.Difficulty): void {

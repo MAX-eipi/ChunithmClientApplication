@@ -1,9 +1,9 @@
-﻿import { Genre, Difficulty, toGenre } from "./utility";
+﻿import { Difficulty } from "./utility";
 
 export class MusicData {
     public Id: number
     public Name: string
-    public Genre: Genre
+    public Genre: string
     public BasicLevel: number
     public AdvancedLevel: number
     public ExpertLevel: number
@@ -16,7 +16,7 @@ export class MusicData {
     public constructor() {
         this.Id = -1;
         this.Name = "";
-        this.Genre = Genre.Invalid;
+        this.Genre = "";
         this.BasicLevel = 0;
         this.AdvancedLevel = 0;
         this.ExpertLevel = 0;
@@ -116,7 +116,7 @@ export class MusicData {
 
         musicData.Id = row[1];
         musicData.Name = row[2];
-        musicData.Genre = toGenre(row[3]);
+        musicData.Genre = row[3];
         musicData.BasicLevel = row[4];
         musicData.AdvancedLevel = row[5];
         musicData.ExpertLevel = row[6];

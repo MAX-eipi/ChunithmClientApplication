@@ -31,14 +31,14 @@ function setupForm() {
         form.setDescription("検証方法は下記リンクを参照\nhttp://chunithmfanclub.hatenablog.com/entry/2019/04/02/120832");
 
         let genres = [
-            DataManager.Genre.All,
-            DataManager.Genre.POPS_AND_ANIME,
-            DataManager.Genre.niconico,
-            DataManager.Genre.東方Project,
-            DataManager.Genre.VARIETY,
-            DataManager.Genre.言ノ葉Project,
-            DataManager.Genre.イロドリミドリ,
-            DataManager.Genre.ORIGINAL,
+            "ALL",
+            "POPS_AND_ANIME",
+            "niconico",
+            "東方Project",
+            "VARIETY",
+            "言ノ葉Project",
+            "イロドリミドリ",
+            "ORIGINAL",
         ];
         let genreList = form.addListItem();
         genreList.setTitle("ジャンルを選択してください");
@@ -49,11 +49,11 @@ function setupForm() {
             let genre = genres[i];
             let page = form.addPageBreakItem();
             page.setTitle("楽曲選択");
-            let genreText = genre == DataManager.Genre.All ? "全ジャンル" : DataManager.toGenreText(genre);
+            let genreText = genre == "ALL" ? "全ジャンル" : genre;
             let musicList = form.addListItem();
             musicList.setRequired(true);
             musicList.setTitle(`楽曲を選択してください(${genreText})`);
-            let filteredMusicDatas = musicDatas.filter(function (m) { return genre == DataManager.Genre.All ? true : m.Genre == genre; });
+            let filteredMusicDatas = musicDatas.filter(function (m) { return genre == "ALL" ? true : m.Genre == genre; });
             if (filteredMusicDatas.length > 0) {
                 musicList.setChoiceValues(filteredMusicDatas.map(function (m) { return m.Name; }));
             }
@@ -63,7 +63,7 @@ function setupForm() {
             let choices: GoogleAppsScript.Forms.Choice[] = new Array();
             for (var i = 0; i < genres.length; i++) {
                 let genre = genres[i];
-                let genreText = genre == DataManager.Genre.All ? "全ジャンル" : DataManager.toGenreText(genre);
+                let genreText = genre == "ALL" ? "全ジャンル" : genre;
                 let page = musicListPages[i];
                 let choice = genreList.createChoice(genreText, page);
                 choices.push(choice);
