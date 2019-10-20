@@ -8,7 +8,9 @@ namespace ChunithmClientLibrary
         public static readonly string Name = "";
         public static readonly string ArtistName = "";
         public static readonly string ImageName = "";
+        [Obsolete]
         public static readonly Genre Genre = Genre.Invalid;
+        public static readonly string GenreText = "";
         public static readonly Difficulty Difficulty = Difficulty.Invalid;
         public static readonly double Level = 0;
         public static readonly int WorldsEndLevel = -1;

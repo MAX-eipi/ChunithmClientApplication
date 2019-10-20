@@ -12,7 +12,9 @@ namespace ChunithmClientViewer.ChunithmNetConnector.ChromiumWebBrowserConnector
     {
         private class MusicGenreGetRequest : IMusicGenreGetRequest
         {
+            [Obsolete]
             public Genre Genre { get; set; }
+            public int GenreCode { get; set; }
             public Difficulty Difficulty { get; set; }
         }
 
@@ -21,11 +23,17 @@ namespace ChunithmClientViewer.ChunithmNetConnector.ChromiumWebBrowserConnector
             public MusicGenre MusicGenre { get; set; }
         }
 
+        [Obsolete]
         public Task<IMusicGenreGetResponse> GetMusicGenreAsync(Genre genre, Difficulty difficulty)
+        {
+            return GetMusicGenreAsync(Utility.ToGenreCode(genre), difficulty);
+        }
+
+        public Task<IMusicGenreGetResponse> GetMusicGenreAsync(int genreCode, Difficulty difficulty)
         {
             return GetMusicGenreAsync(new MusicGenreGetRequest
             {
-                Genre = genre,
+                GenreCode = genreCode,
                 Difficulty = difficulty,
             });
         }
@@ -44,7 +52,7 @@ namespace ChunithmClientViewer.ChunithmNetConnector.ChromiumWebBrowserConnector
 
             await WebBrowserNavigator.EvaluatePageMoveScriptAsync($@"
 var genreSelecter  = document.getElementsByName('genre')[0];
-genreSelecter.value = { Utility.ToGenreCode(request.Genre) };
+genreSelecter.value = { request.GenreCode };
 formSubmitAddParam('music_genre','{ ToDifficultyParam(request.Difficulty) }');
 ");
 

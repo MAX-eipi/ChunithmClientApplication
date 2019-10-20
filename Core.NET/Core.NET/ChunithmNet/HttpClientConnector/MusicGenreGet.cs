@@ -11,6 +11,8 @@ namespace ChunithmClientLibrary.ChunithmNet.HttpClientConnector
     {
         private class MusicGenreGetRequest : IMusicGenreGetRequest
         {
+            public int GenreCode { get; set; }
+            [System.Obsolete]
             public Genre Genre { get; set; }
             public Difficulty Difficulty { get; set; }
         }
@@ -18,15 +20,20 @@ namespace ChunithmClientLibrary.ChunithmNet.HttpClientConnector
         private class MusicGenreGetResponse : ChunithmNetApiResponse, IMusicGenreGetResponse
         {
             public MusicGenre MusicGenre { get; set; }
-
             public MusicGenreGetResponse(HttpResponseMessage message) : base(message) { }
         }
 
+        [System.Obsolete]
         public Task<IMusicGenreGetResponse> GetMusicGenreAsync(Genre genre, Difficulty difficulty)
+        {
+            return GetMusicGenreAsync(Utility.ToGenreCode(genre), difficulty);
+        }
+
+        public Task<IMusicGenreGetResponse> GetMusicGenreAsync(int genreCode, Difficulty difficulty)
         {
             var request = new MusicGenreGetRequest
             {
-                Genre = genre,
+                GenreCode = genreCode,
                 Difficulty = difficulty,
             };
             return GetMusicGenreAsync(request);
@@ -36,7 +43,7 @@ namespace ChunithmClientLibrary.ChunithmNet.HttpClientConnector
         {
             var musicGenreContent = new FormUrlEncodedContent(new Dictionary<string, string>
             {
-                { "genre", Utility.ToGenreCode(request.Genre).ToString() },
+                { "genre", request.GenreCode.ToString() },
                 { "token", token },
             });
 

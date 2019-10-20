@@ -12,6 +12,7 @@ namespace ChunithmClientLibrary.PlaylogRecord
         [DataMember]
         public string Name { get; set; }
         [DataMember]
+        [Obsolete]
         public Genre Genre { get; set; }
         [DataMember]
         public Difficulty Difficulty { get; set; }

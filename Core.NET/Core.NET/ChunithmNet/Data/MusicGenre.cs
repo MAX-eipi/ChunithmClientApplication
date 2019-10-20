@@ -6,7 +6,9 @@
         {
             public int Id { get; set; } = DefaultParameter.Id;
             public string Name { get; set; } = DefaultParameter.Name;
+            [System.Obsolete]
             public Genre Genre { get; set; } = DefaultParameter.Genre;
+            public string GenreText { get; set; } = DefaultParameter.GenreText;
             public Difficulty Difficulty { get; set; } = DefaultParameter.Difficulty;
             public int Score { get; set; } = DefaultParameter.Score;
             public Rank Rank { get; set; } = DefaultParameter.Rank;

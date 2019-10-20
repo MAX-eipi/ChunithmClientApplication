@@ -6,6 +6,7 @@ namespace ChunithmClientLibrary.HighScoreRecord
     {
         int Id { get; }
         string Name { get; }
+        [System.Obsolete]
         Genre Genre { get; }
         Difficulty Difficulty { get; }
         int Score { get; }

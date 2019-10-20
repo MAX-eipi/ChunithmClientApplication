@@ -6,6 +6,7 @@ namespace ChunithmNetConnetorTest
 {
     partial class Program
     {
+        [Obsolete]
         private static IMusicGenreGetResponse MusicGenre(Genre genre, Difficulty difficulty)
         {
             Console.WriteLine($"API: MusicGenre({genre}, {difficulty})");

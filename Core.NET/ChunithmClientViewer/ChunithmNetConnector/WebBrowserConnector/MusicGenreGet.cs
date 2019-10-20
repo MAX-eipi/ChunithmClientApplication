@@ -13,7 +13,9 @@ namespace ChunithmClientViewer.ChunithmNetConnector.WebBrowserConnector
     {
         private class MusicGenreGetRequest : IMusicGenreGetRequest
         {
+            [System.Obsolete]
             public Genre Genre { get; set; }
+            public int GenreCode { get; set; }
             public Difficulty Difficulty { get; set; }
         }
 
@@ -24,13 +26,19 @@ namespace ChunithmClientViewer.ChunithmNetConnector.WebBrowserConnector
             public MusicGenreGetResponse(WebBrowser webBrowser) : base(webBrowser) { }
         }
 
+        [System.Obsolete]
         public Task<IMusicGenreGetResponse> GetMusicGenreAsync(Genre genre, Difficulty difficulty)
+        {
+            return GetMusicGenreAsync(Utility.ToGenreCode(genre), difficulty);
+        }
+
+        public Task<IMusicGenreGetResponse> GetMusicGenreAsync(int genreCode, Difficulty difficulty)
         {
             return GetMusicGenreAsync(new MusicGenreGetRequest
             {
-                Genre = genre,
+                GenreCode = genreCode,
                 Difficulty = difficulty
-            });
+            }); ;
         }
 
         public async Task<IMusicGenreGetResponse> GetMusicGenreAsync(IMusicGenreGetRequest request)
@@ -44,7 +52,7 @@ namespace ChunithmClientViewer.ChunithmNetConnector.WebBrowserConnector
                 var documente = WebBrowserNavigator.WebBrowser.Document;
                 var musicGenreForm = documente.GetElementById("music_genre");
                 var genre = musicGenreForm.GetElementsByTagName("select").OfType<HtmlElement>().FirstOrDefault();
-                genre.SetAttribute("value", Utility.ToGenreCode(request.Genre).ToString());
+                genre.SetAttribute("value", request.GenreCode.ToString());
             }
 
             var musicGenre = WebBrowserNavigator.InvokeScriptAsync("formSubmitAddParam", new[] { "music_genre", ToDifficultyParam(request.Difficulty) });

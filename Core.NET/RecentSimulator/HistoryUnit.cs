@@ -16,6 +16,7 @@ namespace RecentSimulator
         public int Number { get; set; } = 0;
         public int Id { get; set; } = DefaultParameter.Id;
         public string Name { get; set; } = DefaultParameter.Name;
+        [Obsolete]
         public Genre Genre { get; set; } = DefaultParameter.Genre;
         public Difficulty Difficulty { get; set; } = DefaultParameter.Difficulty;
         public int Score { get; set; } = DefaultParameter.Score;

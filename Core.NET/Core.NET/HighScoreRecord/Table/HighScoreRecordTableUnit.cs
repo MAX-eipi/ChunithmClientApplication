@@ -12,6 +12,7 @@ namespace ChunithmClientLibrary.HighScoreRecord
         [DataMember]
         public string Name { get; set; } = DefaultParameter.Name;
         [DataMember]
+        [Obsolete]
         public Genre Genre { get; set; } = DefaultParameter.Genre;
         [DataMember]
         public Difficulty Difficulty { get; set; } = DefaultParameter.Difficulty;

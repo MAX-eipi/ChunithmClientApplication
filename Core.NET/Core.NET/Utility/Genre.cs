@@ -1,5 +1,6 @@
 ﻿namespace ChunithmClientLibrary
 {
+    [System.Obsolete]
     public enum Genre
     {
         Invalid,
@@ -37,10 +38,12 @@
 
         private class GenrePair
         {
+            [System.Obsolete]
             public Genre Genre { get; }
             public string Text { get; }
             public int Code { get; }
 
+            [System.Obsolete]
             public GenrePair(Genre genre, string text, int code)
             {
                 Genre = genre;
@@ -49,6 +52,7 @@
             }
         }
 
+        [System.Obsolete]
         private static GenrePair[] genrePairs = new GenrePair[]
         {
             new GenrePair(Genre.Invalid, GENRE_INVALID_TEXT, GENRE_INVALID_CODE),
@@ -62,16 +66,19 @@
             new GenrePair(Genre.All, GENRE_ALL_TEXT, GENRE_ALL_CODE),
         };
 
+        [System.Obsolete]
         public static Genre ToGenre(string genreText)
         {
             return PairConverter.Convert(genrePairs, genreText, Genre.Invalid, p => p.Text, p => p.Genre);
         }
 
+        [System.Obsolete]
         public static string ToGenreText(Genre genre)
         {
             return PairConverter.Convert(genrePairs, genre, GENRE_INVALID_TEXT, p => p.Genre, p => p.Text);
         }
 
+        [System.Obsolete]
         public static int ToGenreCode(Genre genre)
         {
             return PairConverter.Convert(genrePairs, genre, GENRE_INVALID_CODE, p => p.Genre, p => p.Code);

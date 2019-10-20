@@ -12,6 +12,7 @@ namespace ChunithmClientLibrary.MusicData
         [DataMember]
         public string Name { get; set; }
         [DataMember]
+        [Obsolete]
         public Genre Genre { get; set; }
 
         [DataMember]

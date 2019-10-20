@@ -6,6 +6,7 @@ namespace ChunithmClientLibrary.MusicData
     {
         int Id { get; }
         string Name { get; }
+        [System.Obsolete]
         Genre Genre { get; }
         double GetBaseRating(Difficulty difficulty);
         bool VerifiedBaseRating(Difficulty difficulty);
