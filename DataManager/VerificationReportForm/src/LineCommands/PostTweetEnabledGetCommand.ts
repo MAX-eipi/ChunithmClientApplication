@@ -1,11 +1,11 @@
-import { ICommand } from "./ICommand";
+﻿import { ILineCommand } from "./ILineCommand";
 import { Operator } from "../Operators/Operator";
 import { LineConnectorOperator } from "../Operators/LineConnectorOperator";
 import { TwitterConnectorOperator } from "../Operators/TwitterConnectorOperator";
 
-export class PostTweetEnabledSetCommand implements ICommand {
+export class PostTweetEnabledGetCommand implements ILineCommand {
     public called(command: string): boolean {
-        return command.indexOf("post-tweet-enabled=") == 0;
+        return command == "post-tweet-enabled";
     }
 
     public invoke(command: string, event: any, postData: any): void {
@@ -14,9 +14,6 @@ export class PostTweetEnabledSetCommand implements ICommand {
             return;
         }
 
-        let value = command.replace("post-tweet-enabled=", "") == "true";
-        let result = value ? "有効" : "無効";
-        TwitterConnectorOperator.setPostTweetEnabled(value);
-        LineConnectorOperator.replyMessage(event.replyToken, [`Twitterへの通知を${result}にしました`]);
+        LineConnectorOperator.replyMessage(event.replyToken, [`Twitter通知設定:${TwitterConnectorOperator.getPostTweetEnabled() ? "true" : "false"}`]);
     }
 }

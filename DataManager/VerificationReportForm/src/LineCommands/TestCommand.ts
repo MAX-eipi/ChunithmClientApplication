@@ -1,8 +1,8 @@
 ﻿import { notifyUnverified } from "../operations";
 import { LineConnectorOperator } from "../Operators/LineConnectorOperator";
-import { ICommand } from "./ICommand";
+import { ILineCommand } from "./ILineCommand";
 
-export class TestCommand implements ICommand {
+export class TestCommand implements ILineCommand {
     public called(command: string): boolean {
         return command.indexOf("test-") == 0;
     }

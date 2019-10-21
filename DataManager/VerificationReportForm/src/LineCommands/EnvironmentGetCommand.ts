@@ -1,8 +1,8 @@
-﻿import { ICommand } from "./ICommand";
+﻿import { ILineCommand } from "./ILineCommand";
 import { LineConnectorOperator } from "../Operators/LineConnectorOperator";
 import { Operator } from "../Operators/Operator";
 
-export class EnvironmentGetCommand implements ICommand {
+export class EnvironmentGetCommand implements ILineCommand {
     public called(command: string): boolean {
         return command == "environment";
     }

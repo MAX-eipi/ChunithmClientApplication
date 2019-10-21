@@ -1,20 +1,23 @@
-﻿import { ICommand } from "../Commands/ICommand";
+﻿import { ILineCommand } from "../LineCommands/ILineCommand";
 import { LineConnectorOperator } from "./LineConnectorOperator";
-import { VersionGetCommand } from "../Commands/VersionGetCommand";
-import { FormUrlGetCommand } from "../Commands/FormUrlGetCommand";
-import { TopUrlGetCommand } from "../Commands/TopUrlGetCommand";
-import { EnvironmentGetCommand } from "../Commands/EnvironmentGetCommand";
-import { LatestGameVersionGetCommand } from "../Commands/LatestGameVersionGetCommand";
-import { ReportPostNoticeEnabledGetCommand } from "../Commands/ReportPostNoticeEnabledGetCommand";
-import { ReportPostNoticeEnabledSetCommand } from "../Commands/ReportPostNoticeEnabledSetCommand";
-import { PostTweetEnabledGetCommand } from "../Commands/PostTweetEnabledGetCommand";
-import { PostTweetEnabledSetCommand } from "../Commands/PostTweetEnabledSetCommand";
-import { TestCommand } from "../Commands/TestCommand";
-import { DefaultGameVersionGetCommand } from "../Commands/DefaultGameVersionGetCommand";
+import { VersionGetCommand } from "../LineCommands/VersionGetCommand";
+import { FormUrlGetCommand } from "../LineCommands/FormUrlGetCommand";
+import { TopUrlGetCommand } from "../LineCommands/TopUrlGetCommand";
+import { EnvironmentGetCommand } from "../LineCommands/EnvironmentGetCommand";
+import { LatestGameVersionGetCommand } from "../LineCommands/LatestGameVersionGetCommand";
+import { ReportPostNoticeEnabledGetCommand } from "../LineCommands/ReportPostNoticeEnabledGetCommand";
+import { ReportPostNoticeEnabledSetCommand } from "../LineCommands/ReportPostNoticeEnabledSetCommand";
+import { PostTweetEnabledGetCommand } from "../LineCommands/PostTweetEnabledGetCommand";
+import { PostTweetEnabledSetCommand } from "../LineCommands/PostTweetEnabledSetCommand";
+import { TestCommand } from "../LineCommands/TestCommand";
+import { DefaultGameVersionGetCommand } from "../LineCommands/DefaultGameVersionGetCommand";
+import { IPostAPI } from "../PostAPI/IPostApi";
+import { TableGetAPI } from "../PostAPI/TableGetAPI";
+import { TableUpdateAPI } from "../PostAPI/TableUpadateAPI";
 
 export class CommandOperator {
-    public static invoke(postData: any): void {
-        let commands: ICommand[] = this.getCommands();
+    public static invokeLineCommand(postData: any): void {
+        let commands: ILineCommand[] = this.getLineCommands();
         for (var i = 0; i < postData.events.length; i++) {
             let event = postData.events[i];
             if (event.type != "message" || event.message.type != "text") {
@@ -35,7 +38,7 @@ export class CommandOperator {
         }
     }
 
-    private static getCommands(): ICommand[] {
+    private static getLineCommands(): ILineCommand[] {
         return [
             new VersionGetCommand(),
             new FormUrlGetCommand(),
@@ -48,6 +51,24 @@ export class CommandOperator {
             new PostTweetEnabledGetCommand(),
             new PostTweetEnabledSetCommand(),
             new TestCommand(),
+        ];
+    }
+
+    public static invokePostAPI(postData: any): any {
+        let commands: IPostAPI[] = this.getPostCommand();
+        for (var i = 0; i < commands.length; i++) {
+            let command = commands[i];
+            if (command.called(postData.API)) {
+                return command.invoke(postData.API, postData);
+            }
+        }
+        return {};
+    }
+
+    private static getPostCommand(): IPostAPI[] {
+        return [
+            new TableGetAPI(),
+            new TableUpdateAPI(),
         ];
     }
 }
