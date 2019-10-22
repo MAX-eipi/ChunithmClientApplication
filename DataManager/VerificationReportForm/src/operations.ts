@@ -23,23 +23,24 @@ export function storeConfig() {
 
 function setupForm() {
     try {
+        Operator.setDefaultVersion();
+
         let musicDatas = DataManagerOperator.getMusicDatas();
         let form = Operator.getReportForm();
         form.deleteAllResponses();
+        {
+            let items = form.getItems();
+            for (var i = 0; i < items.length; i++) {
+                form.deleteItem(items[i]);
+                Utilities.sleep(100);
+            }
+        }
 
         form.setTitle("譜面定数検証報告");
-        form.setDescription("検証方法は下記リンクを参照\nhttp://chunithmfanclub.hatenablog.com/entry/2019/04/02/120832");
+        //form.setDescription("検証方法は下記リンクを参照");
 
-        let genres = [
-            "ALL",
-            "POPS_AND_ANIME",
-            "niconico",
-            "東方Project",
-            "VARIETY",
-            "言ノ葉Project",
-            "イロドリミドリ",
-            "ORIGINAL",
-        ];
+        let genres = DataManagerOperator.getGenres();
+        genres.push("ALL");
         let genreList = form.addListItem();
         genreList.setTitle("ジャンルを選択してください");
         genreList.setRequired(true);
@@ -58,6 +59,7 @@ function setupForm() {
                 musicList.setChoiceValues(filteredMusicDatas.map(function (m) { return m.Name; }));
             }
             musicListPages.push(page);
+            Utilities.sleep(500);
         }
         {
             let choices: GoogleAppsScript.Forms.Choice[] = new Array();
@@ -69,6 +71,7 @@ function setupForm() {
                 choices.push(choice);
             }
             genreList.setChoices(choices);
+            Utilities.sleep(500);
         }
 
         let scoreInputPage = form.addPageBreakItem();
@@ -79,6 +82,7 @@ function setupForm() {
             difficultyList.setTitle("難易度を選択してください");
             difficultyList.setRequired(true);
             difficultyList.setChoiceValues(["MASTER", "EXPERT", "ADVANCED", "BASIC"]);
+            Utilities.sleep(500);
 
             let beforeOpInput = form.addTextItem();
             beforeOpInput.setTitle("変動前のOPを入力してください");
@@ -87,6 +91,7 @@ function setupForm() {
                 .requireNumberGreaterThanOrEqualTo(0)
                 /// @ts-ignore
                 .build());
+            Utilities.sleep(500);
 
             let afterOpInput = form.addTextItem();
             afterOpInput.setTitle("変動後のOPを入力してください");
@@ -95,6 +100,7 @@ function setupForm() {
                 .requireNumberGreaterThanOrEqualTo(0)
                 /// @ts-ignore
                 .build());
+            Utilities.sleep(500);
 
             let scoreInput = form.addTextItem();
             scoreInput.setTitle("スコアを入力してください");
@@ -105,11 +111,19 @@ function setupForm() {
                 .setHelpText("許容スコア範囲は[950000,1010000]です")
                 /// @ts-ignore
                 .build());
+            Utilities.sleep(500);
 
             let comboStatusInput = form.addMultipleChoiceItem();
             comboStatusInput.setTitle("コンボステータスを入力してください");
             comboStatusInput.setRequired(true);
             comboStatusInput.setChoiceValues(["AJ", "FC", "なし"]);
+            Utilities.sleep(500);
+
+            // OP変動確認用の画像を添付してください(バージョン名)
+            // 特定のファイル形式のみ許可
+            //  - 画像
+            // ファイルの最大数 5
+            // 最大ファイルサイズ 10MB
         }
 
         for (var i = 0; i < musicListPages.length; i++) {
@@ -133,6 +147,26 @@ function authorizeTwitter() {
 function authCallback(request): any {
     try {
         return TwitterConnectorOperator.authCallback(request);
+    }
+    catch (e) {
+        Operator.exception(e);
+    }
+}
+
+function getGenres(): string[] {
+    try {
+        Operator.setDefaultVersion();
+        let genres: string[] = [];
+        let musicDatas: DataManager.MusicData[] = DataManagerOperator.getMusicDatas();
+        for (var i = 0; i < musicDatas.length; i++) {
+            let genre = musicDatas[i].Genre;
+            if (genres.indexOf(genre) == -1) {
+                genres.push(genre);
+            }
+        }
+        Logger.log(Operator.getTargetVersionName());
+        Logger.log(JSON.stringify(genres));
+        return genres;
     }
     catch (e) {
         Operator.exception(e);

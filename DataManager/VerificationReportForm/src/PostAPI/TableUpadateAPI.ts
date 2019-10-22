@@ -37,15 +37,10 @@ ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLeve
                 TwitterConnectorOperator.postTweet(message);
             }
             else {
-                var message = `[新規定数表作成]
-総楽曲数:${musicCounts[0]}
-POPS & ANIME:${musicCounts[1]}
-niconico:${musicCounts[2]}
-東方Project:${musicCounts[3]}
-VARIETY:${musicCounts[4]}
-イロドリミドリ:${musicCounts[5]}
-言ノ葉Project:${musicCounts[6]}
-ORIGINAL:${musicCounts[7]}`;
+                message = '[新規定数表作成]\n';
+                for (var genre in musicCounts) {
+                    message += `${genre}: ${musicCounts[genre]}\n`;
+                }
                 LineConnectorOperator.pushMessage([message]);
                 TwitterConnectorOperator.postTweet(message);
             }
@@ -70,22 +65,14 @@ ORIGINAL:${musicCounts[7]}`;
         return added;
     }
 
-    private static setMusicList(): number[] {
+    private static setMusicList(): { [genre: string]: number } {
         var musicDatas = DataManagerOperator.getMusicDatas();
         var form = Operator.getReportForm();
         var list = form.getItems(FormApp.ItemType.LIST);
 
-        let genres = [
-            "ALL",
-            "POPS & ANIME",
-            "niconico",
-            "東方Project",
-            "VARIETY",
-            "イロドリミドリ",
-            "言ノ葉Project",
-            "ORIGINAL",
-        ];
-        let musicCounts: number[] = new Array();
+        let genres = DataManagerOperator.getGenres();
+        genres.push("ALL");
+        let musicCounts: { [genre: string]: number } = {};
         for (var i = 0; i < genres.length; i++) {
             let genre = genres[i];
             let musicList = list[i + 1].asListItem();
@@ -96,7 +83,7 @@ ORIGINAL:${musicCounts[7]}`;
             else {
                 musicList.setChoiceValues([""]);
             }
-            musicCounts.push(filteredMusicDatas.length);
+            musicCounts[genre] = filteredMusicDatas.length;
         }
         return musicCounts;
     }
