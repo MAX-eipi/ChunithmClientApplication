@@ -27,7 +27,7 @@ export class ReportManager {
 
     public insertReport(formResponse: GoogleAppsScript.Forms.FormResponse, musicDataTable: DataManager.MusicDataTable): Report {
         let itemResponses = formResponse.getItemResponses();
-        let musicName = itemResponses[1].getResponse().toString();
+        let musicName = ReportManager.convertMusicName(itemResponses[1].getResponse().toString());
         let difficulty = itemResponses[2].getResponse().toString();
         let beforeOp = parseFloat(itemResponses[3].getResponse().toString());
         let afterOp = parseFloat(itemResponses[4].getResponse().toString());
@@ -53,6 +53,18 @@ export class ReportManager {
         this.sheet.getRange(this.currentRow, 1, 1, rawReport.length).setValues([rawReport]);
         this.currentRow++;
         return report;
+    }
+
+    private static convertMusicName(musicName: string): string {
+        let nameMap = {
+            "セイクリッド ルイン": "セイクリッド　ルイン"
+        };
+        for (var key in nameMap) {
+            if (musicName == key) {
+                return nameMap[key];
+            }
+        }
+        return musicName;
     }
 
     public getReport(reportId: string, cached: boolean = true): Report {
