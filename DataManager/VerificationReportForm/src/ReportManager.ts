@@ -57,7 +57,14 @@ export class ReportManager {
 
     private static convertMusicName(musicName: string): string {
         let nameMap = {
-            "セイクリッド ルイン": "セイクリッド　ルイン"
+            "チルノのパーフェクトさんすう教室 ⑨周年バージョン": "チルノのパーフェクトさんすう教室　⑨周年バージョン",
+            "ってゐ！ ～えいえんてゐVer～": "ってゐ！　～えいえんてゐVer～",
+            "少女幻葬戦慄曲 ～ Necro Fantasia": "少女幻葬戦慄曲　～　Necro Fantasia",
+            "キュアリアス光吉古牌 －祭－": "キュアリアス光吉古牌　－祭－",
+            "セイクリッド ルイン": "セイクリッド　ルイン",
+            "オーケー？ オーライ！": "オーケー？　オーライ！",
+            "ここで一席！ Oshama Scramble!": "ここで一席！　Oshama Scramble!",
+            "札付きのワル ～マイケルのうた～": "札付きのワル　～マイケルのうた～",
         };
         for (var key in nameMap) {
             if (musicName == key) {
