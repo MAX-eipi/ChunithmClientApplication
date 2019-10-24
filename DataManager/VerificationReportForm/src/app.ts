@@ -1,7 +1,7 @@
 import { VerificationReportForm } from "./VerificationReportForm";
 import { Operator } from "./Operators/Operator";
 
-const VERSION: string = "0.2.1";
+const VERSION: string = "0.2.1-hotfix-0.1";
 export function getAppVersion(): string {
     return VERSION;
 }
