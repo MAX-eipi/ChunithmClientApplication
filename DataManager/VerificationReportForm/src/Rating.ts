@@ -227,7 +227,9 @@ export function calcBaseRating(beforeOp: number, afterOp: number, score: number,
             added += 0.1;
             break;
     }
-    
-    let baseRating = Math.round((diffOp / 5 - added) * 100) / 100;
+
+    let baseRating = score >= RANK_S_BORDER_SCORE
+        ? Math.round((diffOp / 5 - added) * 100) / 100
+        : Math.round((diffOp / 5 - added) * 10) / 10
     return baseRating;
 }

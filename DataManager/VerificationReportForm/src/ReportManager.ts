@@ -27,7 +27,7 @@ export class ReportManager {
 
     public insertReport(formResponse: GoogleAppsScript.Forms.FormResponse, musicDataTable: DataManager.MusicDataTable): Report {
         let itemResponses = formResponse.getItemResponses();
-        let musicName = itemResponses[1].getResponse().toString();
+        let musicName = ReportManager.convertMusicName(itemResponses[1].getResponse().toString());
         let difficulty = itemResponses[2].getResponse().toString();
         let beforeOp = parseFloat(itemResponses[3].getResponse().toString());
         let afterOp = parseFloat(itemResponses[4].getResponse().toString());
@@ -53,6 +53,25 @@ export class ReportManager {
         this.sheet.getRange(this.currentRow, 1, 1, rawReport.length).setValues([rawReport]);
         this.currentRow++;
         return report;
+    }
+
+    private static convertMusicName(musicName: string): string {
+        let nameMap = {
+            "チルノのパーフェクトさんすう教室 ⑨周年バージョン": "チルノのパーフェクトさんすう教室　⑨周年バージョン",
+            "ってゐ！ ～えいえんてゐVer～": "ってゐ！　～えいえんてゐVer～",
+            "少女幻葬戦慄曲 ～ Necro Fantasia": "少女幻葬戦慄曲　～　Necro Fantasia",
+            "キュアリアス光吉古牌 －祭－": "キュアリアス光吉古牌　－祭－",
+            "セイクリッド ルイン": "セイクリッド　ルイン",
+            "オーケー？ オーライ！": "オーケー？　オーライ！",
+            "ここで一席！ Oshama Scramble!": "ここで一席！　Oshama Scramble!",
+            "札付きのワル ～マイケルのうた～": "札付きのワル　～マイケルのうた～",
+        };
+        for (var key in nameMap) {
+            if (musicName == key) {
+                return nameMap[key];
+            }
+        }
+        return musicName;
     }
 
     public getReport(reportId: string, cached: boolean = true): Report {
