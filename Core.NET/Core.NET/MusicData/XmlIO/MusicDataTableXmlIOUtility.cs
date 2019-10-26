@@ -73,7 +73,7 @@ namespace ChunithmClientLibrary.MusicData.XmlIO
             AddColumn(Parameter.AdvancedVerified, DEFAULT_ADVANCED_TEXT);
             AddColumn(Parameter.ExpertVerified, DEFAULT_EXPERT_TEXT);
             AddColumn(Parameter.MasterVerified, DEFAULT_MASTER_VERIFIED_TEXT);
-    }
+        }
 
         private void AddColumn(Parameter parameter, string text)
         {

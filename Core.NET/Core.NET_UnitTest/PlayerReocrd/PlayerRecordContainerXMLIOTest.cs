@@ -15,52 +15,52 @@ namespace ChunithmClientLibraryUnitTest.PlayerReocrd
         public void PlayerRecordContainer_XmlIO_Test1()
         {
             var expectedPlayerRecordTable = new PlayerRecordContainer();
-            expectedPlayerRecordTable.Basic.Add<HighScoreRecordTableUnit>(new List<HighScoreRecordTableUnit>()
+            expectedPlayerRecordTable.Basic.Add(new List<HighScoreRecordTableUnit>()
             {
                 new HighScoreRecordTableUnit
                 {
                     Id = 1,
                     Name = "TEST MUSIC 1",
-                    Genre = Genre.POPS_AND_ANIME,
+                    Genre = "POPS & ANIME",
                     Difficulty = Difficulty.Basic,
                     Score = 9750000,
                     BaseRating = 1.0,
                     Rating = 1.0,
                 }
             });
-            expectedPlayerRecordTable.Advanced.Add<HighScoreRecordTableUnit>(new List<HighScoreRecordTableUnit>()
+            expectedPlayerRecordTable.Advanced.Add(new List<HighScoreRecordTableUnit>()
             {
                 new HighScoreRecordTableUnit
                 {
                     Id = 2,
                     Name = "TEST MUSIC 2",
-                    Genre = Genre.niconico,
+                    Genre = "niconico",
                     Difficulty = Difficulty.Advanced,
                     Score = 1000000,
                     BaseRating = 3.0,
                     Rating = 4.0,
                 }
             });
-            expectedPlayerRecordTable.Expert.Add<HighScoreRecordTableUnit>(new List<HighScoreRecordTableUnit>()
+            expectedPlayerRecordTable.Expert.Add(new List<HighScoreRecordTableUnit>()
             {
                 new HighScoreRecordTableUnit
                 {
                     Id = 3,
                     Name = "TEST MUSIC 3",
-                    Genre = Genre.東方Project,
+                    Genre = "東方Project",
                     Difficulty = Difficulty.Expert,
                     Score = 1005000,
                     BaseRating = 7.0,
                     Rating = 7.5,
                 }
             });
-            expectedPlayerRecordTable.Master.Add<HighScoreRecordTableUnit>(new List<HighScoreRecordTableUnit>()
+            expectedPlayerRecordTable.Master.Add(new List<HighScoreRecordTableUnit>()
             {
                 new HighScoreRecordTableUnit
                 {
                     Id = 4,
                     Name = "TEST MUSIC 4",
-                    Genre = Genre.VARIETY,
+                    Genre = "VARIETY",
                     Difficulty = Difficulty.Master,
                     Score = 1007500,
                     BaseRating = 10.0,

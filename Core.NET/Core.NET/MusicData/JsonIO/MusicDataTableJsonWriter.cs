@@ -7,7 +7,7 @@ namespace ChunithmClientLibrary.MusicData
         public override MusicDataTable CreateJsonData(IMusicDataTable<IMusicDataTableUnit> data)
         {
             var musicDataTable = new MusicDataTable();
-            musicDataTable.Add<IMusicDataTableUnit>(data);
+            musicDataTable.Add(data);
             return musicDataTable;
         }
     }

@@ -34,7 +34,7 @@ namespace ChunithmClientLibrary.PlaylogRecord
 
                 Append(builder, unit.Id);
                 Append(builder, unit.Name);
-                Append(builder, Utility.ToGenreText(unit.Genre));
+                Append(builder, unit.Genre);
                 Append(builder, Utility.ToDifficultyText(unit.Difficulty));
                 Append(builder, unit.Score);
                 Append(builder, Utility.ToRankText(unit.Rank));

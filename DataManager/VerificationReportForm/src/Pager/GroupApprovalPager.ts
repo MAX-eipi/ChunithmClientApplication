@@ -6,7 +6,6 @@ import { ReportGroup, ReportGroupMusic } from "../ReportGroup";
 import { Utility } from "../Utility";
 import { createHtmlOutput, getPageUrl, Pager, readHtml, resolveVersionName } from "./Pager";
 import { ReportGroupListPager } from "./ReportGroupListPager";
-import {LineConnectorOperatorr } from "../Operators/LineConnectorOperator";
 
 interface GroupApprovalPageParameter {
     groupId: string;

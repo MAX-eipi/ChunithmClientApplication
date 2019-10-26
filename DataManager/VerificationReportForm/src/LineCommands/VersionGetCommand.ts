@@ -1,8 +1,8 @@
-﻿import { ICommand } from "./ICommand";
+﻿import { ILineCommand } from "./ILineCommand";
 import { getAppVersion } from "../app";
 import { LineConnectorOperator } from "../Operators/LineConnectorOperator";
 
-export class VersionGetCommand implements ICommand {
+export class VersionGetCommand implements ILineCommand {
     public called(command: string): boolean {
         return command == "version";
     }

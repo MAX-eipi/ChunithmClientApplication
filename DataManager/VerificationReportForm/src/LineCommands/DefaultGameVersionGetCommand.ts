@@ -1,8 +1,8 @@
-﻿import { ICommand } from "./ICommand";
+﻿import { ILineCommand } from "./ILineCommand";
 import { Operator } from "../Operators/Operator";
 import { LineConnectorOperator } from "../Operators/LineConnectorOperator";
 
-export class DefaultGameVersionGetCommand implements ICommand {
+export class DefaultGameVersionGetCommand implements ILineCommand {
     public called(command: string): boolean {
         return command == "default-game-version";
     }

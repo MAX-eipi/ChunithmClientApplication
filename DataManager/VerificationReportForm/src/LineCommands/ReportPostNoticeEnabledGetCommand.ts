@@ -1,7 +1,7 @@
-﻿import { ICommand } from "./ICommand";
+﻿import { ILineCommand } from "./ILineCommand";
 import { LineConnectorOperator } from "../Operators/LineConnectorOperator";
 
-export class ReportPostNoticeEnabledGetCommand implements ICommand {
+export class ReportPostNoticeEnabledGetCommand implements ILineCommand {
     public called(command: string): boolean {
         return command == "report-post-notice-enabled";
     }

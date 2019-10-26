@@ -12,7 +12,7 @@ namespace GasDataManagerConnectorTest
         static ChunithmMusicDatabaseHttpClientConnector connector;
 
         static readonly bool TABLE_UPDATE = false;
-        static readonly bool MUSIC_DATA_UPDATE = true;
+        static readonly bool MUSIC_DATA_UPDATE = false;
 
         static readonly string url = "https://script.google.com/macros/s/AKfycbxujx4njFMXtNUKkzvCHIMz21RPt2F74XSzS5xgy9gkoFQ9l4A/exec";
 

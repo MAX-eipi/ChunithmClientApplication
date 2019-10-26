@@ -20,8 +20,3 @@ export const MusicDataTableWriter = MDTW.MusicDataTableWriter;
 
 export const Difficulty = UTIL.Difficulty;
 export type Difficulty = UTIL.Difficulty;
-
-export const Genre = UTIL.Genre;
-export type Genre = UTIL.Genre;
-
-export const toGenreText = UTIL.toGenreText;

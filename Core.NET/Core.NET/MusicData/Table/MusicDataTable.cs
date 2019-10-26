@@ -103,7 +103,7 @@ namespace ChunithmClientLibrary.MusicData
 
         private void Merge(MusicDataTableUnit target, IMusicDataTableUnit source)
         {
-            if (target.Genre == Genre.Invalid)
+            if (string.IsNullOrEmpty(target.Genre))
             {
                 target.Genre = source.Genre;
             }

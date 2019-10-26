@@ -1,7 +1,7 @@
-﻿import { ICommand } from "./ICommand";
+﻿import { ILineCommand } from "./ILineCommand";
 import { LineConnectorOperator } from "../Operators/LineConnectorOperator";
 
-export class ReportPostNoticeEnabledSetCommand implements ICommand {
+export class ReportPostNoticeEnabledSetCommand implements ILineCommand {
     public called(command: string): boolean {
         return command.indexOf("report-post-notice-enabled=") == 0;
     }

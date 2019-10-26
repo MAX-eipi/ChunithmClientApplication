@@ -7,7 +7,7 @@ namespace ChunithmClientLibrary.PlaylogRecord
     {
         int Id { get; }
         string Name { get; }
-        Genre Genre { get; }
+        string Genre { get; }
         Difficulty Difficulty { get; }
         int Score { get; }
         Rank Rank { get; }
