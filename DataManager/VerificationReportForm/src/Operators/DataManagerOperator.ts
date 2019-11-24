@@ -4,9 +4,11 @@ import { VersionConfiguration } from "../Configuration";
 
 export class DataManagerOperator {
     private static instance: DataManager.Instance = null;
+    private static genres: string[] = null;
 
     public static reset(versionName: string): void {
         this.instance = null;
+        this.genres = null;
     }
 
     private static getInstance(): DataManager.Instance {
@@ -72,5 +74,19 @@ export class DataManagerOperator {
             return [];
         }
         return instance.updateMusicData(parameters);
+    }
+
+    public static getGenres(): string[] {
+        if (this.genres) {
+            return this.genres;
+        }
+
+        let versionConfig = Operator.getTargetVersionConfiguration();
+        if (!versionConfig) {
+            return [];
+        }
+        let genreText = versionConfig.getProperty<string>("genre_list", "[]");
+        this.genres = JSON.parse(genreText);
+        return this.genres;
     }
 }

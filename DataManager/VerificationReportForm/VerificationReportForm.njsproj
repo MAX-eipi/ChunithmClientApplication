@@ -60,42 +60,6 @@
     <TypeScriptCompile Include="src\Approval.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Commands\DefaultGameVersionGetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Commands\ICommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Commands\EnvironmentGetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Commands\FormUrlGetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Commands\LatestGameVersionGetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Commands\PostTweetEnabledGetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Commands\PostTweetEnabledSetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Commands\ReportPostNoticeEnabledGetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Commands\ReportPostNoticeEnabledSetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Commands\TestCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Commands\TopUrlGetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Commands\VersionGetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\Configuration.ts" />
     <TypeScriptCompile Include="src\events.ts">
       <SubType>Code</SubType>
@@ -103,6 +67,18 @@
     <TypeScriptCompile Include="src\html\group_approval.html">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LineCommands\DefaultGameVersionGetCommand.ts" />
+    <TypeScriptCompile Include="src\LineCommands\EnvironmentGetCommand.ts" />
+    <TypeScriptCompile Include="src\LineCommands\FormUrlGetCommand.ts" />
+    <TypeScriptCompile Include="src\LineCommands\ILineCommand.ts" />
+    <TypeScriptCompile Include="src\LineCommands\LatestGameVersionGetCommand.ts" />
+    <TypeScriptCompile Include="src\LineCommands\PostTweetEnabledGetCommand.ts" />
+    <TypeScriptCompile Include="src\LineCommands\PostTweetEnabledSetCommand.ts" />
+    <TypeScriptCompile Include="src\LineCommands\ReportPostNoticeEnabledGetCommand.ts" />
+    <TypeScriptCompile Include="src\LineCommands\ReportPostNoticeEnabledSetCommand.ts" />
+    <TypeScriptCompile Include="src\LineCommands\TestCommand.ts" />
+    <TypeScriptCompile Include="src\LineCommands\TopUrlGetCommand.ts" />
+    <TypeScriptCompile Include="src\LineCommands\VersionGetCommand.ts" />
     <TypeScriptCompile Include="src\Operators\DataManagerOperator.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -129,6 +105,15 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Pager\InProgressListPager.ts" />
     <TypeScriptCompile Include="src\Pager\Pager.ts" />
+    <TypeScriptCompile Include="src\PostAPI\IPostAPI.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\PostAPI\TableGetAPI.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\PostAPI\TableUpadateAPI.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportGroup.ts" />
     <TypeScriptCompile Include="src\Pager\ReportGroupListPager.ts" />
     <TypeScriptCompile Include="src\Pager\TopPager.ts" />
@@ -156,7 +141,8 @@
     </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\Commands\" />
+    <Folder Include="src\LineCommands\" />
+    <Folder Include="src\PostAPI\" />
     <Folder Include="src\Operators\" />
     <Folder Include="test\" />
     <Folder Include="src\" />

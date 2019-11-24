@@ -62,7 +62,7 @@ namespace ChunithmClientLibrary.PlayerRecord
 
             highScoreRecord.Id = row.Cell(header[Header.Parameter.Id].Index).GetValue<int>();
             highScoreRecord.Name = row.Cell(header[Header.Parameter.Name].Index).GetValue<string>();
-            highScoreRecord.Genre = Utility.ToGenre(row.Cell(header[Header.Parameter.Genre].Index).GetValue<string>());
+            highScoreRecord.Genre = row.Cell(header[Header.Parameter.Genre].Index).GetValue<string>();
             highScoreRecord.Difficulty = Utility.ToDifficulty(row.Cell(header[Header.Parameter.Difficulty].Index).GetValue<string>());
             highScoreRecord.Score = row.Cell(header[Header.Parameter.Score].Index).GetValue<int>();
             highScoreRecord.BaseRating = row.Cell(header[Header.Parameter.BaseRating].Index).GetValue<double>();

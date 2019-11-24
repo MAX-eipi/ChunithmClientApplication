@@ -1,5 +1,4 @@
 ﻿import { MusicDataTable } from "./MusicDataTable";
-import { toGenreText } from "./utility";
 
 export class MusicDataTableWriter {
     private musicDataTable: MusicDataTable;
@@ -22,7 +21,7 @@ export class MusicDataTableWriter {
             row.push(i + 1);
             row.push(table[i].Id);
             row.push("'" + table[i].Name);
-            row.push(toGenreText(table[i].Genre));
+            row.push(table[i].Genre);
             row.push(table[i].BasicLevel);
             row.push(table[i].AdvancedLevel);
             row.push(table[i].ExpertLevel);

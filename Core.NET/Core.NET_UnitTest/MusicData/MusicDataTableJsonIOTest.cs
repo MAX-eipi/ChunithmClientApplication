@@ -1,5 +1,4 @@
-﻿using ChunithmClientLibrary;
-using ChunithmClientLibrary.MusicData;
+﻿using ChunithmClientLibrary.MusicData;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -14,13 +13,13 @@ namespace ChunithmClientLibraryUnitTest.MusicData
         public void MusicDataTable_JsonIO_Test1()
         {
             var expectedMusicDataTable = new MusicDataTable();
-            expectedMusicDataTable.Add<MusicDataTableUnit>(new List<MusicDataTableUnit>()
+            expectedMusicDataTable.Add(new List<MusicDataTableUnit>()
             {
                 new MusicDataTableUnit
                 {
                     Id = 1,
                     Name = "TEST MUSIC 1",
-                    Genre = Genre.POPS_AND_ANIME,
+                    Genre = "POPS & ANIME",
                     BasicLevel = 1.0,
                     AdvancedLevel = 3.0,
                     ExpertLevel = 7.0,

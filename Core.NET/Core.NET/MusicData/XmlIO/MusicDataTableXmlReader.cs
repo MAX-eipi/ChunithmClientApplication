@@ -56,7 +56,7 @@ namespace ChunithmClientLibrary.MusicData
 
             musicData.Id = row.Cell(header[Header.Parameter.Id].Index).GetValue<int>();
             musicData.Name = row.Cell(header[Header.Parameter.Name].Index).GetValue<string>();
-            musicData.Genre = Utility.ToGenre(row.Cell(header[Header.Parameter.Genre].Index).GetValue<string>());
+            musicData.Genre = row.Cell(header[Header.Parameter.Genre].Index).GetValue<string>();
             musicData.SetBaseRating(Difficulty.Basic, row.Cell(header[Header.Parameter.Basic].Index).GetValue<double>());
             musicData.SetBaseRating(Difficulty.Advanced, row.Cell(header[Header.Parameter.Advanced].Index).GetValue<double>());
             musicData.SetBaseRating(Difficulty.Expert, row.Cell(header[Header.Parameter.Expert].Index).GetValue<double>());

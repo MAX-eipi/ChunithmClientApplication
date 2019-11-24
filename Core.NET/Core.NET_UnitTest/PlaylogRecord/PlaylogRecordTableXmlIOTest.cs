@@ -21,7 +21,7 @@ namespace ChunithmClientLibraryUnitTest.PlaylogRecord
                 {
                     Id = 1,
                     Name = "TEST MUSIC 1",
-                    Genre = Genre.POPS_AND_ANIME,
+                    Genre = "POPS & ANIME",
                     Difficulty = Difficulty.Basic,
                     Score = 1000000,
                     Rank = Rank.SS,

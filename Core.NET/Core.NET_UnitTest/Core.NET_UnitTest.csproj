@@ -111,7 +111,6 @@
     <Compile Include="Utility\ChainStatusTest.cs" />
     <Compile Include="Utility\ComboStatusTest.cs" />
     <Compile Include="Utility\DifficultyTest.cs" />
-    <Compile Include="Utility\GenreTest.cs" />
     <Compile Include="Utility\OverPowerTest.cs" />
     <Compile Include="Utility\RankTest.cs" />
     <Compile Include="Utility\RatingTest.cs" />

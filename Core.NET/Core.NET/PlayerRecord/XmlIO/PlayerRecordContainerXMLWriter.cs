@@ -52,7 +52,7 @@ namespace ChunithmClientLibrary.PlayerRecord
                 worksheet.Cell(row, header[Header.Parameter.Id].Index).Value = tableUnits[i].Id;
                 worksheet.Cell(row, header[Header.Parameter.Name].Index).Value = tableUnits[i].Name;
                 worksheet.Cell(row, header[Header.Parameter.Name].Index).DataType = XLDataType.Text;
-                worksheet.Cell(row, header[Header.Parameter.Genre].Index).Value = Utility.ToGenreText(tableUnits[i].Genre);
+                worksheet.Cell(row, header[Header.Parameter.Genre].Index).Value = tableUnits[i].Genre;
                 worksheet.Cell(row, header[Header.Parameter.Difficulty].Index).Value = Utility.ToDifficultyText(tableUnits[i].Difficulty);
                 worksheet.Cell(row, header[Header.Parameter.Score].Index).Value = tableUnits[i].Score;
                 worksheet.Cell(row, header[Header.Parameter.BaseRating].Index).Value = tableUnits[i].BaseRating;

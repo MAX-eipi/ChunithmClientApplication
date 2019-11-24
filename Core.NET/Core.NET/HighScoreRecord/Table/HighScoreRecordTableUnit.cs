@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.ChunithmNet.Data;
+using ChunithmClientLibrary.ChunithmNet.Data;
 using System;
 using System.Runtime.Serialization;
 
@@ -12,7 +12,7 @@ namespace ChunithmClientLibrary.HighScoreRecord
         [DataMember]
         public string Name { get; set; } = DefaultParameter.Name;
         [DataMember]
-        public Genre Genre { get; set; } = DefaultParameter.Genre;
+        public string Genre { get; set; } = DefaultParameter.Genre;
         [DataMember]
         public Difficulty Difficulty { get; set; } = DefaultParameter.Difficulty;
         [DataMember]

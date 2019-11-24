@@ -29,7 +29,7 @@ namespace RecentSimulator
             unit.Number = GetField(row, ref index, int.Parse);
             unit.Id = GetField(row, ref index, int.Parse);
             unit.Name = GetTextField(row, ref index);
-            unit.Genre = Utility.ToGenre(GetTextField(row, ref index));
+            unit.Genre = GetTextField(row, ref index);
             unit.Difficulty = Utility.ToDifficulty(GetTextField(row, ref index));
             unit.Score = GetField(row, ref index, int.Parse);
             unit.Rank = Utility.ToRank(GetTextField(row, ref index));

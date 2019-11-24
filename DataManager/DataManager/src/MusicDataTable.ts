@@ -1,5 +1,5 @@
 ﻿import { MusicData } from "./MusicData";
-import { Difficulty, Genre } from "./utility";
+import { Difficulty } from "./utility";
 
 export class MusicDataTable {
     private table: MusicData[]
@@ -123,7 +123,7 @@ export class MusicDataTable {
             let oldMusicData = oldMusicDataTable.getMusicDataById(newTable[i].Id);
             musicData.Id = newTable[i].Id;
             musicData.Name = newTable[i].Name || (oldMusicData ? oldMusicData.Name : "");
-            musicData.Genre = newTable[i].Genre || (oldMusicData ? oldMusicData.Genre : Genre.Invalid);
+            musicData.Genre = newTable[i].Genre || (oldMusicData ? oldMusicData.Genre : "");
             musicData.setLevel(Difficulty.Basic, oldMusicData ? oldMusicData.getLevel(Difficulty.Basic) : newTable[i].getLevel(Difficulty.Basic));
             musicData.setLevel(Difficulty.Advanced, oldMusicData ? oldMusicData.getLevel(Difficulty.Advanced) : newTable[i].getLevel(Difficulty.Advanced));
             musicData.setLevel(Difficulty.Expert, oldMusicData ? oldMusicData.getLevel(Difficulty.Expert) : newTable[i].getLevel(Difficulty.Expert));
