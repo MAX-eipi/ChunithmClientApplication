@@ -6,84 +6,25 @@ import { createHtmlOutput, getPageUrl, Pager, readHtml, resolveRootUrl, resolveV
 import { TopPager } from "./TopPager";
 
 interface UnverifiedListByGenrePageParameter {
-    difficulty: string;
-    diff_bas: string;
-    diff_adv: string;
-    diff_exp: string;
-    diff_mas: string;
-
-    genre_1: string;
-    genre_2: string;
-    genre_3: string;
-    genre_4: string;
-    genre_5: string;
-    genre_6: string;
-    genre_7: string;
-
     send: string;
+
+    // diff_${difficulty}
+    // genre_${genre}
 }
 
 class Filter {
-    private enabledBasic: boolean;
-    private enabledAdvanced: boolean;
-    private enabledExpert: boolean;
-    private enabledMaster: boolean;
-
-    private enabled_POPS_AND_ANIME: boolean;
-    private enabled_niconico: boolean;
-    private enabled_東方Project: boolean;
-    private enabled_VARIETY: boolean;
-    private enabled_イロドリミドリ: boolean;
-    private enabled_言ノ葉Project: boolean;
-    private enabled_ORIGINAL: boolean;
+    private parameter: UnverifiedListByGenrePageParameter;
 
     public constructor(parameter: UnverifiedListByGenrePageParameter) {
-        this.enabledBasic = parameter.diff_bas ? true : false;
-        this.enabledAdvanced = parameter.diff_adv ? true : false;
-        this.enabledExpert = parameter.diff_exp ? true : false;
-        this.enabledMaster = parameter.diff_mas ? true : false;
-
-        this.enabled_POPS_AND_ANIME = parameter.genre_1 ? true : false;
-        this.enabled_niconico = parameter.genre_2 ? true : false;
-        this.enabled_東方Project = parameter.genre_3 ? true : false;
-        this.enabled_VARIETY = parameter.genre_4 ? true : false;
-        this.enabled_イロドリミドリ = parameter.genre_5 ? true : false;
-        this.enabled_言ノ葉Project = parameter.genre_6 ? true : false;
-        this.enabled_ORIGINAL = parameter.genre_7 ? true : false;
+        this.parameter = parameter;
     }
 
     public enabledDifficulty(difficulty: DataManager.Difficulty): boolean {
-        switch (difficulty) {
-            case DataManager.Difficulty.Basic:
-                return this.enabledBasic;
-            case DataManager.Difficulty.Advanced:
-                return this.enabledAdvanced;
-            case DataManager.Difficulty.Expert:
-                return this.enabledExpert;
-            case DataManager.Difficulty.Master:
-                return this.enabledMaster;
-        }
-        return false;
+        return this.parameter[`diff_${difficulty}`] ? true : false;
     }
 
     public enabledGenre(genre: string): boolean {
-        switch (genre) {
-            case "POPS & ANIME":
-                return this.enabled_POPS_AND_ANIME;
-            case "niconico":
-                return this.enabled_niconico;
-            case "東方Project":
-                return this.enabled_東方Project;
-            case "VARIETY":
-                return this.enabled_VARIETY;
-            case "イロドリミドリ":
-                return this.enabled_イロドリミドリ;
-            case "言ノ葉Project":
-                return this.enabled_言ノ葉Project;
-            case "ORIGINAL":
-                return this.enabled_ORIGINAL;
-        }
-        return false;
+        return this.parameter[`genre_${genre}`] ? true : false;
     }
 }
 
@@ -102,6 +43,13 @@ class MusicData {
 }
 
 export class UnverifiedListByGenrePager implements Pager {
+    private static readonly difficulties = [
+        DataManager.Difficulty.Basic,
+        DataManager.Difficulty.Advanced,
+        DataManager.Difficulty.Expert,
+        DataManager.Difficulty.Master,
+    ];
+
     public static readonly PAGE_NAME = "unverified_list_genre";
 
     public static resolvePageUrl(source: string, rootUrl: string, versionName: string): string {
@@ -112,61 +60,55 @@ export class UnverifiedListByGenrePager implements Pager {
         return UnverifiedListByGenrePager.PAGE_NAME;
     }
     public call(parameter: UnverifiedListByGenrePageParameter): GoogleAppsScript.HTML.HtmlOutput {
-        let filter = new Filter(parameter);
-
         var source = readHtml(this.getPageName());
 
         source = resolveRootUrl(source, Operator.getRootUrl());
         source = resolveVersionName(source, Operator.getTargetVersionName());
         source = TopPager.resolvePageUrl(source, Operator.getRootUrl(), Operator.getTargetVersionName());
 
+        let filter = new Filter(parameter);
+        source = source.replace(/%difficulty_select_list%/g, this.getDifficultySelectListHtml(filter));
+        source = source.replace(/%genre_select_list%/g, this.getGenreSelectListHtml(filter));
         if (parameter.send) {
-            source = source.replace(/%checked_basic%/g, filter.enabledDifficulty(DataManager.Difficulty.Basic) ? "checked" : "");
-            source = source.replace(/%checked_advanced%/g, filter.enabledDifficulty(DataManager.Difficulty.Advanced) ? "checked" : "");
-            source = source.replace(/%checked_expert%/g, filter.enabledDifficulty(DataManager.Difficulty.Expert) ? "checked" : "");
-            source = source.replace(/%checked_master%/g, filter.enabledDifficulty(DataManager.Difficulty.Master) ? "checked" : "");
-
-            source = source.replace(/%checked_genre_1%/g, filter.enabledGenre("POPS & ANIME") ? "checked" : "");
-            source = source.replace(/%checked_genre_2%/g, filter.enabledGenre("niconico") ? "checked" : "");
-            source = source.replace(/%checked_genre_3%/g, filter.enabledGenre("東方Project") ? "checked" : "");
-            source = source.replace(/%checked_genre_4%/g, filter.enabledGenre("VARIETY") ? "checked" : "");
-            source = source.replace(/%checked_genre_5%/g, filter.enabledGenre("イロドリミドリ") ? "checked" : "");
-            source = source.replace(/%checked_genre_6%/g, filter.enabledGenre("言ノ葉Project") ? "checked" : "");
-            source = source.replace(/%checked_genre_7%/g, filter.enabledGenre("ORIGINAL") ? "checked" : "");
-
             source = source.replace(/%list%/g, this.getListHtml(filter));
         }
         else {
-            source = source.replace(/%checked_basic%/g, "");
-            source = source.replace(/%checked_advanced%/g, "");
-            source = source.replace(/%checked_expert%/g, "");
-            source = source.replace(/%checked_master%/g, "");
-
-            source = source.replace(/%checked_genre_1%/g, "checked");
-            source = source.replace(/%checked_genre_2%/g, "checked");
-            source = source.replace(/%checked_genre_3%/g, "checked");
-            source = source.replace(/%checked_genre_4%/g, "checked");
-            source = source.replace(/%checked_genre_5%/g, "checked");
-            source = source.replace(/%checked_genre_6%/g, "checked");
-            source = source.replace(/%checked_genre_7%/g, "checked");
-            source = source.replace(/%checked_genre_8%/g, "checked");
-
             source = source.replace(/%list%/g, "");
         }
 
         return createHtmlOutput(source);
     }
 
+    private getDifficultySelectListHtml(filter: Filter): string {
+        var listHtml = "";
+        let difficulties = UnverifiedListByGenrePager.difficulties;
+        for (var i = 0; i < difficulties.length; i++) {
+            listHtml += this.getDifficultySelectListItemHtml(difficulties[i], filter) + "\n";
+        }
+        return listHtml;
+    }
+
+    private getDifficultySelectListItemHtml(difficulty: DataManager.Difficulty, filter: Filter): string {
+        let checked = filter.enabledDifficulty(difficulty) ? "checked" : "";
+        return `<div><input type="checkbox" name="diff_${difficulty}" value="1" ${checked}>${Utility.toDifficultyText(difficulty)}</div>`;
+    }
+
+    private getGenreSelectListHtml(filter: Filter): string {
+        var listHtml = "";
+        let genres = DataManagerOperator.getGenres();
+        for (var i = 0; i < genres.length; i++) {
+            listHtml += this.getGenreSelectListItemHtml(genres[i], filter) + "\n";
+        }
+        return listHtml;
+    }
+
+    private getGenreSelectListItemHtml(genre: string, filter: Filter): string {
+        let checked = filter.enabledGenre(genre) ? "checked" : "";
+        return `<div><div><input type="checkbox" name="genre_${genre}" value="1" ${checked}>${genre}</div></div>`;
+    }
+
     private getListHtml(filter: Filter): string {
-        let genres = [
-            "POPS & ANIME",
-            "niconico",
-            "東方Project",
-            "VARIETY",
-            "イロドリミドリ",
-            "言ノ葉Project",
-            "ORIGINAL",
-        ];
+        let genres = DataManagerOperator.getGenres();
         let self = this;
         let unverifiedMusicDatas = this.getUnverifiedMusicDatas();
         let genreListHtmls = genres.map(function (g) { return self.getGenreListHtml(unverifiedMusicDatas, g, filter); });
@@ -219,12 +161,7 @@ export class UnverifiedListByGenrePager implements Pager {
     private getUnverifiedMusicDatas(): MusicData[] {
         let musicDatas = DataManagerOperator.getMusicDatas();
         let unverifiedMusicDatas: MusicData[] = new Array();
-        let difficulties = [
-            DataManager.Difficulty.Basic,
-            DataManager.Difficulty.Advanced,
-            DataManager.Difficulty.Expert,
-            DataManager.Difficulty.Master,
-        ];
+        let difficulties = UnverifiedListByGenrePager.difficulties;
         for (var i = 0; i < musicDatas.length; i++) {
             for (var j = 0; j < difficulties.length; j++) {
                 let difficulty = difficulties[j];
