@@ -48,11 +48,26 @@ export class ReportManager {
                 imagePaths = responseImagePaths.split(",");
             }
         }
-        let report = new Report(reportId.toString(), targetMusicData.Id, musicName, difficulty, beforeOp, afterOp, score, comboStatus, imagePaths, ReportStatus.InProgress);
+        let progress = !this.checkResolved(targetMusicData, difficulty) ? ReportStatus.InProgress : ReportStatus.Rejected;
+        let report = new Report(reportId.toString(), targetMusicData.Id, musicName, difficulty, beforeOp, afterOp, score, comboStatus, imagePaths, progress);
         let rawReport = report.toRawData();
         this.sheet.getRange(this.currentRow, 1, 1, rawReport.length).setValues([rawReport]);
         this.currentRow++;
         return report;
+    }
+    
+    private checkResolved(musicData: DataManager.MusicData, difficultyText: string): boolean {
+        let reports = this.getReports();
+        for (var i = 0; i < reports.length; i++) {
+            let report = reports[i];
+            if (report.getMusicId() != musicData.Id || report.getDifficulty() != difficultyText) {
+                continue;
+            }
+            if (report.getReportStatus() == ReportStatus.Resolved) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static convertMusicName(musicName: string): string {
