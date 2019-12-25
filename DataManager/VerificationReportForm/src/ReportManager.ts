@@ -1,10 +1,12 @@
 import * as DataManager from "../DataManager";
 import { Report, ReportError, ReportStatus } from "./Report";
+import { Utility } from "./Utility";
 
 export class ReportManager {
     private sheet: GoogleAppsScript.Spreadsheet.Sheet;
     private currentRow: number;
 
+    private rawReports: Object[][] = null;
     private reports: Report[] = null;
     private reportMap: { [reportId: string]: Report } = null;
 
@@ -55,19 +57,10 @@ export class ReportManager {
         this.currentRow++;
         return report;
     }
-    
+
     private checkResolved(musicData: DataManager.MusicData, difficultyText: string): boolean {
-        let reports = this.getReports();
-        for (var i = 0; i < reports.length; i++) {
-            let report = reports[i];
-            if (report.getMusicId() != musicData.Id || report.getDifficulty() != difficultyText) {
-                continue;
-            }
-            if (report.getReportStatus() == ReportStatus.Resolved) {
-                return true;
-            }
-        }
-        return false;
+        let difficulty = Utility.toDifficulty(difficultyText);
+        return musicData.getVerified(difficulty);
     }
 
     private static convertMusicName(musicName: string): string {
@@ -106,20 +99,57 @@ export class ReportManager {
         if (cached && this.reports) {
             return this.reports;
         }
-        let rawReports = this.sheet.getDataRange().getValues().slice(1);
-        this.reports = rawReports.map(function (r) { return Report.createByRow(r); });
+        this.reports = this.getRawReports(cached).map(function (r) { return Report.createByRow(r); });
         this.reportMap = null;
         return this.reports;
     }
 
-    public updateStatus(reportId: string, reportStatus: ReportStatus): void {
-        let rawReports = this.sheet.getDataRange().getValues();
+    public approve(reportId: string): void {
+        let targetReport = this.getReport(reportId, false);
+        let duplicatedReports = this.getReports().filter(function (r) {
+            return r.getReportId() != targetReport.getReportId()
+                && r.getMusicId() == targetReport.getMusicId()
+                && r.getDifficulty() == targetReport.getDifficulty();
+        });
+
+        this.updateStatus(reportId, ReportStatus.Resolved);
+        for (var i = 0; i < duplicatedReports.length; i++) {
+            let report = duplicatedReports[i];
+            this.updateStatus(report.getReportId(), ReportStatus.Rejected);
+        }
+
+        this.clearCache();
+    }
+
+    public reject(reportId: string): void {
+        if (this.updateStatus(reportId, ReportStatus.Rejected, false)) {
+            this.clearCache();
+        }
+    }
+
+    private updateStatus(reportId: string, reportStatus: ReportStatus, cached: boolean = true): boolean {
+        let rawReports = this.getRawReports(cached);
         for (var i = 0; i < rawReports.length; i++) {
             let row = rawReports[i];
             if (row[0] == reportId) {
                 this.sheet.getRange(i + 1, 10, 1, 1).setValues([[reportStatus]]);
-                break;
+                return true;
             }
         }
+        return false;
+    }
+
+    private getRawReports(cached: boolean = true): Object[][] {
+        if (cached && this.rawReports) {
+            return this.rawReports;
+        }
+        this.rawReports = this.sheet.getDataRange().getValues();
+        return this.rawReports;
+    }
+
+    private clearCache(): void {
+        this.rawReports = null;
+        this.reports = null;
+        this.reportMap = null;
     }
 }

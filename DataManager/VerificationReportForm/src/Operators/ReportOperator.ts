@@ -89,12 +89,20 @@ export class ReportOperator {
         return reportManager.insertReport(formResponse, table);
     }
 
-    public static updateStatus(reportId: string, reportStatus: ReportStatus): void {
+    public static approve(reportId: string): void {
         let reportManager = this.getReportManager();
         if (!reportManager) {
             return;
         }
-        reportManager.updateStatus(reportId, reportStatus);
+        reportManager.approve(reportId);
+    }
+
+    public static reject(reportId: string): void {
+        let reportManager = this.getReportManager();
+        if (!reportManager) {
+            return;
+        }
+        reportManager.reject(reportId);
     }
 
     public static getReportGroup(groupId: string): ReportGroup {

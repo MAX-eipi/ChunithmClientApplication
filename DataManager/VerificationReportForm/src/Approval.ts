@@ -61,7 +61,7 @@ function approve(reportId: string, versionName: string): void {
                 break;
         }
         DataManagerOperator.updateMusicData([targetMusicData]);
-        ReportOperator.updateStatus(reportId, ReportStatus.Resolved);
+        ReportOperator.approve(reportId);
 
         SpreadSheetLoggerOperator.log([
             "[検証報告承認]",
@@ -96,7 +96,7 @@ function reject(reportId: string, versionName: string): void {
         if (!report) {
             throw new ApprovalError(`検証報告取得の失敗. ID:${reportId}`);
         }
-        ReportOperator.updateStatus(reportId, ReportStatus.Rejected);
+        ReportOperator.reject(reportId);
 
         let musicName = report.getMusicName();
         let difficulty = report.getDifficulty();
@@ -190,7 +190,7 @@ function groupApprove(reportGroupId: string, versionName: string): void {
             let report = inprogressReportMap[key];
             let difficulty = report.getDifficulty();
             let baseRating = report.calcBaseRating();
-            ReportOperator.updateStatus(report.getReportId(), ReportStatus.Resolved);
+            ReportOperator.approve(report.getReportId());
 
             SpreadSheetLoggerOperator.log([
                 "[検証報告承認]",
