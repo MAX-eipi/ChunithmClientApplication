@@ -2,10 +2,12 @@ import { Configuration, VersionConfiguration } from "../Configuration";
 import { Router } from "../Router";
 import { LineConnectorOperator } from "./LineConnectorOperator";
 import { SpreadSheetLoggerOperator } from "./SpreadSheetLoggerOperator";
+import { Role } from "../Role";
 
 export class Operator {
     private static readonly DEFAULT_VERSION_NAME = "default_version_name";
     private static readonly ENVIRONMENT = "environment";
+    private static readonly ROLE = "role";
 
     private static configuration: Configuration;
     private static targetVersionName: string;
@@ -15,6 +17,8 @@ export class Operator {
     private static rootUrl: string = null;
     private static router: Router = null;
     private static reportForm: GoogleAppsScript.Forms.Form = null;
+
+    private static role: Role = null;
 
     private static onChangeTargetVersion: any[] = null;
 
@@ -136,6 +140,26 @@ export class Operator {
     public static isDevelop(): boolean {
         let environment = this.getEnvironment();
         return environment == "develop";
+    }
+
+    public static getRole(): Role {
+        if (this.role != null) {
+            return this.role;
+        }
+        let config = this.getConfiguration();
+        let roleText = config.getGlobalConfigurationProperty<string>(this.ROLE, "");
+        switch (roleText) {
+            case "operator":
+                this.role = Role.Operator;
+                break;
+            case "reader":
+                this.role = Role.Reader;
+                break;
+            default:
+                this.role = Role.Reader;
+                break;
+        }
+        return this.role;
     }
 
     public static error(messages: string[]): void {
