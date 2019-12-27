@@ -122,6 +122,9 @@
     <TypeScriptCompile Include="src\Rating.ts" />
     <TypeScriptCompile Include="src\Report.ts" />
     <TypeScriptCompile Include="src\ReportManager.ts" />
+    <TypeScriptCompile Include="src\Role.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\Router.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
