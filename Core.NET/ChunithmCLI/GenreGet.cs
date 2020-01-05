@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ChunithmCLI
 {
-    public class GenreGet
+    public class GenreGet : ICommand
     {
         public class Argument
         {
@@ -38,6 +38,13 @@ namespace ChunithmCLI
             }
         }
 
+        private const string COMMAND_NAME = "genre-get";
+
+        public string GetCommandName()
+        {
+            return COMMAND_NAME;
+        }
+
         public bool Called(string[] args)
         {
             if (args == null && !args.Any())
@@ -45,7 +52,7 @@ namespace ChunithmCLI
                 return false;
             }
 
-            return args[0] == "genre-get";
+            return args[0] == COMMAND_NAME;
         }
 
         public void Call(string[] args)
