@@ -88,10 +88,10 @@ namespace ChunithmCLI
                     {
                         var src = unitTemplate;
                         src = src.Replace("%music-name%", HttpUtility.HtmlEncode(u.Name));
-                        src = src.Replace("%base-rating-basic%", u.GetBaseRating(Difficulty.Basic).ToString());
-                        src = src.Replace("%base-rating-advanced%", u.GetBaseRating(Difficulty.Advanced).ToString());
-                        src = src.Replace("%base-rating-expert%", u.GetBaseRating(Difficulty.Expert).ToString());
-                        src = src.Replace("%base-rating-master%", u.GetBaseRating(Difficulty.Master).ToString());
+                        src = src.Replace("%base-rating-basic%", u.GetBaseRating(Difficulty.Basic).ToString("0.0"));
+                        src = src.Replace("%base-rating-advanced%", u.GetBaseRating(Difficulty.Advanced).ToString("0.0"));
+                        src = src.Replace("%base-rating-expert%", u.GetBaseRating(Difficulty.Expert).ToString("0.0"));
+                        src = src.Replace("%base-rating-master%", u.GetBaseRating(Difficulty.Master).ToString("0.0"));
 
                         src = src.Replace("%unverified-basic%", !u.VerifiedBaseRating(Difficulty.Basic) ? "unverified" : "");
                         src = src.Replace("%unverified-advanced%", !u.VerifiedBaseRating(Difficulty.Advanced) ? "unverified" : "");
