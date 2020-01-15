@@ -89,7 +89,7 @@ export class VerificationReportForm {
         let afterOp = report.getAfterOp();
         let score = report.getScore();
         let comboStatus = report.getComboStatus();
-        let baseRating = report.calcBaseRating();
+        let baseRating = report.calcBaseRating().toFixed(1);
         if (report.getReportStatus() == ReportStatus.InProgress) {
             SpreadSheetLoggerOperator.log([
                 "[検証結果報告]",
