@@ -157,7 +157,7 @@ export class GroupApprovalPager implements Pager {
         template = template.replace(/%diffOp%/g, diffOp.toString());
         template = template.replace(/%score%/g, report.getScore().toString());
         template = template.replace(/%comboStatus%/g, report.getComboStatus());
-        template = template.replace(/%baseRating%/g, report.calcBaseRating().toString());
+        template = template.replace(/%baseRating%/g, report.calcBaseRating().toFixed(1));
 
         let imagePaths = report.getImagePaths();
         if (imagePaths.length > 0) {
