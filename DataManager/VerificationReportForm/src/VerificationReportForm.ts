@@ -82,7 +82,9 @@ export class VerificationReportForm {
             versionName = Operator.getDefaultVersionName();
         }
         Operator.setVersion(versionName);
-        let report = ReportOperator.insertReport(e.response);
+        // TODO: ここら辺ちょっと調整いる
+        // レポートの検証処理を入れるべき
+        let report = ReportOperator.insertReport(e.response).getReport();
         let musicName = report.getMusicName();
         let difficulty = report.getDifficulty();
         let beforeOp = report.getBeforeOp();

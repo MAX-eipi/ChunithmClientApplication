@@ -1,15 +1,19 @@
 import * as DataManager from "../../DataManager";
-import { ReportManager } from "../ReportManager";
 import { VersionConfiguration } from "../Configuration";
-import { Report, ReportStatus } from "../Report";
-import { Operator } from "./Operator";
+import { Report } from "../Report";
 import { ReportGroup } from "../ReportGroup";
+import { ReportManager, ReportPostResult } from "../ReportManager";
 import { DataManagerOperator } from "./DataManagerOperator";
+import { Operator } from "./Operator";
 
 export class ReportOperator {
     private static reportManager: ReportManager = null;
     private static reportGroupMap: { [groupId: string]: ReportGroup } = null;
     private static reportGroups: ReportGroup[] = null;
+
+    public static readonly REASON_NONE: number = 0;
+    public static readonly REASON_DUPLICATED: number = 0;
+    public static readonly REASON_INVALID_OP_DIFF: number = 0;
 
     public static reset(versionName: string): void {
         this.reportManager = null;
@@ -77,7 +81,7 @@ export class ReportOperator {
         return reportManager.getReports();
     }
 
-    public static insertReport(formResponse: GoogleAppsScript.Forms.FormResponse): Report {
+    public static insertReport(formResponse: GoogleAppsScript.Forms.FormResponse): ReportPostResult {
         let reportManager = this.getReportManager();
         if (!reportManager) {
             return;
