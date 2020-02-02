@@ -1,75 +1,5 @@
 import * as DataManager from "../DataManager";
-import { Report, ReportError, ReportStatus } from "./Report";
-import { Utility } from "./Utility";
-
-export enum PostErrorCode {
-    None,
-    InvalidOpRange,
-    Duplicated,
-}
-
-export class ReportPostResult {
-    private report: Report;
-    private errorCode: PostErrorCode;
-
-    public constructor(report: Report, errorCode: PostErrorCode) {
-        this.report = report;
-        this.errorCode = errorCode;
-    }
-
-    public getReport(): Report {
-        return this.report;
-    }
-
-    public getErrorCode(): PostErrorCode {
-        return this.errorCode;
-    }
-}
-
-class ReportPostData
-{
-    public musicName: string;
-    public difficulty: string;
-    public beforeOp: number;
-    public afterOp: number;
-    public score: number;
-    public comboStatus: string;
-    public imagePaths: string[];
-    
-    public constructor(formResponse: GoogleAppsScript.Forms.FormResponse) {
-        let itemResponses = formResponse.getItemResponses();
-        this.musicName = ReportManager.convertMusicName(itemResponses[1].getResponse().toString());
-        this.difficulty = itemResponses[2].getResponse().toString();
-        this.beforeOp = parseFloat(itemResponses[3].getResponse().toString());
-        this.afterOp = parseFloat(itemResponses[4].getResponse().toString());
-        this.score = parseInt(itemResponses[5].getResponse().toString());
-        this.comboStatus = itemResponses[6].getResponse().toString();
-        
-        let imagePaths = [];
-        if (itemResponses[7]) {
-            let responseImagePaths = itemResponses[7].getResponse().toString();
-            if (responseImagePaths) {
-                imagePaths = responseImagePaths.split(",");
-            }
-        }
-        this.imagePaths = imagePaths;
-    }
-    
-    public createReport(reportId: string, musicData: DataManager.MusicData, progress: ReportStatus): Report {
-        return new Report(
-            reportId,
-            musicData.Id,
-            this.musicName,
-            this.difficulty,
-            this.beforeOp,
-            this.afterOp,
-            this.score,
-            this.comboStatus,
-            this.imagePaths,
-            progress
-        );
-    }
-}
+import { Report, ReportStatus } from "./Report";
 
 export class ReportManager {
     private sheet: GoogleAppsScript.Spreadsheet.Sheet;
@@ -96,28 +26,51 @@ export class ReportManager {
         return sheet;
     }
 
-    public insertReport(formResponse: GoogleAppsScript.Forms.FormResponse, musicDataTable: DataManager.MusicDataTable): ReportPostResult {
+    public createReport(formResponse: GoogleAppsScript.Forms.FormResponse, musicDataTable: DataManager.MusicDataTable): Report {
         let itemResponses = formResponse.getItemResponses();
-        var postData = new ReportPostData(formResponse);
-        let targetMusicData = musicDataTable.getMusicDataByName(postData.musicName);
-        if (targetMusicData == null) {
-            throw new ReportError(`楽曲情報取得の失敗. 楽曲名:${musicName}`);
+        let musicName = ReportManager.convertMusicName(itemResponses[1].getResponse().toString());
+        let difficulty = itemResponses[2].getResponse().toString();
+        let beforeOp = parseFloat(itemResponses[3].getResponse().toString());
+        let afterOp = parseFloat(itemResponses[4].getResponse().toString());
+        let score = parseInt(itemResponses[5].getResponse().toString());
+        let comboStatus = itemResponses[6].getResponse().toString();
+
+        var imagePaths = [];
+        if (itemResponses[7]) {
+            let responseImagePaths = itemResponses[7].getResponse().toString();
+            if (responseImagePaths) {
+                imagePaths = responseImagePaths.split(",");
+            }
         }
+
+        let targetMusicData = musicDataTable.getMusicDataByName(musicName);
+        if (targetMusicData == null) {
+            return null;
+        }
+
+        let report = new Report(
+            Report.UNASSIGNED_REPORT_ID,
+            targetMusicData.Id,
+            musicName,
+            difficulty,
+            beforeOp,
+            afterOp,
+            score,
+            comboStatus,
+            imagePaths,
+            ReportStatus.InProgress);
+        return report;
+    }
+
+    public insertReport(report: Report) {
         if (this.currentRow < 0) {
             this.currentRow = this.sheet.getLastRow() + 1;
         }
         let reportId = this.currentRow - 1;
-        let progress = !this.checkResolved(targetMusicData, postData.difficulty) ? ReportStatus.InProgress : ReportStatus.Rejected;
-        let report = postData.createReport(reportId.toString(), targetMusicData, progress);
+        report.reportId = reportId.toString();
         let rawReport = report.toRawData();
         this.sheet.getRange(this.currentRow, 1, 1, rawReport.length).setValues([rawReport]);
         this.currentRow++;
-        return new ReportPostResult(report, PostErrorCode.None);
-    }
-
-    private checkResolved(musicData: DataManager.MusicData, difficultyText: string): boolean {
-        let difficulty = Utility.toDifficulty(difficultyText);
-        return musicData.getVerified(difficulty);
     }
 
     private static convertMusicName(musicName: string): string {

@@ -2,9 +2,27 @@ import * as DataManager from "../../DataManager";
 import { VersionConfiguration } from "../Configuration";
 import { Report } from "../Report";
 import { ReportGroup } from "../ReportGroup";
-import { ReportManager, ReportPostResult } from "../ReportManager";
+import { ReportManager } from "../ReportManager";
 import { DataManagerOperator } from "./DataManagerOperator";
 import { Operator } from "./Operator";
+import { Utility } from "../Utility";
+
+export class ReportPostResult {
+    private _report: Report = null;
+    public get report(): Report {
+        return this._report;
+    }
+
+    private _errorMessage: string = "";
+    public get errorMessage(): string {
+        return this._errorMessage;
+    }
+
+    public constructor(report: Report, errorMessage: string = "") {
+        this._report = report;
+        this._errorMessage = errorMessage;
+    }
+}
 
 export class ReportOperator {
     private static reportManager: ReportManager = null;
@@ -90,7 +108,25 @@ export class ReportOperator {
         if (!table) {
             return null;
         }
-        return reportManager.insertReport(formResponse, table);
+        var report = reportManager.createReport(formResponse, table);
+        if (report == null) {
+            // レポート生成に失敗
+            return new ReportPostResult(null, "Reportの生成に失敗");
+        }
+
+        // ここでチェックを入れる
+        var targetMusicData = table.getMusicDataById(report.musicId);
+        if (targetMusicData.getVerified(Utility.toDifficulty(report.difficulty))) {
+            return new ReportPostResult(report, "既に検証済みの楽曲");
+        }
+
+        var diff = report.afterOp - report.beforeOp;
+        if (diff <= 0 || diff > 100) {
+            return new ReportPostResult(report, "OP変動値が範囲外");
+        }
+
+        reportManager.insertReport(report);
+        return new ReportPostResult(report);
     }
 
     public static approve(reportId: string): void {
