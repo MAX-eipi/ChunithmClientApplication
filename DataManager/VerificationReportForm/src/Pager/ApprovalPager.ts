@@ -64,7 +64,7 @@ export class ApprovalPager implements Pager {
         source = source.replace(/%diffOp%/g, diffOp.toString());
         source = source.replace(/%score%/g, score.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
         source = source.replace(/%comboStatus%/g, comboStatus);
-        source = source.replace(/%baseRating%/g, baseRating.toString());
+        source = source.replace(/%baseRating%/g, baseRating.toFixed(1));
 
         let imagePaths = report.getImagePaths();
         if (imagePaths.length > 0) {
@@ -106,7 +106,7 @@ export class ApprovalPager implements Pager {
 "[#譜面定数 検証結果]
 楽曲名: ${musicName}
 難易度: ${difficulty}
-譜面定数: ${baseRating}
+譜面定数: ${baseRating.toFixed(1)}
 
 配信Bot->@uni_mc_bot"></a>
 </div>`;

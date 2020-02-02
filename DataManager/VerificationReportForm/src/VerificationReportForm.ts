@@ -7,7 +7,6 @@ import { Operator } from "./Operators/Operator";
 import { ReportOperator } from "./Operators/ReportOperator";
 import { SpreadSheetLoggerOperator } from "./Operators/SpreadSheetLoggerOperator";
 import { ApprovalPager } from "./Pager/ApprovalPager";
-import { ReportStatus } from "./Report";
 
 export class VerificationReportForm {
     public static doGet(e: any): any {
@@ -82,18 +81,29 @@ export class VerificationReportForm {
             versionName = Operator.getDefaultVersionName();
         }
         Operator.setVersion(versionName);
-        let report = ReportOperator.insertReport(e.response);
+        let result = ReportOperator.insertReport(e.response);
+        let report = result.report;
+        if (result.report == null) {
+            SpreadSheetLoggerOperator.logError([
+                "[検証報告]",
+                result.errorMessage,
+            ]);
+            LineConnectorOperator.pushMessage
+            return;
+        }
+
         let musicName = report.getMusicName();
         let difficulty = report.getDifficulty();
         let beforeOp = report.getBeforeOp();
         let afterOp = report.getAfterOp();
         let score = report.getScore();
         let comboStatus = report.getComboStatus();
-        let baseRating = report.calcBaseRating();
-        if (report.getReportStatus() == ReportStatus.InProgress) {
-            SpreadSheetLoggerOperator.log([
+        let baseRating = report.calcBaseRating().toFixed(1);
+
+        if (result.errorMessage != "") {
+            SpreadSheetLoggerOperator.logError([
                 "[検証結果報告]",
-                `報告ID:${report.getReportId()}`,
+                result.errorMessage,
                 `楽曲名:${musicName}`,
                 `難易度:${difficulty}`,
                 `OP:${beforeOp}→${afterOp}(${Math.round((afterOp - beforeOp) * 100) / 100})`,
@@ -101,28 +111,25 @@ export class VerificationReportForm {
                 `コンボ:${comboStatus}`,
                 `譜面定数:${baseRating}`,
             ]);
-            LineConnectorOperator.noticeReportPost([`[検証結果 報告]
+            LineConnectorOperator.pushMessage([`報告を受け取りましたが、エラーのため却下しました。\nエラー内容は管理者にご確認ください。`]);
+            return;
+        }
+
+        SpreadSheetLoggerOperator.log([
+            "[検証結果報告]",
+            `報告ID:${report.getReportId()}`,
+            `楽曲名:${musicName}`,
+            `難易度:${difficulty}`,
+            `OP:${beforeOp}→${afterOp}(${Math.round((afterOp - beforeOp) * 100) / 100})`,
+            `スコア:${score}`,
+            `コンボ:${comboStatus}`,
+            `譜面定数:${baseRating}`,
+        ]);
+        LineConnectorOperator.noticeReportPost([`[検証結果 報告]
 楽曲名:${report.getMusicName()}
 難易度:${difficulty}
 譜面定数:${baseRating}
 URL:${ApprovalPager.getUrl(Operator.getRootUrl(), Operator.getTargetVersionName(), report.getReportId())}`]);
-        }
-        else {
-            SpreadSheetLoggerOperator.log([
-                "[検証結果報告]",
-                "重複",
-                `報告ID:${report.getReportId()}`,
-                `楽曲名:${musicName}`,
-                `難易度:${difficulty}`,
-                `OP:${beforeOp}→${afterOp}(${Math.round((afterOp - beforeOp) * 100) / 100})`,
-                `スコア:${score}`,
-                `コンボ:${comboStatus}`,
-                `譜面定数:${baseRating}`,
-            ]);
-            LineConnectorOperator.noticeReportPost([`報告を受け取りましたが、重複のため却下しました。
-楽曲名:${report.getMusicName()}
-難易度:${difficulty}`]);
-        }
     }
 
     private static init() {

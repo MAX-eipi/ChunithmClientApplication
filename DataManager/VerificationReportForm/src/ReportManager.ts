@@ -1,6 +1,5 @@
 import * as DataManager from "../DataManager";
-import { Report, ReportError, ReportStatus } from "./Report";
-import { Utility } from "./Utility";
+import { Report, ReportStatus } from "./Report";
 
 export class ReportManager {
     private sheet: GoogleAppsScript.Spreadsheet.Sheet;
@@ -27,7 +26,7 @@ export class ReportManager {
         return sheet;
     }
 
-    public insertReport(formResponse: GoogleAppsScript.Forms.FormResponse, musicDataTable: DataManager.MusicDataTable): Report {
+    public createReport(formResponse: GoogleAppsScript.Forms.FormResponse, musicDataTable: DataManager.MusicDataTable): Report {
         let itemResponses = formResponse.getItemResponses();
         let musicName = ReportManager.convertMusicName(itemResponses[1].getResponse().toString());
         let difficulty = itemResponses[2].getResponse().toString();
@@ -35,32 +34,43 @@ export class ReportManager {
         let afterOp = parseFloat(itemResponses[4].getResponse().toString());
         let score = parseInt(itemResponses[5].getResponse().toString());
         let comboStatus = itemResponses[6].getResponse().toString();
-        let targetMusicData = musicDataTable.getMusicDataByName(musicName);
-        if (targetMusicData == null) {
-            throw new ReportError(`楽曲情報取得の失敗. 楽曲名:${musicName}`);
-        }
-        if (this.currentRow < 0) {
-            this.currentRow = this.sheet.getLastRow() + 1;
-        }
-        let reportId = this.currentRow - 1;
-        let imagePaths = [];
+
+        var imagePaths = [];
         if (itemResponses[7]) {
             let responseImagePaths = itemResponses[7].getResponse().toString();
             if (responseImagePaths) {
                 imagePaths = responseImagePaths.split(",");
             }
         }
-        let progress = !this.checkResolved(targetMusicData, difficulty) ? ReportStatus.InProgress : ReportStatus.Rejected;
-        let report = new Report(reportId.toString(), targetMusicData.Id, musicName, difficulty, beforeOp, afterOp, score, comboStatus, imagePaths, progress);
-        let rawReport = report.toRawData();
-        this.sheet.getRange(this.currentRow, 1, 1, rawReport.length).setValues([rawReport]);
-        this.currentRow++;
+
+        let targetMusicData = musicDataTable.getMusicDataByName(musicName);
+        if (targetMusicData == null) {
+            return null;
+        }
+
+        let report = new Report(
+            Report.UNASSIGNED_REPORT_ID,
+            targetMusicData.Id,
+            musicName,
+            difficulty,
+            beforeOp,
+            afterOp,
+            score,
+            comboStatus,
+            imagePaths,
+            ReportStatus.InProgress);
         return report;
     }
 
-    private checkResolved(musicData: DataManager.MusicData, difficultyText: string): boolean {
-        let difficulty = Utility.toDifficulty(difficultyText);
-        return musicData.getVerified(difficulty);
+    public insertReport(report: Report) {
+        if (this.currentRow < 0) {
+            this.currentRow = this.sheet.getLastRow() + 1;
+        }
+        let reportId = this.currentRow - 1;
+        report.reportId = reportId.toString();
+        let rawReport = report.toRawData();
+        this.sheet.getRange(this.currentRow, 1, 1, rawReport.length).setValues([rawReport]);
+        this.currentRow++;
     }
 
     private static convertMusicName(musicName: string): string {
