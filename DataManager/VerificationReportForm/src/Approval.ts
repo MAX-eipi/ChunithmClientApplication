@@ -68,19 +68,19 @@ function approve(reportId: string, versionName: string): void {
             `報告ID:${report.getReportId()}`,
             `楽曲名:${report.getMusicName()}`,
             `難易度:${difficulty}`,
-            `譜面定数:${baseRating}`
+            `譜面定数:${baseRating.toFixed(1)}`
         ]);
 
         TwitterConnectorOperator.postTweet(`[譜面定数 検証結果]
 楽曲名:${report.getMusicName()}
 難易度:${difficulty}
-譜面定数:${baseRating}
+譜面定数:${baseRating.toFixed(1)}
 
 バージョン:${Operator.getTargetVersionConfiguration().getProperty("version_text", "")}`);
         LineConnectorOperator.noticeReportPost([`⭕️[検証結果 承認]⭕️
 楽曲名:${report.getMusicName()}
 難易度:${difficulty}
-譜面定数:${baseRating}
+譜面定数:${baseRating.toFixed(1)}
 URL:${ApprovalPager.getUrl(Operator.getRootUrl(), Operator.getTargetVersionName(), report.getReportId())}`]);
     }
     catch (error) {
@@ -106,7 +106,7 @@ function reject(reportId: string, versionName: string): void {
             `報告ID:${report.getReportId()}`,
             `楽曲名:${musicName}`,
             `難易度:${difficulty}`,
-            `譜面定数:${baseRating}`
+            `譜面定数:${baseRating.toFixed(1)}`
         ]);
         LineConnectorOperator.noticeReportPost([`✖️[検証結果 却下]✖️
 楽曲名:${musicName}
@@ -197,12 +197,12 @@ function groupApprove(reportGroupId: string, versionName: string): void {
                 `報告ID:${report.getReportId()}`,
                 `楽曲名:${report.getMusicName()}`,
                 `難易度:${difficulty}`,
-                `譜面定数:${baseRating}`
+                `譜面定数:${baseRating.toFixed(1)}`
             ]);
             TwitterConnectorOperator.postTweet(`[譜面定数 検証結果]
 楽曲名:${report.getMusicName()}
 難易度:${difficulty}
-譜面定数:${baseRating}
+譜面定数:${baseRating.toFixed(1)}
 
 バージョン:${versionText}`);
         }
