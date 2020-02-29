@@ -155,7 +155,7 @@ export class Report {
             this._afterOp,
             this._score,
             this._comboStatus,
-            (this._imagePaths && this._imagePaths.length > 0) ? this.imagePaths.reduce(function (acc, src) { return `${acc},${src}`; }) : "",
+            (this._imagePaths && this._imagePaths.length > 0) ? this._imagePaths.reduce(function (acc, src) { return `${acc},${src}`; }) : "",
             this._reportStatus,
         ];
     }
