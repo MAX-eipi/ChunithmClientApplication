@@ -1,6 +1,7 @@
 import { Operator } from "../Operators/Operator";
 import { createHtmlOutput, Pager, readHtml } from "./Pager";
 import { TopPager } from "./TopPager";
+import { Role } from "../Role";
 
 interface ErrorPageParameter {
     message: string;
@@ -11,6 +12,10 @@ export class ErrorPager implements Pager {
 
     public getPageName(): string {
         return ErrorPager.PAGE_NAME;
+    }
+
+    public isAccessable(role: Role): boolean {
+        return true;
     }
 
     public call(parameter: ErrorPageParameter): GoogleAppsScript.HTML.HtmlOutput {

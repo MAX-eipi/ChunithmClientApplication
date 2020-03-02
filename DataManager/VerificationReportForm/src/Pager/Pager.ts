@@ -1,6 +1,8 @@
+import { Role } from "../Role";
 
 export interface Pager {
     getPageName(): string;
+    isAccessable(role: Role): boolean;
     call(parameter: any): GoogleAppsScript.HTML.HtmlOutput;
 }
 

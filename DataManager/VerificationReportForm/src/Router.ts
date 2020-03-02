@@ -44,6 +44,12 @@ export class Router {
             }
         }
 
+        if (!this.pagers[page].isAccessable(Operator.getRole()))
+        {
+            Operator.error([`権限のないページにアクセスされました\n指定ページ:${page}`]);
+            return this.callError("存在しないページが指定されました");
+        } 
+
         return this.pagers[page].call(parameter);
     }
 

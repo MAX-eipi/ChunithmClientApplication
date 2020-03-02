@@ -4,6 +4,7 @@ import { ReportStatus } from "../Report";
 import { Utility } from "../Utility";
 import { InProgressListPager } from "./InProgressListPager";
 import { createHtmlOutput, getPageUrl, Pager, readHtml, resolveVersionName } from "./Pager";
+import { Role } from "../Role";
 
 interface ApprovalPageParameter {
     reportId: string;
@@ -30,6 +31,10 @@ export class ApprovalPager implements Pager {
 
     public getPageName(): string {
         return ApprovalPager.PAGE_NAME;
+    }
+
+    public isAccessable(role: Role): boolean {
+        return role == Role.Operator;
     }
 
     public call(parameter: ApprovalPageParameter): GoogleAppsScript.HTML.HtmlOutput {

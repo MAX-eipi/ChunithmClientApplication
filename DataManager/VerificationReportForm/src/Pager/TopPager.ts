@@ -21,6 +21,10 @@ export class TopPager implements Pager {
         return TopPager.PAGE_NAME;
     }
 
+    public isAccessable(role: Role): boolean {
+        return true;
+    }
+
     public call(parameter: TopPageParameter): GoogleAppsScript.HTML.HtmlOutput {
         let rootUrl = Operator.getRootUrl();
         let config = Operator.getTargetVersionConfiguration();

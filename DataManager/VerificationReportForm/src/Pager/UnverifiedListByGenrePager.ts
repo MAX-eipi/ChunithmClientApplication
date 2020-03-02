@@ -4,6 +4,7 @@ import { Operator } from "../Operators/Operator";
 import { Utility } from "../Utility";
 import { createHtmlOutput, getPageUrl, Pager, readHtml, resolveRootUrl, resolveVersionName } from "./Pager";
 import { TopPager } from "./TopPager";
+import { Role } from "../Role";
 
 interface UnverifiedListByGenrePageParameter {
     send: string;
@@ -59,6 +60,11 @@ export class UnverifiedListByGenrePager implements Pager {
     public getPageName(): string {
         return UnverifiedListByGenrePager.PAGE_NAME;
     }
+
+    public isAccessable(role: Role): boolean {
+        return true;
+    }
+    
     public call(parameter: UnverifiedListByGenrePageParameter): GoogleAppsScript.HTML.HtmlOutput {
         var source = readHtml(this.getPageName());
 
