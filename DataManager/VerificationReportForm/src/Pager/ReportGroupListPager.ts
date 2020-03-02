@@ -4,6 +4,7 @@ import { ReportGroup } from "../ReportGroup";
 import { GroupApprovalPager } from "./GroupApprovalPager";
 import { createHtmlOutput, getPageUrl, Pager, readHtml, resolveVersionName } from "./Pager";
 import { TopPager } from "./TopPager";
+import { Role } from "../Role";
 
 interface ReportGroupListPageParameter {
 }
@@ -17,6 +18,10 @@ export class ReportGroupListPager implements Pager {
 
     public getPageName(): string {
         return ReportGroupListPager.PAGE_NAME;
+    }
+
+    public isAccessable(role: Role): boolean {
+        return role == Role.Operator;
     }
 
     public call(parameter: ReportGroupListPageParameter): GoogleAppsScript.HTML.HtmlOutput {

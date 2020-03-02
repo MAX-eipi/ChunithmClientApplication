@@ -6,6 +6,7 @@ import { ReportGroup, ReportGroupMusic } from "../ReportGroup";
 import { Utility } from "../Utility";
 import { createHtmlOutput, getPageUrl, Pager, readHtml, resolveVersionName } from "./Pager";
 import { ReportGroupListPager } from "./ReportGroupListPager";
+import { Role } from "../Role";
 
 interface GroupApprovalPageParameter {
     groupId: string;
@@ -69,6 +70,10 @@ export class GroupApprovalPager implements Pager {
 
     public getPageName(): string {
         return GroupApprovalPager.PAGE_NAME;
+    }
+
+    public isAccessable(role: Role): boolean {
+        return role == Role.Reader;
     }
 
     public call(parameter: GroupApprovalPageParameter): GoogleAppsScript.HTML.HtmlOutput {
