@@ -1,0 +1,167 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>MigrationReportForm</Name>
+    <RootNamespace>MigrationReportForm</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>0e2e001f-768e-427e-b7a6-5241795ba14d</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>src\app.ts</StartupFile>
+    <StartWebBrowser>False</StartWebBrowser>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <EnableTypeScript>true</EnableTypeScript>
+    <StartWebBrowser>false</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Content Include="src\Resources\Page\Approval\approval.html" />
+    <Content Include="src\Resources\Page\Common\common.css.html" />
+    <Content Include="src\Resources\Page\Error\error.html" />
+    <Content Include="src\Resources\Page\GroupApproval\group_approval.html" />
+    <Content Include="src\Resources\Page\InProgressList\in_progress_list.html" />
+    <Content Include="src\Resources\Page\ReportGroupList\report_group_list.html" />
+    <Content Include="src\Resources\Page\Top\top.html" />
+    <Content Include="src\Resources\Page\Common\unverified_list.css.html" />
+    <Content Include="src\Resources\Page\UnverifiedListGenre\unverified_list_genre.html" />
+    <Content Include="src\Resources\Page\UnverifiedListLevel\unverified_list_level.html" />
+    <Content Include="tsconfig.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="interface\" />
+    <Folder Include="src\MusicDataTable\" />
+    <Folder Include="src\Dependencies\" />
+    <Folder Include="src\Resources\" />
+    <Folder Include="src\Original\" />
+    <Folder Include="src\Original\LineCommands\" />
+    <Folder Include="src\Original\Operators\" />
+    <Folder Include="src\Original\Pager\" />
+    <Folder Include="src\Original\PostAPI\" />
+    <Folder Include="src\Resources\Page\" />
+    <Folder Include="src\Resources\Page\Common\" />
+    <Folder Include="src\Resources\Page\Error\" />
+    <Folder Include="src\Resources\Page\Approval\" />
+    <Folder Include="src\Resources\Page\GroupApproval\" />
+    <Folder Include="src\Resources\Page\InProgressList\" />
+    <Folder Include="src\Resources\Page\UnverifiedListLevel\" />
+    <Folder Include="src\Resources\Page\UnverifiedListGenre\" />
+    <Folder Include="src\Resources\Page\Top\" />
+    <Folder Include="src\Resources\Page\ReportGroupList\" />
+    <Folder Include="test\" />
+    <Folder Include="src\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="interface\TwitterWebService.ts" />
+    <TypeScriptCompile Include="src\MusicDataTable\Configuration.ts" />
+    <TypeScriptCompile Include="src\MusicDataTable\Instance.ts" />
+    <TypeScriptCompile Include="src\MusicDataTable\MusicData.ts" />
+    <TypeScriptCompile Include="src\MusicDataTable\MusicDataTable.ts" />
+    <TypeScriptCompile Include="src\MusicDataTable\MusicDataTableReader.ts" />
+    <TypeScriptCompile Include="src\MusicDataTable\MusicDataTableWriter.ts" />
+    <TypeScriptCompile Include="src\MusicDataTable\utility.ts" />
+    <TypeScriptCompile Include="src\app.ts" />
+    <TypeScriptCompile Include="src\Original\Approval.ts" />
+    <TypeScriptCompile Include="src\Original\Configuration.ts" />
+    <TypeScriptCompile Include="src\Original\events.ts" />
+    <TypeScriptCompile Include="src\Original\LineCommands\DefaultGameVersionGetCommand.ts" />
+    <TypeScriptCompile Include="src\Original\LineCommands\EnvironmentGetCommand.ts" />
+    <TypeScriptCompile Include="src\Original\LineCommands\FormUrlGetCommand.ts" />
+    <TypeScriptCompile Include="src\Original\LineCommands\ILineCommand.ts" />
+    <TypeScriptCompile Include="src\Original\LineCommands\LatestGameVersionGetCommand.ts" />
+    <TypeScriptCompile Include="src\Original\LineCommands\PostTweetEnabledGetCommand.ts" />
+    <TypeScriptCompile Include="src\Original\LineCommands\PostTweetEnabledSetCommand.ts" />
+    <TypeScriptCompile Include="src\Original\LineCommands\ReportPostNoticeEnabledGetCommand.ts" />
+    <TypeScriptCompile Include="src\Original\LineCommands\ReportPostNoticeEnabledSetCommand.ts" />
+    <TypeScriptCompile Include="src\Original\LineCommands\TestCommand.ts" />
+    <TypeScriptCompile Include="src\Original\LineCommands\TopUrlGetCommand.ts" />
+    <TypeScriptCompile Include="src\Original\LineCommands\VersionGetCommand.ts" />
+    <TypeScriptCompile Include="src\Dependencies\LineConnector.ts" />
+    <TypeScriptCompile Include="src\Original\operations.ts" />
+    <TypeScriptCompile Include="src\Original\Operators\CommandOperator.ts" />
+    <TypeScriptCompile Include="src\Original\Operators\DataManagerOperator.ts" />
+    <TypeScriptCompile Include="src\Original\Operators\LineConnectorOperator.ts" />
+    <TypeScriptCompile Include="src\Original\Operators\Operator.ts" />
+    <TypeScriptCompile Include="src\Original\Operators\ReportOperator.ts" />
+    <TypeScriptCompile Include="src\Original\Operators\SpreadSheetLoggerOperator.ts" />
+    <TypeScriptCompile Include="src\Original\Operators\TwitterConnectorOperator.ts" />
+    <TypeScriptCompile Include="src\Original\Pager\ApprovalPager.ts" />
+    <TypeScriptCompile Include="src\Original\Pager\ErrorPager.ts" />
+    <TypeScriptCompile Include="src\Original\Pager\GroupApprovalPager.ts" />
+    <TypeScriptCompile Include="src\Original\Pager\InProgressListPager.ts" />
+    <TypeScriptCompile Include="src\Original\Pager\Pager.ts" />
+    <TypeScriptCompile Include="src\Original\Pager\ReportGroupListPager.ts" />
+    <TypeScriptCompile Include="src\Original\Pager\TopPager.ts" />
+    <TypeScriptCompile Include="src\Original\Pager\UnverifiedListByGenrePager.ts" />
+    <TypeScriptCompile Include="src\Original\Pager\UnverifiedListByLevelPager.ts" />
+    <TypeScriptCompile Include="src\Original\PostAPI\IPostAPI.ts" />
+    <TypeScriptCompile Include="src\Original\PostAPI\TableGetAPI.ts" />
+    <TypeScriptCompile Include="src\Original\PostAPI\TableUpadateAPI.ts" />
+    <TypeScriptCompile Include="src\Original\Rating.ts" />
+    <TypeScriptCompile Include="src\Original\Report.ts" />
+    <TypeScriptCompile Include="src\Original\ReportGroup.ts" />
+    <TypeScriptCompile Include="src\Original\ReportManager.ts" />
+    <TypeScriptCompile Include="src\Original\Role.ts" />
+    <TypeScriptCompile Include="src\Original\Router.ts" />
+    <TypeScriptCompile Include="src\Original\SpreadSheetLogger.ts" />
+    <TypeScriptCompile Include="src\Dependencies\TwitterConnector.ts" />
+    <TypeScriptCompile Include="src\Original\Utility.ts" />
+    <TypeScriptCompile Include="src\Original\VerificationReportForm.ts" />
+    <TypeScriptCompile Include="test\MusicDataTable.spec.ts" />
+    <TypeScriptCompile Include="test\Rating.spec.ts" />
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
