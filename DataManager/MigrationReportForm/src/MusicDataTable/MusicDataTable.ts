@@ -1,5 +1,5 @@
-﻿import { MusicData } from "./MusicData";
-import { Difficulty } from "./utility";
+﻿import { MusicData, MusicDataParameter } from "./MusicData";
+import { Difficulty } from "./Difficulty";
 
 export class MusicDataTable {
     private table: MusicData[]
@@ -12,8 +12,12 @@ export class MusicDataTable {
         this.nameMap = {};
     }
 
-    public getTable(): MusicData[] {
+    public get datas(): MusicData[] {
         return this.table;
+    }
+
+    public getTable(): MusicData[] {
+        return this.datas;
     }
 
     public getMusicDataById(id: number): MusicData {
@@ -79,7 +83,7 @@ export class MusicDataTable {
         return JSON.stringify({ MusicDatas: this.table });
     }
 
-    public static createByParameters(parameters: any[]): MusicDataTable {
+    public static createByParameters(parameters: MusicDataParameter[]): MusicDataTable {
         let musicDataTable = new MusicDataTable();
         for (var i = 0; i < parameters.length; i++) {
             var musicData = MusicData.createByParameter(parameters[i]);

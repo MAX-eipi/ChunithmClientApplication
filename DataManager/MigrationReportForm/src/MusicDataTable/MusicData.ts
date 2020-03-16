@@ -1,4 +1,18 @@
-﻿import { Difficulty } from "./utility";
+﻿import { Difficulty } from "./Difficulty";
+
+export interface MusicDataParameter {
+    Id: number;
+    Name: string;
+    Genre: string;
+    BasicLevel: number;
+    AdvancedLevel: number;
+    ExpertLevel: number;
+    MasterLevel: number;
+    BasicVerified: boolean;
+    AdvancedVerified: boolean;
+    ExpertVerified: boolean;
+    MasterVerified: boolean;
+}
 
 export class MusicData {
     public Id: number
@@ -93,7 +107,7 @@ export class MusicData {
         return MusicData.createByParameter(this);
     }
 
-    public static createByParameter(parameter: any): MusicData {
+    public static createByParameter(parameter: MusicDataParameter): MusicData {
         var musicData = new MusicData();
 
         musicData.Id = parameter.Id;
