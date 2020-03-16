@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "DataManager", "DataManager\DataManager.njsproj", "{FA1E7DFF-C2D6-4BBF-B0C0-5B2F0109461C}"
 EndProject
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "MigrationReportForm", "MigrationReportForm\MigrationReportForm.njsproj", "{0E2E001F-768E-427E-B7A6-5241795BA14D}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "ReportForm", "ReportForm\ReportForm.njsproj", "{0E2E001F-768E-427E-B7A6-5241795BA14D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
