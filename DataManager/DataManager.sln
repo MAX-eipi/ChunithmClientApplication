@@ -7,6 +7,8 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "DataManager", "DataManager\
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "VerificationReportForm", "VerificationReportForm\VerificationReportForm.njsproj", "{49B069E3-8570-470C-8957-4BC43FAA8B39}"
 EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "MigrationReportForm", "MigrationReportForm\MigrationReportForm.njsproj", "{0E2E001F-768E-427E-B7A6-5241795BA14D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{49B069E3-8570-470C-8957-4BC43FAA8B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49B069E3-8570-470C-8957-4BC43FAA8B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49B069E3-8570-470C-8957-4BC43FAA8B39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E2E001F-768E-427E-B7A6-5241795BA14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E2E001F-768E-427E-B7A6-5241795BA14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E2E001F-768E-427E-B7A6-5241795BA14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E2E001F-768E-427E-B7A6-5241795BA14D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,278 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>MigrationReportForm</Name>
+    <RootNamespace>MigrationReportForm</RootNamespace>
+    <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>0e2e001f-768e-427e-b7a6-5241795ba14d</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>src\@app.ts</StartupFile>
+    <StartWebBrowser>False</StartWebBrowser>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <EnableTypeScript>true</EnableTypeScript>
+    <StartWebBrowser>False</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Content Include="src\Resources\Page\approval\main.html" />
+    <Content Include="src\Resources\Page\approval\rejected_form_container.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\Resources\Page\approval\resoved_form_container.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\Resources\Page\approval\wip_form_container.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\Resources\Page\common\common.css.html" />
+    <Content Include="src\Resources\Page\error\main.html" />
+    <Content Include="src\Resources\Page\group_approval\list_item.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\Resources\Page\group_approval\main.html" />
+    <Content Include="src\Resources\Page\group_approval\unverified_list_item.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\Resources\Page\wip_list\main.html" />
+    <Content Include="src\Resources\Page\report_group_list\main.html" />
+    <Content Include="src\Resources\Page\top\main.html" />
+    <Content Include="src\Resources\Page\common\unverified_list.css.html" />
+    <Content Include="src\Resources\Page\top\wip_list_container.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\Resources\Page\unverified_list_genre\main.html" />
+    <Content Include="src\Resources\Page\unverified_list_level\main.html" />
+    <Content Include="tsconfig.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="hoge\" />
+    <Folder Include="hoge\ReportForm\" />
+    <Folder Include="src\MusicDataTable\" />
+    <Folder Include="src\LINE\" />
+    <Folder Include="Dependencies\" />
+    <Folder Include="src\ReportForm\Modules\" />
+    <Folder Include="src\Configurations\" />
+    <Folder Include="src\ReportForm\Logger\" />
+    <Folder Include="hoge\ReportForm\LINECommand\" />
+    <Folder Include="src\ReportForm\Configurations\" />
+    <Folder Include="src\ReportForm\Dependencies\" />
+    <Folder Include="src\ReportForm\LineCommand\" />
+    <Folder Include="src\ReportForm\Report\" />
+    <Folder Include="src\ReportForm\Page\" />
+    <Folder Include="src\Twitter\" />
+    <Folder Include="src\ReportForm\" />
+    <Folder Include="src\ReportForm\PostCommand\" />
+    <Folder Include="src\Resources\" />
+    <Folder Include="src\Resources\Page\" />
+    <Folder Include="src\Resources\Page\common\" />
+    <Folder Include="src\Resources\Page\error\" />
+    <Folder Include="src\Resources\Page\approval\" />
+    <Folder Include="src\Resources\Page\group_approval\" />
+    <Folder Include="src\Resources\Page\wip_list\" />
+    <Folder Include="src\Resources\Page\unverified_list_level\" />
+    <Folder Include="src\Resources\Page\unverified_list_genre\" />
+    <Folder Include="src\Resources\Page\top\" />
+    <Folder Include="src\Resources\Page\report_group_list\" />
+    <Folder Include="test\" />
+    <Folder Include="src\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Dependencies\TwitterWebService.ts" />
+    <TypeScriptCompile Include="src\Configurations\ConfigurationDefinition.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Configurations\CommonConfiguration.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Configurations\LogConfiguration.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Configurations\TwitterConfiguration.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Dependencies\LINECommand.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Dependencies\Logger.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Dependencies\Page.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Dependencies\PostCommand.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\GlobalConfigValueGetCommand.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\ReportFormBuildCommand.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Modules\LINEModule.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Modules\%40ReportFormModule.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\MusicDataTable\MusicData.ts" />
+    <TypeScriptCompile Include="src\MusicDataTable\MusicDataTable.ts" />
+    <TypeScriptCompile Include="src\MusicDataTable\MusicDataTableReader.ts" />
+    <TypeScriptCompile Include="src\MusicDataTable\MusicDataTableWriter.ts" />
+    <TypeScriptCompile Include="src\MusicDataTable\Difficulty.ts" />
+    <TypeScriptCompile Include="src\%40app.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Configurations\LINEConfiguration.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Configurations\%40ReportFormConfiguration.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Configurations\ScriptPropertiesConfiguration.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Configurations\SpreadsheetConfiguration.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Configurations\VersionConfiguration.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Environment.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\%40LINECommand.ts" />
+    <TypeScriptCompile Include="src\LINE\LINEConnector.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Configurations\ConfigurationEditor.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Debug.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Instance.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\DefaultGameVersionGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\EnvironmentGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\FormUrlGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\LatestGameVersionGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\PostTweetEnabledGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\PostTweetEnabledSetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\ReportPostNoticeEnabledGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\ReportPostNoticeEnabledSetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\TestCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\TopUrlGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\VersionGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Logger\LINELogger.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Logger\Logger.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Logger\ReportFormLogger.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Modules\MusicDataModule.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Modules\TwitterModule.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Modules\VersionModule.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Page\ApprovalPage.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Page\ErrorPage.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Page\GroupApprovalPage.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Page\InProgressListPage.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Page\%40ReportFormPage.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Page\ReportGroupListPage.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Page\TopPage.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Page\UnverifiedListByGenrePage.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Page\UnverifiedListByLevelPage.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Modules\PostCommandModule.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Report\GoogleFormReport.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Report\ReportError.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\ReportGroupContainer.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Report\ReportSheet.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Twitter\TwitterConnector.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Approval.ts" />
+    <TypeScriptCompile Include="src\Configurations\Configuration.ts" />
+    <TypeScriptCompile Include="src\ReportForm\events.ts" />
+    <TypeScriptCompile Include="src\ReportForm\operations.ts" />
+    <TypeScriptCompile Include="src\ReportForm\PostCommand\%40PostCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\PostCommand\TableGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\PostCommand\TableUpadateCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Rating.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\Report.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\ReportGroup.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Modules\ReportModule.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Role.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Modules\Router.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Logger\SpreadSheetLogger.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Utility.ts" />
+    <TypeScriptCompile Include="src\ReportForm\ReportForm.ts" />
+    <TypeScriptCompile Include="test\MusicDataTable.spec.ts" />
+    <TypeScriptCompile Include="test\Rating.spec.ts" />
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
