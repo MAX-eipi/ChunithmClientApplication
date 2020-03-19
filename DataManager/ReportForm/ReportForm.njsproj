@@ -126,6 +126,9 @@
     <TypeScriptCompile Include="src\ReportForm\LineCommand\ReportFormBuildCommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Modules\ApprovalModule.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Modules\LINEModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
