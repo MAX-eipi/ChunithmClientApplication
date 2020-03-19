@@ -42,6 +42,7 @@ export class ConfigurationPropertyName {
     public static readonly REPORT_SHEET_ID = 'report_spreadsheet_id';
     public static readonly REPORT_SHEET_NAME = 'report_worksheet_name';
     public static readonly REPORT_GROUP_SHEET_NAME = 'report_group_worksheet_name';
+    public static readonly BULK_REPORT_SHEET_NAME = 'bulk_report_worksheet_name';
     public static readonly GENRE_LIST = 'genre_list';
 
     // LINE
@@ -52,6 +53,10 @@ export class ConfigurationPropertyName {
     // Twitter
     public static readonly TWITTER_API_TOKEN = 'twitter_api_token';
     public static readonly TWITTER_API_SECRET_KEY = 'twitter_api_secret_key';
+
+    // Report
+    public static readonly REPORT_GOOGLE_FORM_ID = 'report_form_id';
+    public static readonly BULK_REPORT_GOOGLE_FORM_ID = 'bulk_report_form_id';
 };
 
 export class ConfigurationSpreadsheet {

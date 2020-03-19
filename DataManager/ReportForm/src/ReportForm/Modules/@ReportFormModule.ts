@@ -6,6 +6,7 @@ import { ReportModule } from "./ReportModule";
 import { Router } from "./Router";
 import { TwitterModule } from "./TwitterModule";
 import { VersionModule } from "./VersionModule";
+import { ApprovalModule } from "./ApprovalModule";
 
 export class ReportFormModule {
     public static instantiate(config: ReportFormConfiguration): ReportFormModule {

@@ -3,6 +3,7 @@ import { CommonConfiguration } from "./CommonConfiguration";
 import { LINEConfiguration } from "./LineConfiguration";
 import { LogConfiguration } from "./LogConfiguration";
 import { TwitterConfiguration } from "./TwitterConfiguration";
+import { ReportConfiguration } from "./ReportConfiguration";
 
 export class ReportFormConfiguration implements Configuration {
     public static instantiate(config: Configuration, properties: { [key: string]: string }): ReportFormConfiguration {
@@ -50,4 +51,5 @@ export class ReportFormConfiguration implements Configuration {
     public get line(): LINEConfiguration { return this.getConfig('line', LINEConfiguration); }
     public get log(): LogConfiguration { return this.getConfig('log', LogConfiguration); }
     public get twitter(): TwitterConfiguration { return this.getConfig('twitter', TwitterConfiguration); }
+    public get report(): ReportConfiguration { return this.getConfig('report', ReportConfiguration); }
 }

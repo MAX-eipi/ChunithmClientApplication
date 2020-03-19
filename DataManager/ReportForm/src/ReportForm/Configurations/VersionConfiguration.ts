@@ -1,4 +1,4 @@
-﻿import { Configuration } from "../../04_Configurations/Configuration";
+﻿import { Configuration } from "../../Configurations/Configuration";
 import { ConfigurationPropertyName } from "../../Configurations/ConfigurationDefinition";
 
 export class VersionConfiguration implements Configuration {
@@ -40,6 +40,9 @@ export class VersionConfiguration implements Configuration {
     }
     public get reportGroupWorksheetName(): string {
         return this.getProperty<string>(ConfigurationPropertyName.REPORT_GROUP_SHEET_NAME, '');
+    }
+    public get bulkReportWorksheetName(): string {
+        return this.getProperty<string>(ConfigurationPropertyName.BULK_REPORT_SHEET_NAME, '');
     }
 
     private _genres: string[];

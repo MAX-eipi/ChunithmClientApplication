@@ -6,6 +6,10 @@ import { ReportFormModule } from "./@ReportFormModule";
 import { Debug } from "../Debug";
 import { Utility } from "../Utility";
 import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
+import { ConfigurationPropertyName } from "../../Configurations/ConfigurationDefinition";
+import { GoogleFormBulkReport } from "../Report/GoogleFormBulkReport";
+import { BulkReport } from "../Report/BulkReport";
+import { BulkReportSheet } from "../Report/BulkReportSheet";
 
 export class ReportModule extends ReportFormModule {
 
@@ -48,20 +52,48 @@ export class ReportModule extends ReportFormModule {
         return reportGroupContainer;
     }
 
-    private _googleForm: GoogleAppsScript.Forms.Form;
-    public get googleForm(): GoogleAppsScript.Forms.Form {
-        if (!this._googleForm) {
-            let formId = this.config.getProperty('form_id', '');
+    private _reportGoogleForm: GoogleAppsScript.Forms.Form;
+    public get reportGoogleForm(): GoogleAppsScript.Forms.Form {
+        if (!this._reportGoogleForm) {
+            let formId = this.config.report.reportFormId;
             if (!formId) {
-                throw new Error("form_id is not set.");
+                throw new Error(`${ConfigurationPropertyName.REPORT_GOOGLE_FORM_ID} is not set.`);
             }
             let form = FormApp.openById(formId);
             if (!form) {
                 throw new Error(`Form is invalid. formId: ${formId}`);
             }
-            this._googleForm = form;
+            this._reportGoogleForm = form;
         }
-        return this._googleForm;
+        return this._reportGoogleForm;
+    }
+
+    private _bulkReportSheetMap: { [key: string]: BulkReportSheet } = {};
+    public getBulkReportSheet(versionName: string): BulkReportSheet {
+        if (versionName in this._bulkReportSheetMap) {
+            return this._bulkReportSheetMap[versionName];
+        }
+        this._bulkReportSheetMap[versionName] = new BulkReportSheet(
+            this.musicData.getTable(versionName),
+            this.version.getVersionConfig(versionName).reportSpreadsheetId,
+            this.version.getVersionConfig(versionName).bulkReportWorksheetName);
+        return this._bulkReportSheetMap[versionName];
+    }
+
+    private _bulkReportGoogleForm: GoogleAppsScript.Forms.Form;
+    public get bulkReportGoogleForm(): GoogleAppsScript.Forms.Form {
+        if (!this._bulkReportGoogleForm) {
+            let formId = this.config.report.bulkReportFormId;
+            if (!formId) {
+                throw new Error(`${ConfigurationPropertyName.BULK_REPORT_GOOGLE_FORM_ID} is not set.`);
+            }
+            let form = FormApp.openById(formId);
+            if (!form) {
+                throw new Error(`Form is invalid. formId: ${formId}`);
+            }
+            this._bulkReportGoogleForm = form;
+        }
+        return this._bulkReportGoogleForm;
     }
 
     public approve(versionName: string, reportId: number): void {
@@ -130,11 +162,50 @@ ${JSON.stringify(formReport)}`);
         return reportSheet.insertReport(formReport);
     }
 
+    public insertBulkReport(versionName: string, formReport: GoogleFormBulkReport): BulkReport {
+        let table = this.musicData.getTable(versionName);
+        let bulkReportSheet = this.getBulkReportSheet(versionName);
+
+        let musicCount = table.getTargetLevelMusicCount(formReport.targetLevel);
+        let maxOp = Math.round((formReport.targetLevel + 3) * 5 * musicCount);
+        let checkOp = maxOp + 0.5;
+
+        let opRatio_x100 = Math.round(formReport.opRatio * 100);
+        let calcOpRatio_x100 = Math.floor(formReport.op / maxOp * 100 * 100);
+        let checkCalcOpRatio_x100 = Math.floor(formReport.op / (maxOp + 0.5) * 100 * 100);
+        if (opRatio_x100 != calcOpRatio_x100) {
+            let message = `[一括検証エラー]OP割合推定値とOP割合実測値が一致してません
+対象レベル:${formReport.targetLevel}
+楽曲数:${musicCount}
+OP理論値:${maxOp}
+OP実測値:${formReport.op}
+OP割合[万分率]:${opRatio_x100}
+実測値と理論値の比率[万分率]:${calcOpRatio_x100}`;
+            this.line.notice.pushTextMessage([message]);
+            Debug.logError(message);
+            return null;
+        }
+        if (calcOpRatio_x100 == checkCalcOpRatio_x100) {
+            let message = `[一括検証エラー]確定ではありません
+対象レベル:${formReport.targetLevel}
+楽曲数:${musicCount}
+OP理論値:${maxOp}
+OP実測値:${formReport.op}
+OP割合[万分率]:${opRatio_x100}
+実測値と理論値の比率[万分率]:${calcOpRatio_x100}`;
+            this.line.notice.pushTextMessage([message]);
+            Debug.logError(message);
+            return null;
+        }
+
+        return bulkReportSheet.insertBulkReport(formReport);
+    }
+
     public buildForm(versionName: string): void {
         Debug.log(`報告フォームを構築します: ${versionName}`);
 
         Debug.log('フォームに送信された回答の削除...');
-        let form = this.module.report.googleForm;
+        let form = this.module.report.reportGoogleForm;
         form.deleteAllResponses();
         {
             for (let item of form.getItems()) {

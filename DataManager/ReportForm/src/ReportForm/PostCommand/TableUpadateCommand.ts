@@ -67,7 +67,7 @@ ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLeve
     }
 
     private setMusicList(versionName: string, musicDatas: MusicData[]): { [genre: string]: number } {
-        var form = this.module.report.googleForm;
+        var form = this.module.report.reportGoogleForm;
         var list = form.getItems(FormApp.ItemType.LIST);
 
         let genres = this.module.version.getVersionConfig(versionName).genres;

@@ -105,6 +105,9 @@
     <TypeScriptCompile Include="src\ReportForm\Configurations\LogConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Configurations\ReportConfiguration.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Configurations\TwitterConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
