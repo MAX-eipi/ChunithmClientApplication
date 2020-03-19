@@ -20,10 +20,8 @@ export abstract class ReportFormPage {
         this._module = module;
     }
 
-    public get pageName(): string {
-        return this.getPageName();
-    }
-    public abstract getPageName(): string;
+    public abstract get pageName(): string;
+    public getPageName(): string { return this.pageName; }
 
     public isAccessable(role: Role): boolean {
         return true;

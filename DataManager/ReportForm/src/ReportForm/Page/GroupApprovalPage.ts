@@ -18,7 +18,7 @@ export class GroupApprovalPage extends ReportFormPage {
     不明な楽曲です。 楽曲ID: %musicId%
 </div>`;
 
-    public getPageName(): string {
+    public get pageName(): string {
         return GroupApprovalPage.PAGE_NAME;
     }
 

@@ -11,7 +11,7 @@ interface TopPageParameter extends ReportFormPageParameter { }
 export class TopPage extends ReportFormPage {
     public static readonly PAGE_NAME: string = "top";
 
-    public getPageName(): string {
+    public get pageName(): string {
         return TopPage.PAGE_NAME;
     }
 

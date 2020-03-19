@@ -12,7 +12,7 @@ interface ApprovalPageParameter extends ReportFormPageParameter {
 export class ApprovalPage extends ReportFormPage {
     public static readonly PAGE_NAME = "approval";
 
-    public getPageName(): string {
+    public get pageName(): string {
         return ApprovalPage.PAGE_NAME;
     }
 

@@ -10,7 +10,7 @@ interface InProgressListPageParameter extends ReportFormPageParameter { }
 export class InProgressListPage extends ReportFormPage {
     public static readonly PAGE_NAME = "wip_list";
 
-    public getPageName(): string {
+    public get pageName(): string {
         return InProgressListPage.PAGE_NAME;
     }
 
