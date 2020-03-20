@@ -18,7 +18,7 @@ export class BulkReport {
             parseInt(row[2].toString()),
             parseFloat(row[3].toString()),
             parseFloat(row[4].toString()),
-            row[4].toString() ? row[5].toString().split(',') : [],
+            row[5].toString() ? row[5].toString().split(',') : [],
             new Date(row[6].toString()),
             parseInt(row[7].toString())
         );
