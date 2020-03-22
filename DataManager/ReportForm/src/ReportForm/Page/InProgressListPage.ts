@@ -20,8 +20,9 @@ export class InProgressListPage extends ReportFormPage {
 
     public call(parameter: InProgressListPageParameter): GoogleAppsScript.HTML.HtmlOutput {
         let listHtml = this.module.report.getReports(parameter.versionName)
-            .filter(function (r) { return r.reportStatus == ReportStatus.InProgress; })
-            .map(this.getListItemHtml).reduce(function (acc, src) { return `${acc}\n${src}`; }, "");
+            .filter(r => r.reportStatus == ReportStatus.InProgress)
+            .map(this.getListItemHtml)
+            .reduce((acc, src) => `${acc}\n${src}`, '');
 
         var source = this.readMainHtml();
 
