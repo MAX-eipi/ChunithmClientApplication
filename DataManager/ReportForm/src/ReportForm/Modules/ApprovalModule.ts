@@ -5,6 +5,7 @@ import { ApprovalPage } from "../Page/ApprovalPage";
 import { Report, ReportStatus } from "../Report/Report";
 import { Utility } from "../Utility";
 import { ReportFormModule } from "./@ReportFormModule";
+import { BulkApprovalPage } from "../Page/BulkApprovalPage";
 
 class ApprovalError implements Error {
     public name: string = "ApprovalError";
@@ -205,8 +206,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
         }));
 
         this.report.noticeReportPost(`⭕️[一括検証結果 承認]⭕️
-Lv: ${bulkReport.targetLevel}
-URL: `);
+Lv:${bulkReport.targetLevel}
+URL:${this.router.getPage(BulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}`);
     }
 
     public bulkReject(versionName: string, bulkReportId: number): void {
@@ -223,7 +224,7 @@ URL: `);
         }));
 
         this.report.noticeReportPost(`✖️[一括検証結果 却下]✖️
-Lv: ${bulkReport.targetLevel}
-URL: `);
+Lv:${bulkReport.targetLevel}
+URL:${this.router.getPage(BulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}`);
     }
 }

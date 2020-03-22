@@ -1,19 +1,18 @@
+import { ConfigurationPropertyName } from "../../Configurations/ConfigurationDefinition";
+import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
+import { Debug } from "../Debug";
+import { BulkReport } from "../Report/BulkReport";
+import { BulkReportSheet } from "../Report/BulkReportSheet";
+import { GoogleFormBulkReport } from "../Report/GoogleFormBulkReport";
 import { GoogleFormReport } from "../Report/GoogleFormReport";
 import { Report, ReportStatus } from "../Report/Report";
 import { ReportGroupContainer } from "../Report/ReportGroupContainer";
 import { ReportSheet } from "../Report/ReportSheet";
-import { ReportFormModule } from "./@ReportFormModule";
-import { Debug } from "../Debug";
 import { Utility } from "../Utility";
-import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
-import { ConfigurationPropertyName } from "../../Configurations/ConfigurationDefinition";
-import { GoogleFormBulkReport } from "../Report/GoogleFormBulkReport";
-import { BulkReport } from "../Report/BulkReport";
-import { BulkReportSheet } from "../Report/BulkReportSheet";
+import { ReportFormModule } from "./@ReportFormModule";
+import { Environment } from "../Environment";
 
 export class ReportModule extends ReportFormModule {
-    Debug: any;
-
     public noticeReportPost(message: string): void {
         if (this.config.line.reportPostNoticeEnabled) {
             this.line.notice.pushTextMessage([message]);
@@ -342,7 +341,7 @@ OP割合[万分率]:${opRatio_x100}
         comboStatusInput.setRequired(true);
         comboStatusInput.setChoiceValues(["AJ", "FC", "なし"]);
 
-        // OP変動確認用の画像を添付してください(バージョン名)
+        // OP変動確認用の画像を添付してください
         // 特定のファイル形式のみ許可
         //  - 画像
         // ファイルの最大数 5
@@ -352,6 +351,63 @@ OP割合[万分率]:${opRatio_x100}
     }
 
     public buildBulkReportForm(versionName: string): void {
+        Debug.log(`一括報告フォームを構築します: ${versionName}`);
 
+        Debug.log('フォームに送信された回答の削除...');
+        let form = this.module.report.bulkReportGoogleForm;
+        form.deleteAllResponses();
+        {
+            for (let item of form.getItems()) {
+                form.deleteItem(item);
+                Utilities.sleep(100);
+            }
+        }
+        Debug.log(`フォームに送信された回答の削除が完了しました`);
+
+        let versionConfig = this.version.getVersionConfig(versionName);
+        if (this.config.common.environment == Environment.Release) {
+            form.setTitle(`譜面定数 一括検証報告 ${versionConfig.displayVersionName}`);
+        }
+        else {
+            form.setTitle(`譜面定数 一括検証報告 ${versionConfig.displayVersionName} [Dev]`);
+        }
+
+        Debug.log('パラメータ記入画面の作成...');
+        {
+            let levelSelector = form.addListItem();
+            levelSelector.setTitle('レベルを選択してください');
+            levelSelector.setRequired(true);
+            let choices: GoogleAppsScript.Forms.Choice[] = new Array();
+            for (var i = 1; i <= 6; i++) {
+                let choice = levelSelector.createChoice(i.toString());
+                choices.push(choice);
+            }
+            levelSelector.setChoices(choices);
+        }
+        {
+            let opInput = form.addTextItem();
+            opInput.setTitle("OPを入力してください");
+            opInput.setRequired(true);
+            opInput.setValidation(FormApp.createTextValidation()
+                .requireNumberGreaterThan(0)
+                .build());
+        }
+        {
+            let opRatioInput = form.addTextItem();
+            opRatioInput.setTitle("OP割合を入力してください");
+            opRatioInput.setRequired(true);
+            opRatioInput.setValidation(FormApp.createTextValidation()
+                .requireNumberBetween(0, 100)
+                .build());
+        }
+        Debug.log(`パラメータ記入画面の作成が完了しました`);
+
+        // 検証画像を添付してください
+        // 特定のファイル形式のみ許可
+        //  - 画像
+        // ファイルの最大数 1
+        // 最大ファイルサイズ 10MB
+
+        Debug.log(`一括報告フォームの構築が完了しました`);
     }
 }
