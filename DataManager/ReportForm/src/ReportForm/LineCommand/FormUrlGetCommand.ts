@@ -2,7 +2,7 @@
 
 export class FormUrlGetCommand extends LINECommand {
     public called(command: string): boolean {
-        command == 'report-form-url';
+        return command == 'report-form-url';
     }
 
     public invoke(command: string, event: any, postData: any): void {
