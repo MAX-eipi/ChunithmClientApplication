@@ -18,7 +18,7 @@ export class Router extends ReportFormModule {
     }
 
     public getRootUrl(): string {
-        return this.config.getProperty<string>("root_url", "");
+        return this.config.common.rootUrl;
     }
 
     public bindRoot(source: string): string {

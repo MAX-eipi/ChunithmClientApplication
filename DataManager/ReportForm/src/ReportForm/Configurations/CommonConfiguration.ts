@@ -13,8 +13,8 @@ export class CommonConfiguration extends ReportFormConfiguration {
             : this.getProperty(ConfigurationPropertyName.ROOT_URL, "");
     }
 
-    public overrideRootUrl(roolUrl: string): void {
-        this._overrideRootUrl = this.rootUrl;
+    public overrideRootUrl(rootUrl: string): void {
+        this._overrideRootUrl = rootUrl;
     }
 
     private _overrideRole: Role = -1;
