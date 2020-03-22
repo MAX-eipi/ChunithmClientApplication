@@ -1,5 +1,5 @@
 import { Debug } from "../Debug";
-import { ReportFormPage, ReportFormPageParameter } from "../Page/@ReportFormPage";
+import { ReportFormPage } from "../Page/@ReportFormPage";
 import { ReportFormModule } from "./@ReportFormModule";
 
 interface PageFactory {
