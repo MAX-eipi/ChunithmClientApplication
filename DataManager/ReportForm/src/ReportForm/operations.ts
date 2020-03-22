@@ -28,6 +28,18 @@ function setupForm() {
     }
 }
 
+function setupBulkReportForm() {
+    try {
+        Instance.initialize();
+
+        let versionName = Instance.instance.module.config.common.defaultVersionName;
+        Instance.instance.module.report.buildBulkReportForm(versionName);
+    }
+    catch (e) {
+        Instance.exception(e);
+    }
+}
+
 function authorizeTwitter() {
     try {
         Instance.instance.module.twitter.connector.authorize();

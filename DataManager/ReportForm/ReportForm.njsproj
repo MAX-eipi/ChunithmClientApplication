@@ -132,6 +132,9 @@
     <TypeScriptCompile Include="src\ReportForm\Dependencies\PostCommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\BulkReportFormBuildCommand.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\LineCommand\BulkReportFormUrlGetCommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
