@@ -42,6 +42,9 @@
     <Content Include="src\Resources\Page\approval\wip_form_container.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\Resources\Page\bulk_approval\main.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\Resources\Page\common\common.css.html" />
     <Content Include="src\Resources\Page\error\main.html" />
     <Content Include="src\Resources\Page\group_approval\list_item.html">
@@ -51,6 +54,10 @@
     <Content Include="src\Resources\Page\group_approval\unverified_list_item.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\Resources\Page\wip_bulk_report_list\main.html" />
+    <Content Include="src\Resources\Page\bulk_approval\rejected_form_container.html" />
+    <Content Include="src\Resources\Page\bulk_approval\resoved_form_container.html" />
+    <Content Include="src\Resources\Page\bulk_approval\wip_form_container.html" />
     <Content Include="src\Resources\Page\wip_list\main.html" />
     <Content Include="src\Resources\Page\report_group_list\main.html" />
     <Content Include="src\Resources\Page\top\main.html" />
@@ -77,6 +84,8 @@
     <Folder Include="src\ReportForm\LineCommand\" />
     <Folder Include="src\ReportForm\Report\" />
     <Folder Include="src\ReportForm\Page\" />
+    <Folder Include="src\Resources\Page\bulk_approval\" />
+    <Folder Include="src\Resources\Page\wip_bulk_report_list\" />
     <Folder Include="src\Twitter\" />
     <Folder Include="src\ReportForm\" />
     <Folder Include="src\ReportForm\PostCommand\" />
@@ -199,6 +208,12 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Page\ApprovalPage.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Page\BulkApprovalPage.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Page\BulkReportListPage.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Page\ErrorPage.ts" />
     <TypeScriptCompile Include="src\ReportForm\Page\GroupApprovalPage.ts" />
     <TypeScriptCompile Include="src\ReportForm\Page\InProgressListPage.ts" />

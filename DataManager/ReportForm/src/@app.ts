@@ -16,3 +16,7 @@ function doPost(e: any): any {
 function onPost(e: any, versionName: string) {
     ReportForm.onPost(e, versionName);
 }
+
+function onPostBulkReport(e: any, versionName: string) {
+    ReportForm.onPostBulkReport(e, versionName);
+}

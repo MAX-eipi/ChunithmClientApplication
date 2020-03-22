@@ -12,6 +12,7 @@ import { BulkReport } from "../Report/BulkReport";
 import { BulkReportSheet } from "../Report/BulkReportSheet";
 
 export class ReportModule extends ReportFormModule {
+    Debug: any;
 
     public noticeReportPost(message: string): void {
         if (this.config.line.reportPostNoticeEnabled) {
@@ -78,6 +79,10 @@ export class ReportModule extends ReportFormModule {
             this.version.getVersionConfig(versionName).reportSpreadsheetId,
             this.version.getVersionConfig(versionName).bulkReportWorksheetName);
         return this._bulkReportSheetMap[versionName];
+    }
+
+    public getBulkReports(versionName: string): BulkReport[] {
+        return this.getBulkReportSheet(versionName).bulkReports;
     }
 
     private _bulkReportGoogleForm: GoogleAppsScript.Forms.Form;
@@ -160,6 +165,16 @@ ${JSON.stringify(formReport)}`);
         }
 
         return reportSheet.insertReport(formReport);
+    }
+
+    public approveBulk(versionName: string, bulkReportId: number): void {
+        let bulkReportSheet = this.getBulkReportSheet(versionName);
+        bulkReportSheet.updateStatus([{ reportId: bulkReportId, status: ReportStatus.Resolved }]);
+    }
+
+    public rejectBulk(versionName: string, bulkReportId: number): void {
+        let bulkReportSheet = this.getBulkReportSheet(versionName);
+        bulkReportSheet.updateStatus([{ reportId: bulkReportId, status: ReportStatus.Rejected }]);
     }
 
     public insertBulkReport(versionName: string, formReport: GoogleFormBulkReport): BulkReport {
@@ -334,5 +349,9 @@ OP割合[万分率]:${opRatio_x100}
         // 最大ファイルサイズ 10MB
 
         return scoreInputPage;
+    }
+
+    public buildBulkReportForm(versionName: string): void {
+
     }
 }

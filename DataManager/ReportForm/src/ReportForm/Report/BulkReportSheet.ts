@@ -65,4 +65,16 @@ export class BulkReportSheet {
         this._sheet.getRange(row, 1, 1, rawReport.length).setValues([rawReport]);
         return report;
     }
+
+    public updateStatus(updateList: { reportId: number, status: ReportStatus }[]): void {
+        let table = this._sheet.getDataRange().getValues();
+        for (let target of updateList) {
+            for (var i = 0; i < table.length; i++) {
+                let reportId = parseInt(table[i][0]);
+                if (reportId == target.reportId) {
+                    this._sheet.getRange(i + 1, 8).setValue(target.status);
+                }
+            }
+        }
+    }
 }

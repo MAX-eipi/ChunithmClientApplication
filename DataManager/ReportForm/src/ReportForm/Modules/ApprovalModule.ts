@@ -170,7 +170,14 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
     }
 
     // Lv.1-6用
-    public bulkApprove(versionName: string, targetLevelList: number[]): void {
+    public bulkApprove(versionName: string, bulkReportId: number): void {
+        let bulkReport = this.report.getBulkReportSheet(versionName).getBulkReport(bulkReportId);
+        if (!bulkReport) {
+            throw new ApprovalError(`一括検証報告取得の失敗. ID:${bulkReportId}`);
+        }
+
+        let targetLevelList = [bulkReport.targetLevel];
+
         let musicDataTable = this.musicData.getTable(versionName);
         let targetMusicDatas: MusicData[] = [];
         for (let data of musicDataTable.datas) {
@@ -190,13 +197,33 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
         }
 
         this.musicData.updateMusicData(versionName, targetMusicDatas);
+        this.report.approveBulk(versionName, bulkReportId);
 
         Debug.log(JSON.stringify({
             header: '一括承認',
-            targetLevel: targetLevelList,
+            targetLevel: bulkReport.targetLevel,
         }));
 
-        this.report.noticeReportPost(`指定レベル一括承認が行われました
-Lv: ${JSON.stringify(targetLevelList)}`);
+        this.report.noticeReportPost(`⭕️[一括検証結果 承認]⭕️
+Lv: ${bulkReport.targetLevel}
+URL: `);
+    }
+
+    public bulkReject(versionName: string, bulkReportId: number): void {
+        let bulkReport = this.report.getBulkReportSheet(versionName).getBulkReport(bulkReportId);
+        if (!bulkReport) {
+            throw new ApprovalError(`一括検証報告取得の失敗. ID:${bulkReportId}`);
+        }
+
+        this.report.rejectBulk(versionName, bulkReportId);
+
+        Debug.log(JSON.stringify({
+            header: '一括承認',
+            targetLevel: bulkReport.targetLevel,
+        }));
+
+        this.report.noticeReportPost(`✖️[一括検証結果 却下]✖️
+Lv: ${bulkReport.targetLevel}
+URL: `);
     }
 }

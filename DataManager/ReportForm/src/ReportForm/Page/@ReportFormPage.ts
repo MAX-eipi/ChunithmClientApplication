@@ -47,6 +47,21 @@ export abstract class ReportFormPage {
         return source ? source.replace(linkTarget, url) : "";
     }
 
+    protected binds(source: string, parameter: ReportFormPageParameter, targetPages: ReportFormPageFactory<ReportFormPage>[]): string {
+        let ret = source;
+        if (!ret) {
+            return ret;
+        }
+
+        for (let targetPage of targetPages) {
+            let pageEntity = this.getPage(targetPage);
+            let url = pageEntity.getPageUrl(parameter.versionName);
+            let linkTarget = new RegExp(`%link:${pageEntity.pageName}%`, 'g');
+            ret = ret.replace(linkTarget, url);
+        }
+        return ret;
+    }
+
     protected readMainHtml(): string {
         return this.readCurrentPageHtml("main");
     }

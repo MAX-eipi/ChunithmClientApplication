@@ -43,5 +43,6 @@ export class ReportFormModule {
     public get report(): ReportModule { return this.getModule('report', ReportModule); }
     public get twitter(): TwitterModule { return this.getModule('twitter', TwitterModule); }
     public get musicData(): MusicDataModule { return this.getModule('musicData', MusicDataModule); }
+    public get approval(): ApprovalModule { return this.getModule('approval', ApprovalModule); }
     public get version(): VersionModule { return this.getModule('version', VersionModule); }
 }
