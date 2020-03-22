@@ -23,6 +23,11 @@ export class TestCommand extends LINECommand {
                 notifyUnverified();
                 this.pushMessage(['完了']);
                 break;
+            case "bulkApprove":
+                this.module.approval.bulkApprove(
+                    this.module.config.common.defaultVersionName,
+                    [1, 2, 3, 4, 5, 6,]);
+                break;
             default:
                 this.replyMessage(event.replyToken, [`未知のコマンドです\n${command}`]);
                 break;
