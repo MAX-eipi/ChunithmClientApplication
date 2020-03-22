@@ -5,13 +5,15 @@ import { UnverifiedListByGenrePage } from "./UnverifiedListByGenrePage";
 import { UnverifiedListByLevelPage } from "./UnverifiedListByLevelPage";
 import { ReportFormPageParameter, ReportFormPage } from "./@ReportFormPage";
 import { getAppVersion } from "../../@app";
+import { BulkApprovalPage } from "./BulkApprovalPage";
+import { BulkReportListPage } from "./BulkReportListPage";
 
 interface TopPageParameter extends ReportFormPageParameter { }
 
 export class TopPage extends ReportFormPage {
     public static readonly PAGE_NAME: string = "top";
 
-    public getPageName(): string {
+    public get pageName(): string {
         return TopPage.PAGE_NAME;
     }
 
@@ -25,10 +27,18 @@ export class TopPage extends ReportFormPage {
 
         source = this.replaceWipContainer(source, this.module.config.common.role);
 
-        source = this.bind(InProgressListPage, parameter, source);
-        source = this.bind(ReportGroupListPage, parameter, source);
-        source = this.bind(UnverifiedListByGenrePage, parameter, source);
-        source = this.bind(UnverifiedListByLevelPage, parameter, source);
+        source = this.binds(
+            source,
+            parameter,
+            [
+                InProgressListPage,
+                ReportGroupListPage,
+                BulkApprovalPage,
+                BulkReportListPage,
+                UnverifiedListByGenrePage,
+                UnverifiedListByLevelPage,
+            ]);
+
 
         return this.createHtmlOutput(source);
     }

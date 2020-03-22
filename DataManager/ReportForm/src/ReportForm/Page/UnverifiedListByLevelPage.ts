@@ -53,7 +53,7 @@ class ListItemMusicData {
 
 export class UnverifiedListByLevelPage extends ReportFormPage {
     public static readonly PAGE_NAME: string = "unverified_list_level";
-    public getPageName(): string {
+    public get pageName(): string {
         return UnverifiedListByLevelPage.PAGE_NAME;
     }
     public call(parameter: UnverifiedListByLevelPageParameter): GoogleAppsScript.HTML.HtmlOutput {

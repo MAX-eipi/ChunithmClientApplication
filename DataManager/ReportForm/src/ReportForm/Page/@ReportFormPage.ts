@@ -20,10 +20,8 @@ export abstract class ReportFormPage {
         this._module = module;
     }
 
-    public get pageName(): string {
-        return this.getPageName();
-    }
-    public abstract getPageName(): string;
+    public abstract get pageName(): string;
+    public getPageName(): string { return this.pageName; }
 
     public isAccessable(role: Role): boolean {
         return true;
@@ -47,6 +45,21 @@ export abstract class ReportFormPage {
         let url = pageEntity.getPageUrl(parameter.versionName);
         let linkTarget = new RegExp(`%link:${pageEntity.pageName}%`, 'g');
         return source ? source.replace(linkTarget, url) : "";
+    }
+
+    protected binds(source: string, parameter: ReportFormPageParameter, targetPages: ReportFormPageFactory<ReportFormPage>[]): string {
+        let ret = source;
+        if (!ret) {
+            return ret;
+        }
+
+        for (let targetPage of targetPages) {
+            let pageEntity = this.getPage(targetPage);
+            let url = pageEntity.getPageUrl(parameter.versionName);
+            let linkTarget = new RegExp(`%link:${pageEntity.pageName}%`, 'g');
+            ret = ret.replace(linkTarget, url);
+        }
+        return ret;
     }
 
     protected readMainHtml(): string {

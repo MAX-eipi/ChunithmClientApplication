@@ -12,12 +12,15 @@ import { VersionGetCommand } from "../LINECommand/VersionGetCommand";
 import { ReportFormModule } from "../Modules/@ReportFormModule";
 import { ReportFormBuildCommand } from "../LineCommand/ReportFormBuildCommand";
 import { GlobalConfigValueGetCommand } from "../LineCommand/GlobalConfigValueGetCommand";
+import { BulkReportFormUrlGetCommand } from "../LineCommand/BulkReportFormUrlGetCommand";
+import { TargetLevelMusicCountGetCommand } from "../LineCommand/TargetLevelMusicCountGetCommand";
 
 export class LINECommandDI {
     public static setCommandFactories(module: ReportFormModule): void {
         module.line.setCommandFactories([
             VersionGetCommand,
             FormUrlGetCommand,
+            BulkReportFormUrlGetCommand,
             TopUrlGetCommand,
             EnvironmentGetCommand,
             LatestGameVersionGetCommand,
@@ -28,6 +31,7 @@ export class LINECommandDI {
             PostTweetEnabledGetCommand,
             PostTweetEnabledSetCommand,
             ReportFormBuildCommand,
+            TargetLevelMusicCountGetCommand,
             TestCommand,
         ]);
     }
