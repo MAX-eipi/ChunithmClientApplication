@@ -51,7 +51,7 @@ export class UnverifiedListByGenrePage extends ReportFormPage {
 
     public static readonly PAGE_NAME = "unverified_list_genre";
 
-    public getPageName(): string {
+    public get pageName(): string {
         return UnverifiedListByGenrePage.PAGE_NAME;
     }
 

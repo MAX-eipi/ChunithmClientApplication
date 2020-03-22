@@ -1,9 +1,9 @@
-import { ReportFormPageParameter, ReportFormPage } from "./@ReportFormPage
-import { Role } from "../Role";
-import { InProgressListPage } from "./InProgressListPage";
-import { Utility } from "../Utility";
-import { ReportStatus } from "../Report/Report";
 import { Difficulty } from "../../MusicDataTable/Difficulty";
+import { ReportStatus } from "../Report/Report";
+import { Role } from "../Role";
+import { Utility } from "../Utility";
+import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
+import { InProgressListPage } from "./InProgressListPage";
 
 interface ApprovalPageParameter extends ReportFormPageParameter {
     reportId: string;
@@ -12,7 +12,7 @@ interface ApprovalPageParameter extends ReportFormPageParameter {
 export class ApprovalPage extends ReportFormPage {
     public static readonly PAGE_NAME = "approval";
 
-    public getPageName(): string {
+    public get pageName(): string {
         return ApprovalPage.PAGE_NAME;
     }
 
@@ -68,8 +68,8 @@ export class ApprovalPage extends ReportFormPage {
         let imagePaths = report.imagePaths;
         if (imagePaths.length > 0) {
             let img = imagePaths
-                .map(function (p) { return `<div class="result_image"><img src="${p}" /></div>`; })
-                .reduce(function (acc, src) { return acc + src; });
+                .map(p => `<div class="result_image"><img src="${p}" /></div>`)
+                .reduce((acc, src) => acc + src);
             source = source.replace(/%verificationImageContainer%/, `<div class="result_box w400">${img}</div>`);
         }
         else {

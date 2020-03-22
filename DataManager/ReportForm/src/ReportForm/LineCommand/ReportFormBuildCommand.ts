@@ -13,7 +13,7 @@ export class ReportFormBuildCommand extends LINECommand {
         this.replyMessage(event.replyToken, [`報告フォームを構築します:${versionName}`]);
         this.module.report.buildForm(versionName);
 
-        let url = this.module.report.googleForm.getPublishedUrl();
+        let url = this.module.report.reportGoogleForm.getPublishedUrl();
         this.pushMessage([`報告フォームの構築が完了しました
 URL: ${url}`])
     }

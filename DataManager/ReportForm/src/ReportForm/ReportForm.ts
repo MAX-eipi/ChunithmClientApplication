@@ -2,9 +2,10 @@ import { ConfigurationScriptProperty } from "../Configurations/ConfigurationDefi
 import { Debug } from "./Debug";
 import { Instance } from "./Instance";
 import { storeConfig } from "./operations";
+import { ApprovalPage } from "./Page/ApprovalPage";
+import { GoogleFormBulkReport } from "./Report/GoogleFormBulkReport";
 import { GoogleFormReport } from "./Report/GoogleFormReport";
 import { Utility } from "./Utility";
-import { ApprovalPage } from "./Page/ApprovalPage";
 
 export class ReportForm {
     public static doGet(e: any): any {
@@ -125,6 +126,33 @@ export class ReportForm {
 難易度:${Utility.toDifficultyText(report.difficulty)}
 譜面定数:${report.calcBaseRating().toFixed(1)}
 URL:${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, report.reportId)}`);
+            }
+        }
+        catch (error) {
+            let message = this.toExceptionMessage(error);
+            Debug.logError(message);
+        }
+    }
+
+    public static onPostBulkReport(e: { response: GoogleAppsScript.Forms.FormResponse }, versionName: string = ""): void {
+        try {
+            Instance.initialize();
+            if (!versionName) {
+                versionName = Instance.instance.module.config.common.defaultVersionName;
+            }
+            let bulkReport = Instance.instance.module.report.insertBulkReport(versionName, new GoogleFormBulkReport(e.response));
+            if (bulkReport) {
+                Debug.log(JSON.stringify({
+                    header: `一括検証報告`,
+                    reportId: bulkReport.reportId,
+                    targetLevel: bulkReport.targetLevel,
+                    musicCount: bulkReport.musicCount,
+                    op: bulkReport.op,
+                    opRatio: bulkReport.opRatio,
+                }));
+                Instance.instance.module.report.noticeReportPost(`[一括検証報告]
+対象レベル:${bulkReport.targetLevel}
+URL:${'未実装'}`);
             }
         }
         catch (error) {

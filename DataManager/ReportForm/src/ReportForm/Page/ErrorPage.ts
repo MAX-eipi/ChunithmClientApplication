@@ -8,9 +8,10 @@ interface ErrorPageParameter extends ReportFormPageParameter {
 export class ErrorPage extends ReportFormPage {
     public static readonly PAGE_NAME: string = "error";
 
-    public getPageName(): string {
+    public get pageName(): string {
         return ErrorPage.PAGE_NAME;
     }
+
     public call(parameter: ErrorPageParameter): GoogleAppsScript.HTML.HtmlOutput {
         var source = this.readMainHtml();
 

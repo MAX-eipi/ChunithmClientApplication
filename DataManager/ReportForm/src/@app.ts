@@ -1,6 +1,6 @@
 import { ReportForm } from "./ReportForm/ReportForm";
 
-const VERSION: string = "0.3.0.0";
+const VERSION: string = "0.3.1.2";
 export function getAppVersion(): string {
     return VERSION;
 }
@@ -15,4 +15,8 @@ function doPost(e: any): any {
 
 function onPost(e: any, versionName: string) {
     ReportForm.onPost(e, versionName);
+}
+
+function onPostBulkReport(e: any, versionName: string) {
+    ReportForm.onPostBulkReport(e, versionName);
 }

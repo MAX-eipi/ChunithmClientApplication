@@ -9,7 +9,7 @@ interface ReportGroupListPageParameter extends ReportFormPageParameter { }
 export class ReportGroupListPage extends ReportFormPage {
     public static readonly PAGE_NAME = "report_group_list";
 
-    public getPageName(): string {
+    public get pageName(): string {
         return ReportGroupListPage.PAGE_NAME;
     }
 

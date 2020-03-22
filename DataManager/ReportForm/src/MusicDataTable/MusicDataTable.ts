@@ -41,6 +41,19 @@ export class MusicDataTable {
         return this.table[index];
     }
 
+    public getTargetLevelMusicCount(targetLevel: number): number {
+        var count = 0;
+        for (let data of this.datas) {
+            if (data.BasicLevel == targetLevel) {
+                count++;
+            }
+            if (data.AdvancedLevel == targetLevel) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public updateMusicDatas(musicDatas: MusicData[]): MusicData[] {
         var updatedMusicDatas = new Array();
         for (var i = 0; i < musicDatas.length; i++) {
