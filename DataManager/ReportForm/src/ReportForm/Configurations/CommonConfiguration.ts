@@ -4,9 +4,29 @@ import { Role } from "../Role";
 import { ReportFormConfiguration } from "./@ReportFormConfiguration";
 
 export class CommonConfiguration extends ReportFormConfiguration {
-    public get rootUrl(): string { return this.getProperty(ConfigurationPropertyName.ROOT_URL, ""); }
     public get environment(): Environment { return this.getProperty(ConfigurationPropertyName.ENVIRONMENT, Environment.Release); }
-    public get role(): Role { return this.getProperty(ConfigurationPropertyName.ROLE, Role.Reader); }
+
+    private _overrideRootUrl: string = null;
+    public get rootUrl(): string {
+        return this._overrideRootUrl
+            ? this._overrideRootUrl
+            : this.getProperty(ConfigurationPropertyName.ROOT_URL, "");
+    }
+
+    public overrideRootUrl(rootUrl: string): void {
+        this._overrideRootUrl = rootUrl;
+    }
+
+    private _overrideRole: Role = -1;
+    public get role(): Role {
+        return this._overrideRole >= 0
+            ? this._overrideRole
+            : this.getProperty(ConfigurationPropertyName.ROLE, Role.Reader);
+    }
+
+    public overrideRole(role: Role): void {
+        this._overrideRole = role;
+    }
 
     public get defaultVersionName(): string {
         let versionName = this.getProperty(ConfigurationPropertyName.DEFAULT_VERSION_NAME, '');
