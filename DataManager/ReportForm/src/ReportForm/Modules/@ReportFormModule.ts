@@ -7,6 +7,7 @@ import { Router } from "./Router";
 import { TwitterModule } from "./TwitterModule";
 import { VersionModule } from "./VersionModule";
 import { ApprovalModule } from "./ApprovalModule";
+import { WebhookModule } from "./WebhookModule";
 
 export class ReportFormModule {
     public static instantiate(config: ReportFormConfiguration): ReportFormModule {
@@ -45,4 +46,5 @@ export class ReportFormModule {
     public get musicData(): MusicDataModule { return this.getModule('musicData', MusicDataModule); }
     public get approval(): ApprovalModule { return this.getModule('approval', ApprovalModule); }
     public get version(): VersionModule { return this.getModule('version', VersionModule); }
+    public get webhook(): WebhookModule { return this.getModule('webhook', WebhookModule); }
 }

@@ -315,7 +315,6 @@ OP割合[万分率]:${opRatio_x100}
         beforeOpInput.setRequired(true);
         beforeOpInput.setValidation(FormApp.createTextValidation()
             .requireNumberGreaterThanOrEqualTo(0)
-            /// @ts-ignore
             .build());
 
         let afterOpInput = form.addTextItem();
@@ -323,7 +322,6 @@ OP割合[万分率]:${opRatio_x100}
         afterOpInput.setRequired(true);
         afterOpInput.setValidation(FormApp.createTextValidation()
             .requireNumberGreaterThanOrEqualTo(0)
-            /// @ts-ignore
             .build());
 
         let scoreInput = form.addTextItem();
@@ -331,9 +329,7 @@ OP割合[万分率]:${opRatio_x100}
         scoreInput.setRequired(true);
         scoreInput.setValidation(FormApp.createTextValidation()
             .requireNumberBetween(950000, 1010000)
-            /// @ts-ignore
             .setHelpText("許容スコア範囲は[950000,1010000]です")
-            /// @ts-ignore
             .build());
 
         let comboStatusInput = form.addMultipleChoiceItem();

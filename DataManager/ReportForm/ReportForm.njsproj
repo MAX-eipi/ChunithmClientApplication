@@ -70,15 +70,12 @@
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="hoge\" />
-    <Folder Include="hoge\ReportForm\" />
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
     <Folder Include="src\ReportForm\Modules\" />
     <Folder Include="src\Configurations\" />
     <Folder Include="src\ReportForm\Logger\" />
-    <Folder Include="hoge\ReportForm\LINECommand\" />
     <Folder Include="src\ReportForm\Configurations\" />
     <Folder Include="src\ReportForm\Dependencies\" />
     <Folder Include="src\ReportForm\LineCommand\" />
@@ -130,6 +127,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Dependencies\PostCommand.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Dependencies\WebhookEventDefinition.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\LineCommand\BulkReportFormBuildCommand.ts">
@@ -253,6 +253,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Report\ReportSheet.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Modules\WebhookModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Twitter\TwitterConnector.ts" />
