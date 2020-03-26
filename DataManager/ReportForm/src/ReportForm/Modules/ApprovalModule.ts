@@ -6,6 +6,7 @@ import { Report, ReportStatus } from "../Report/Report";
 import { Utility } from "../Utility";
 import { ReportFormModule } from "./@ReportFormModule";
 import { BulkApprovalPage } from "../Page/BulkApprovalPage";
+import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
 
 class ApprovalError implements Error {
     public name: string = "ApprovalError";
@@ -76,6 +77,8 @@ export class ApprovalModule extends ReportFormModule {
 難易度:${difficulty}
 譜面定数:${baseRating.toFixed(1)}
 URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}`);
+
+        this.webhook.invoke(WebhookEventName.ON_APPROVE);
     }
 
     public reject(versionName: string, reportId: number): void {
@@ -168,6 +171,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
 
         this.report.noticeReportPost(`検証報告グループが一括承認されました
 グループID: ${reportGroupId}`);
+
+        this.webhook.invoke(WebhookEventName.ON_APPROVE);
     }
 
     // Lv.1-6用
@@ -208,6 +213,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
         this.report.noticeReportPost(`⭕️[一括検証結果 承認]⭕️
 Lv:${bulkReport.targetLevel}
 URL:${this.router.getPage(BulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}`);
+
+        this.webhook.invoke(WebhookEventName.ON_APPROVE);
     }
 
     public bulkReject(versionName: string, bulkReportId: number): void {
