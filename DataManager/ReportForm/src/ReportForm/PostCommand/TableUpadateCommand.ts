@@ -1,5 +1,6 @@
 import { MusicData, MusicDataParameter } from "../../MusicDataTable/MusicData";
 import { PostCommand, PostCommandParameter } from "./@PostCommand";
+import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
 
 interface TableUpdateCommandParameter extends PostCommandParameter {
     MusicDatas: MusicDataParameter[];
@@ -36,6 +37,8 @@ ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLeve
                 }
                 this.module.line.notice.pushTextMessage([message]);
                 this.module.twitter.postTweet(message);
+
+                this.module.webhook.invoke(WebhookEventName.ON_UPDATE_TABLE);
             }
             else {
                 message = '[新規定数表作成]\n';
@@ -44,6 +47,8 @@ ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLeve
                 }
                 this.module.line.notice.pushTextMessage([message]);
                 this.module.twitter.postTweet(message);
+
+                this.module.webhook.invoke(WebhookEventName.ON_UPDATE_TABLE);
             }
         }
 
