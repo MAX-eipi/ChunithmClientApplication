@@ -6,65 +6,89 @@ export interface WebhookParameter {
 
 export class WebhookModule extends ReportFormModule {
 
-    private _settings: WebhookSettings;
-    public get settings(): WebhookSettings {
-        return this._settings;
+    private _settingsManager: WebhookSettingsManager;
+    public get settingsManager(): WebhookSettingsManager {
+        return this._settingsManager;
     }
-    public set settings(value: WebhookSettings) {
-        this._settings = value;
+    public set settingsManager(value: WebhookSettingsManager) {
+        this._settingsManager = value;
     }
 
     public invoke(eventName: string, parameter?: WebhookParameter): void {
-        if (!this.settings) {
+        if (!this.settingsManager) {
             return;
         }
-        let targets: string[] = [];
-        for (var callback of this.settings.getCallbacks(eventName)) {
-            targets.push(this.replaceParameter(callback, parameter));
+        const requests: GoogleAppsScript.URL_Fetch.URLFetchRequest[] = [];
+        for (const callback of this.settingsManager.getCallbacks(eventName)) {
+            requests.push(this.createRequest(callback, parameter));
         }
-        UrlFetchApp.fetchAll(targets);
+        UrlFetchApp.fetchAll(requests);
     }
 
-    private replaceParameter(callback: string, parameter: WebhookParameter): string {
+    private createRequest(settings: WebhookSettings, parameter: WebhookParameter): GoogleAppsScript.URL_Fetch.URLFetchRequest {
+        return {
+            url: this.replaceUrlParameter(settings.callback, parameter),
+            headers: settings.header,
+        };
+    }
+
+    private replaceUrlParameter(url: string, parameter: WebhookParameter): string {
         if (parameter) {
             for (let param of parameter.parameters) {
-                callback = callback.replace(param.key, param.value);
+                url = url.replace(param.key, param.value);
             }
         }
-        return callback;
+        return url;
     }
 }
 
-export class WebhookSettings {
-    public static readBySheet(spreadsheetId: string, worksheetName: string): WebhookSettings {
+class WebhookSettings {
+    private _callback: string;
+    public get callback(): string {
+        return this._callback;
+    }
+
+    private _header: { [key: string]: string };
+    public get header(): { [key: string]: string } {
+        return this._header
+    }
+
+    public constructor(callback: string, headerJson?: string) {
+        this._callback = callback;
+        this._header = headerJson ? JSON.parse(headerJson) : {};
+    }
+}
+
+export class WebhookSettingsManager {
+    public static readBySheet(spreadsheetId: string, worksheetName: string): WebhookSettingsManager {
         let sheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName(worksheetName);
         if (!sheet) {
             throw new Error(`Worksheet not found. (${worksheetName})`);
         }
 
         let datas = sheet.getDataRange().getValues();
-        let settings: { eventName: string, callback: string }[] = [];
-        for (var i = 1; i < datas.length; i++) {
+        const settings: { eventName: string, settings: WebhookSettings }[] = [];
+        for (let i = 1; i < datas.length; i++) {
             settings.push({
                 eventName: datas[i][0],
-                callback: datas[i][1],
+                settings: new WebhookSettings(datas[i][1], datas[i][2]),
             });
         }
-        return new WebhookSettings(settings);
+        return new WebhookSettingsManager(settings);
     }
 
-    public constructor(settingsList: { eventName: string, callback: string }[]) {
+    public constructor(settingsList: { eventName: string, settings: WebhookSettings }[]) {
         for (let settings of settingsList) {
             if (!(settings.eventName in this._callbackMap)) {
                 this._callbackMap[settings.eventName] = [];
             }
-            this._callbackMap[settings.eventName].push(settings.callback);
+            this._callbackMap[settings.eventName].push(settings.settings);
         }
     }
 
-    private _callbackMap: { [eventName: string]: string[] } = {};
+    private _callbackMap: { [eventName: string]: WebhookSettings[] } = {};
 
-    public getCallbacks(eventName: string): string[] {
+    public getCallbacks(eventName: string): WebhookSettings[] {
         if (!(eventName in this._callbackMap)) {
             return [];
         }
