@@ -1,0 +1,38 @@
+<head>
+    <?!= ReportFormPage.includeStylesheet("common/common.css"); ?>
+    <?!= ReportFormPage.includeStylesheet("common/unverified_list.css"); ?>
+    <base target="_top" />
+</head>
+<body>
+    <div class="box_1">
+        <div class="box_1_title">
+            未検証楽曲リスト(ジャンル別)
+        </div>
+        <div class="box_2">
+            <form action="%link:root%" method="get">
+                <input type="hidden" name="send" value="1">
+                <input type="hidden" name="page" value="unverified_list_genre">
+                <input type="hidden" name="versionName" value="%versionName%">
+                <div class="select_box">
+                    <div class="box_3_title">
+                        難易度
+                    </div>
+                    %difficulty_select_list%
+                </div>
+                <div class="select_box">
+                    <div class="box_3_title">
+                        ジャンル
+                    </div>
+                    %genre_select_list%
+                </div>
+                <div class="text_center">
+                    <input type="submit" class="send" value="リスト取得">
+                </div>
+            </form>
+        </div>
+        %list%
+        <div class="text_center">
+            <a href="%link:top%">TOP</a>
+        </div>
+    </div>
+</body>

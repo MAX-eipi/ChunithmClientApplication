@@ -1,0 +1,21 @@
+{
+  "name": "migration-report-form",
+  "version": "0.0.0",
+  "description": "MigrationReportForm",
+  "main": "app.js",
+  "author": {
+    "name": ""
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
+  },
+  "devDependencies": {
+    "@types/google-apps-script": "^1.0.10",
+    "@types/jest": "^25.1.3",
+    "@types/node": "^8.0.14",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.1",
+    "typescript": "^3.2.2"
+  }
+}
