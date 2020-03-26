@@ -1,6 +1,6 @@
 import { ReportForm } from "./ReportForm/ReportForm";
 
-const VERSION: string = "0.3.2";
+const VERSION = "0.3.2.0";
 export function getAppVersion(): string {
     return VERSION;
 }
