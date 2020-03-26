@@ -70,15 +70,12 @@
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="hoge\" />
-    <Folder Include="hoge\ReportForm\" />
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
     <Folder Include="src\ReportForm\Modules\" />
     <Folder Include="src\Configurations\" />
     <Folder Include="src\ReportForm\Logger\" />
-    <Folder Include="hoge\ReportForm\LINECommand\" />
     <Folder Include="src\ReportForm\Configurations\" />
     <Folder Include="src\ReportForm\Dependencies\" />
     <Folder Include="src\ReportForm\LineCommand\" />
