@@ -23,6 +23,12 @@ export class TestCommand extends LINECommand {
                 notifyUnverified();
                 this.pushMessage(['完了']);
                 break;
+            case "tweet":
+                {
+                    const date = new Date();
+                    this.module.twitter.postTweet(`これはテストツイートです。\n${date.toString()}`);
+                }
+                break;
             default:
                 this.replyMessage(event.replyToken, [`未知のコマンドです\n${command}`]);
                 break;
