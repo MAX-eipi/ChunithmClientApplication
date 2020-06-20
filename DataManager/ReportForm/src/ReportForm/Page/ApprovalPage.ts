@@ -45,8 +45,6 @@ export class ApprovalPage extends ReportFormPage {
         let comboStatus = report.comboStatus;
         let baseRating = report.calcBaseRating();
 
-        //let jacketImagePath = "https://drive.google.com/uc?id=1r9QWYcPCCAZTo5kbGj3adHVJOF3Kh2gm";
-
         var source = this.readMainHtml();
 
         source = this.resolveVersionName(source, parameter.versionName);
@@ -54,7 +52,6 @@ export class ApprovalPage extends ReportFormPage {
         source = this.bind(InProgressListPage, parameter, source);
 
         source = source.replace(/%reportId%/g, reportId.toString());
-        //source = source.replace(/%jacketImagePath%/g, jacketImagePath);
         source = source.replace(/%musicName%/g, report.musicName);
         source = source.replace(/%difficulty%/g, Utility.toDifficultyTextLowerCase(report.difficulty));
         source = source.replace(/%difficultyImagePath%/g, Utility.getDifficultyImagePath(report.difficulty));
