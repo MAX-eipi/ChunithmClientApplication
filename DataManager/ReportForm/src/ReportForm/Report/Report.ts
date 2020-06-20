@@ -98,7 +98,7 @@ export class Report {
         return this._comboStatus;
     }
     public get imagePaths(): string[] {
-        return this._imagePaths.map(function (id) { return `https://drive.google.com/uc?id=${id}`; });
+        return this._imagePaths;
     }
     public get reportStatus(): ReportStatus {
         return this._reportStatus;
