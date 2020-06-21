@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary;
+using ChunithmClientLibrary;
 using ChunithmClientLibrary.MusicData;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;

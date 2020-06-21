@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.ChunithmNet.Parser;
+using ChunithmClientLibrary.ChunithmNet.Parser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ChunithmClientLibraryUnitTest.ChunithmNetParser

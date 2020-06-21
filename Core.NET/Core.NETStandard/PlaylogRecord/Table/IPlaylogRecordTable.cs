@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.Table;
+using ChunithmClientLibrary.Table;
 
 namespace ChunithmClientLibrary.PlaylogRecord
 {

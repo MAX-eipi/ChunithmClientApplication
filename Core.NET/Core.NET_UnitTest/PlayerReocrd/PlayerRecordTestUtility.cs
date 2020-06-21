@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.PlayerRecord;
+using ChunithmClientLibrary.PlayerRecord;
 using ChunithmClientLibraryUnitTest.HighScoreRecord;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

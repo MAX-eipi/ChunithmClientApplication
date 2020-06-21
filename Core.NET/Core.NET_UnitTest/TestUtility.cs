@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary;
+using ChunithmClientLibrary;
 
 namespace ChunithmClientLibraryUnitTest
 {

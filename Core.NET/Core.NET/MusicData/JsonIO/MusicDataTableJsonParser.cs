@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.Reader;
+using ChunithmClientLibrary.Reader;
 
 namespace ChunithmClientLibrary.MusicData
 {

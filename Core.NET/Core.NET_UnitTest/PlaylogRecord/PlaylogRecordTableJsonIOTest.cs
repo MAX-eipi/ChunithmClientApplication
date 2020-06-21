@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary;
+using ChunithmClientLibrary;
 using ChunithmClientLibrary.PlaylogRecord;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

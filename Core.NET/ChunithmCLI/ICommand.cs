@@ -1,4 +1,4 @@
-﻿namespace ChunithmCLI
+namespace ChunithmCLI
 {
     public interface ICommand
     {

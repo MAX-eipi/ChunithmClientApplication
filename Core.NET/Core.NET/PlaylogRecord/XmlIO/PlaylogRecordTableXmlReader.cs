@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.PlaylogRecord.XmlIO;
+using ChunithmClientLibrary.PlaylogRecord.XmlIO;
 using ChunithmClientLibrary.Reader;
 using ClosedXML.Excel;
 using System;

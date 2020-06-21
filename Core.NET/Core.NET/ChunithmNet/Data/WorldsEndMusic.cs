@@ -1,4 +1,4 @@
-﻿namespace ChunithmClientLibrary.ChunithmNet.Data
+namespace ChunithmClientLibrary.ChunithmNet.Data
 {
     public class WorldsEndMusic
     {

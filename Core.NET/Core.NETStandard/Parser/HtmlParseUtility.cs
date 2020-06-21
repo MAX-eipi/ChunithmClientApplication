@@ -1,4 +1,4 @@
-﻿using AngleSharp.Dom;
+using AngleSharp.Dom;
 using ChunithmClientLibrary.ChunithmNet.Data;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using AngleSharp.Html.Parser;
+using AngleSharp.Html.Parser;
 using ChunithmClientLibrary.ChunithmNet.API;
 using ChunithmClientLibrary.ChunithmNet.Data;
 using ChunithmClientLibrary.ChunithmNet.Parser;

@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary;
+using ChunithmClientLibrary;
 using ChunithmClientLibrary.ChunithmNet.Parser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

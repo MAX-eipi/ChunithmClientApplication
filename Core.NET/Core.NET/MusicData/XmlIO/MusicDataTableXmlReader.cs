@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.MusicData.XmlIO;
+using ChunithmClientLibrary.MusicData.XmlIO;
 using ChunithmClientLibrary.Reader;
 using ClosedXML.Excel;
 using System.Collections.Generic;

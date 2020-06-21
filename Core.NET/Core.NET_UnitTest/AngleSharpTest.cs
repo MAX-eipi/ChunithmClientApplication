@@ -1,4 +1,4 @@
-﻿using AngleSharp.Html.Dom;
+using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;

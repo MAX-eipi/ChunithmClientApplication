@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.MusicData;
+using ChunithmClientLibrary.MusicData;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -1,4 +1,4 @@
-﻿namespace ChunithmClientLibrary.Writer
+namespace ChunithmClientLibrary.Writer
 {
     public interface IWriter<TData>
     {

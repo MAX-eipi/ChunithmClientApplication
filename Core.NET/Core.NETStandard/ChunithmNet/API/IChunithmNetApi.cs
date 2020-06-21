@@ -1,4 +1,4 @@
-﻿namespace ChunithmClientLibrary.ChunithmNet.API
+namespace ChunithmClientLibrary.ChunithmNet.API
 {
     public interface IChunithmNetApiRequest
     {

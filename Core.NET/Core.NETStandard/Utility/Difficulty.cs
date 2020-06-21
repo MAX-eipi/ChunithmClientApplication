@@ -1,4 +1,4 @@
-﻿namespace ChunithmClientLibrary
+namespace ChunithmClientLibrary
 {
     public enum Difficulty
     {

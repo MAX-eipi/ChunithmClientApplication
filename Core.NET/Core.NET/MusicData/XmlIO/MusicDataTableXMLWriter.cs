@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.Writer;
+using ChunithmClientLibrary.Writer;
 using ClosedXML.Excel;
 using System.Linq;
 using Header = ChunithmClientLibrary.MusicData.XmlIO.Header;

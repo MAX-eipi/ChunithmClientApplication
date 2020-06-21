@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.HighScoreRecord;
+using ChunithmClientLibrary.HighScoreRecord;
 using System;
 using System.Runtime.Serialization;
 

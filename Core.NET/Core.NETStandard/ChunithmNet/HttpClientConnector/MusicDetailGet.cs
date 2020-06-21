@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.ChunithmNet.API;
+using ChunithmClientLibrary.ChunithmNet.API;
 using ChunithmClientLibrary.ChunithmNet.Data;
 using ChunithmClientLibrary.ChunithmNet.Parser;
 using System.Collections.Generic;

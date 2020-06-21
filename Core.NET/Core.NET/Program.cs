@@ -1,4 +1,4 @@
-﻿/*
+/*
 CHUNITHM Record Leader
 
 Copyright 2017 MAX-eipi

@@ -1,4 +1,4 @@
-﻿namespace ChunithmClientLibrary.HighScoreRecord
+namespace ChunithmClientLibrary.HighScoreRecord
 {
     public interface IWorldsEndHighScoreRecordTableUnit : IHighScoreRecordTableUnit
     {

@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary;
+using ChunithmClientLibrary;
 using ChunithmClientLibrary.ChunithmMusicDatabase.HttpClientConnector;
 using ChunithmClientLibrary.MusicData;
 using System.IO;

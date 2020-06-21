@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.Reader;
+using ChunithmClientLibrary.Reader;
 using System;
 
 namespace ChunithmClientLibrary.PlaylogRecord

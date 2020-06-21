@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.ChunithmNet.API;
+using ChunithmClientLibrary.ChunithmNet.API;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;

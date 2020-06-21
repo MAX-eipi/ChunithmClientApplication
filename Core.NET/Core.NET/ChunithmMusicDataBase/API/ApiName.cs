@@ -1,4 +1,4 @@
-﻿namespace ChunithmClientLibrary.ChunithmMusicDatabase.API
+namespace ChunithmClientLibrary.ChunithmMusicDatabase.API
 {
     public static class ApiName
     {

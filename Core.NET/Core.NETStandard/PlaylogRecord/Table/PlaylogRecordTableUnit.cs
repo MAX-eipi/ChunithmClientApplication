@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.ChunithmNet.Data;
+using ChunithmClientLibrary.ChunithmNet.Data;
 using System;
 using System.Runtime.Serialization;
 

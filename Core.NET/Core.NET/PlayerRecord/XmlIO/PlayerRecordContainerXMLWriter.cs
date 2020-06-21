@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.HighScoreRecord;
+using ChunithmClientLibrary.HighScoreRecord;
 using ChunithmClientLibrary.PlayerRecord.XmlIO;
 using ChunithmClientLibrary.Writer;
 using ClosedXML.Excel;

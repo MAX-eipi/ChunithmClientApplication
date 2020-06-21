@@ -1,4 +1,4 @@
-﻿namespace ChunithmClientLibrary.Reader
+namespace ChunithmClientLibrary.Reader
 {
     public class JsonReader<TResult> : IReader<string, TResult>
     {

@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.ChunithmNet.API;
+using ChunithmClientLibrary.ChunithmNet.API;
 using ChunithmClientLibrary.ChunithmNet.Parser;
 using System.Net.Http;
 using System.Threading.Tasks;

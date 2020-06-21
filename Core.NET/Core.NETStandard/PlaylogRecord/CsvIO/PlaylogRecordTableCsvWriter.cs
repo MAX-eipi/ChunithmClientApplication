@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.Writer;
+using ChunithmClientLibrary.Writer;
 using System;
 using System.Text;
 

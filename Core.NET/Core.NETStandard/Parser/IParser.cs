@@ -1,4 +1,4 @@
-﻿namespace ChunithmClientLibrary.Parser
+namespace ChunithmClientLibrary.Parser
 {
     public interface IParser<TSource, TResult>
     {

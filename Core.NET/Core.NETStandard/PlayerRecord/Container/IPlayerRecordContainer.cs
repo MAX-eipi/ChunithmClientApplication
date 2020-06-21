@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.HighScoreRecord;
+using ChunithmClientLibrary.HighScoreRecord;
 
 namespace ChunithmClientLibrary.PlayerRecord
 {
