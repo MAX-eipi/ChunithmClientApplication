@@ -39,8 +39,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AngleSharp, Version=0.13.0.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
-      <HintPath>..\packages\AngleSharp.0.13.0\lib\net46\AngleSharp.dll</HintPath>
+    <Reference Include="AngleSharp, Version=0.14.0.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
+      <HintPath>..\packages\AngleSharp.0.14.0\lib\net472\AngleSharp.dll</HintPath>
     </Reference>
     <Reference Include="ClosedXML, Version=0.94.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.0.94.2\lib\net46\ClosedXML.dll</HintPath>
@@ -97,15 +97,12 @@
     <Compile Include="ChunithmNetParser\WorldsEndMusicParserTest.cs" />
     <Compile Include="HighScoreRecord\HighScoreRecordTestUtility.cs" />
     <Compile Include="MusicData\MusicDataTableJsonIOTest.cs" />
-    <Compile Include="MusicData\MusicDataTableXmllOTest.cs" />
     <Compile Include="MusicData\MusicDataTestUtility.cs" />
     <Compile Include="PlayerReocrd\PlayerRecordContainerJsonIOTest.cs" />
-    <Compile Include="PlayerReocrd\PlayerRecordContainerXMLIOTest.cs" />
     <Compile Include="PlayerReocrd\PlayerRecordTestUtility.cs" />
     <Compile Include="PlaylogRecord\PlaylogRecordTableCsvIOTest.cs" />
     <Compile Include="PlaylogRecord\PlaylogRecordTableJsonIOTest.cs" />
     <Compile Include="PlaylogRecord\PlaylogRecordTableTestUtility.cs" />
-    <Compile Include="PlaylogRecord\PlaylogRecordTableXmlIOTest.cs" />
     <Compile Include="TestUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\ChainStatusTest.cs" />
@@ -189,9 +186,9 @@
     <Content Include="Resources\WorldsEndMusic\html_test_case_error_1.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core.NET\Core.NET.csproj">
-      <Project>{2981db06-1d35-4d47-9a1d-9f0036f644e6}</Project>
-      <Name>Core.NET</Name>
+    <ProjectReference Include="..\Core.NETStandard\Core.NETStandard.csproj">
+      <Project>{0330b366-eca7-4021-8096-1569a024aba3}</Project>
+      <Name>Core.NETStandard</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
