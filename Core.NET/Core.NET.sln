@@ -23,7 +23,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecentSimulator", "RecentSi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChunithmMusicDataTableCreator", "ChunithmMusicDataTableCreator\ChunithmMusicDataTableCreator.csproj", "{CC81E9C5-50C9-4731-9B14-C35982BDCAC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmCLI", "ChunithmCLI\ChunithmCLI.csproj", "{4FEF038D-D14D-4FC7-865F-D4EF8A16A74F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChunithmCLI", "ChunithmCLI\ChunithmCLI.csproj", "{4FEF038D-D14D-4FC7-865F-D4EF8A16A74F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.NETStandard", "Core.NETStandard\Core.NETStandard.csproj", "{0330B366-ECA7-4021-8096-1569A024ABA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{4FEF038D-D14D-4FC7-865F-D4EF8A16A74F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FEF038D-D14D-4FC7-865F-D4EF8A16A74F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FEF038D-D14D-4FC7-865F-D4EF8A16A74F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0330B366-ECA7-4021-8096-1569A024ABA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0330B366-ECA7-4021-8096-1569A024ABA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0330B366-ECA7-4021-8096-1569A024ABA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0330B366-ECA7-4021-8096-1569A024ABA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
