@@ -97,12 +97,15 @@
     <Compile Include="ChunithmNetParser\WorldsEndMusicParserTest.cs" />
     <Compile Include="HighScoreRecord\HighScoreRecordTestUtility.cs" />
     <Compile Include="MusicData\MusicDataTableJsonIOTest.cs" />
+    <Compile Include="MusicData\MusicDataTableXmllOTest.cs" />
     <Compile Include="MusicData\MusicDataTestUtility.cs" />
     <Compile Include="PlayerReocrd\PlayerRecordContainerJsonIOTest.cs" />
+    <Compile Include="PlayerReocrd\PlayerRecordContainerXMLIOTest.cs" />
     <Compile Include="PlayerReocrd\PlayerRecordTestUtility.cs" />
     <Compile Include="PlaylogRecord\PlaylogRecordTableCsvIOTest.cs" />
     <Compile Include="PlaylogRecord\PlaylogRecordTableJsonIOTest.cs" />
     <Compile Include="PlaylogRecord\PlaylogRecordTableTestUtility.cs" />
+    <Compile Include="PlaylogRecord\PlaylogRecordTableXmlIOTest.cs" />
     <Compile Include="TestUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\ChainStatusTest.cs" />
@@ -189,6 +192,10 @@
     <ProjectReference Include="..\Core.NETStandard\Core.NETStandard.csproj">
       <Project>{0330b366-eca7-4021-8096-1569a024aba3}</Project>
       <Name>Core.NETStandard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.NET\Core.NET.csproj">
+      <Project>{2981db06-1d35-4d47-9a1d-9f0036f644e6}</Project>
+      <Name>Core.NET</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
