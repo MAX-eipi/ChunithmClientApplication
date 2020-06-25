@@ -3,15 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.NET", "Core.NET\Core.NET.csproj", "{2981DB06-1D35-4D47-9A1D-9F0036F644E6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmClientViewer", "ChunithmClientViewer\ChunithmClientViewer.csproj", "{F8B0A431-41DA-418F-B962-DC875140B745}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChunithmMusicDataTableUpdater", "ChunithmMusicDataTableUpdater\ChunithmMusicDataTableUpdater.csproj", "{DB4657C8-A50A-47F4-99F7-206DB02A9987}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmNetConnetorTest", "ChunithmNetConnetorTest\ChunithmNetConnetorTest.csproj", "{A0C1FAF1-0C2E-464B-8885-FEEA7BD64D39}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.NET_UnitTest", "Core.NET_UnitTest\Core.NET_UnitTest.csproj", "{AB8933F9-DDE0-4CFF-8EC1-BD1724098AD8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GasDataManagerConnectorTest", "GasDataManagerConnectorTest\GasDataManagerConnectorTest.csproj", "{CEE7F211-DDFB-4561-9E7A-AC71B22ED2D2}"
 EndProject
@@ -25,7 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChunithmMusicDataTableCreat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChunithmCLI", "ChunithmCLI\ChunithmCLI.csproj", "{4FEF038D-D14D-4FC7-865F-D4EF8A16A74F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.NETStandard", "Core.NETStandard\Core.NETStandard.csproj", "{0330B366-ECA7-4021-8096-1569A024ABA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.NETStandard", "Core.NETStandard\Core.NETStandard.csproj", "{0330B366-ECA7-4021-8096-1569A024ABA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.NETStandard_UnitTest", "Core.NETStandard_UnitTest\Core.NETStandard_UnitTest.csproj", "{05BA44CE-FAD1-4881-93A2-6F2A12E38B74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmNetConnectorTest", "ChunithmNetConnectorTest\ChunithmNetConnectorTest.csproj", "{A296D85F-79A0-4D43-A6C9-B7E18CDD75C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2981DB06-1D35-4D47-9A1D-9F0036F644E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2981DB06-1D35-4D47-9A1D-9F0036F644E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2981DB06-1D35-4D47-9A1D-9F0036F644E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2981DB06-1D35-4D47-9A1D-9F0036F644E6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F8B0A431-41DA-418F-B962-DC875140B745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F8B0A431-41DA-418F-B962-DC875140B745}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8B0A431-41DA-418F-B962-DC875140B745}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,14 +39,6 @@ Global
 		{DB4657C8-A50A-47F4-99F7-206DB02A9987}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB4657C8-A50A-47F4-99F7-206DB02A9987}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB4657C8-A50A-47F4-99F7-206DB02A9987}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0C1FAF1-0C2E-464B-8885-FEEA7BD64D39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0C1FAF1-0C2E-464B-8885-FEEA7BD64D39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0C1FAF1-0C2E-464B-8885-FEEA7BD64D39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0C1FAF1-0C2E-464B-8885-FEEA7BD64D39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB8933F9-DDE0-4CFF-8EC1-BD1724098AD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB8933F9-DDE0-4CFF-8EC1-BD1724098AD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB8933F9-DDE0-4CFF-8EC1-BD1724098AD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB8933F9-DDE0-4CFF-8EC1-BD1724098AD8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CEE7F211-DDFB-4561-9E7A-AC71B22ED2D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CEE7F211-DDFB-4561-9E7A-AC71B22ED2D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEE7F211-DDFB-4561-9E7A-AC71B22ED2D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -81,6 +67,14 @@ Global
 		{0330B366-ECA7-4021-8096-1569A024ABA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0330B366-ECA7-4021-8096-1569A024ABA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0330B366-ECA7-4021-8096-1569A024ABA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05BA44CE-FAD1-4881-93A2-6F2A12E38B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05BA44CE-FAD1-4881-93A2-6F2A12E38B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05BA44CE-FAD1-4881-93A2-6F2A12E38B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05BA44CE-FAD1-4881-93A2-6F2A12E38B74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A296D85F-79A0-4D43-A6C9-B7E18CDD75C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A296D85F-79A0-4D43-A6C9-B7E18CDD75C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A296D85F-79A0-4D43-A6C9-B7E18CDD75C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A296D85F-79A0-4D43-A6C9-B7E18CDD75C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

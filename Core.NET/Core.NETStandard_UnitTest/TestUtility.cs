@@ -19,7 +19,7 @@ namespace ChunithmClientLibraryUnitTest
             public const string XmlIO = "XmlIO";
         }
 
-        public const string ResourceDirectory = "../../Resources";
+        public const string ResourceDirectory = "../../../Resources";
 
         public static string LoadResource(string path)
         {
