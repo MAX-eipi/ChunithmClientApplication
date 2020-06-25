@@ -41,17 +41,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AngleSharp, Version=0.13.0.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
-      <HintPath>..\packages\AngleSharp.0.13.0\lib\net46\AngleSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="ClosedXML">
-      <HintPath>..\..\CHUNITHMRecordReader\CHUNITHMRecordLeader\bin\Release\ClosedXML.dll</HintPath>
-    </Reference>
-    <Reference Include="DocumentFormat.OpenXml">
-      <HintPath>..\..\CHUNITHMRecordReader\CHUNITHMRecordLeader\bin\Release\DocumentFormat.OpenXml.dll</HintPath>
-    </Reference>
-    <Reference Include="FastMember.Signed">
-      <HintPath>..\..\CHUNITHMRecordReader\CHUNITHMRecordLeader\bin\Release\FastMember.Signed.dll</HintPath>
+    <Reference Include="AngleSharp, Version=0.14.0.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
+      <HintPath>..\packages\AngleSharp.0.14.0\lib\net472\AngleSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -141,9 +132,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core.NET\Core.NET.csproj">
-      <Project>{2981db06-1d35-4d47-9a1d-9f0036f644e6}</Project>
-      <Name>Core.NET</Name>
+    <ProjectReference Include="..\Core.NETStandard\Core.NETStandard.csproj">
+      <Project>{0330b366-eca7-4021-8096-1569a024aba3}</Project>
+      <Name>Core.NETStandard</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
