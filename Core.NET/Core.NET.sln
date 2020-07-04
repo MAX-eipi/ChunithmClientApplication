@@ -21,9 +21,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChunithmCLI", "ChunithmCLI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.NETStandard", "Core.NETStandard\Core.NETStandard.csproj", "{0330B366-ECA7-4021-8096-1569A024ABA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.NETStandard_UnitTest", "Core.NETStandard_UnitTest\Core.NETStandard_UnitTest.csproj", "{05BA44CE-FAD1-4881-93A2-6F2A12E38B74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.NETStandard_UnitTest", "Core.NETStandard_UnitTest\Core.NETStandard_UnitTest.csproj", "{05BA44CE-FAD1-4881-93A2-6F2A12E38B74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmNetConnectorTest", "ChunithmNetConnectorTest\ChunithmNetConnectorTest.csproj", "{A296D85F-79A0-4D43-A6C9-B7E18CDD75C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChunithmNetConnectorTest", "ChunithmNetConnectorTest\ChunithmNetConnectorTest.csproj", "{A296D85F-79A0-4D43-A6C9-B7E18CDD75C0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{41F3C2A4-8530-488E-8FA8-CC0437267CEB}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
