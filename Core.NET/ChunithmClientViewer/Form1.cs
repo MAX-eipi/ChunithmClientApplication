@@ -1,4 +1,4 @@
-﻿using CefSharp;
+using CefSharp;
 using CefSharp.WinForms;
 using ChunithmClientLibrary;
 using ChunithmClientLibrary.ChunithmMusicDatabase.HttpClientConnector;

@@ -1,4 +1,4 @@
-﻿namespace RecentSimulator.Analysis
+namespace RecentSimulator.Analysis
 {
     public interface IAnalyzer
     {

@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.PlaylogRecord;
+using ChunithmClientLibrary.PlaylogRecord;
 using ChunithmClientLibrary.Table;
 using System;
 using System.Collections.Generic;
