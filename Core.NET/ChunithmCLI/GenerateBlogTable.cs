@@ -20,10 +20,6 @@ namespace ChunithmCLI
 
             public Argument(string[] args)
             {
-                VersionName = "";
-                MinLevelText = "10.0";
-                MaxLevelText = "14.2";
-
                 for (var i = 0; i < args.Length; i++)
                 {
                     if (!args[i].StartsWith("--"))
@@ -35,7 +31,6 @@ namespace ChunithmCLI
                     {
                         case "--db-url":
                             DataBaseUrl = args[i + 1];
-                            i += 1;
                             break;
                         case "--max-level":
                             MaxLevelText = args[i + 1];
@@ -54,16 +49,16 @@ namespace ChunithmCLI
             }
         }
 
-        private const string COMMNAD_NAME = "gen-blog-table";
+        private const string COMMAND_NAME = "gen-blog-table";
 
         public string GetCommandName()
         {
-            return COMMNAD_NAME;
+            return COMMAND_NAME;
         }
 
         public bool Called(string[] args)
         {
-            return args?.FirstOrDefault() == COMMNAD_NAME;
+            return args?.FirstOrDefault() == COMMAND_NAME;
         }
 
         public void Call(string[] args)
