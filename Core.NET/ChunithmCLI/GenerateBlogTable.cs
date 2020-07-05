@@ -54,16 +54,16 @@ namespace ChunithmCLI
             }
         }
 
-        private const string COMMNAD_NAME = "gen-blog-table";
+        private const string COMMAND_NAME = "gen-blog-table";
 
         public string GetCommandName()
         {
-            return COMMNAD_NAME;
+            return COMMAND_NAME;
         }
 
         public bool Called(string[] args)
         {
-            return args?.FirstOrDefault() == COMMNAD_NAME;
+            return args?.FirstOrDefault() == COMMAND_NAME;
         }
 
         public void Call(string[] args)
