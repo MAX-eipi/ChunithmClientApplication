@@ -76,6 +76,11 @@ namespace ChunithmCLI
             var maxLevel = decimal.Parse(arg.MaxLevelText);
             var tableText = GenerateTableText(minLevel, maxLevel, expert, master);
 
+            if (Directory.Exists(Path.GetDirectoryName(arg.DestinationPath)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(arg.DestinationPath));
+            }
+
             using (var writer = new StreamWriter(arg.DestinationPath))
             {
                 writer.Write(tableText);
