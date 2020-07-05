@@ -22,6 +22,7 @@ namespace ChunithmCLI
             {
                 new GenreGet(),
                 new GenerateTableHtml(),
+                new GenerateBlogTable(),
             };
         }
     }
