@@ -5,13 +5,9 @@ VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChunithmClientViewer", "ChunithmClientViewer\ChunithmClientViewer.csproj", "{F8B0A431-41DA-418F-B962-DC875140B745}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChunithmMusicDataTableUpdater", "ChunithmMusicDataTableUpdater\ChunithmMusicDataTableUpdater.csproj", "{DB4657C8-A50A-47F4-99F7-206DB02A9987}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GasDataManagerConnectorTest", "GasDataManagerConnectorTest\GasDataManagerConnectorTest.csproj", "{CEE7F211-DDFB-4561-9E7A-AC71B22ED2D2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HatenaBlogDeployer", "HatenaBlogDeployer\HatenaBlogDeployer.csproj", "{FAE5A0CA-E832-438F-BC98-241C4E152799}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HatenaBlogTableOutput", "HatenaBlogTableOutput\HatenaBlogTableOutput.csproj", "{DC146B31-0A68-465D-84C9-DDC629DA7C56}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecentSimulator", "RecentSimulator\RecentSimulator.csproj", "{2BFAE482-7900-4D29-A4D9-385ED6EA0918}"
 EndProject
@@ -40,10 +36,6 @@ Global
 		{F8B0A431-41DA-418F-B962-DC875140B745}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8B0A431-41DA-418F-B962-DC875140B745}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8B0A431-41DA-418F-B962-DC875140B745}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB4657C8-A50A-47F4-99F7-206DB02A9987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB4657C8-A50A-47F4-99F7-206DB02A9987}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB4657C8-A50A-47F4-99F7-206DB02A9987}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB4657C8-A50A-47F4-99F7-206DB02A9987}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CEE7F211-DDFB-4561-9E7A-AC71B22ED2D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CEE7F211-DDFB-4561-9E7A-AC71B22ED2D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEE7F211-DDFB-4561-9E7A-AC71B22ED2D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -52,10 +44,6 @@ Global
 		{FAE5A0CA-E832-438F-BC98-241C4E152799}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAE5A0CA-E832-438F-BC98-241C4E152799}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAE5A0CA-E832-438F-BC98-241C4E152799}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DC146B31-0A68-465D-84C9-DDC629DA7C56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC146B31-0A68-465D-84C9-DDC629DA7C56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC146B31-0A68-465D-84C9-DDC629DA7C56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC146B31-0A68-465D-84C9-DDC629DA7C56}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2BFAE482-7900-4D29-A4D9-385ED6EA0918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2BFAE482-7900-4D29-A4D9-385ED6EA0918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BFAE482-7900-4D29-A4D9-385ED6EA0918}.Release|Any CPU.ActiveCfg = Release|Any CPU
