@@ -5,7 +5,7 @@ import { ApprovalPage } from "../Page/ApprovalPage";
 import { Report, ReportStatus } from "../Report/Report";
 import { Utility } from "../Utility";
 import { ReportFormModule } from "./@ReportFormModule";
-import { BulkApprovalPage } from "../Page/BulkApprovalPage";
+import { LevelBulkApprovalPage } from "../Page/LevelBulkApprovalPage";
 import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
 
 class ApprovalError implements Error {
@@ -177,7 +177,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
 
     // Lv.1-6用
     public bulkApprove(versionName: string, bulkReportId: number): void {
-        let bulkReport = this.report.getBulkReportSheet(versionName).getBulkReport(bulkReportId);
+        let bulkReport = this.report.getLevelBulkReportSheet(versionName).getBulkReport(bulkReportId);
         if (!bulkReport) {
             throw new ApprovalError(`一括検証報告取得の失敗. ID:${bulkReportId}`);
         }
@@ -212,13 +212,13 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
 
         this.report.noticeReportPost(`⭕️[一括検証結果 承認]⭕️
 Lv:${bulkReport.targetLevel}
-URL:${this.router.getPage(BulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}`);
+URL:${this.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}`);
 
         this.webhook.invoke(WebhookEventName.ON_APPROVE);
     }
 
     public bulkReject(versionName: string, bulkReportId: number): void {
-        let bulkReport = this.report.getBulkReportSheet(versionName).getBulkReport(bulkReportId);
+        let bulkReport = this.report.getLevelBulkReportSheet(versionName).getBulkReport(bulkReportId);
         if (!bulkReport) {
             throw new ApprovalError(`一括検証報告取得の失敗. ID:${bulkReportId}`);
         }
@@ -232,6 +232,6 @@ URL:${this.router.getPage(BulkApprovalPage).getReportPageUrl(versionName, bulkRe
 
         this.report.noticeReportPost(`✖️[一括検証結果 却下]✖️
 Lv:${bulkReport.targetLevel}
-URL:${this.router.getPage(BulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}`);
+URL:${this.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}`);
     }
 }

@@ -3,7 +3,7 @@ import { Debug } from "./Debug";
 import { Instance } from "./Instance";
 import { storeConfig } from "./operations";
 import { ApprovalPage } from "./Page/ApprovalPage";
-import { BulkApprovalPage } from "./Page/BulkApprovalPage";
+import { LevelBulkApprovalPage } from "./Page/LevelBulkApprovalPage";
 import { GoogleFormBulkReport } from "./Report/GoogleFormBulkReport";
 import { GoogleFormReport } from "./Report/GoogleFormReport";
 import { Utility } from "./Utility";
@@ -153,7 +153,7 @@ URL:${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(ver
                 }));
                 Instance.instance.module.report.noticeReportPost(`[一括検証報告]
 対象レベル:${bulkReport.targetLevel}
-URL:${Instance.instance.module.router.getPage(BulkApprovalPage).getReportPageUrl(versionName, bulkReport.reportId)}`);
+URL:${Instance.instance.module.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReport.reportId)}`);
             }
         }
         catch (error) {

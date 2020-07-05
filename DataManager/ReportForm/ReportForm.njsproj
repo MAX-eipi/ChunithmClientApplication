@@ -217,10 +217,10 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Page\ApprovalPage.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Page\BulkApprovalPage.ts">
+    <TypeScriptCompile Include="src\ReportForm\Page\LevelBulkApprovalPage.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Page\BulkReportListPage.ts">
+    <TypeScriptCompile Include="src\ReportForm\Page\LevelBulkReportListPage.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Page\ErrorPage.ts" />
@@ -236,10 +236,13 @@
     <TypeScriptCompile Include="src\ReportForm\Modules\PostCommandModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReport.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Report\BulkReportSheet.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReportSheet.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkSheetWriter.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Report\GoogleFormBulkReport.ts">

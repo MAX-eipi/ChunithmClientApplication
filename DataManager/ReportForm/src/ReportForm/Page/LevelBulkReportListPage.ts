@@ -1,20 +1,20 @@
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { TopPage } from "./TopPage";
-import { BulkApprovalPage } from "./BulkApprovalPage";
+import { LevelBulkApprovalPage } from "./LevelBulkApprovalPage";
 import { Role } from "../Role";
 import { ReportStatus } from "../Report/Report";
-import { BulkReport } from "../Report/BulkReport";
+import { LevelBulkReport } from "../Report/LevelBulkReport";
 import { Utility } from "../Utility";
 import { Difficulty } from "../../MusicDataTable/Difficulty";
 
 export interface BulkReportListPageParameter extends ReportFormPageParameter {
 }
 
-export class BulkReportListPage extends ReportFormPage {
+export class LevelBulkReportListPage extends ReportFormPage {
     public static readonly PAGE_NAME = 'wip_bulk_report_list';
 
     public get pageName(): string {
-        return BulkReportListPage.PAGE_NAME;
+        return LevelBulkReportListPage.PAGE_NAME;
     }
 
     public isAccessable(role: Role): boolean {
@@ -22,7 +22,7 @@ export class BulkReportListPage extends ReportFormPage {
     }
 
     public call(parameter: BulkReportListPageParameter): GoogleAppsScript.HTML.HtmlOutput {
-        let listHtml = this.module.report.getBulkReports(parameter.versionName)
+        let listHtml = this.module.report.getLevelBulkReports(parameter.versionName)
             .filter(r => r.reportStatus == ReportStatus.InProgress)
             .map(report => this.getListItemHtml(this, report))
             .reduce((acc, src) => `${acc}\n${src}`, '');
@@ -30,13 +30,13 @@ export class BulkReportListPage extends ReportFormPage {
         var source = this.readMainHtml();
 
         source = this.bind(TopPage, parameter, source);
-        source = this.bind(BulkApprovalPage, parameter, source);
+        source = this.bind(LevelBulkApprovalPage, parameter, source);
 
         source = source.replace(/%list%/g, listHtml)
         return this.createHtmlOutput(source);
     }
 
-    private getListItemHtml(self: BulkReportListPage, report: BulkReport): string {
+    private getListItemHtml(self: LevelBulkReportListPage, report: LevelBulkReport): string {
         let bg = report.targetLevel <= 3
             ? Utility.toDifficultyTextLowerCase(Difficulty.Basic)
             : Utility.toDifficultyTextLowerCase(Difficulty.Advanced);

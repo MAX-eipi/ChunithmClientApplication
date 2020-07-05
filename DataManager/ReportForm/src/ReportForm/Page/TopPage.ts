@@ -5,8 +5,8 @@ import { UnverifiedListByGenrePage } from "./UnverifiedListByGenrePage";
 import { UnverifiedListByLevelPage } from "./UnverifiedListByLevelPage";
 import { ReportFormPageParameter, ReportFormPage } from "./@ReportFormPage";
 import { getAppVersion } from "../../@app";
-import { BulkApprovalPage } from "./BulkApprovalPage";
-import { BulkReportListPage } from "./BulkReportListPage";
+import { LevelBulkApprovalPage } from "./LevelBulkApprovalPage";
+import { LevelBulkReportListPage } from "./LevelBulkReportListPage";
 
 interface TopPageParameter extends ReportFormPageParameter { }
 
@@ -33,8 +33,8 @@ export class TopPage extends ReportFormPage {
             [
                 InProgressListPage,
                 ReportGroupListPage,
-                BulkApprovalPage,
-                BulkReportListPage,
+                LevelBulkApprovalPage,
+                LevelBulkReportListPage,
                 UnverifiedListByGenrePage,
                 UnverifiedListByLevelPage,
             ]);

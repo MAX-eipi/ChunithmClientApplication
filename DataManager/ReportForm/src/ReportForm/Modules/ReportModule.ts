@@ -1,8 +1,8 @@
 import { ConfigurationPropertyName } from "../../Configurations/ConfigurationDefinition";
 import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
 import { Debug } from "../Debug";
-import { BulkReport } from "../Report/BulkReport";
-import { BulkReportSheet } from "../Report/BulkReportSheet";
+import { LevelBulkReport } from "../Report/LevelBulkReport";
+import { LevelBulkReportSheet } from "../Report/LevelBulkReportSheet";
 import { GoogleFormBulkReport } from "../Report/GoogleFormBulkReport";
 import { GoogleFormReport } from "../Report/GoogleFormReport";
 import { Report, ReportStatus } from "../Report/Report";
@@ -68,25 +68,25 @@ export class ReportModule extends ReportFormModule {
         return this._reportGoogleForm;
     }
 
-    private _bulkReportSheetMap: { [key: string]: BulkReportSheet } = {};
-    public getBulkReportSheet(versionName: string): BulkReportSheet {
-        if (versionName in this._bulkReportSheetMap) {
-            return this._bulkReportSheetMap[versionName];
+    private _levelBulkReportSheetMap: { [key: string]: LevelBulkReportSheet } = {};
+    public getLevelBulkReportSheet(versionName: string): LevelBulkReportSheet {
+        if (versionName in this._levelBulkReportSheetMap) {
+            return this._levelBulkReportSheetMap[versionName];
         }
-        this._bulkReportSheetMap[versionName] = new BulkReportSheet(
+        this._levelBulkReportSheetMap[versionName] = new LevelBulkReportSheet(
             this.musicData.getTable(versionName),
             this.version.getVersionConfig(versionName).reportSpreadsheetId,
             this.version.getVersionConfig(versionName).bulkReportWorksheetName);
-        return this._bulkReportSheetMap[versionName];
+        return this._levelBulkReportSheetMap[versionName];
     }
 
-    public getBulkReports(versionName: string): BulkReport[] {
-        return this.getBulkReportSheet(versionName).bulkReports;
+    public getLevelBulkReports(versionName: string): LevelBulkReport[] {
+        return this.getLevelBulkReportSheet(versionName).bulkReports;
     }
 
-    private _bulkReportGoogleForm: GoogleAppsScript.Forms.Form;
-    public get bulkReportGoogleForm(): GoogleAppsScript.Forms.Form {
-        if (!this._bulkReportGoogleForm) {
+    private _levelBulkReportGoogleForm: GoogleAppsScript.Forms.Form;
+    public get levelBulkReportGoogleForm(): GoogleAppsScript.Forms.Form {
+        if (!this._levelBulkReportGoogleForm) {
             let formId = this.config.report.bulkReportFormId;
             if (!formId) {
                 throw new Error(`${ConfigurationPropertyName.BULK_REPORT_GOOGLE_FORM_ID} is not set.`);
@@ -95,9 +95,9 @@ export class ReportModule extends ReportFormModule {
             if (!form) {
                 throw new Error(`Form is invalid. formId: ${formId}`);
             }
-            this._bulkReportGoogleForm = form;
+            this._levelBulkReportGoogleForm = form;
         }
-        return this._bulkReportGoogleForm;
+        return this._levelBulkReportGoogleForm;
     }
 
     public approve(versionName: string, reportId: number): void {
@@ -167,18 +167,18 @@ ${JSON.stringify(formReport)}`);
     }
 
     public approveBulk(versionName: string, bulkReportId: number): void {
-        let bulkReportSheet = this.getBulkReportSheet(versionName);
+        let bulkReportSheet = this.getLevelBulkReportSheet(versionName);
         bulkReportSheet.updateStatus([{ reportId: bulkReportId, status: ReportStatus.Resolved }]);
     }
 
     public rejectBulk(versionName: string, bulkReportId: number): void {
-        let bulkReportSheet = this.getBulkReportSheet(versionName);
+        let bulkReportSheet = this.getLevelBulkReportSheet(versionName);
         bulkReportSheet.updateStatus([{ reportId: bulkReportId, status: ReportStatus.Rejected }]);
     }
 
-    public insertBulkReport(versionName: string, formReport: GoogleFormBulkReport): BulkReport {
+    public insertBulkReport(versionName: string, formReport: GoogleFormBulkReport): LevelBulkReport {
         let table = this.musicData.getTable(versionName);
-        let bulkReportSheet = this.getBulkReportSheet(versionName);
+        let bulkReportSheet = this.getLevelBulkReportSheet(versionName);
 
         let musicCount = table.getTargetLevelMusicCount(formReport.targetLevel);
         let maxOp = Math.round((formReport.targetLevel + 3) * 5 * musicCount);
@@ -350,7 +350,7 @@ OP割合[万分率]:${opRatio_x100}
         Debug.log(`一括報告フォームを構築します: ${versionName}`);
 
         Debug.log('フォームに送信された回答の削除...');
-        let form = this.module.report.bulkReportGoogleForm;
+        let form = this.module.report.levelBulkReportGoogleForm;
         form.deleteAllResponses();
         {
             for (let item of form.getItems()) {
