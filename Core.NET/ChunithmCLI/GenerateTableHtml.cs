@@ -11,9 +11,9 @@ namespace ChunithmCLI
     {
         public class Argument
         {
-            public string HostUrl { get; private set; }
+            public string DataBaseUrl { get; private set; }
             public string TemplateHtmlPath { get; private set; }
-            public string DistributionPath { get; private set; }
+            public string DestinationPath { get; private set; }
             public string VersionName { get; private set; }
 
             public Argument(string[] args)
@@ -23,13 +23,15 @@ namespace ChunithmCLI
                     switch (args[i])
                     {
                         case "--host":
-                            HostUrl = args[i + 1];
+                        case "--db-url":
+                            DataBaseUrl = args[i + 1];
                             break;
                         case "--src":
                             TemplateHtmlPath = args[i + 1];
                             break;
                         case "--dist":
-                            DistributionPath = args[i + 1];
+                        case "--dest":
+                            DestinationPath = args[i + 1];
                             break;
                         case "--version":
                             VersionName = args[i + 1];
@@ -61,13 +63,13 @@ namespace ChunithmCLI
             var arg = new Argument(args);
 
             IMusicDataTable<IMusicDataTableUnit> table = null;
-            using (var connector = new ChunithmMusicDatabaseHttpClientConnector(arg.HostUrl))
+            using (var connector = new ChunithmMusicDatabaseHttpClientConnector(arg.DataBaseUrl))
             {
                 var tableGet = connector.GetTableAsync().Result;
                 table = tableGet.MusicDataTable;
             }
 
-            using (var writer = new StreamWriter(arg.DistributionPath))
+            using (var writer = new StreamWriter(arg.DestinationPath))
             {
                 var source = GenerateSource(table, arg.VersionName, arg.TemplateHtmlPath);
                 writer.Write(source);
