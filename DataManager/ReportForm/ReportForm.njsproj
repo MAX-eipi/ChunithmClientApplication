@@ -256,6 +256,8 @@
     <TypeScriptCompile Include="src\ReportForm\Report\BulkReportInput\BulkReportTableWriter.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Report\IReport.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\IReportContainer.ts" />
     <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReport.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -275,6 +277,7 @@
     <TypeScriptCompile Include="src\ReportForm\Report\ReportGroupContainer.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Report\ReportInputFormat.ts" />
     <TypeScriptCompile Include="src\ReportForm\Report\ReportStorage.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
