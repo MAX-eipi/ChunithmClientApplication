@@ -1,9 +1,11 @@
 import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { ComboStatus } from "../Rating";
 import { Utility } from "../Utility";
+import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
 
 export class GoogleFormReport {
-    private _musicnName: string = "";
+    private _musicId: number;
+    private _musicnName = "";
     private _difficulty: Difficulty = Difficulty.Invalid;
     private _beforeOp: number;
     private _afterOp: number;
@@ -28,6 +30,16 @@ export class GoogleFormReport {
         }
     }
 
+    public setMusicData(musicDataTable: MusicDataTable): void {
+        const musicData = musicDataTable.getMusicDataByName(this.musicName);
+        if (musicData) {
+            this._musicId = musicData.Id;
+        }
+    }
+
+    public get musicId(): number {
+        return this._musicId;
+    }
     public get musicName(): string {
         return this._musicnName;
     }

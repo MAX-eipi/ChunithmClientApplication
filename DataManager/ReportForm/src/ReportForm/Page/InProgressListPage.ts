@@ -1,4 +1,5 @@
-import { Report, ReportStatus } from "../Report/Report";
+import { IReport } from "../Report/IReport";
+import { ReportStatus } from "../Report/ReportStatus";
 import { Role } from "../Role";
 import { Utility } from "../Utility";
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
@@ -19,12 +20,12 @@ export class InProgressListPage extends ReportFormPage {
     }
 
     public call(parameter: InProgressListPageParameter): GoogleAppsScript.HTML.HtmlOutput {
-        let listHtml = this.module.report.getReports(parameter.versionName)
-            .filter(r => r.reportStatus == ReportStatus.InProgress)
+        const listHtml = this.module.report.getReports(parameter.versionName)
+            .filter(r => r.reportStatus === ReportStatus.InProgress)
             .map(this.getListItemHtml)
             .reduce((acc, src) => `${acc}\n${src}`, '');
 
-        var source = this.readMainHtml();
+        let source = this.readMainHtml();
 
         source = this.bind(TopPage, parameter, source);
         source = this.bind(ApprovalPage, parameter, source);
@@ -33,7 +34,7 @@ export class InProgressListPage extends ReportFormPage {
         return this.createHtmlOutput(source);
     }
 
-    private getListItemHtml(report: Report): string {
+    private getListItemHtml(report: IReport): string {
         return `<div class="music_list bg_${Utility.toDifficultyText(report.difficulty).toLowerCase()}" onclick="transition('${report.reportId}')">${report.musicName}</div>`;
     }
 }

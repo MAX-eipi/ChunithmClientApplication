@@ -1,6 +1,6 @@
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { Role } from "../Role";
-import { ReportStatus } from "../Report/Report";
+import { ReportStatus } from "../Report/ReportStatus";
 import { Utility } from "../Utility";
 import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { LevelBulkReportListPage } from "./LevelBulkReportListPage";

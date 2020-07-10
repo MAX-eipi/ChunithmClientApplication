@@ -1,5 +1,5 @@
 import { GoogleFormBulkReport } from "./GoogleFormBulkReport";
-import { ReportStatus } from "./Report";
+import { ReportStatus } from "./ReportStatus";
 
 export class LevelBulkReport {
     private _reportId: number;

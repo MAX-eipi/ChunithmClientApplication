@@ -2,7 +2,7 @@ import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { TopPage } from "./TopPage";
 import { LevelBulkApprovalPage } from "./LevelBulkApprovalPage";
 import { Role } from "../Role";
-import { ReportStatus } from "../Report/Report";
+import { ReportStatus } from "../Report/ReportStatus";
 import { LevelBulkReport } from "../Report/LevelBulkReport";
 import { Utility } from "../Utility";
 import { Difficulty } from "../../MusicDataTable/Difficulty";

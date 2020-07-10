@@ -256,8 +256,8 @@
     <TypeScriptCompile Include="src\ReportForm\Report\BulkReportInput\BulkReportTableWriter.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Report\IMusicDataReport.ts" />
     <TypeScriptCompile Include="src\ReportForm\Report\IReport.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Report\IReportContainer.ts" />
     <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReport.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -273,15 +273,18 @@
     <TypeScriptCompile Include="src\ReportForm\Report\GoogleFormReport.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Report\MusicDataReport.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\MusicDataReportGroup.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Report\MusicDataReportGroupContainer.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Report\Report.ts" />
     <TypeScriptCompile Include="src\ReportForm\Report\ReportError.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Report\ReportGroupContainer.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Report\ReportInputFormat.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\ReportStatus.ts" />
     <TypeScriptCompile Include="src\ReportForm\Report\ReportStorage.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Report\ReportSheet.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Modules\WebhookModule.ts">
@@ -296,8 +299,6 @@
     <TypeScriptCompile Include="src\ReportForm\PostCommand\TableGetCommand.ts" />
     <TypeScriptCompile Include="src\ReportForm\PostCommand\TableUpadateCommand.ts" />
     <TypeScriptCompile Include="src\ReportForm\Rating.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Report\Report.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Report\ReportGroup.ts" />
     <TypeScriptCompile Include="src\ReportForm\Modules\ReportModule.ts" />
     <TypeScriptCompile Include="src\ReportForm\Role.ts" />
     <TypeScriptCompile Include="src\ReportForm\Modules\Router.ts" />

@@ -1,6 +1,6 @@
 ﻿import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { IReport } from "./IReport";
-export interface IReportContainer {
+export interface IMusicDataReport {
     readonly musicId: number;
     readonly difficulty: Difficulty;
     readonly reports: IReport[];

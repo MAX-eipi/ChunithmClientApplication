@@ -1,12 +1,13 @@
 import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { MusicData } from "../../MusicDataTable/MusicData";
 import { Debug } from "../Debug";
+import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
 import { ApprovalPage } from "../Page/ApprovalPage";
-import { Report, ReportStatus } from "../Report/Report";
+import { LevelBulkApprovalPage } from "../Page/LevelBulkApprovalPage";
+import { IReport } from "../Report/IReport";
+import { ReportStatus } from "../Report/ReportStatus";
 import { Utility } from "../Utility";
 import { ReportFormModule } from "./@ReportFormModule";
-import { LevelBulkApprovalPage } from "../Page/LevelBulkApprovalPage";
-import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
 
 class ApprovalError implements Error {
     public name: string = "ApprovalError";
@@ -22,7 +23,7 @@ class ApprovalError implements Error {
 
 export class ApprovalModule extends ReportFormModule {
     public approve(versionName: string, reportId: number) {
-        let report = this.report.getReportSheet(versionName).getReport(reportId);
+        const report = this.report.getReport(versionName, reportId);
         if (!report) {
             throw new ApprovalError(`検証報告取得の失敗. ID:${reportId}`);
         }
@@ -82,7 +83,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
     }
 
     public reject(versionName: string, reportId: number): void {
-        let report = this.report.getReportSheet(versionName).getReport(reportId);
+        const report = this.report.getReport(versionName, reportId);
         if (!report) {
             throw new ApprovalError(`検証報告取得の失敗. ID:${reportId}`);
         }
@@ -106,25 +107,27 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
     }
 
     public approveGroup(versionName: string, reportGroupId: string): void {
-        let reportGroup = this.report.getReportGroupContainer(versionName).getReportGroup(reportGroupId);
+        const reportGroup = this.report
+            .getMusicDataReportGroupContainer(versionName)
+            .getMusicDataReportGroup(reportGroupId);
         if (!reportGroup) {
             throw new ApprovalError(`報告グループ取得の失敗. ID:${reportGroupId}`);
         }
 
-        let musicDataTable = this.musicData.getTable(versionName);
-        let targetMusicDatas: MusicData[] = [];
-        let approvedReports: Report[] = [];
-        for (let unit of reportGroup.units) {
-            if (!unit.report || unit.report.reportStatus != ReportStatus.InProgress) {
+        const musicDataTable = this.musicData.getTable(versionName);
+        const targetMusicDatas: MusicData[] = [];
+        const approvedReports: IReport[] = [];
+        for (const rep of reportGroup.getMusicDataReports()) {
+            if (!rep || !rep.mainReport || rep.mainReport.reportStatus !== ReportStatus.InProgress) {
                 continue;
             }
 
-            let report = unit.report;
+            const report = rep.mainReport;
             approvedReports.push(report);
 
-            let targetMusicData = musicDataTable.getMusicDataById(report.musicId).clone();
-            let difficulty = report.difficulty;
-            let baseRating = report.calcBaseRating();
+            const targetMusicData = musicDataTable.getMusicDataById(report.musicId).clone();
+            const difficulty = report.difficulty;
+            const baseRating = report.calcBaseRating();
             switch (difficulty) {
                 case Difficulty.Master:
                     targetMusicData.setLevel(Difficulty.Master, baseRating);
@@ -149,10 +152,10 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
         this.musicData.updateMusicData(versionName, targetMusicDatas);
         this.report.approveGroup(versionName, approvedReports.map(r => r.reportId));
 
-        let versionText = this.version.getVersionConfig(versionName).displayVersionName;
-        for (let report of approvedReports) {
-            let difficulty = Utility.toDifficultyText(report.difficulty);
-            let baseRating = report.calcBaseRating();
+        const versionText = this.version.getVersionConfig(versionName).displayVersionName;
+        for (const report of approvedReports) {
+            const difficulty = Utility.toDifficultyText(report.difficulty);
+            const baseRating = report.calcBaseRating();
 
             Debug.log(JSON.stringify({
                 'header': '検証報告承認',

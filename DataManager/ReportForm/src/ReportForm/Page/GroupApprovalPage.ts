@@ -1,6 +1,7 @@
 import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
-import { ReportStatus } from "../Report/Report";
-import { LinkedReportGroupUnit, ReportGroup } from "../Report/ReportGroup";
+import { IMusicDataReport } from "../Report/IMusicDataReport";
+import { MusicDataReportGroup } from "../Report/MusicDataReportGroup";
+import { ReportStatus } from "../Report/ReportStatus";
 import { Role } from "../Role";
 import { Utility } from "../Utility";
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
@@ -27,14 +28,14 @@ export class GroupApprovalPage extends ReportFormPage {
     }
 
     public call(parameter: GroupApprovalPageParameter): GoogleAppsScript.HTML.HtmlOutput {
-        let table = this.module.musicData.getTable(parameter.versionName);
-        let reportGroup = this.module.report
-            .getReportGroupContainer(parameter.versionName)
-            .getReportGroup(parameter.groupId);
+        const table = this.module.musicData.getTable(parameter.versionName);
+        const reportGroup = this.module.report
+            .getMusicDataReportGroupContainer(parameter.versionName)
+            .getMusicDataReportGroup(parameter.groupId);
 
-        let listHtml = this.getListHtml(table, reportGroup);
+        const listHtml = this.getListHtml(table, reportGroup);
 
-        var source = this.readMainHtml();
+        let source = this.readMainHtml();
 
         source = this.resolveVersionName(source, parameter.versionName);
         source = this.bind(ReportGroupListPage, parameter, source);
@@ -60,12 +61,10 @@ export class GroupApprovalPage extends ReportFormPage {
         return source.replace(/%link:self%/g, url);
     }
 
-    private getListHtml(table: MusicDataTable, reportGroup: ReportGroup): string {
+    private getListHtml(table: MusicDataTable, reportGroup: MusicDataReportGroup): string {
         let source = '';
-        let units = reportGroup.units;
-        for (var i = 0; i < units.length; i++) {
-            let unit = units[i];
-            if (unit.report && unit.report.reportStatus == ReportStatus.Resolved) {
+        for (const unit of reportGroup.getMusicDataReports()) {
+            if (unit && unit.mainReport && unit.mainReport.reportStatus === ReportStatus.Resolved) {
                 continue;
             }
             source += this.getListItemHtml(table, unit) + '\n';
@@ -89,36 +88,36 @@ export class GroupApprovalPage extends ReportFormPage {
         return this._unverifiedListItemTemplate;
     }
 
-    private getListItemHtml(table: MusicDataTable, reportGroupUnit: LinkedReportGroupUnit): string {
-        let musicDetail = table.getMusicDataById(reportGroupUnit.parameter.musicId);
-        let difficultyText = Utility.toDifficultyText(reportGroupUnit.parameter.difficulty);
+    private getListItemHtml(table: MusicDataTable, musicDataReport: IMusicDataReport): string {
+        const musicDetail = table.getMusicDataById(musicDataReport.musicId);
+        const difficultyText = Utility.toDifficultyText(musicDataReport.difficulty);
 
         let template = '';
         if (!musicDetail) {
             template = GroupApprovalPage.unkownMusicTemplate;
-            template = template.replace(/%musicId%/g, reportGroupUnit.parameter.musicId.toString());
+            template = template.replace(/%musicId%/g, musicDataReport.musicId.toString());
             template = template.replace(/%difficultyLower%/g, difficultyText.toLowerCase());
             return template;
         }
 
-        if (!reportGroupUnit.report) {
+        if (!musicDataReport.mainReport) {
             template = this.unverifiedListItemTemplate;
             template = template.replace(/%musicName%/g, musicDetail.Name);
             template = template.replace(/%difficultyLower%/g, difficultyText.toLowerCase());
             template = template.replace(/%difficulty%/g, difficultyText);
-            template = template.replace(/%difficultyImagePath%/g, Utility.getDifficultyImagePath(reportGroupUnit.parameter.difficulty));
+            template = template.replace(/%difficultyImagePath%/g, Utility.getDifficultyImagePath(musicDataReport.difficulty));
             return template;
         }
 
-        let report = reportGroupUnit.report;
+        const report = musicDataReport.mainReport;
         template = this.listItemTemplate;
         template = template.replace(/%musicName%/g, musicDetail.Name);
         template = template.replace(/%difficultyLower%/g, difficultyText.toLowerCase());
         template = template.replace(/%difficulty%/g, difficultyText);
-        template = template.replace(/%difficultyImagePath%/g, Utility.getDifficultyImagePath(reportGroupUnit.parameter.difficulty));
+        template = template.replace(/%difficultyImagePath%/g, Utility.getDifficultyImagePath(musicDataReport.difficulty));
         {
             let progress = "-";
-            let status = report ? report.reportStatus : null;
+            const status = report ? report.reportStatus : null;
             switch (status) {
                 case ReportStatus.InProgress:
                     progress = `<span class="text_b" style="font-family:arial,sans-serif;">承認待ち</span>`;
@@ -130,9 +129,9 @@ export class GroupApprovalPage extends ReportFormPage {
             template = template.replace(/%progress%/g, progress);
         }
 
-        let beforeOp = report.beforeOp;
-        let afterOp = report.afterOp;
-        let diffOp = Math.round((afterOp - beforeOp) * 100) / 100;
+        const beforeOp = report.beforeOp;
+        const afterOp = report.afterOp;
+        const diffOp = Math.round((afterOp - beforeOp) * 100) / 100;
         template = template.replace(/%beforeOp%/g, beforeOp.toString());
         template = template.replace(/%afterOp%/g, afterOp.toString());
         template = template.replace(/%diffOp%/g, diffOp.toString());
@@ -140,11 +139,11 @@ export class GroupApprovalPage extends ReportFormPage {
         template = template.replace(/%comboStatus%/g, Utility.toComboStatusText(report.comboStatus));
         template = template.replace(/%baseRating%/g, report.calcBaseRating().toFixed(1));
 
-        let imagePaths = report.imagePaths;
+        const imagePaths = report.imagePaths;
         if (imagePaths.length > 0) {
-            let img = imagePaths
-                .map(function (p) { return `<div class="result_image"><img src="${p}" /></div>`; })
-                .reduce(function (acc, src) { return acc + src; });
+            const img = imagePaths
+                .map(p => `<div class="result_image"><img src="${p}" /></div>`)
+                .reduce((acc, src) => acc + src);
             template = template.replace(/%verificationImageContainer%/, `<div class="result_box w400">${img}</div>`);
         }
         else {

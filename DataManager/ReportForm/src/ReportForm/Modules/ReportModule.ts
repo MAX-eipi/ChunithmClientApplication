@@ -1,16 +1,19 @@
 import { ConfigurationPropertyName } from "../../Configurations/ConfigurationDefinition";
+import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
 import { Debug } from "../Debug";
-import { LevelBulkReport } from "../Report/LevelBulkReport";
-import { LevelBulkReportSheet } from "../Report/LevelBulkReportSheet";
+import { Environment } from "../Environment";
 import { GoogleFormBulkReport } from "../Report/GoogleFormBulkReport";
 import { GoogleFormReport } from "../Report/GoogleFormReport";
-import { Report, ReportStatus } from "../Report/Report";
-import { ReportGroupContainer } from "../Report/ReportGroupContainer";
-import { ReportSheet } from "../Report/ReportSheet";
+import { IMusicDataReport } from "../Report/IMusicDataReport";
+import { IReport } from "../Report/IReport";
+import { LevelBulkReport } from "../Report/LevelBulkReport";
+import { LevelBulkReportSheet } from "../Report/LevelBulkReportSheet";
+import { MusicDataReportGroupContainer } from "../Report/MusicDataReportGroupContainer";
+import { ReportStatus } from "../Report/ReportStatus";
+import { PostLocation, ReportStorage } from "../Report/ReportStorage";
 import { Utility } from "../Utility";
 import { ReportFormModule } from "./@ReportFormModule";
-import { Environment } from "../Environment";
 
 export class ReportModule extends ReportFormModule {
     public noticeReportPost(message: string): void {
@@ -19,37 +22,49 @@ export class ReportModule extends ReportFormModule {
         }
     }
 
-    private _reportSheetMap: { [key: string]: ReportSheet } = {};
-    public getReportSheet(versionName: string): ReportSheet {
-        if (versionName in this._reportSheetMap) {
-            return this._reportSheetMap[versionName];
+    private m_reportStorage: { [key: string]: ReportStorage } = {};
+    public getReportStorage(versionName: string): ReportStorage {
+        if (versionName in this.m_reportStorage) {
+            return this.m_reportStorage[versionName];
         }
-        this._reportSheetMap[versionName] = new ReportSheet(
+        this.m_reportStorage[versionName] = new ReportStorage(
             this.musicData.getTable(versionName),
             this.version.getVersionConfig(versionName).reportSpreadsheetId,
             this.version.getVersionConfig(versionName).reportWorksheetName);
-        return this._reportSheetMap[versionName];
+        return this.m_reportStorage[versionName];
     }
 
-    public getReports(versionName: string): Report[] {
-        return this.getReportSheet(versionName).reports;
+    public getReportContainers(versionName: string): IMusicDataReport[] {
+        return this.getReportStorage(versionName).reportContainers;
     }
 
-    private _reportGroupContainer: { [key: string]: ReportGroupContainer } = {};
-    public getReportGroupContainer(versionName: string): ReportGroupContainer {
-        if (versionName in this._reportGroupContainer) {
-            return this._reportGroupContainer[versionName];
+    public getReportContainer(versionName: string, musicId: number, difficulty: Difficulty): IMusicDataReport {
+        return this.getReportStorage(versionName).getMusicDataReport(musicId, difficulty);
+    }
+
+    public getReports(versionName: string): IReport[] {
+        return this.getReportStorage(versionName).reports;
+    }
+
+    public getReport(versionName: string, reportId: number): IReport {
+        return this.getReportStorage(versionName).getReportById(reportId);
+    }
+
+    private readonly _musicDataReportGroupContainer: { [key: string]: MusicDataReportGroupContainer } = {};
+    public getMusicDataReportGroupContainer(versionName: string): MusicDataReportGroupContainer {
+        if (versionName in this._musicDataReportGroupContainer) {
+            return this._musicDataReportGroupContainer[versionName];
         }
 
-        let versionConfig = this.version.getVersionConfig(versionName);
-        let reportGroupSheet = SpreadsheetApp
+        const versionConfig = this.version.getVersionConfig(versionName);
+        const sheet = SpreadsheetApp
             .openById(versionConfig.reportSpreadsheetId)
             .getSheetByName(versionConfig.reportGroupWorksheetName);
-        let reportSheet = this.getReportSheet(versionName);
-        let reportGroupContainer = ReportGroupContainer.createBySheet(reportGroupSheet, reportSheet);
+        const storage = this.getReportStorage(versionName);
+        const container = MusicDataReportGroupContainer.createByStorage(sheet, storage);
 
-        this._reportGroupContainer[versionName] = reportGroupContainer;
-        return reportGroupContainer;
+        this._musicDataReportGroupContainer[versionName] = container;
+        return container;
     }
 
     private _reportGoogleForm: GoogleAppsScript.Forms.Form;
@@ -101,46 +116,43 @@ export class ReportModule extends ReportFormModule {
     }
 
     public approve(versionName: string, reportId: number): void {
-        let reportSheet = this.getReportSheet(versionName);
-        let targetReport = reportSheet.getReport(reportId);
-        let duplicatedReports = reportSheet.reports.filter(r =>
-            r.reportId != targetReport.reportId && r.musicId == targetReport.musicId && r.difficulty == targetReport.difficulty);
+        const reportStorage = this.getReportStorage(versionName);
+        const targetReport = reportStorage.getReportById(reportId);
+        const duplicatedReports = reportStorage.reports.filter(r =>
+            r.reportId !== targetReport.reportId && r.musicId === targetReport.musicId && r.difficulty === targetReport.difficulty);
 
-        let updateList: { reportId: number, status: ReportStatus }[] = [];
-        updateList.push({ reportId: reportId, status: ReportStatus.Resolved });
-        for (let report of duplicatedReports) {
-            updateList.push({ reportId: report.reportId, status: ReportStatus.Rejected });
+        reportStorage.updateStatus(reportId, ReportStatus.Resolved);
+        for (const report of duplicatedReports) {
+            reportStorage.updateStatus(report.reportId, ReportStatus.Rejected);
         }
-        reportSheet.updateStatus(updateList);
+        reportStorage.write();
     }
 
     public reject(versionName: string, reportId: number): void {
-        let reportSheet = this.getReportSheet(versionName);
-        reportSheet.updateStatus([{ reportId: reportId, status: ReportStatus.Rejected }]);
+        const reportStorage = this.getReportStorage(versionName);
+        reportStorage.updateStatus(reportId, ReportStatus.Rejected);
+        reportStorage.write();
     }
 
     public approveGroup(versionName: string, reportIdList: number[]): void {
-        let reportSheet = this.getReportSheet(versionName);
-        let updateList: { reportId: number, status: ReportStatus }[] = [];
+        const reportStorage = this.getReportStorage(versionName);
+        for (const reportId of reportIdList) {
+            const targetReport = reportStorage.getReportById(reportId);
+            const duplicatedReports = reportStorage.reports.filter(r =>
+                r.reportId !== targetReport.reportId && r.musicId === targetReport.musicId && r.difficulty === targetReport.difficulty);
 
-        for (let reportId of reportIdList) {
-            let targetReport = reportSheet.getReport(reportId);
-            let duplicatedReports = reportSheet.reports.filter(r =>
-                r.reportId != targetReport.reportId && r.musicId == targetReport.musicId && r.difficulty == targetReport.difficulty);
-
-            updateList.push({ reportId: reportId, status: ReportStatus.Resolved });
-            for (let duplicated of duplicatedReports) {
-                updateList.push({ reportId: duplicated.reportId, status: ReportStatus.Rejected });
+            reportStorage.updateStatus(reportId, ReportStatus.Resolved);
+            for (const duplicated of duplicatedReports) {
+                reportStorage.updateStatus(duplicated.reportId, ReportStatus.Rejected);
             }
         }
-        reportSheet.updateStatus(updateList);
+        reportStorage.write();
     }
 
-    public insertReport(versionName: string, formReport: GoogleFormReport): Report {
-        let table = this.musicData.getTable(versionName);
-        let reportSheet = this.getReportSheet(versionName);
+    public insertReport(versionName: string, formReport: GoogleFormReport): IReport {
+        const table = this.musicData.getTable(versionName);
 
-        let targetMusicData = table.getMusicDataByName(formReport.musicName);
+        const targetMusicData = table.getMusicDataByName(formReport.musicName);
         if (!targetMusicData) {
             Debug.logError(`[検証報告エラー]楽曲表に存在しない楽曲
 楽曲名: ${formReport.musicName}
@@ -156,14 +168,15 @@ VERSION: ${versionName}`);
             return null;
         }
 
-        var diff = formReport.afterOp - formReport.beforeOp;
+        const diff = formReport.afterOp - formReport.beforeOp;
         if (diff <= 0 || diff > 100) {
             Debug.logError(`[検証報告エラー]OP変動値が範囲外
 ${JSON.stringify(formReport)}`);
             return null;
         }
 
-        return reportSheet.insertReport(formReport);
+        return this.getReportStorage(versionName)
+            .push(formReport, PostLocation.GoogleForm, formReport.imagePaths);
     }
 
     public approveBulk(versionName: string, bulkReportId: number): void {

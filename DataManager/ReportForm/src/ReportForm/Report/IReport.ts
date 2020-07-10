@@ -1,4 +1,4 @@
-﻿import { ReportStatus } from "./Report";
+﻿import { ReportStatus } from "./ReportStatus";
 import { PostLocation } from "./ReportStorage";
 import { ReportInputFormat } from "./ReportInputFormat";
 export interface IReport extends ReportInputFormat {
@@ -7,4 +7,5 @@ export interface IReport extends ReportInputFormat {
     readonly imagePaths: string[];
     readonly postLocation: PostLocation;
     readonly reportStatus: ReportStatus;
+    calcBaseRating(): number;
 }
