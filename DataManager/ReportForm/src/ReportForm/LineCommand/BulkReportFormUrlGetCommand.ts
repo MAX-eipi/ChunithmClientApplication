@@ -5,7 +5,7 @@ export class BulkReportFormUrlGetCommand extends LINECommand {
         return command == 'bulk-report-form-url';
     }
     public invoke(command: string, event: any, postData: any): void {
-        let url = this.module.report.bulkReportGoogleForm.getPublishedUrl();
+        let url = this.module.report.levelBulkReportGoogleForm.getPublishedUrl();
         this.replyMessage(event.replyToken, [`[一括検証報告フォーム]\n${url}`]);
     }
 }

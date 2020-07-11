@@ -18,5 +18,9 @@ function onPost(e: any, versionName: string) {
 }
 
 function onPostBulkReport(e: any, versionName: string) {
-    ReportForm.onPostBulkReport(e, versionName);
+    ReportForm.onPostLevelBulkReport(e, versionName);
+}
+
+function onPostBulkReportImagePaths(e: any, versionName: string) {
+    ReportForm.onPostBulkReportImagePaths(e, versionName);
 }

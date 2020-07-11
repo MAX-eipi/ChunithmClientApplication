@@ -1,4 +1,4 @@
-import { ReportGroup } from "../Report/ReportGroup";
+import { MusicDataReportGroup } from "../Report/MusicDataReportGroup";
 import { Role } from "../Role";
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { GroupApprovalPage } from "./GroupApprovalPage";
@@ -18,10 +18,10 @@ export class ReportGroupListPage extends ReportFormPage {
     }
 
     public call(parameter: ReportGroupListPageParameter): GoogleAppsScript.HTML.HtmlOutput {
-        let reportGroups = this.module.report.getReportGroupContainer(parameter.versionName).reportGroups;
-        let listHtml = this.getListHtml(reportGroups);
+        const reportGroups = this.module.report.getMusicDataReportGroupContainer(parameter.versionName).musicDataReportGroups;
+        const listHtml = this.getListHtml(reportGroups);
 
-        var source = this.readMainHtml();
+        let source = this.readMainHtml();
 
         source = this.resolveVersionName(source, parameter.versionName);
         source = this.bind(TopPage, parameter, source);
@@ -32,20 +32,20 @@ export class ReportGroupListPage extends ReportFormPage {
         return this.createHtmlOutput(source);
     }
 
-    private getListHtml(reportGroupList: ReportGroup[]): string {
+    private getListHtml(reportGroups: MusicDataReportGroup[]): string {
         let source = '';
-        for (var i = 0; i < reportGroupList.length; i++) {
-            source += this.getListItemHtml(reportGroupList[i]) + '\n';
+        for (const reportGroup of reportGroups) {
+            source += this.getListItemHtml(reportGroup) + '\n';
         }
         return source;
     }
 
-    private getListItemHtml(reportGroup: ReportGroup): string {
+    private getListItemHtml(reportGroup: MusicDataReportGroup): string {
         let title = `ID: ${reportGroup.groupId}`;
         if (reportGroup.verified) {
             title = `<span style="color:#02d507;">【済】</span>` + title;
         }
-        let template = `<div class="music_list bg_master" onclick="transition('${encodeURI(reportGroup.groupId)}')">${title}</div>`;
+        const template = `<div class="music_list bg_master" onclick="transition('${encodeURI(reportGroup.groupId)}')">${title}</div>`;
         return template;
     }
 }

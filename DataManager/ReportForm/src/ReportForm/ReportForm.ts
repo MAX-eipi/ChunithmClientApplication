@@ -3,10 +3,12 @@ import { Debug } from "./Debug";
 import { Instance } from "./Instance";
 import { storeConfig } from "./operations";
 import { ApprovalPage } from "./Page/ApprovalPage";
-import { BulkApprovalPage } from "./Page/BulkApprovalPage";
-import { GoogleFormBulkReport } from "./Report/GoogleFormBulkReport";
+import { LevelBulkApprovalPage } from "./Page/LevelBulkApprovalPage";
 import { GoogleFormReport } from "./Report/GoogleFormReport";
 import { Utility } from "./Utility";
+import { GoogleFormLevelBulkReport } from "./Report/LevelBulkReport/GoogleFormLevelBulkReport";
+import { PostLocation } from "./Report/ReportStorage";
+import { ReportStatus } from "./Report/ReportStatus";
 
 export class ReportForm {
     public static doGet(e: any): any {
@@ -135,13 +137,13 @@ URL:${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(ver
         }
     }
 
-    public static onPostBulkReport(e: { response: GoogleAppsScript.Forms.FormResponse }, versionName: string = ""): void {
+    public static onPostLevelBulkReport(e: { response: GoogleAppsScript.Forms.FormResponse }, versionName: string = ""): void {
         try {
             Instance.initialize();
             if (!versionName) {
                 versionName = Instance.instance.module.config.common.defaultVersionName;
             }
-            let bulkReport = Instance.instance.module.report.insertBulkReport(versionName, new GoogleFormBulkReport(e.response));
+            let bulkReport = Instance.instance.module.report.insertLevelBulkReport(versionName, new GoogleFormLevelBulkReport(e.response));
             if (bulkReport) {
                 Debug.log(JSON.stringify({
                     header: `一括検証報告`,
@@ -153,11 +155,58 @@ URL:${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(ver
                 }));
                 Instance.instance.module.report.noticeReportPost(`[一括検証報告]
 対象レベル:${bulkReport.targetLevel}
-URL:${Instance.instance.module.router.getPage(BulkApprovalPage).getReportPageUrl(versionName, bulkReport.reportId)}`);
+URL:${Instance.instance.module.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReport.reportId)}`);
             }
         }
         catch (error) {
             let message = this.toExceptionMessage(error);
+            Debug.logError(message);
+        }
+    }
+
+    public static onPostBulkReportImagePaths(e: { response: GoogleAppsScript.Forms.FormResponse }, versionName = ""): void {
+        try {
+            Instance.initialize();
+            if (!versionName) {
+                versionName = Instance.instance.module.config.common.defaultVersionName;
+            }
+            const items = e.response.getItemResponses();
+            const musicId = parseInt(items[0].getResponse() as string);
+            //const musicName = items[1].getResponse() as string;
+            const difficulty = Utility.toDifficulty(items[2].getResponse() as string);
+            const imagePaths = items[3].getResponse().toString()
+                .split(',')
+                .map(p => `https://drive.google.com/uc?id=${p}`);
+
+            const targetReport = Instance.instance.module.report
+                .getReportStorage(versionName)
+                .getMusicDataReport(musicId, difficulty)
+                .find(r => r.postLocation === PostLocation.BulkSheet && r.reportStatus === ReportStatus.InProgress);
+            if (targetReport) {
+                targetReport.setImagePaths(imagePaths);
+                Instance.instance.module.report.getReportStorage(versionName).write();
+            }
+            else {
+                const tableContainer = Instance.instance.module.report.getBulkReportTableContainer(versionName);
+                const row = tableContainer.getTableByDifficulty(difficulty).getRowByMusicId(musicId);
+                if (row && row.isValid()) {
+                    Instance.instance.module.report
+                        .getReportStorage(versionName)
+                        .push(row, PostLocation.BulkSheet, imagePaths);
+                    Instance.instance.module.report.getReportStorage(versionName).write();
+                }
+                else {
+                    // 入力前に画像が投稿された
+                    Debug.logError(`データが未入力のまま検証画像が投稿されました
+楽曲ID: ${musicId}
+難易度: ${items[2].getResponse()}
+画像URL:
+${imagePaths.reduce((acc, src) => acc + '\n' + src)}`);
+                }
+            }
+        }
+        catch (error) {
+            const message = this.toExceptionMessage(error);
             Debug.logError(message);
         }
     }

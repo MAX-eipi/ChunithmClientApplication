@@ -44,6 +44,9 @@ export class VersionConfiguration implements Configuration {
     public get bulkReportWorksheetName(): string {
         return this.getProperty<string>(ConfigurationPropertyName.BULK_REPORT_SHEET_NAME, '');
     }
+    public get bulkReportSpreadsheetId(): string {
+        return this.getProperty<string>(ConfigurationPropertyName.BULK_REPORT_SPREADSHEET_ID, '');
+    }
 
     private _genres: string[];
     public get genres(): string[] {

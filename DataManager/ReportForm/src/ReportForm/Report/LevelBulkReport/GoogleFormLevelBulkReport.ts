@@ -1,18 +1,18 @@
 
-export class GoogleFormBulkReport {
+export class GoogleFormLevelBulkReport {
     private _targetLevel: number;
     private _op: number;
     private _opRatio: number;
     private _imagePaths: string[] = [];
 
     public constructor(post: GoogleAppsScript.Forms.FormResponse) {
-        let items = post.getItemResponses();
+        const items = post.getItemResponses();
         this._targetLevel = parseInt(items[0].getResponse().toString());
         this._op = parseFloat(items[1].getResponse().toString());
         this._opRatio = parseFloat(items[2].getResponse().toString());
 
         if (items[3]) {
-            let pathText = items[3].getResponse().toString();
+            const pathText = items[3].getResponse().toString();
             if (pathText) {
                 this._imagePaths = pathText.split(',');
             }

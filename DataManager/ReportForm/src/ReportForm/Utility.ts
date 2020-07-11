@@ -14,7 +14,7 @@ export class Utility {
             case "MASTER":
                 return Difficulty.Master;
         }
-        throw new Error(`[Utility.toDifficulty]unkown difficulty. difficultyText="${difficultyText}"`);
+        return Difficulty.Invalid;
     }
 
     public static toDifficultyText(difficulty: Difficulty): string {
@@ -28,7 +28,7 @@ export class Utility {
             case Difficulty.Master:
                 return "MASTER";
         }
-        throw new Error(`[Utility.toDifficultyText]unkown difficulty. difficulty=${difficulty}`);
+        return '';
     }
 
     public static toDifficultyTextLowerCase(difficulty: Difficulty): string {

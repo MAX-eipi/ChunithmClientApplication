@@ -1,19 +1,19 @@
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { Role } from "../Role";
-import { ReportStatus } from "../Report/Report";
+import { ReportStatus } from "../Report/ReportStatus";
 import { Utility } from "../Utility";
 import { Difficulty } from "../../MusicDataTable/Difficulty";
-import { BulkReportListPage } from "./BulkReportListPage";
+import { LevelBulkReportListPage } from "./LevelBulkReportListPage";
 
-export interface BulkApprovePageParameter extends ReportFormPageParameter {
+export interface LevelBulkApprovePageParameter extends ReportFormPageParameter {
     reportId: string;
 }
 
-export class BulkApprovalPage extends ReportFormPage {
+export class LevelBulkApprovalPage extends ReportFormPage {
     public static PAGE_NAME: string = 'bulk_approval';
 
     public get pageName(): string {
-        return BulkApprovalPage.PAGE_NAME;
+        return LevelBulkApprovalPage.PAGE_NAME;
     }
 
     public isAccessable(role: Role): boolean {
@@ -25,14 +25,14 @@ export class BulkApprovalPage extends ReportFormPage {
         return url;
     }
 
-    private bindSelf(source: string, parameter: BulkApprovePageParameter): string {
+    private bindSelf(source: string, parameter: LevelBulkApprovePageParameter): string {
         let url = this.getPageUrl(parameter.versionName);
         return source ? source.replace(/%link:self%/g, url) : "";
     }
 
-    public call(parameter: BulkApprovePageParameter): GoogleAppsScript.HTML.HtmlOutput {
+    public call(parameter: LevelBulkApprovePageParameter): GoogleAppsScript.HTML.HtmlOutput {
         let reportId = parseInt(parameter.reportId);
-        let report = this.module.report.getBulkReportSheet(parameter.versionName).getBulkReport(reportId);
+        let report = this.module.report.getLevelBulkReportSheet(parameter.versionName).getBulkReport(reportId);
         if (!report) {
             return this.module.router.callErrorPage("該当する検証報告が存在しません");
         }
@@ -41,7 +41,7 @@ export class BulkApprovalPage extends ReportFormPage {
 
         source = this.resolveVersionName(source, parameter.versionName);
         source = this.bindSelf(source, parameter);
-        source = this.bind(BulkReportListPage, parameter, source);
+        source = this.bind(LevelBulkReportListPage, parameter, source);
 
         let difficulty = report.targetLevel <= 3 ? Difficulty.Basic : Difficulty.Advanced;
 

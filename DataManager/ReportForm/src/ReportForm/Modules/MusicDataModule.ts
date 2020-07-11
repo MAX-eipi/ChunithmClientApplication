@@ -4,6 +4,8 @@ import { MusicDataTableWriter } from "../../MusicDataTable/MusicDataTableWriter"
 import { ReportFormModule } from "./@ReportFormModule";
 
 export class MusicDataModule extends ReportFormModule {
+    public static readonly moduleName = 'musicData';
+
     private _tables: { [key: string]: MusicDataTable } = {};
 
     public getTable(versionName: string): MusicDataTable {

@@ -2,7 +2,7 @@ import { ConfigurationScriptProperty, ConfigurationSpreadsheet } from "../Config
 import { ConfigurationEditor } from "./Configurations/ConfigurationEditor";
 import { Debug } from "./Debug";
 import { InProgressListPage } from "./Page/InProgressListPage";
-import { ReportStatus } from "./Report/Report";
+import { ReportStatus } from "./Report/ReportStatus";
 import { Instance } from "./Instance";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {

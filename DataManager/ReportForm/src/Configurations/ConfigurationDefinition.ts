@@ -44,6 +44,7 @@ export class ConfigurationPropertyName {
     public static readonly REPORT_GROUP_SHEET_NAME = 'report_group_worksheet_name';
     public static readonly BULK_REPORT_SHEET_NAME = 'bulk_report_worksheet_name';
     public static readonly GENRE_LIST = 'genre_list';
+    public static readonly BULK_REPORT_SPREADSHEET_ID = 'bulk_report_spreadsheet_id';
 
     // LINE
     public static readonly LINE_CHANNEL_ACCESS_TOKEN = 'line_channel_access_token';
