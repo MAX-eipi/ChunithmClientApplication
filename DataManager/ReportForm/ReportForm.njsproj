@@ -216,7 +216,8 @@
     <TypeScriptCompile Include="src\ReportForm\Modules\MusicDataModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Modules\Report\GoogleFormReportModule.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Modules\Report\LevelBulkReportGoogleForm.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Modules\Report\ReportGoogleForm.ts" />
     <TypeScriptCompile Include="src\ReportForm\Modules\TwitterModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

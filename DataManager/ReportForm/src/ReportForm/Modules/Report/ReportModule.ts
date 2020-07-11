@@ -1,21 +1,32 @@
-import { ConfigurationPropertyName } from "../../../Configurations/ConfigurationDefinition";
-import { Difficulty } from "../../../MusicDataTable/Difficulty";
 import { Debug } from "../../Debug";
-import { Environment } from "../../Environment";
 import { GoogleFormReport } from "../../Report/GoogleFormReport";
-import { IMusicDataReport } from "../../Report/IMusicDataReport";
 import { IReport } from "../../Report/IReport";
 import { GoogleFormLevelBulkReport } from "../../Report/LevelBulkReport/GoogleFormLevelBulkReport";
 import { LevelBulkReport } from "../../Report/LevelBulkReport/LevelBulkReport";
 import { LevelBulkReportSheet } from "../../Report/LevelBulkReport/LevelBulkReportSheet";
 import { MusicDataReportGroupContainer } from "../../Report/MusicDataReportGroupContainer";
 import { ReportStatus } from "../../Report/ReportStatus";
-import { ReportStorage } from "../../Report/ReportStorage";
+import { PostLocation, ReportStorage } from "../../Report/ReportStorage";
+import { Utility } from "../../Utility";
 import { ReportFormModule } from "../@ReportFormModule";
-import { GoogleFormReportModule } from "./GoogleFormReportModule";
+import { MusicDataModule } from "../MusicDataModule";
+import { LevelBulkReportGoogleForm } from "./LevelBulkReportGoogleForm";
+import { ReportGoogleForm } from "./ReportGoogleForm";
 
 export class ReportModule extends ReportFormModule {
     public static readonly moduleName = 'report';
+
+    private readonly _reportGoogleForm = new ReportGoogleForm(this);
+    private readonly _levelBulkReportGoogleForm = new LevelBulkReportGoogleForm(this);
+    private readonly _levelBulkReportSheetMap: { [key: string]: LevelBulkReportSheet } = {};
+
+    public get reportGoogleForm(): GoogleAppsScript.Forms.Form {
+        return this._reportGoogleForm.form;
+    }
+
+    public get levelBulkReportGoogleForm(): GoogleAppsScript.Forms.Form {
+        return this._levelBulkReportGoogleForm.form;
+    }
 
     public noticeReportPost(message: string): void {
         if (this.config.line.reportPostNoticeEnabled) {
@@ -33,14 +44,6 @@ export class ReportModule extends ReportFormModule {
             this.version.getVersionConfig(versionName).reportSpreadsheetId,
             this.version.getVersionConfig(versionName).reportWorksheetName);
         return this._reportStorage[versionName];
-    }
-
-    public getReportContainers(versionName: string): IMusicDataReport[] {
-        return this.getReportStorage(versionName).reportContainers;
-    }
-
-    public getReportContainer(versionName: string, musicId: number, difficulty: Difficulty): IMusicDataReport {
-        return this.getReportStorage(versionName).getMusicDataReport(musicId, difficulty);
     }
 
     public getReports(versionName: string): IReport[] {
@@ -68,13 +71,6 @@ export class ReportModule extends ReportFormModule {
         return container;
     }
 
-    private readonly _googleFormReport = new GoogleFormReportModule(this);
-
-    public get reportGoogleForm(): GoogleAppsScript.Forms.Form {
-        return this._googleFormReport.reportGoogleForm;
-    }
-
-    private readonly _levelBulkReportSheetMap: { [key: string]: LevelBulkReportSheet } = {};
     public getLevelBulkReportSheet(versionName: string): LevelBulkReportSheet {
         if (versionName in this._levelBulkReportSheetMap) {
             return this._levelBulkReportSheetMap[versionName];
@@ -88,22 +84,6 @@ export class ReportModule extends ReportFormModule {
 
     public getLevelBulkReports(versionName: string): LevelBulkReport[] {
         return this.getLevelBulkReportSheet(versionName).bulkReports;
-    }
-
-    private _levelBulkReportGoogleForm: GoogleAppsScript.Forms.Form;
-    public get levelBulkReportGoogleForm(): GoogleAppsScript.Forms.Form {
-        if (!this._levelBulkReportGoogleForm) {
-            const formId = this.config.report.bulkReportFormId;
-            if (!formId) {
-                throw new Error(`${ConfigurationPropertyName.BULK_REPORT_GOOGLE_FORM_ID} is not set.`);
-            }
-            const form = FormApp.openById(formId);
-            if (!form) {
-                throw new Error(`Form is invalid. formId: ${formId}`);
-            }
-            this._levelBulkReportGoogleForm = form;
-        }
-        return this._levelBulkReportGoogleForm;
     }
 
     public approve(versionName: string, reportId: number): void {
@@ -141,15 +121,42 @@ export class ReportModule extends ReportFormModule {
     }
 
     public insertReport(versionName: string, formReport: GoogleFormReport): IReport {
-        return this._googleFormReport.insertReport(versionName, formReport);
+        const table = this.getModule(MusicDataModule).getTable(versionName);
+
+        const targetMusicData = table.getMusicDataByName(formReport.musicName);
+        if (!targetMusicData) {
+            Debug.logError(`[検証報告エラー]楽曲表に存在しない楽曲
+楽曲名: ${formReport.musicName}
+VERSION: ${versionName}`);
+            return null;
+        }
+
+        if (targetMusicData.getVerified(formReport.difficulty)) {
+            Debug.logError(`[検証報告エラー]既に検証済みの楽曲
+楽曲名: ${formReport.musicName}
+難易度: ${Utility.toDifficultyText(formReport.difficulty)}
+VERSION: ${versionName}`);
+            return null;
+        }
+
+        const diff = formReport.afterOp - formReport.beforeOp;
+        if (diff <= 0 || diff > 100) {
+            Debug.logError(`[検証報告エラー]OP変動値が範囲外
+${JSON.stringify(formReport)}`);
+            return null;
+        }
+
+        return this.getModule(ReportModule)
+            .getReportStorage(versionName)
+            .push(formReport, PostLocation.GoogleForm, formReport.imagePaths);
     }
 
-    public approveLevelBulk(versionName: string, bulkReportId: number): void {
+    public approveLevelBulkReport(versionName: string, bulkReportId: number): void {
         const bulkReportSheet = this.getLevelBulkReportSheet(versionName);
         bulkReportSheet.updateStatus([{ reportId: bulkReportId, status: ReportStatus.Resolved }]);
     }
 
-    public rejectLevelBulk(versionName: string, bulkReportId: number): void {
+    public rejectLevelBulkReport(versionName: string, bulkReportId: number): void {
         const bulkReportSheet = this.getLevelBulkReportSheet(versionName);
         bulkReportSheet.updateStatus([{ reportId: bulkReportId, status: ReportStatus.Rejected }]);
     }
@@ -194,67 +201,10 @@ OP割合[万分率]:${opRatio100Fold}
     }
 
     public buildForm(versionName: string): void {
-        this._googleFormReport.buildForm(versionName);
+        this._reportGoogleForm.buildForm(versionName);
     }
 
     public buildBulkReportForm(versionName: string): void {
-        Debug.log(`一括報告フォームを構築します: ${versionName}`);
-
-        Debug.log('フォームに送信された回答の削除...');
-        const form = this.module.report.levelBulkReportGoogleForm;
-        form.deleteAllResponses();
-        {
-            for (const item of form.getItems()) {
-                form.deleteItem(item);
-                Utilities.sleep(100);
-            }
-        }
-        Debug.log(`フォームに送信された回答の削除が完了しました`);
-
-        const versionConfig = this.version.getVersionConfig(versionName);
-        if (this.config.common.environment === Environment.Release) {
-            form.setTitle(`譜面定数 一括検証報告 ${versionConfig.displayVersionName}`);
-        }
-        else {
-            form.setTitle(`譜面定数 一括検証報告 ${versionConfig.displayVersionName} [Dev]`);
-        }
-
-        Debug.log('パラメータ記入画面の作成...');
-        {
-            const levelSelector = form.addListItem();
-            levelSelector.setTitle('レベルを選択してください');
-            levelSelector.setRequired(true);
-            const choices: GoogleAppsScript.Forms.Choice[] = [];
-            for (let i = 1; i <= 6; i++) {
-                const choice = levelSelector.createChoice(i.toString());
-                choices.push(choice);
-            }
-            levelSelector.setChoices(choices);
-        }
-        {
-            const opInput = form.addTextItem();
-            opInput.setTitle("OPを入力してください");
-            opInput.setRequired(true);
-            opInput.setValidation(FormApp.createTextValidation()
-                .requireNumberGreaterThan(0)
-                .build());
-        }
-        {
-            const opRatioInput = form.addTextItem();
-            opRatioInput.setTitle("OP割合を入力してください");
-            opRatioInput.setRequired(true);
-            opRatioInput.setValidation(FormApp.createTextValidation()
-                .requireNumberBetween(0, 100)
-                .build());
-        }
-        Debug.log(`パラメータ記入画面の作成が完了しました`);
-
-        // 検証画像を添付してください
-        // 特定のファイル形式のみ許可
-        //  - 画像
-        // ファイルの最大数 1
-        // 最大ファイルサイズ 10MB
-
-        Debug.log(`一括報告フォームの構築が完了しました`);
+        this._levelBulkReportGoogleForm.buildForm(versionName);
     }
 }
