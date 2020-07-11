@@ -7,13 +7,10 @@ import { Difficulty } from "../../../MusicDataTable/Difficulty";
 export class BulkReportTableReader {
     public read(
         spreadsheetId: string,
-        headerSheetName: string = 'header',
-        basicSheetName: string = 'basic',
-        advancedSheetName: string = 'advanced',
-        expertSheetName: string = 'expert',
-        masterSheetName: string = 'master'
+        headerSheetName = 'header',
+        basicSheetName = 'basic', advancedSheetName = 'advanced', expertSheetName = 'expert', masterSheetName = 'master'
     ): BulkReportTableContainer {
-        let spreadsheet = SpreadsheetApp.openById(spreadsheetId);
+        const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
         if (!spreadsheet) {
             throw new Error(`Spreadsheet not found. (${spreadsheetId})`);
         }
@@ -35,8 +32,8 @@ export class BulkReportTableReader {
     private createHeader(sheet: GoogleAppsScript.Spreadsheet.Sheet): BulkReportTableHeader {
         const header = new BulkReportTableHeader();
         const values = sheet.getDataRange().getValues();
-        for (var i = 1; i < values.length; i++) {
-            header.push(values[i][0], values[i][1], values[i][2]);
+        for (const value of values) {
+            header.push(value[0], value[1], value[2]);
         }
         return header;
     }
@@ -45,21 +42,19 @@ export class BulkReportTableReader {
         const sheet = spreadsheet.getSheetByName(sheetName);
         const table = new BulkReportTable(header, sheetName, difficulty);
         const values = sheet.getDataRange().getValues();
-        const columnLength = header.columns.length;
         const oldColumnMap: { [key: string]: number } = {};
-        for (var i = 0; i < columnLength; i++) {
-            const column = header.columns[i];
-            for (var j = 0; j < values[0].length; j++) {
-                if (column.name == values[0][j]) {
-                    oldColumnMap[column.name] = j;
+        for (const column of header.columns) {
+            for (let i = 0; i < values[0].length; i++) {
+                if (column.name === values[0][i]) {
+                    oldColumnMap[column.name] = i;
                     break;
                 }
             }
         }
-        for (var i = 1; i < values.length; i++) {
+        for (let i = 1; i < values.length; i++) {
             const row = new BulkReportTableRow(header);
-            for (var j = 0; j < columnLength; j++) {
-                const columnName = header.columns[j].name;
+            for (const column of header.columns) {
+                const columnName = column.name;
                 if (columnName in oldColumnMap) {
                     row.push(values[i][oldColumnMap[columnName]]);
                 }

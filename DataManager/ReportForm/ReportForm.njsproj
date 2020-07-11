@@ -264,9 +264,6 @@
     <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReportSheet.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Report\BulkReportInputSheet.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Report\GoogleFormBulkReport.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

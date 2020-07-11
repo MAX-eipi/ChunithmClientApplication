@@ -20,8 +20,8 @@ export class BulkReportTableContainer {
     }
 
     public update(newMusicDataTable: MusicDataTable, oldMusicDataTable: MusicDataTable): void {
-        for (var i = 0; i < this._tables.length; i++) {
-            this._tables[i].updateMusicDataTable(newMusicDataTable, oldMusicDataTable);
+        for (const table of this._tables) {
+            table.updateMusicDataTable(newMusicDataTable, oldMusicDataTable);
         }
     }
 }

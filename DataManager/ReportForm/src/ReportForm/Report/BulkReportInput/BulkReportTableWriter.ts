@@ -3,14 +3,14 @@ import { BulkReportTable } from "./BulkReportTable";
 
 export class BulkReportTableWriter {
     public write(spreadsheetId: string, bulkReportTableContainer: BulkReportTableContainer): void {
-        let spreadsheet = SpreadsheetApp.openById(spreadsheetId);
+        const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
         if (!spreadsheet) {
             throw new Error(`Spreadsheet not found. (${spreadsheetId})`);
         }
 
         const tables = bulkReportTableContainer.getTables();
-        for (var i = 0; i < tables.length; i++) {
-            this.writeByTable(spreadsheet, tables[i]);
+        for (const table of tables) {
+            this.writeByTable(spreadsheet, table);
         }
     }
 
@@ -20,8 +20,8 @@ export class BulkReportTableWriter {
         const rows = table.rows;
         const values = [];
         values.push(header.columns.map(c => c.name));
-        for (var i = 0; i < rows.length; i++) {
-            values.push(rows[i].getRawValues());
+        for (const row of rows) {
+            values.push(row.getRawValues());
         }
 
         sheet.clear();
@@ -31,7 +31,7 @@ export class BulkReportTableWriter {
         sheetRange.setValues(values);
         sheetRange.createFilter();
 
-        for (var i = 0; i < header.columns.length; i++) {
+        for (let i = 0; i < header.columns.length; i++) {
             if (header.columns[i].protect) {
                 const range = sheet.getRange(1, i + 1, values.length, 1);
                 range.protect();

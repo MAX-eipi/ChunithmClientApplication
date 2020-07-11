@@ -26,12 +26,12 @@
     public push(name: string, value: string, protect: boolean) {
         const length = this._columns.push({ name: name, value: value, protect: protect });
         this._columnIndexByNameMap[name] = length - 1;
-        if (value.indexOf('@') == 0 && value.indexOf('@input') != 0) {
+        if (value.indexOf('@') === 0 && value.indexOf('@input') !== 0) {
             this._columnIndexByValueMap[value] = length - 1;
         }
     }
 
-    public get columns(): { name: string, value: string, protect: boolean }[] {
+    public get columns(): { name: string; value: string; protect: boolean }[] {
         return this._columns;
     }
 

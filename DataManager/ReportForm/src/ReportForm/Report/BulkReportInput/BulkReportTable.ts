@@ -4,16 +4,10 @@ import { MusicDataTable } from "../../../MusicDataTable/MusicDataTable";
 import { Difficulty } from "../../../MusicDataTable/Difficulty";
 
 export class BulkReportTable {
-    private _header: BulkReportTableHeader = null;
-    private _tableName: string = null;
-    private _difficulty: Difficulty;
     private _rows: BulkReportTableRow[] = [];
     private _idMap: { [key: number]: number } = {};
 
-    public constructor(header: BulkReportTableHeader, tableName: string, difficulty: Difficulty) {
-        this._header = header;
-        this._tableName = tableName;
-        this._difficulty = difficulty;
+    public constructor(private readonly _header: BulkReportTableHeader, private readonly _tableName: string, private readonly _difficulty: Difficulty) {
     }
 
     public push(row: BulkReportTableRow): number {
@@ -40,8 +34,8 @@ export class BulkReportTable {
         const oldIdMap = this._idMap;
         this._rows = [];
         this._idMap = {};
-        for (var i = 0; i < newMusicDataTable.datas.length; i++) {
-            var musicId = newMusicDataTable.datas[i].Id;
+        for (let i = 0; i < newMusicDataTable.datas.length; i++) {
+            const musicId = newMusicDataTable.datas[i].Id;
             if (musicId in oldIdMap) {
                 const row = oldRows[oldIdMap[musicId]];
                 row.update(i, this._difficulty, newMusicDataTable, oldMusicDataTable);
