@@ -118,7 +118,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
         const targetMusicDatas: MusicData[] = [];
         const approvedReports: IReport[] = [];
         for (const rep of reportGroup.getMusicDataReports()) {
-            if (!rep || !rep.mainReport || rep.mainReport.reportStatus !== ReportStatus.InProgress) {
+            if (!rep.mainReport || rep.mainReport.reportStatus !== ReportStatus.InProgress) {
                 continue;
             }
 

@@ -12,6 +12,9 @@ import { ReportFormModule } from "../@ReportFormModule";
 import { MusicDataModule } from "../MusicDataModule";
 import { LevelBulkReportGoogleForm } from "./LevelBulkReportGoogleForm";
 import { ReportGoogleForm } from "./ReportGoogleForm";
+import { BulkReportTableReader } from "../../Report/BulkReport/BulkReportTableReader";
+import { Difficulty } from "../../../MusicDataTable/Difficulty";
+import { IMusicDataReport } from "../../Report/IMusicDataReport";
 
 export class ReportModule extends ReportFormModule {
     public static readonly moduleName = 'report';
@@ -118,6 +121,32 @@ export class ReportModule extends ReportFormModule {
             }
         }
         reportStorage.write();
+    }
+
+    public getMusicDataReport(versionName: string, musicId: number, difficulty: Difficulty): IMusicDataReport {
+        return this.getReportStorage(versionName).getMusicDataReport(musicId, difficulty);
+    }
+
+    public importBulkReport(versionName: string): void {
+        const reader = new BulkReportTableReader();
+        const spreadsheetId = this.version.getVersionConfig(versionName).bulkReportSpreadsheetId;
+        const container = reader.read(spreadsheetId);
+        for (const table of container.getTables()) {
+            for (const row of table.rows) {
+                if (!row.isValid()) {
+                    continue;
+                }
+                const musicData = this.musicData.getTable(versionName).getMusicDataById(row.musicId);
+                if (musicData.getVerified(row.difficulty)) {
+                    continue;
+                }
+                const musicDataReport = this.getMusicDataReport(versionName, row.musicId, row.difficulty);
+                if (!musicDataReport.mainReport) {
+                    this.getReportStorage(versionName).push(row, PostLocation.BulkSheet);
+                }
+            }
+        }
+        this.getReportStorage(versionName).write();
     }
 
     public insertReport(versionName: string, formReport: GoogleFormReport): IReport {

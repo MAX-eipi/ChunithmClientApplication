@@ -16,6 +16,6 @@ export class MusicDataReportGroup {
     }
 
     public verified(): boolean {
-        return this.getMusicDataReports().every(r => r && r.mainReport && r.mainReport.reportStatus === ReportStatus.Resolved);
+        return this.getMusicDataReports().every(r => r.mainReport && r.mainReport.reportStatus === ReportStatus.Resolved);
     }
 }

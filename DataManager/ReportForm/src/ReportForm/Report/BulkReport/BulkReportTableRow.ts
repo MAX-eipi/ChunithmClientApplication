@@ -157,6 +157,9 @@ export class BulkReportTableRow implements ReportInputFormat {
                 case BulkReportTableHeader.VALUE_GENRE:
                     this._values[i] = musicData.Genre;
                     break;
+                case BulkReportTableHeader.VALUE_DIFFICULTY:
+                    this._values[i] = Utility.toDifficultyText(difficulty);
+                    break;
                 case BulkReportTableHeader.VALUE_LEVEL:
                     this._values[i] = BulkReportTableRow.toLevelText(musicData.getLevel(difficulty));
                     break;
@@ -182,5 +185,9 @@ export class BulkReportTableRow implements ReportInputFormat {
             }
         }
         return values;
+    }
+
+    public isValid(): boolean {
+        return this.score > 0 && this.beforeOp >= 0 && this.afterOp > 0;
     }
 }

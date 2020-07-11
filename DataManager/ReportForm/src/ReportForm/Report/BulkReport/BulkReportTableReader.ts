@@ -32,7 +32,7 @@ export class BulkReportTableReader {
     private createHeader(sheet: GoogleAppsScript.Spreadsheet.Sheet): BulkReportTableHeader {
         const header = new BulkReportTableHeader();
         const values = sheet.getDataRange().getValues();
-        for (const value of values) {
+        for (const value of values.slice(1)) {
             header.push(value[0], value[1], value[2]);
         }
         return header;

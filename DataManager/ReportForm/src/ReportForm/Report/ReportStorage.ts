@@ -54,7 +54,7 @@ export class ReportStorage {
         for (let i = 1; i < this._rawValueTable.length; i++) {
             const report = new Report(this._rawValueTable[i]);
             this._reports.push(report);
-            this.getOrCreateReportContainer(report.musicId, report.difficulty).push(report);
+            this.getMusicDataReport(report.musicId, report.difficulty).push(report);
         }
     }
 
@@ -81,7 +81,7 @@ export class ReportStorage {
 Šy‹ÈID: ${reportInput.musicId}`);
         }
 
-        const reportContainer = this.getOrCreateReportContainer(reportInput.musicId, reportInput.difficulty);
+        const reportContainer = this.getMusicDataReport(reportInput.musicId, reportInput.difficulty);
         if (reportContainer.mainReport && reportContainer.mainReport.reportStatus === ReportStatus.Resolved) {
             throw new Error(`Šù‚ÉŒŸØÏ‚Ý‚ÌŠy‹È. 
 Šy‹È–¼: ${reportContainer.mainReport.musicName}
@@ -96,6 +96,19 @@ export class ReportStorage {
         this._rawValueTable.push(buffer);
         this._reports.push(report);
         return report;
+    }
+
+    public getMusicDataReport(musicId: number, difficulty: Difficulty): MusicDataReport {
+        const key = this.getIndexMapKey(musicId, difficulty);
+        if (key in this._reportContainerIndexMap) {
+            return this._reportContainers[this._reportContainerIndexMap[key]];
+        }
+
+        const musicData = this._musicDataTable.getMusicDataById(musicId);
+        const reportContainer = new MusicDataReport(musicData, difficulty);
+        const length = this._reportContainers.push(reportContainer);
+        this._reportContainerIndexMap[key] = length - 1;
+        return reportContainer;
     }
 
     public write(): void {
@@ -125,27 +138,6 @@ export class ReportStorage {
         for (let i = 0; i < this._reports.length; i++) {
             this._reports[i].onUpdateStorage();
         }
-    }
-
-    private getOrCreateReportContainer(musicId: number, difficulty: Difficulty): MusicDataReport {
-        return this.getMusicDataReport(musicId, difficulty) || this.createReportContainer(musicId, difficulty);
-    }
-
-    public getMusicDataReport(musicId: number, difficulty: Difficulty): MusicDataReport {
-        const key = this.getIndexMapKey(musicId, difficulty);
-        if (!(key in this._reportContainerIndexMap)) {
-            return null;
-        }
-        return this._reportContainers[this._reportContainerIndexMap[key]];
-    }
-
-    private createReportContainer(musicId: number, difficulty: Difficulty): MusicDataReport {
-        const key = this.getIndexMapKey(musicId, difficulty);
-        const musicData = this._musicDataTable.getMusicDataById(musicId);
-        const reportContainer = new MusicDataReport(musicData, difficulty);
-        const length = this._reportContainers.push(reportContainer);
-        this._reportContainerIndexMap[key] = length - 1;
-        return reportContainer;
     }
 
     private getIndexMapKey(musicId: number, difficulty: Difficulty): string {

@@ -64,7 +64,7 @@ export class GroupApprovalPage extends ReportFormPage {
     private getListHtml(table: MusicDataTable, reportGroup: MusicDataReportGroup): string {
         let source = '';
         for (const unit of reportGroup.getMusicDataReports()) {
-            if (unit && unit.mainReport && unit.mainReport.reportStatus === ReportStatus.Resolved) {
+            if (unit.mainReport && unit.mainReport.reportStatus === ReportStatus.Resolved) {
                 continue;
             }
             source += this.getListItemHtml(table, unit) + '\n';

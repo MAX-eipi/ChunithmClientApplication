@@ -5,6 +5,7 @@ import { ReportStorage, PostLocation } from "./ReportForm/Report/ReportStorage";
 import { ReportInputFormat } from "./ReportForm/Report/ReportInputFormat";
 import { Difficulty } from "./MusicDataTable/Difficulty";
 import { ComboStatus } from "./ReportForm/Rating";
+import { ReportModule } from "./ReportForm/Modules/Report/ReportModule";
 
 function testUpdateBulkSheet(): void {
     Instance.initialize();
@@ -32,4 +33,9 @@ function testInsertReport(): void {
     };
     storage.push(reportInput, PostLocation.GoogleForm);
     storage.write();
+}
+
+function testImportReport(): void {
+    Instance.initialize();
+    Instance.instance.module.getModule(ReportModule).importBulkReport('Dev3');
 }
