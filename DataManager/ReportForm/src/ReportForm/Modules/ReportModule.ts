@@ -22,7 +22,7 @@ export class ReportModule extends ReportFormModule {
         }
     }
 
-    private _reportStorage: { [key: string]: ReportStorage } = {};
+    private readonly _reportStorage: { [key: string]: ReportStorage } = {};
     public getReportStorage(versionName: string): ReportStorage {
         if (versionName in this._reportStorage) {
             return this._reportStorage[versionName];
@@ -83,7 +83,7 @@ export class ReportModule extends ReportFormModule {
         return this._reportGoogleForm;
     }
 
-    private _levelBulkReportSheetMap: { [key: string]: LevelBulkReportSheet } = {};
+    private readonly _levelBulkReportSheetMap: { [key: string]: LevelBulkReportSheet } = {};
     public getLevelBulkReportSheet(versionName: string): LevelBulkReportSheet {
         if (versionName in this._levelBulkReportSheetMap) {
             return this._levelBulkReportSheetMap[versionName];
@@ -179,17 +179,17 @@ ${JSON.stringify(formReport)}`);
             .push(formReport, PostLocation.GoogleForm, formReport.imagePaths);
     }
 
-    public approveBulk(versionName: string, bulkReportId: number): void {
+    public approveLevelBulk(versionName: string, bulkReportId: number): void {
         const bulkReportSheet = this.getLevelBulkReportSheet(versionName);
         bulkReportSheet.updateStatus([{ reportId: bulkReportId, status: ReportStatus.Resolved }]);
     }
 
-    public rejectBulk(versionName: string, bulkReportId: number): void {
+    public rejectLevelBulk(versionName: string, bulkReportId: number): void {
         const bulkReportSheet = this.getLevelBulkReportSheet(versionName);
         bulkReportSheet.updateStatus([{ reportId: bulkReportId, status: ReportStatus.Rejected }]);
     }
 
-    public insertBulkReport(versionName: string, formReport: GoogleFormLevelBulkReport): LevelBulkReport {
+    public insertLevelBulkReport(versionName: string, formReport: GoogleFormLevelBulkReport): LevelBulkReport {
         const table = this.musicData.getTable(versionName);
         const bulkReportSheet = this.getLevelBulkReportSheet(versionName);
 

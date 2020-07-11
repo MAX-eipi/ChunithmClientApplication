@@ -206,7 +206,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
         }
 
         this.musicData.updateMusicData(versionName, targetMusicDatas);
-        this.report.approveBulk(versionName, bulkReportId);
+        this.report.approveLevelBulk(versionName, bulkReportId);
 
         Debug.log(JSON.stringify({
             header: '一括承認',
@@ -226,7 +226,7 @@ URL:${this.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, b
             throw new ApprovalError(`一括検証報告取得の失敗. ID:${bulkReportId}`);
         }
 
-        this.report.rejectBulk(versionName, bulkReportId);
+        this.report.rejectLevelBulk(versionName, bulkReportId);
 
         Debug.log(JSON.stringify({
             header: '一括承認',

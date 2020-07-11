@@ -141,7 +141,7 @@ URL:${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(ver
             if (!versionName) {
                 versionName = Instance.instance.module.config.common.defaultVersionName;
             }
-            let bulkReport = Instance.instance.module.report.insertBulkReport(versionName, new GoogleFormBulkReport(e.response));
+            let bulkReport = Instance.instance.module.reinsertLevelBulkReporteport(versionName, new GoogleFormBulkReport(e.response));
             if (bulkReport) {
                 Debug.log(JSON.stringify({
                     header: `一括検証報告`,
