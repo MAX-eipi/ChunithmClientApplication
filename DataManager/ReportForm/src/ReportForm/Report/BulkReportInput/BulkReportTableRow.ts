@@ -3,8 +3,9 @@ import { MusicDataTable } from "../../../MusicDataTable/MusicDataTable";
 import { ComboStatus } from "../../Rating";
 import { Utility } from "../../Utility";
 import { BulkReportTableHeader } from "./BulkReportTableHeader";
+import { ReportInputFormat } from "../ReportInputFormat";
 
-export class BulkReportTableRow {
+export class BulkReportTableRow implements ReportInputFormat {
     public static create(index: number, musicId: number, difficulty: Difficulty, header: BulkReportTableHeader, currentMusicDataTable: MusicDataTable, previousMusicDataTable: MusicDataTable = null): BulkReportTableRow {
         const row = new BulkReportTableRow(header);
         const musicData = currentMusicDataTable.getMusicDataById(musicId);
@@ -81,7 +82,7 @@ export class BulkReportTableRow {
     public get index(): number {
         return this.getValueByIndex(this.getColumnIndex(BulkReportTableHeader.VALUE_INDEX)) as number;
     }
-    public get id(): number {
+    public get musicId(): number {
         return this.getValueByIndex(this.getColumnIndex(BulkReportTableHeader.VALUE_ID)) as number;
     }
     public get name(): string {
@@ -130,7 +131,7 @@ export class BulkReportTableRow {
     }
 
     public update(index: number, difficulty: Difficulty, newMusicDataTable: MusicDataTable, oldMusicDataTable: MusicDataTable = null): void {
-        const musicId = this.id;
+        const musicId = this.musicId;
         const musicData = newMusicDataTable.getMusicDataById(musicId);
         const oldMusicData = oldMusicDataTable ? oldMusicDataTable.getMusicDataById(musicId) : null;
         for (let i = 0; i < this._header.columns.length; i++) {

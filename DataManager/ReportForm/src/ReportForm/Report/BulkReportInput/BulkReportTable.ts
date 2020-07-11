@@ -12,7 +12,7 @@ export class BulkReportTable {
 
     public push(row: BulkReportTableRow): number {
         const length = this._rows.push(row);
-        this._idMap[row.id] = length - 1;
+        this._idMap[row.musicId] = length - 1;
         return length;
     }
 
