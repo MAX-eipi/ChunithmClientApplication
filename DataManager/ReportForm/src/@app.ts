@@ -22,5 +22,5 @@ function onPostBulkReport(e: any, versionName: string) {
 }
 
 function onPostBulkReportImagePaths(e: any, versionName: string) {
-    ReportForm.onPostBulkReportImagePath(e, versionName);
+    ReportForm.onPostBulkReportImagePaths(e, versionName);
 }

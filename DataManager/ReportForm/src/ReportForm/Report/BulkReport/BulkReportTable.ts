@@ -45,11 +45,11 @@ export class BulkReportTable {
             const musicId = newMusicDataTable.datas[i].Id;
             if (musicId in oldIdMap) {
                 const row = oldRows[oldIdMap[musicId]];
-                row.update(i, this._difficulty, newMusicDataTable, oldMusicDataTable);
+                row.update(i + 1, this._difficulty, newMusicDataTable, oldMusicDataTable);
                 this.push(row);
             }
             else {
-                const row = BulkReportTableRow.create(i, musicId, this._difficulty, this._header, newMusicDataTable, oldMusicDataTable);
+                const row = BulkReportTableRow.create(i + 1, musicId, this._difficulty, this._header, newMusicDataTable, oldMusicDataTable);
                 this.push(row);
             }
         }

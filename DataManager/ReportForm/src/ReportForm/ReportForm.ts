@@ -164,7 +164,7 @@ URL:${Instance.instance.module.router.getPage(LevelBulkApprovalPage).getReportPa
         }
     }
 
-    public static onPostBulkReportImagePath(e: { response: GoogleAppsScript.Forms.FormResponse }, versionName = ""): void {
+    public static onPostBulkReportImagePaths(e: { response: GoogleAppsScript.Forms.FormResponse }, versionName = ""): void {
         try {
             Instance.initialize();
             if (!versionName) {
