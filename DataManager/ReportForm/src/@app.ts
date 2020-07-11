@@ -20,3 +20,7 @@ function onPost(e: any, versionName: string) {
 function onPostBulkReport(e: any, versionName: string) {
     ReportForm.onPostLevelBulkReport(e, versionName);
 }
+
+function onPostBulkReportImagePaths(e: any, versionName: string) {
+    ReportForm.onPostBulkReportImagePath(e, versionName);
+}

@@ -8,4 +8,5 @@ export interface IReport extends ReportInputFormat {
     readonly postLocation: PostLocation;
     readonly reportStatus: ReportStatus;
     calcBaseRating(): number;
+    setImagePaths(imagePaths: string[]): void;
 }

@@ -92,4 +92,7 @@ export class Report implements IReport {
         }
         return calcBaseRating(this.beforeOp, this.afterOp, this.score, comboStatus);
     }
+    public setImagePaths(imagePaths: string[]): void {
+        this.imagePaths = imagePaths;
+    }
 }

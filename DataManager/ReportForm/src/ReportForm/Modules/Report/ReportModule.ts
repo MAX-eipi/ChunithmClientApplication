@@ -15,6 +15,7 @@ import { ReportGoogleForm } from "./ReportGoogleForm";
 import { BulkReportTableReader } from "../../Report/BulkReport/BulkReportTableReader";
 import { Difficulty } from "../../../MusicDataTable/Difficulty";
 import { IMusicDataReport } from "../../Report/IMusicDataReport";
+import { BulkReportTableContainer } from "../../Report/BulkReport/BulkReportTableContainer";
 
 export class ReportModule extends ReportFormModule {
     public static readonly moduleName = 'report';
@@ -127,10 +128,15 @@ export class ReportModule extends ReportFormModule {
         return this.getReportStorage(versionName).getMusicDataReport(musicId, difficulty);
     }
 
-    public importBulkReport(versionName: string): void {
+    public getBulkReportTableContainer(versionName: string): BulkReportTableContainer {
         const reader = new BulkReportTableReader();
         const spreadsheetId = this.version.getVersionConfig(versionName).bulkReportSpreadsheetId;
         const container = reader.read(spreadsheetId);
+        return container;
+    }
+
+    public importBulkReport(versionName: string): void {
+        const container = this.getBulkReportTableContainer(versionName);
         for (const table of container.getTables()) {
             for (const row of table.rows) {
                 if (!row.isValid()) {

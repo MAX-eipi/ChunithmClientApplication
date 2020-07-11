@@ -29,6 +29,13 @@ export class BulkReportTable {
         return this._rows.slice();
     }
 
+    public getRowByMusicId(musicId: number): BulkReportTableRow {
+        if (musicId in this._idMap) {
+            return this._rows[this._idMap[musicId]];
+        }
+        return null;
+    }
+
     public updateMusicDataTable(newMusicDataTable: MusicDataTable, oldMusicDataTable: MusicDataTable = null): void {
         const oldRows = this._rows;
         const oldIdMap = this._idMap;

@@ -59,10 +59,18 @@ export class MusicDataReport implements IMusicDataReport {
         }
         return ret;
     }
-    public getReportByReportId(reportId: number): Report {
+    public getReportByReportId(reportId: number): IReport {
         for (let i = 0; i < this._reports.length; i++) {
             if (this._reports[i].reportId === reportId) {
                 return this._reports[i];
+            }
+        }
+        return null;
+    }
+    public find(predicate: (report: Report) => boolean): IReport {
+        for (const report of this._reports) {
+            if (predicate(report)) {
+                return report;
             }
         }
         return null;
