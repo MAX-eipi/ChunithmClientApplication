@@ -1,6 +1,6 @@
 import { Instance } from "./ReportForm/Instance";
-import { BulkReportTableReader } from "./ReportForm/Report/BulkReportInput/BulkReportTableReader";
-import { BulkReportTableWriter } from "./ReportForm/Report/BulkReportInput/BulkReportTableWriter";
+import { BulkReportTableReader } from "./ReportForm/Report/BulkReport/BulkReportTableReader";
+import { BulkReportTableWriter } from "./ReportForm/Report/BulkReport/BulkReportTableWriter";
 import { ReportStorage, PostLocation } from "./ReportForm/Report/ReportStorage";
 import { ReportInputFormat } from "./ReportForm/Report/ReportInputFormat";
 import { Difficulty } from "./MusicDataTable/Difficulty";

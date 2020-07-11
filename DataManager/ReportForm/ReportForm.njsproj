@@ -81,7 +81,8 @@
     <Folder Include="src\ReportForm\LineCommand\" />
     <Folder Include="src\ReportForm\Report\" />
     <Folder Include="src\ReportForm\Page\" />
-    <Folder Include="src\ReportForm\Report\BulkReportInput\" />
+    <Folder Include="src\ReportForm\Report\BulkReport\" />
+    <Folder Include="src\ReportForm\Report\LevelBulkReport\" />
     <Folder Include="src\Resources\Page\bulk_approval\" />
     <Folder Include="src\Resources\Page\wip_bulk_report_list\" />
     <Folder Include="src\Twitter\" />
@@ -240,31 +241,31 @@
     <TypeScriptCompile Include="src\ReportForm\Modules\PostCommandModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Report\BulkReportInput\BulkReportTable.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport\BulkReportTable.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Report\BulkReportInput\BulkReportTableContainer.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport\BulkReportTableContainer.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Report\BulkReportInput\BulkReportTableHeader.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Report\BulkReportInput\BulkReportTableRow.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport\BulkReportTableHeader.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport\BulkReportTableRow.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Report\BulkReportInput\BulkReportTableReader.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport\BulkReportTableReader.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Report\BulkReportInput\BulkReportTableWriter.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport\BulkReportTableWriter.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Report\IMusicDataReport.ts" />
     <TypeScriptCompile Include="src\ReportForm\Report\IReport.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReport.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReport\LevelBulkReport.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReportSheet.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReport\LevelBulkReportSheet.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Report\GoogleFormBulkReport.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReport\GoogleFormLevelBulkReport.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Report\GoogleFormReport.ts">
@@ -278,7 +279,6 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Report\Report.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Report\ReportError.ts" />
     <TypeScriptCompile Include="src\ReportForm\Report\ReportInputFormat.ts" />
     <TypeScriptCompile Include="src\ReportForm\Report\ReportStatus.ts" />
     <TypeScriptCompile Include="src\ReportForm\Report\ReportStorage.ts">

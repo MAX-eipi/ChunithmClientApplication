@@ -4,7 +4,7 @@ import { Instance } from "./Instance";
 import { storeConfig } from "./operations";
 import { ApprovalPage } from "./Page/ApprovalPage";
 import { LevelBulkApprovalPage } from "./Page/LevelBulkApprovalPage";
-import { GoogleFormBulkReport } from "./Report/GoogleFormBulkReport";
+import { GoogleFormBulkReport } from "./Report/GoogleFormLevelBulkReport";
 import { GoogleFormReport } from "./Report/GoogleFormReport";
 import { Utility } from "./Utility";
 

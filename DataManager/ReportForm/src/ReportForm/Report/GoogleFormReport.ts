@@ -3,6 +3,26 @@ import { ComboStatus } from "../Rating";
 import { Utility } from "../Utility";
 import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
 
+class PostReportExtends {
+    private static convertMusicNameMap: { [key: string]: string } = {
+        "チルノのパーフェクトさんすう教室 ⑨周年バージョン": "チルノのパーフェクトさんすう教室　⑨周年バージョン",
+        "ってゐ！ ～えいえんてゐVer～": "ってゐ！　～えいえんてゐVer～",
+        "少女幻葬戦慄曲 ～ Necro Fantasia": "少女幻葬戦慄曲　～　Necro Fantasia",
+        "キュアリアス光吉古牌 －祭－": "キュアリアス光吉古牌　－祭－",
+        "セイクリッド ルイン": "セイクリッド　ルイン",
+        "オーケー？ オーライ！": "オーケー？　オーライ！",
+        "ここで一席！ Oshama Scramble!": "ここで一席！　Oshama Scramble!",
+        "札付きのワル ～マイケルのうた～": "札付きのワル　～マイケルのうた～",
+    };
+
+    public static convertMusicName(musicName: string): string {
+        if (musicName in this.convertMusicNameMap) {
+            return this.convertMusicNameMap[musicName];
+        }
+        return musicName;
+    }
+}
+
 export class GoogleFormReport {
     private _musicId: number;
     private _musicnName = "";
@@ -14,7 +34,7 @@ export class GoogleFormReport {
     private _imagePaths: string[] = [];
 
     public constructor(post: GoogleAppsScript.Forms.FormResponse) {
-        let items = post.getItemResponses();
+        const items = post.getItemResponses();
         this._musicnName = PostReportExtends.convertMusicName(items[1].getResponse().toString());
         this._difficulty = Utility.toDifficulty(items[2].getResponse().toString());
         this._beforeOp = parseFloat(items[3].getResponse().toString());
@@ -23,7 +43,7 @@ export class GoogleFormReport {
         this._comboStatus = Utility.toComboStatus(items[6].getResponse().toString());
 
         if (items[7]) {
-            let pathText = items[7].getResponse().toString();
+            const pathText = items[7].getResponse().toString();
             if (pathText) {
                 this._imagePaths = pathText.split(",");
             }
@@ -60,25 +80,5 @@ export class GoogleFormReport {
     }
     public get imagePaths(): string[] {
         return this._imagePaths.map(function (id) { return `https://drive.google.com/uc?id=${id}`; });
-    }
-}
-
-class PostReportExtends {
-    private static convertMusicNameMap: { [key: string]: string } = {
-        "チルノのパーフェクトさんすう教室 ⑨周年バージョン": "チルノのパーフェクトさんすう教室　⑨周年バージョン",
-        "ってゐ！ ～えいえんてゐVer～": "ってゐ！　～えいえんてゐVer～",
-        "少女幻葬戦慄曲 ～ Necro Fantasia": "少女幻葬戦慄曲　～　Necro Fantasia",
-        "キュアリアス光吉古牌 －祭－": "キュアリアス光吉古牌　－祭－",
-        "セイクリッド ルイン": "セイクリッド　ルイン",
-        "オーケー？ オーライ！": "オーケー？　オーライ！",
-        "ここで一席！ Oshama Scramble!": "ここで一席！　Oshama Scramble!",
-        "札付きのワル ～マイケルのうた～": "札付きのワル　～マイケルのうた～",
-    };
-
-    public static convertMusicName(musicName: string): string {
-        if (musicName in this.convertMusicNameMap) {
-            return this.convertMusicNameMap[musicName];
-        }
-        return musicName;
     }
 }

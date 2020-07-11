@@ -3,17 +3,17 @@ import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
 import { Debug } from "../Debug";
 import { Environment } from "../Environment";
-import { GoogleFormBulkReport } from "../Report/GoogleFormBulkReport";
+import { GoogleFormLevelBulkReport } from "../Report/LevelBulkReport/GoogleFormLevelBulkReport";
 import { GoogleFormReport } from "../Report/GoogleFormReport";
 import { IMusicDataReport } from "../Report/IMusicDataReport";
 import { IReport } from "../Report/IReport";
-import { LevelBulkReport } from "../Report/LevelBulkReport";
-import { LevelBulkReportSheet } from "../Report/LevelBulkReportSheet";
+import { LevelBulkReportSheet } from "../Report/LevelBulkReport/LevelBulkReportSheet";
 import { MusicDataReportGroupContainer } from "../Report/MusicDataReportGroupContainer";
 import { ReportStatus } from "../Report/ReportStatus";
 import { PostLocation, ReportStorage } from "../Report/ReportStorage";
 import { Utility } from "../Utility";
 import { ReportFormModule } from "./@ReportFormModule";
+import { LevelBulkReport } from "../Report/LevelBulkReport/LevelBulkReport";
 
 export class ReportModule extends ReportFormModule {
     public noticeReportPost(message: string): void {
@@ -189,7 +189,7 @@ ${JSON.stringify(formReport)}`);
         bulkReportSheet.updateStatus([{ reportId: bulkReportId, status: ReportStatus.Rejected }]);
     }
 
-    public insertBulkReport(versionName: string, formReport: GoogleFormBulkReport): LevelBulkReport {
+    public insertBulkReport(versionName: string, formReport: GoogleFormLevelBulkReport): LevelBulkReport {
         const table = this.musicData.getTable(versionName);
         const bulkReportSheet = this.getLevelBulkReportSheet(versionName);
 

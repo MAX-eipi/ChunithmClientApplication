@@ -1,7 +1,7 @@
 import { LevelBulkReport } from "./LevelBulkReport";
-import { GoogleFormBulkReport } from "./GoogleFormBulkReport";
-import { ReportStatus } from "./ReportStatus";
-import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
+import { GoogleFormBulkReport } from "../GoogleFormLevelBulkReport";
+import { ReportStatus } from "../ReportStatus";
+import { MusicDataTable } from "../../../MusicDataTable/MusicDataTable";
 
 export class LevelBulkReportSheet {
     private _musicDataTable: MusicDataTable = null;
