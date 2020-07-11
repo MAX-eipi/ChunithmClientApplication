@@ -38,7 +38,7 @@ export class ReportFormConfiguration implements Configuration {
     }
 
     private _configList: { [key: string]: ReportFormConfiguration } = {};
-    private getConfig<TConfig extends ReportFormConfiguration>(key: string, factory: { new(): TConfig }): TConfig {
+    private getConfigInternal<TConfig extends ReportFormConfiguration>(key: string, factory: { new(): TConfig }): TConfig {
         if (!(key in this._root._configList)) {
             let config = new factory();
             config._root = this._root;
@@ -47,9 +47,19 @@ export class ReportFormConfiguration implements Configuration {
         return this._root._configList[key] as TConfig;
     }
 
-    public get common(): CommonConfiguration { return this.getConfig('common', CommonConfiguration); }
-    public get line(): LINEConfiguration { return this.getConfig('line', LINEConfiguration); }
-    public get log(): LogConfiguration { return this.getConfig('log', LogConfiguration); }
-    public get twitter(): TwitterConfiguration { return this.getConfig('twitter', TwitterConfiguration); }
-    public get report(): ReportConfiguration { return this.getConfig('report', ReportConfiguration); }
+    public getConfig<TConfig extends ReportFormConfiguration>(factory: { configName: string; new(): TConfig }): TConfig {
+        if (factory.configName in this._root._configList) {
+            return this._root._configList[factory.configName] as TConfig;
+        }
+        const config = new factory();
+        config._root = this._root;
+        this._root._configList[factory.configName] = config;
+        return config;
+    }
+
+    public get common(): CommonConfiguration { return this.getConfigInternal('common', CommonConfiguration); }
+    public get line(): LINEConfiguration { return this.getConfigInternal('line', LINEConfiguration); }
+    public get log(): LogConfiguration { return this.getConfigInternal('log', LogConfiguration); }
+    public get twitter(): TwitterConfiguration { return this.getConfigInternal('twitter', TwitterConfiguration); }
+    public get report(): ReportConfiguration { return this.getConfigInternal('report', ReportConfiguration); }
 }

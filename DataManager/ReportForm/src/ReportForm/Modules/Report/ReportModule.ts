@@ -1,21 +1,22 @@
-import { ConfigurationPropertyName } from "../../Configurations/ConfigurationDefinition";
-import { Difficulty } from "../../MusicDataTable/Difficulty";
-import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
-import { Debug } from "../Debug";
-import { Environment } from "../Environment";
-import { GoogleFormLevelBulkReport } from "../Report/LevelBulkReport/GoogleFormLevelBulkReport";
-import { GoogleFormReport } from "../Report/GoogleFormReport";
-import { IMusicDataReport } from "../Report/IMusicDataReport";
-import { IReport } from "../Report/IReport";
-import { LevelBulkReportSheet } from "../Report/LevelBulkReport/LevelBulkReportSheet";
-import { MusicDataReportGroupContainer } from "../Report/MusicDataReportGroupContainer";
-import { ReportStatus } from "../Report/ReportStatus";
-import { PostLocation, ReportStorage } from "../Report/ReportStorage";
-import { Utility } from "../Utility";
-import { ReportFormModule } from "./@ReportFormModule";
-import { LevelBulkReport } from "../Report/LevelBulkReport/LevelBulkReport";
+import { ConfigurationPropertyName } from "../../../Configurations/ConfigurationDefinition";
+import { Difficulty } from "../../../MusicDataTable/Difficulty";
+import { Debug } from "../../Debug";
+import { Environment } from "../../Environment";
+import { GoogleFormReport } from "../../Report/GoogleFormReport";
+import { IMusicDataReport } from "../../Report/IMusicDataReport";
+import { IReport } from "../../Report/IReport";
+import { GoogleFormLevelBulkReport } from "../../Report/LevelBulkReport/GoogleFormLevelBulkReport";
+import { LevelBulkReport } from "../../Report/LevelBulkReport/LevelBulkReport";
+import { LevelBulkReportSheet } from "../../Report/LevelBulkReport/LevelBulkReportSheet";
+import { MusicDataReportGroupContainer } from "../../Report/MusicDataReportGroupContainer";
+import { ReportStatus } from "../../Report/ReportStatus";
+import { ReportStorage } from "../../Report/ReportStorage";
+import { ReportFormModule } from "../@ReportFormModule";
+import { GoogleFormReportModule } from "./GoogleFormReportModule";
 
 export class ReportModule extends ReportFormModule {
+    public static readonly moduleName = 'report';
+
     public noticeReportPost(message: string): void {
         if (this.config.line.reportPostNoticeEnabled) {
             this.line.notice.pushTextMessage([message]);
@@ -67,20 +68,10 @@ export class ReportModule extends ReportFormModule {
         return container;
     }
 
-    private _reportGoogleForm: GoogleAppsScript.Forms.Form;
+    private readonly _googleFormReport = new GoogleFormReportModule(this);
+
     public get reportGoogleForm(): GoogleAppsScript.Forms.Form {
-        if (!this._reportGoogleForm) {
-            const formId = this.config.report.reportFormId;
-            if (!formId) {
-                throw new Error(`${ConfigurationPropertyName.REPORT_GOOGLE_FORM_ID} is not set.`);
-            }
-            const form = FormApp.openById(formId);
-            if (!form) {
-                throw new Error(`Form is invalid. formId: ${formId}`);
-            }
-            this._reportGoogleForm = form;
-        }
-        return this._reportGoogleForm;
+        return this._googleFormReport.reportGoogleForm;
     }
 
     private readonly _levelBulkReportSheetMap: { [key: string]: LevelBulkReportSheet } = {};
@@ -150,33 +141,7 @@ export class ReportModule extends ReportFormModule {
     }
 
     public insertReport(versionName: string, formReport: GoogleFormReport): IReport {
-        const table = this.musicData.getTable(versionName);
-
-        const targetMusicData = table.getMusicDataByName(formReport.musicName);
-        if (!targetMusicData) {
-            Debug.logError(`[検証報告エラー]楽曲表に存在しない楽曲
-楽曲名: ${formReport.musicName}
-VERSION: ${versionName}`);
-            return null;
-        }
-
-        if (targetMusicData.getVerified(formReport.difficulty)) {
-            Debug.logError(`[検証報告エラー]既に検証済みの楽曲
-楽曲名: ${formReport.musicName}
-難易度: ${Utility.toDifficultyText(formReport.difficulty)}
-VERSION: ${versionName}`);
-            return null;
-        }
-
-        const diff = formReport.afterOp - formReport.beforeOp;
-        if (diff <= 0 || diff > 100) {
-            Debug.logError(`[検証報告エラー]OP変動値が範囲外
-${JSON.stringify(formReport)}`);
-            return null;
-        }
-
-        return this.getReportStorage(versionName)
-            .push(formReport, PostLocation.GoogleForm, formReport.imagePaths);
+        return this._googleFormReport.insertReport(versionName, formReport);
     }
 
     public approveLevelBulk(versionName: string, bulkReportId: number): void {
@@ -225,138 +190,11 @@ OP割合[万分率]:${opRatio100Fold}
             return null;
         }
 
-        return bulkReportSheet.insertBulkReport(formReport);
+        return bulkReportSheet.insertBulkReport({ googleFormBulkReport: formReport });
     }
 
     public buildForm(versionName: string): void {
-        Debug.log(`報告フォームを構築します: ${versionName}`);
-
-        Debug.log('フォームに送信された回答の削除...');
-        const form = this.module.report.reportGoogleForm;
-        form.deleteAllResponses();
-        {
-            for (const item of form.getItems()) {
-                form.deleteItem(item);
-                Utilities.sleep(100);
-            }
-        }
-        Debug.log(`フォームに送信された回答の削除が完了しました`);
-
-        form.setTitle('譜面定数 検証報告');
-
-        const genreSelect = form.addListItem();
-        genreSelect.setTitle('ジャンルを選択してください');
-        genreSelect.setRequired(true);
-
-        Debug.log(`楽曲選択画面の作成...`);
-        const table = this.musicData.getTable(versionName);
-        const genres = this.version.getVersionConfig(versionName).genres;
-        genres.push('ALL');
-        const musicSelectPages: { [key: string]: GoogleAppsScript.Forms.PageBreakItem } = {};
-        for (const genre of genres) {
-            musicSelectPages[genre] = this.buildFormMusicSelectPage(form, table, genre);
-            Utilities.sleep(500);
-        }
-        Debug.log(`楽曲選択画面の作成が完了しました`);
-
-        Debug.log(`ジャンル選択画面の構築...`);
-        this.buildGenreSelect(genreSelect, genres, musicSelectPages);
-        Debug.log(`ジャンル選択画面の構築中が完了しました`);
-
-        Utilities.sleep(1000);
-
-        Debug.log(`パラメータ記入画面の作成...`);
-        const scoreInputPage = this.buildInputPage(form);
-        Debug.log(`パラメータ記入画面の作成が完了しました`);
-
-        Utilities.sleep(1000);
-
-        Debug.log(`ページ遷移の構築...`);
-        for (const genre of genres) {
-            musicSelectPages[genre].setGoToPage(scoreInputPage);
-        }
-        Debug.log(`ページ遷移の構築が完了しました`);
-
-        Debug.log(`報告フォームの構築が完了しました`);
-    }
-
-    private buildFormMusicSelectPage(form: GoogleAppsScript.Forms.Form, table: MusicDataTable, targetGenre: string): GoogleAppsScript.Forms.PageBreakItem {
-        const page = form.addPageBreakItem();
-        page.setTitle('楽曲選択');
-
-        const musicList = form.addListItem();
-
-        const displayGenreText = targetGenre === 'ALL' ? '全ジャンル' : targetGenre;
-        musicList.setTitle(`楽曲を選択してください(${displayGenreText})`);
-        musicList.setRequired(true);
-
-        const targetMusicDatas = targetGenre === 'ALL'
-            ? table.datas
-            : table.datas.filter(m => m.Genre === targetGenre);
-        if (targetMusicDatas.length > 0) {
-            musicList.setChoiceValues(targetMusicDatas.map(m => m.Name));
-        }
-
-        return page;
-    }
-
-    private buildGenreSelect(
-        genreSelect: GoogleAppsScript.Forms.ListItem,
-        genres: string[],
-        musicSelectPages: { [key: string]: GoogleAppsScript.Forms.PageBreakItem }): void {
-        const choices: GoogleAppsScript.Forms.Choice[] = [];
-        for (const genre of genres) {
-            const displayGenreText = genre === 'ALL' ? '全ジャンル' : genre;
-            const page = musicSelectPages[genre];
-            const choice = genreSelect.createChoice(displayGenreText, page);
-            choices.push(choice);
-        }
-        genreSelect.setChoices(choices);
-    }
-
-    private buildInputPage(form: GoogleAppsScript.Forms.Form): GoogleAppsScript.Forms.PageBreakItem {
-        const scoreInputPage = form.addPageBreakItem();
-        scoreInputPage.setTitle('スコア入力');
-
-        const difficultyList = form.addMultipleChoiceItem();
-        difficultyList.setTitle("難易度を選択してください");
-        difficultyList.setRequired(true);
-        difficultyList.setChoiceValues(["MASTER", "EXPERT", "ADVANCED", "BASIC"]);
-
-        const beforeOpInput = form.addTextItem();
-        beforeOpInput.setTitle("変動前のOPを入力してください");
-        beforeOpInput.setRequired(true);
-        beforeOpInput.setValidation(FormApp.createTextValidation()
-            .requireNumberGreaterThanOrEqualTo(0)
-            .build());
-
-        const afterOpInput = form.addTextItem();
-        afterOpInput.setTitle("変動後のOPを入力してください");
-        afterOpInput.setRequired(true);
-        afterOpInput.setValidation(FormApp.createTextValidation()
-            .requireNumberGreaterThanOrEqualTo(0)
-            .build());
-
-        const scoreInput = form.addTextItem();
-        scoreInput.setTitle("スコアを入力してください");
-        scoreInput.setRequired(true);
-        scoreInput.setValidation(FormApp.createTextValidation()
-            .requireNumberBetween(950000, 1010000)
-            .setHelpText("許容スコア範囲は[950000,1010000]です")
-            .build());
-
-        const comboStatusInput = form.addMultipleChoiceItem();
-        comboStatusInput.setTitle("コンボステータスを入力してください");
-        comboStatusInput.setRequired(true);
-        comboStatusInput.setChoiceValues(["AJ", "FC", "なし"]);
-
-        // OP変動確認用の画像を添付してください
-        // 特定のファイル形式のみ許可
-        //  - 画像
-        // ファイルの最大数 5
-        // 最大ファイルサイズ 10MB
-
-        return scoreInputPage;
+        this._googleFormReport.buildForm(versionName);
     }
 
     public buildBulkReportForm(versionName: string): void {

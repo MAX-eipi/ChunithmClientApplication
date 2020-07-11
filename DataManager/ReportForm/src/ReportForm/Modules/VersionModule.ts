@@ -6,6 +6,8 @@ import { ReportFormModule } from "./@ReportFormModule";
 
 
 export class VersionModule extends ReportFormModule {
+    public static readonly moduleName = 'version';
+
     private _versionConfigMap: { [key: string]: VersionConfiguration } = {};
     public getVersionConfig(versionName: string): VersionConfiguration {
         if (versionName in this._versionConfigMap) {

@@ -79,6 +79,7 @@
     <Folder Include="src\ReportForm\Configurations\" />
     <Folder Include="src\ReportForm\Dependencies\" />
     <Folder Include="src\ReportForm\LineCommand\" />
+    <Folder Include="src\ReportForm\Modules\Report\" />
     <Folder Include="src\ReportForm\Report\" />
     <Folder Include="src\ReportForm\Page\" />
     <Folder Include="src\ReportForm\Report\BulkReport\" />
@@ -215,6 +216,7 @@
     <TypeScriptCompile Include="src\ReportForm\Modules\MusicDataModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Modules\Report\GoogleFormReportModule.ts" />
     <TypeScriptCompile Include="src\ReportForm\Modules\TwitterModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -296,7 +298,7 @@
     <TypeScriptCompile Include="src\ReportForm\PostCommand\TableGetCommand.ts" />
     <TypeScriptCompile Include="src\ReportForm\PostCommand\TableUpadateCommand.ts" />
     <TypeScriptCompile Include="src\ReportForm\Rating.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Modules\ReportModule.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Modules\Report\ReportModule.ts" />
     <TypeScriptCompile Include="src\ReportForm\Role.ts" />
     <TypeScriptCompile Include="src\ReportForm\Modules\Router.ts" />
     <TypeScriptCompile Include="src\ReportForm\Logger\SpreadSheetLogger.ts" />

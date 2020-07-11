@@ -1,7 +1,7 @@
 import { LevelBulkReport } from "./LevelBulkReport";
-import { GoogleFormBulkReport } from "../GoogleFormLevelBulkReport";
 import { ReportStatus } from "../ReportStatus";
 import { MusicDataTable } from "../../../MusicDataTable/MusicDataTable";
+import { GoogleFormLevelBulkReport } from "./GoogleFormLevelBulkReport";
 
 export class LevelBulkReportSheet {
     private _musicDataTable: MusicDataTable = null;
@@ -47,7 +47,7 @@ export class LevelBulkReportSheet {
         return this.bulkReports[this._bulkReportIndexMap[reportId.toString()]];
     }
 
-    public insertBulkReport(googleFormBulkReport: GoogleFormBulkReport, reportStatus: ReportStatus = ReportStatus.InProgress): LevelBulkReport {
+    public insertBulkReport({ googleFormBulkReport, reportStatus = ReportStatus.InProgress }: { googleFormBulkReport: GoogleFormLevelBulkReport; reportStatus?: ReportStatus; }): LevelBulkReport {
         let reportId = this.bulkReports.length > 0
             ? this.bulkReports[this.bulkReports.length - 1].reportId + 1
             : 1;
