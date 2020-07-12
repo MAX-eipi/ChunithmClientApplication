@@ -56,7 +56,8 @@ export class Report implements IReport {
     private _cachedImagePaths: string[] = null;
     public get imagePaths(): string[] {
         if (!this._cachedImagePaths) {
-            this._cachedImagePaths = (this._buffer[ColumnIndex.ImagePaths] as string).split(',');
+            const str = this._buffer[ColumnIndex.ImagePaths] as string;
+            this._cachedImagePaths = str ? str.split(',') : [];
         }
         return this._cachedImagePaths;
     }

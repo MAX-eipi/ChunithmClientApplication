@@ -63,11 +63,11 @@ export class GroupApprovalPage extends ReportFormPage {
 
     private getListHtml(table: MusicDataTable, reportGroup: MusicDataReportGroup): string {
         let source = '';
-        for (const unit of reportGroup.getMusicDataReports()) {
-            if (unit.mainReport && unit.mainReport.reportStatus === ReportStatus.Resolved) {
+        for (const musicDataReport of reportGroup.getMusicDataReports()) {
+            if (musicDataReport.verified) {
                 continue;
             }
-            source += this.getListItemHtml(table, unit) + '\n';
+            source += this.getListItemHtml(table, musicDataReport) + '\n';
         }
         return source;
     }

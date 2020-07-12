@@ -5,4 +5,6 @@ export interface IMusicDataReport {
     readonly difficulty: Difficulty;
     readonly reports: IReport[];
     readonly mainReport: IReport;
+    readonly valid: boolean;
+    readonly verified: boolean;
 }
