@@ -4,6 +4,12 @@ import { Debug } from "./Debug";
 import { InProgressListPage } from "./Page/InProgressListPage";
 import { ReportStatus } from "./Report/ReportStatus";
 import { Instance } from "./Instance";
+import { CommonConfiguration } from "./Configurations/CommonConfiguration";
+import { ReportModule } from "./Modules/Report/ReportModule";
+import { MusicDataModule } from "./Modules/MusicDataModule";
+import { VersionModule } from "./Modules/VersionModule";
+import { BulkReportTableReader } from "./Report/BulkReport/BulkReportTableReader";
+import { BulkReportTableWriter } from "./Report/BulkReport/BulkReportTableWriter";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {
     let properties = PropertiesService.getScriptProperties().getProperties();
@@ -102,6 +108,73 @@ export function notifyUnverified() {
 ${unverifiedListUrl}`;
             Instance.instance.module.line.notice.pushTextMessage([message]);
         }
+    }
+    catch (e) {
+        Instance.exception(e);
+    }
+}
+
+function importBulkReportSheet() {
+    try {
+        Instance.initialize();
+        Debug.log("開始: importBulkReportSheet");
+        const versionName = Instance.instance.module.config.getConfig(CommonConfiguration).defaultVersionName;
+        Instance.instance.module.getModule(ReportModule).importBulkReport(versionName);
+        Debug.log("完了: importBulkReportSheet");
+    }
+    catch (e) {
+        Instance.exception(e);
+    }
+}
+
+function updateCurrentVersionBulkReportTable() {
+    try {
+        Instance.initialize();
+
+        Debug.log("開始: updateCurrentVersionBulkReportSheet");
+
+        const config = Instance.instance.module.config.getConfig(CommonConfiguration);
+        const versionName = config.defaultVersionName;
+        const prevVersionName = config.getPreviousVersionName(versionName);
+
+        const spreadsheetId = Instance.instance.module.getModule(VersionModule)
+            .getVersionConfig(versionName)
+            .bulkReportSpreadsheetId;
+        const reader = new BulkReportTableReader();
+        const container = reader.read(spreadsheetId, 'Header', 'BASIC', 'ADVANCED', 'EXPERT', 'MASTER');
+        container.update(
+            Instance.instance.module.getModule(MusicDataModule).getTable(versionName),
+            Instance.instance.module.getModule(MusicDataModule).getTable(prevVersionName));
+        const writer = new BulkReportTableWriter();
+        writer.write(spreadsheetId, container);
+
+        Debug.log("完了: updateCurrentVersionBulkReportSheet");
+    }
+    catch (e) {
+        Instance.exception(e);
+    }
+}
+
+function updateNextVersionBulkReportTable() {
+    try {
+        Instance.initialize();
+
+        Debug.log("開始: updateNextVersionBulkReportTable");
+
+        const config = Instance.instance.module.config.getConfig(CommonConfiguration);
+        const versionName = config.defaultVersionName;
+
+        const spreadsheetId = Instance.instance.module.getModule(VersionModule)
+            .getVersionConfig(versionName)
+            .nextVersionBulkReportSpreadsheetId;
+        const reader = new BulkReportTableReader();
+        const container = reader.read(spreadsheetId, 'Header', 'BASIC', 'ADVANCED', 'EXPERT', 'MASTER');
+        const table = Instance.instance.module.getModule(MusicDataModule).getTable(versionName);
+        container.update(table, table);
+        const writer = new BulkReportTableWriter();
+        writer.write(spreadsheetId, container);
+
+        Debug.log("完了: updateNextVersionBulkReportTable");
     }
     catch (e) {
         Instance.exception(e);

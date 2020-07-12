@@ -1,4 +1,4 @@
-﻿import { ConfigurationPropertyName } from "../../../Configurations/ConfigurationDefinition";
+import { ConfigurationPropertyName } from "../../../Configurations/ConfigurationDefinition";
 import { MusicDataTable } from "../../../MusicDataTable/MusicDataTable";
 import { Debug } from "../../Debug";
 import { ReportFormModule } from "../@ReportFormModule";

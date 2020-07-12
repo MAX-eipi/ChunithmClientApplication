@@ -1,4 +1,4 @@
-﻿import { TopPage } from "../Page/TopPage";
+import { TopPage } from "../Page/TopPage";
 import { LINECommand } from "./@LINECommand";
 
 export class TopUrlGetCommand extends LINECommand {

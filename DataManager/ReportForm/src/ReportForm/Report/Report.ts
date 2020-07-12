@@ -1,4 +1,4 @@
-﻿import { Difficulty } from "../../MusicDataTable/Difficulty";
+import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { calcBaseRating, ComboStatus } from "../Rating";
 import { Utility } from "../Utility";
 import { IReport } from "./IReport";

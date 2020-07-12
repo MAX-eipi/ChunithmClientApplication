@@ -1,4 +1,4 @@
-﻿export enum ReportStatus {
+export enum ReportStatus {
     InProgress,
     Resolved,
     Rejected

@@ -181,9 +181,11 @@ ${JSON.stringify(formReport)}`);
             return null;
         }
 
-        return this.getModule(ReportModule)
-            .getReportStorage(versionName)
-            .push(formReport, PostLocation.GoogleForm, formReport.imagePaths);
+        formReport.setMusicData(table);
+        const storage = this.getModule(ReportModule).getReportStorage(versionName);
+        const report = storage.push(formReport, PostLocation.GoogleForm, formReport.imagePaths);
+        storage.write();
+        return report;
     }
 
     public approveLevelBulkReport(versionName: string, bulkReportId: number): void {

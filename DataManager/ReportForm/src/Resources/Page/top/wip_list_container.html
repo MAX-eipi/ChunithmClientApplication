@@ -1,9 +1,52 @@
-<div class="top_menu_list">
-    <a href="%link:wip_list%">承認待ち検証報告リスト</a>
+<div class="box_2">
+    <div class="box_2_title">検証報告リスト</div>
+    <div class="top_menu_list">
+        <a href="%link:wip_list%">承認待ち検証報告リスト</a>
+    </div>
+    <div class="top_menu_list">
+        <a href="%link:report_group_list%">検証報告グループリスト</a>
+    </div>
+    <div class="top_menu_list">
+        <a href="%link:wip_bulk_report_list%">承認待ち一括検証報告リスト</a>
+    </div>
 </div>
-<div class="top_menu_list">
-    <a href="%link:report_group_list%">検証報告グループリスト</a>
-</div>
-<div class="top_menu_list">
-    <a href="%link:wip_bulk_report_list%">承認待ち一括検証報告リスト</a>
+<div class="box_2">
+    <script>
+        function getHandler() {
+            let onSuccess = function () {
+                alert("処理が完了しました");
+            };
+            let onFailure = function (error) {
+                alert("処理に失敗しました\n" + error.message);
+            };
+            return google.script.run
+                .withSuccessHandler(onSuccess)
+                .withFailureHandler(onFailure);
+        }
+        function importBulkReportSheet() {
+            if (confirm("実行します。\nよろしいですか？")) {
+                getHandler().importBulkReportSheet();
+            }
+        }
+        function updateCurrentVersion() {
+            if (confirm("実行します。\nよろしいですか？")) {
+                getHandler().updateCurrentVersionBulkReportTable();
+            }
+        }
+        function updateNextVersion() {
+            if (confirm("実行します。\nよろしいですか？")) {
+                getHandler().updateNextVersionBulkReportTable();
+            }
+        }
+    </script>
+    <div class="box_2_title">オペレーション</div>
+    <div class="top_menu_list">
+        <a href="javascript:void(0);" onclick="importBulkReportSheet()">一括報告入力シートから報告データをインポート</a>
+    </div>
+    <div class="top_menu_list">
+        <a href="javascript:void(0);" onclick="updateCurrentVersion()">一括報告入力シートの楽曲更新</a>
+    </div>
+    <div class="top_menu_list">
+        <a href="javascript:void(0);" onclick="updateNextVersion()">次期バージョンの一括報告入力シートの楽曲更新</a>
+    </div>
 </div>

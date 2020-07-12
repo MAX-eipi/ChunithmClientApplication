@@ -77,15 +77,15 @@ export class ReportStorage {
     public push(reportInput: ReportInputFormat, postLocation: PostLocation, imagePaths: string[] = []): IReport {
         const musicData = this._musicDataTable.getMusicDataById(reportInput.musicId);
         if (!musicData) {
-            throw new Error(`Šy‹È‚ª‘¶Ý‚µ‚Ü‚¹‚ñ.
-Šy‹ÈID: ${reportInput.musicId}`);
+            throw new Error(`æ¥½æ›²ãŒå­˜åœ¨ã—ã¾ã›ã‚“.
+æ¥½æ›²ID: ${reportInput.musicId}`);
         }
 
         const reportContainer = this.getMusicDataReport(reportInput.musicId, reportInput.difficulty);
         if (reportContainer.mainReport && reportContainer.mainReport.reportStatus === ReportStatus.Resolved) {
-            throw new Error(`Šù‚ÉŒŸØÏ‚Ý‚ÌŠy‹È. 
-Šy‹È–¼: ${reportContainer.mainReport.musicName}
-“ïˆÕ“x: ${reportContainer.mainReport.difficulty}`);
+            throw new Error(`æ—¢ã«æ¤œè¨¼æ¸ˆã¿ã®æ¥½æ›². 
+æ¥½æ›²å: ${reportContainer.mainReport.musicName}
+é›£æ˜“åº¦: ${reportContainer.mainReport.difficulty}`);
         }
 
         const reportId = this._reports.length > 0 ? this._reports[this._reports.length - 1].reportId + 1 : 1;

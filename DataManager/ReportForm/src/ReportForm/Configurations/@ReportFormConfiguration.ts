@@ -57,7 +57,7 @@ export class ReportFormConfiguration implements Configuration {
         return config;
     }
 
-    public get common(): CommonConfiguration { return this.getConfigInternal('common', CommonConfiguration); }
+    public get common(): CommonConfiguration { return this.getConfigInternal(CommonConfiguration.configName, CommonConfiguration); }
     public get line(): LINEConfiguration { return this.getConfigInternal('line', LINEConfiguration); }
     public get log(): LogConfiguration { return this.getConfigInternal('log', LogConfiguration); }
     public get twitter(): TwitterConfiguration { return this.getConfigInternal('twitter', TwitterConfiguration); }

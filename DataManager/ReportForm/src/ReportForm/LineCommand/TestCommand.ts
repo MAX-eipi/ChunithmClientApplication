@@ -1,4 +1,4 @@
-﻿import { Debug } from "../Debug";
+import { Debug } from "../Debug";
 import { notifyUnverified } from "../operations";
 import { LINECommand } from "./@LINECommand";
 

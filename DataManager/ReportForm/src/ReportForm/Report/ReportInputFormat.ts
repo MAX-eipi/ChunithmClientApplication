@@ -1,4 +1,4 @@
-﻿import { Difficulty } from "../../MusicDataTable/Difficulty";
+import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { ComboStatus } from "../Rating";
 
 export interface ReportInputFormat {

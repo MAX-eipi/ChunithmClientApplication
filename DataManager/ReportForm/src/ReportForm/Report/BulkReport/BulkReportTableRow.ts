@@ -164,7 +164,7 @@ export class BulkReportTableRow implements ReportInputFormat {
                     this._values[i] = BulkReportTableRow.toLevelText(musicData.getLevel(difficulty));
                     break;
                 case BulkReportTableHeader.VALUE_PREV_BASE_RATING:
-                    this._values[i] = oldMusicData ? oldMusicData.getLevel(difficulty) : this._values[i];
+                    this._values[i] = oldMusicData ? oldMusicData.getLevel(difficulty) : '';
                     break;
             }
         }

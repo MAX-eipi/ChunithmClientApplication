@@ -5,14 +5,14 @@ import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
 
 class PostReportExtends {
     private static convertMusicNameMap: { [key: string]: string } = {
-        "ƒ`ƒ‹ƒm‚Ìƒp[ƒtƒFƒNƒg‚³‚ñ‚·‚¤‹³Žº ‡HŽü”Nƒo[ƒWƒ‡ƒ“": "ƒ`ƒ‹ƒm‚Ìƒp[ƒtƒFƒNƒg‚³‚ñ‚·‚¤‹³Žº@‡HŽü”Nƒo[ƒWƒ‡ƒ“",
-        "‚Á‚Ä‚îI `‚¦‚¢‚¦‚ñ‚Ä‚îVer`": "‚Á‚Ä‚îI@`‚¦‚¢‚¦‚ñ‚Ä‚îVer`",
-        "­—Œ¶‘’íœÉ‹È ` Necro Fantasia": "­—Œ¶‘’íœÉ‹È@`@Necro Fantasia",
-        "ƒLƒ…ƒAƒŠƒAƒXŒõ‹gŒÃ”v |Õ|": "ƒLƒ…ƒAƒŠƒAƒXŒõ‹gŒÃ”v@|Õ|",
-        "ƒZƒCƒNƒŠƒbƒh ƒ‹ƒCƒ“": "ƒZƒCƒNƒŠƒbƒh@ƒ‹ƒCƒ“",
-        "ƒI[ƒP[H ƒI[ƒ‰ƒCI": "ƒI[ƒP[H@ƒI[ƒ‰ƒCI",
-        "‚±‚±‚ÅˆêÈI Oshama Scramble!": "‚±‚±‚ÅˆêÈI@Oshama Scramble!",
-        "ŽD•t‚«‚Ìƒƒ‹ `ƒ}ƒCƒPƒ‹‚Ì‚¤‚½`": "ŽD•t‚«‚Ìƒƒ‹@`ƒ}ƒCƒPƒ‹‚Ì‚¤‚½`",
+        "ãƒãƒ«ãƒŽã®ãƒ‘ãƒ¼ãƒ•ã‚§ã‚¯ãƒˆã•ã‚“ã™ã†æ•™å®¤ â‘¨å‘¨å¹´ãƒãƒ¼ã‚¸ãƒ§ãƒ³": "ãƒãƒ«ãƒŽã®ãƒ‘ãƒ¼ãƒ•ã‚§ã‚¯ãƒˆã•ã‚“ã™ã†æ•™å®¤ã€€â‘¨å‘¨å¹´ãƒãƒ¼ã‚¸ãƒ§ãƒ³",
+        "ã£ã¦ã‚ï¼ ã€œãˆã„ãˆã‚“ã¦ã‚Verã€œ": "ã£ã¦ã‚ï¼ã€€ã€œãˆã„ãˆã‚“ã¦ã‚Verã€œ",
+        "å°‘å¥³å¹»è‘¬æˆ¦æ…„æ›² ã€œ Necro Fantasia": "å°‘å¥³å¹»è‘¬æˆ¦æ…„æ›²ã€€ã€œã€€Necro Fantasia",
+        "ã‚­ãƒ¥ã‚¢ãƒªã‚¢ã‚¹å…‰å‰å¤ç‰Œ âˆ’ç¥­âˆ’": "ã‚­ãƒ¥ã‚¢ãƒªã‚¢ã‚¹å…‰å‰å¤ç‰Œã€€âˆ’ç¥­âˆ’",
+        "ã‚»ã‚¤ã‚¯ãƒªãƒƒãƒ‰ ãƒ«ã‚¤ãƒ³": "ã‚»ã‚¤ã‚¯ãƒªãƒƒãƒ‰ã€€ãƒ«ã‚¤ãƒ³",
+        "ã‚ªãƒ¼ã‚±ãƒ¼ï¼Ÿ ã‚ªãƒ¼ãƒ©ã‚¤ï¼": "ã‚ªãƒ¼ã‚±ãƒ¼ï¼Ÿã€€ã‚ªãƒ¼ãƒ©ã‚¤ï¼",
+        "ã“ã“ã§ä¸€å¸­ï¼ Oshama Scramble!": "ã“ã“ã§ä¸€å¸­ï¼ã€€Oshama Scramble!",
+        "æœ­ä»˜ãã®ãƒ¯ãƒ« ã€œãƒžã‚¤ã‚±ãƒ«ã®ã†ãŸã€œ": "æœ­ä»˜ãã®ãƒ¯ãƒ«ã€€ã€œãƒžã‚¤ã‚±ãƒ«ã®ã†ãŸã€œ",
     };
 
     public static convertMusicName(musicName: string): string {

@@ -4,6 +4,8 @@ import { Role } from "../Role";
 import { ReportFormConfiguration } from "./@ReportFormConfiguration";
 
 export class CommonConfiguration extends ReportFormConfiguration {
+    public static readonly configName = 'common';
+
     public get environment(): Environment { return this.getProperty(ConfigurationPropertyName.ENVIRONMENT, Environment.Release); }
 
     private _overrideRootUrl: string = null;
@@ -46,5 +48,14 @@ export class CommonConfiguration extends ReportFormConfiguration {
             this._versionNames = JSON.parse(this.getScriptProperty(ConfigurationScriptProperty.VERSION_NAME_LIST));
         }
         return this._versionNames;
+    }
+
+    public getPreviousVersionName(currentVersionName: string): string {
+        for (let i = 1; i < this.versionNames.length; i++) {
+            if (this.versionNames[i] === currentVersionName) {
+                return this.versionNames[i - 1];
+            }
+        }
+        return '';
     }
 }

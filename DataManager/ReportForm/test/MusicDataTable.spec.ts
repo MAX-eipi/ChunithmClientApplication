@@ -1,4 +1,4 @@
-﻿import { MusicData } from "../src/MusicData";
+import { MusicData } from "../src/MusicData";
 import { MusicDataTable } from "../src/MusicDataTable";
 
 function createTestMusicDataTable(musicDatas: MusicData[]): MusicDataTable {

@@ -1,4 +1,4 @@
-﻿import { ConfigurationScriptProperty } from "../../Configurations/ConfigurationDefinition";
+import { ConfigurationScriptProperty } from "../../Configurations/ConfigurationDefinition";
 import { SpreadsheetConfiguration } from "../../Configurations/SpreadsheetConfiguration";
 
 export class ConfigurationEditor {
