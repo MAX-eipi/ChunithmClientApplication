@@ -1,6 +1,5 @@
 import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { IMusicDataReport } from "./IMusicDataReport";
-import { ReportStatus } from "./ReportStatus";
 import { ReportStorage } from "./ReportStorage";
 
 export class MusicDataReportGroup {
@@ -15,7 +14,7 @@ export class MusicDataReportGroup {
         return this._params.map(p => this._storage.getMusicDataReport(p.musicId, p.difficulty));
     }
 
-    public verified(): boolean {
-        return this.getMusicDataReports().every(r => r.mainReport && r.mainReport.reportStatus === ReportStatus.Resolved);
+    public get verified(): boolean {
+        return this.getMusicDataReports().every(r => !r.valid || r.verified);
     }
 }

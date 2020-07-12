@@ -105,7 +105,7 @@ export class ReportStorage {
         }
 
         const musicData = this._musicDataTable.getMusicDataById(musicId);
-        const reportContainer = new MusicDataReport(musicData, difficulty);
+        const reportContainer = new MusicDataReport(musicId, difficulty, musicData);
         const length = this._reportContainers.push(reportContainer);
         this._reportContainerIndexMap[key] = length - 1;
         return reportContainer;

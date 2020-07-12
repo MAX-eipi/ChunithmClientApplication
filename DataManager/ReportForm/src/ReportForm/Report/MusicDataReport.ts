@@ -7,7 +7,7 @@ import { ReportStatus } from "./ReportStatus";
 import { PostLocation } from "./ReportStorage";
 export class MusicDataReport implements IMusicDataReport {
     private readonly _reports: Report[] = [];
-    public constructor(private readonly _musicData: MusicData, private readonly _difficulty: Difficulty) {
+    public constructor(private readonly _musicId: number, private readonly _difficulty: Difficulty, private readonly _musicData: MusicData) {
     }
     public push(report: Report): boolean {
         const add = !this.getReportByReportId(report.reportId);
@@ -17,12 +17,20 @@ export class MusicDataReport implements IMusicDataReport {
         }
         return add;
     }
-    public get musicId(): number { return this._musicData.Id; }
+    public get musicId(): number { return this._musicId; }
     public get difficulty(): Difficulty { return this._difficulty; }
+    public get valid(): boolean { return this._musicData ? true : false; }
+    public get verified(): boolean {
+        if (this._musicData && this._musicData.getVerified(this._difficulty)) {
+            return true;
+        }
+        return this.mainReport && this.mainReport.reportStatus === ReportStatus.Resolved;
+    }
+
     public get reports(): IReport[] { return this._reports; }
     private _cachedMainReport: Report = null;
     public get mainReport(): IReport {
-        if (this._musicData.getVerified(this._difficulty)) {
+        if (!this._musicData || this._musicData.getVerified(this._difficulty)) {
             return null;
         }
         if (this._cachedMainReport) {
