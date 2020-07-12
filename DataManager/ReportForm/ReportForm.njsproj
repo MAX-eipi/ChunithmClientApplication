@@ -105,9 +105,6 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Dependencies\TwitterWebService.ts" />
-    <TypeScriptCompile Include="src\%40test.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\Configurations\ConfigurationDefinition.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
