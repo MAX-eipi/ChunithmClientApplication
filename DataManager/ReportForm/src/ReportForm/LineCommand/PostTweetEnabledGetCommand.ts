@@ -1,4 +1,4 @@
-﻿import { LINECommand } from "./@LINECommand";
+import { LINECommand } from "./@LINECommand";
 
 export class PostTweetEnabledGetCommand extends LINECommand {
     public called(command: string): boolean {

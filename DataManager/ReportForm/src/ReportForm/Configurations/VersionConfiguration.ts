@@ -1,4 +1,4 @@
-﻿import { Configuration } from "../../Configurations/Configuration";
+import { Configuration } from "../../Configurations/Configuration";
 import { ConfigurationPropertyName } from "../../Configurations/ConfigurationDefinition";
 
 export class VersionConfiguration implements Configuration {

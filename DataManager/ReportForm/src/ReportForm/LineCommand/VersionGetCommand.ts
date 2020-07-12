@@ -1,4 +1,4 @@
-﻿import { getAppVersion } from "../../@app";
+import { getAppVersion } from "../../@app";
 import { LINECommand } from "./@LINECommand";
 
 export class VersionGetCommand extends LINECommand {

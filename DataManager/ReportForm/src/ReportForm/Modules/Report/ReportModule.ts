@@ -181,6 +181,7 @@ ${JSON.stringify(formReport)}`);
             return null;
         }
 
+        formReport.setMusicData(table);
         return this.getModule(ReportModule)
             .getReportStorage(versionName)
             .push(formReport, PostLocation.GoogleForm, formReport.imagePaths);

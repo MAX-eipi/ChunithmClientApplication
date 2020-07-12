@@ -1,4 +1,4 @@
-﻿import { ReportStatus } from "./ReportStatus";
+import { ReportStatus } from "./ReportStatus";
 import { PostLocation } from "./ReportStorage";
 import { ReportInputFormat } from "./ReportInputFormat";
 export interface IReport extends ReportInputFormat {

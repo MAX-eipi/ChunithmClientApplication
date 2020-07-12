@@ -1,4 +1,4 @@
-﻿import { ConfigurationPropertyName } from "../../../Configurations/ConfigurationDefinition";
+import { ConfigurationPropertyName } from "../../../Configurations/ConfigurationDefinition";
 import { Debug } from "../../Debug";
 import { Environment } from "../../Environment";
 import { ReportFormModule } from "../@ReportFormModule";
