@@ -62,7 +62,7 @@ export class BulkReportTableRow implements ReportInputFormat {
     private static toLevelText(baseRating: number): string {
         const integerPart = Math.floor(baseRating);
         let levelText = integerPart.toString();
-        if (baseRating - integerPart >= 0.7) {
+        if ((baseRating * 10) % 10 >= 7) {
             levelText += '+';
         }
         return levelText;
@@ -143,7 +143,9 @@ export class BulkReportTableRow implements ReportInputFormat {
             }
 
             if (column.value.indexOf('@input:') === 0) {
-                this._values[i] = column.value.replace('@input:', '');
+                if (!this._values[i]) {
+                    this._values[i] = column.value.replace('@input:', '');
+                }
                 continue;
             }
 
