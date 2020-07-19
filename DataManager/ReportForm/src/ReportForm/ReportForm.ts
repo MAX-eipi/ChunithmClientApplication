@@ -51,8 +51,11 @@ export class ReportForm {
         for (const versionName of Instance.instance.module.config.common.versionNames) {
             if (versionConfigText) {
                 versionConfigText += '\n';
+                versionConfigText += properties[ConfigurationScriptProperty.getVersionConfigName(versionName)];
             }
-            versionConfigText += properties[ConfigurationScriptProperty.getVersionConfigName(versionName)];
+            else {
+                versionConfigText = properties[ConfigurationScriptProperty.getVersionConfigName(versionName)];
+            }
         }
 
         Instance.instance.module.line.notice.replyTextMessage(
