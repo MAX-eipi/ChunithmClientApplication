@@ -8,6 +8,7 @@ import { IReport } from "../Report/IReport";
 import { ReportStatus } from "../Report/ReportStatus";
 import { Utility } from "../Utility";
 import { ReportFormModule } from "./@ReportFormModule";
+import { ChunirecModule } from "./ChunirecModule";
 
 class ApprovalError implements Error {
     public name: string = "ApprovalError";
@@ -58,8 +59,10 @@ export class ApprovalModule extends ReportFormModule {
         this.musicData.updateMusicData(versionName, [targetMusicData]);
         this.report.approve(versionName, reportId);
 
-        let difficulty = Utility.toDifficultyText(report.difficulty);
+        this.requestChunirecUpdateMusics([report]);
+        this.webhook.invoke(WebhookEventName.ON_APPROVE);
 
+        const difficulty = Utility.toDifficultyText(report.difficulty);
         Debug.log(JSON.stringify({
             'header': '検証報告承認',
             'reportId': report.reportId,
@@ -78,8 +81,6 @@ export class ApprovalModule extends ReportFormModule {
 難易度:${difficulty}
 譜面定数:${baseRating.toFixed(1)}
 URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}`);
-
-        this.webhook.invoke(WebhookEventName.ON_APPROVE);
     }
 
     public reject(versionName: string, reportId: number): void {
@@ -172,10 +173,23 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
 バージョン:${versionText}`);
         }
 
+        this.requestChunirecUpdateMusics(approvedReports);
+        this.webhook.invoke(WebhookEventName.ON_APPROVE);
+
         this.report.noticeReportPost(`検証報告グループが一括承認されました
 グループID: ${reportGroupId}`);
+    }
 
-        this.webhook.invoke(WebhookEventName.ON_APPROVE);
+    private requestChunirecUpdateMusics(reports: IReport[]): boolean {
+        const params: { musicId: number; difficulty: Difficulty; baseRating: number; }[] = [];
+        for (const report of reports) {
+            params.push({
+                musicId: report.musicId,
+                difficulty: report.difficulty,
+                baseRating: report.calcBaseRating(),
+            });
+        }
+        return this.getModule(ChunirecModule).requestUpdateMusics(params);
     }
 
     // Lv.1-6用
