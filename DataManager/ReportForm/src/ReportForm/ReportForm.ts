@@ -9,6 +9,7 @@ import { Utility } from "./Utility";
 import { GoogleFormLevelBulkReport } from "./Report/LevelBulkReport/GoogleFormLevelBulkReport";
 import { PostLocation } from "./Report/ReportStorage";
 import { ReportStatus } from "./Report/ReportStatus";
+import { version } from "punycode";
 
 export class ReportForm {
     public static doGet(e: any): any {
@@ -46,18 +47,23 @@ export class ReportForm {
         let properties = ret.getProperties();
         Debug.log(JSON.stringify(properties));
 
+        let versionConfigText = null;
+        for (const versionName of Instance.instance.module.config.common.versionNames) {
+            if (versionConfigText) {
+                versionConfigText += '\n';
+            }
+            versionConfigText += properties[ConfigurationScriptProperty.getVersionConfigName(versionName)];
+        }
+
         Instance.instance.module.line.notice.replyTextMessage(
             request.replyToken,
             [
                 properties[ConfigurationScriptProperty.GLOBAL_CONFIG],
                 properties[ConfigurationScriptProperty.VERSION_NAME_LIST],
+                versionConfigText,
             ]);
-        for (let versionName of Instance.instance.module.config.common.versionNames) {
-            Instance.instance.module.line.notice.pushTextMessage([
-                properties[ConfigurationScriptProperty.getVersionConfigName(versionName)]
-            ]);
-        }
     }
+
 
     public static doPost(e: any): any {
         try {
