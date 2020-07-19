@@ -49,9 +49,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core.NET\Core.NET.csproj">
-      <Project>{2981db06-1d35-4d47-9a1d-9f0036f644e6}</Project>
-      <Name>Core.NET</Name>
+    <ProjectReference Include="..\Core.NETStandard\Core.NETStandard.csproj">
+      <Project>{0330b366-eca7-4021-8096-1569a024aba3}</Project>
+      <Name>Core.NETStandard</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

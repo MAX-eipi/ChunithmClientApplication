@@ -1,4 +1,4 @@
-﻿import { notifyUnverified } from "./operations";
+import { notifyUnverified } from "./operations";
 
 function onNotifyUnverified() {
     let now = new Date();

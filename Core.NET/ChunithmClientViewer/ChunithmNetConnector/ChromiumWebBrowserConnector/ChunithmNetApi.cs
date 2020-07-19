@@ -1,4 +1,4 @@
-﻿using AngleSharp.Html.Parser;
+using AngleSharp.Html.Parser;
 using CefSharp;
 using CefSharp.WinForms;
 using ChunithmClientLibrary.ChunithmNet.API;

@@ -44,6 +44,8 @@ export class ConfigurationPropertyName {
     public static readonly REPORT_GROUP_SHEET_NAME = 'report_group_worksheet_name';
     public static readonly BULK_REPORT_SHEET_NAME = 'bulk_report_worksheet_name';
     public static readonly GENRE_LIST = 'genre_list';
+    public static readonly BULK_REPORT_SPREADSHEET_ID = 'bulk_report_spreadsheet_id';
+    public static readonly NEXT_VERSION_BULK_REPORT_SPREADSHEET_ID = 'next_version_bulk_report_spreadsheet_id';
 
     // LINE
     public static readonly LINE_CHANNEL_ACCESS_TOKEN = 'line_channel_access_token';
@@ -62,4 +64,5 @@ export class ConfigurationPropertyName {
 export class ConfigurationSpreadsheet {
     public static readonly GLOBAL_CONFIG_SHEET_NAME = 'Global';
     public static readonly VERSION_LIST_SHEET_NAME = 'Version';
+    public static readonly WEBHOOK_SETTINGS_SHEET_NAME = 'Webhook';
 }

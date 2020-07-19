@@ -1,4 +1,4 @@
-﻿namespace ChunithmClientViewer
+namespace ChunithmClientViewer
 {
     partial class MainForm
     {

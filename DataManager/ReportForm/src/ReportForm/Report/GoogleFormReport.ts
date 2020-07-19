@@ -1,9 +1,31 @@
 import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { ComboStatus } from "../Rating";
 import { Utility } from "../Utility";
+import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
+
+class PostReportExtends {
+    private static convertMusicNameMap: { [key: string]: string } = {
+        "ãƒãƒ«ãƒã®ãƒ‘ãƒ¼ãƒ•ã‚§ã‚¯ãƒˆã•ã‚“ã™ã†æ•™å®¤ â‘¨å‘¨å¹´ãƒãƒ¼ã‚¸ãƒ§ãƒ³": "ãƒãƒ«ãƒã®ãƒ‘ãƒ¼ãƒ•ã‚§ã‚¯ãƒˆã•ã‚“ã™ã†æ•™å®¤ã€€â‘¨å‘¨å¹´ãƒãƒ¼ã‚¸ãƒ§ãƒ³",
+        "ã£ã¦ã‚ï¼ ã€œãˆã„ãˆã‚“ã¦ã‚Verã€œ": "ã£ã¦ã‚ï¼ã€€ã€œãˆã„ãˆã‚“ã¦ã‚Verã€œ",
+        "å°‘å¥³å¹»è‘¬æˆ¦æ…„æ›² ã€œ Necro Fantasia": "å°‘å¥³å¹»è‘¬æˆ¦æ…„æ›²ã€€ã€œã€€Necro Fantasia",
+        "ã‚­ãƒ¥ã‚¢ãƒªã‚¢ã‚¹å…‰å‰å¤ç‰Œ âˆ’ç¥­âˆ’": "ã‚­ãƒ¥ã‚¢ãƒªã‚¢ã‚¹å…‰å‰å¤ç‰Œã€€âˆ’ç¥­âˆ’",
+        "ã‚»ã‚¤ã‚¯ãƒªãƒƒãƒ‰ ãƒ«ã‚¤ãƒ³": "ã‚»ã‚¤ã‚¯ãƒªãƒƒãƒ‰ã€€ãƒ«ã‚¤ãƒ³",
+        "ã‚ªãƒ¼ã‚±ãƒ¼ï¼Ÿ ã‚ªãƒ¼ãƒ©ã‚¤ï¼": "ã‚ªãƒ¼ã‚±ãƒ¼ï¼Ÿã€€ã‚ªãƒ¼ãƒ©ã‚¤ï¼",
+        "ã“ã“ã§ä¸€å¸­ï¼ Oshama Scramble!": "ã“ã“ã§ä¸€å¸­ï¼ã€€Oshama Scramble!",
+        "æœ­ä»˜ãã®ãƒ¯ãƒ« ã€œãƒã‚¤ã‚±ãƒ«ã®ã†ãŸã€œ": "æœ­ä»˜ãã®ãƒ¯ãƒ«ã€€ã€œãƒã‚¤ã‚±ãƒ«ã®ã†ãŸã€œ",
+    };
+
+    public static convertMusicName(musicName: string): string {
+        if (musicName in this.convertMusicNameMap) {
+            return this.convertMusicNameMap[musicName];
+        }
+        return musicName;
+    }
+}
 
 export class GoogleFormReport {
-    private _musicnName: string = "";
+    private _musicId: number;
+    private _musicnName = "";
     private _difficulty: Difficulty = Difficulty.Invalid;
     private _beforeOp: number;
     private _afterOp: number;
@@ -12,7 +34,7 @@ export class GoogleFormReport {
     private _imagePaths: string[] = [];
 
     public constructor(post: GoogleAppsScript.Forms.FormResponse) {
-        let items = post.getItemResponses();
+        const items = post.getItemResponses();
         this._musicnName = PostReportExtends.convertMusicName(items[1].getResponse().toString());
         this._difficulty = Utility.toDifficulty(items[2].getResponse().toString());
         this._beforeOp = parseFloat(items[3].getResponse().toString());
@@ -21,13 +43,23 @@ export class GoogleFormReport {
         this._comboStatus = Utility.toComboStatus(items[6].getResponse().toString());
 
         if (items[7]) {
-            let pathText = items[7].getResponse().toString();
+            const pathText = items[7].getResponse().toString();
             if (pathText) {
                 this._imagePaths = pathText.split(",");
             }
         }
     }
 
+    public setMusicData(musicDataTable: MusicDataTable): void {
+        const musicData = musicDataTable.getMusicDataByName(this.musicName);
+        if (musicData) {
+            this._musicId = musicData.Id;
+        }
+    }
+
+    public get musicId(): number {
+        return this._musicId;
+    }
     public get musicName(): string {
         return this._musicnName;
     }
@@ -48,25 +80,5 @@ export class GoogleFormReport {
     }
     public get imagePaths(): string[] {
         return this._imagePaths.map(function (id) { return `https://drive.google.com/uc?id=${id}`; });
-    }
-}
-
-class PostReportExtends {
-    private static convertMusicNameMap: { [key: string]: string } = {
-        "ƒ`ƒ‹ƒm‚Ìƒp[ƒtƒFƒNƒg‚³‚ñ‚·‚¤‹³º ‡Hü”Nƒo[ƒWƒ‡ƒ“": "ƒ`ƒ‹ƒm‚Ìƒp[ƒtƒFƒNƒg‚³‚ñ‚·‚¤‹³º@‡Hü”Nƒo[ƒWƒ‡ƒ“",
-        "‚Á‚Ä‚îI `‚¦‚¢‚¦‚ñ‚Ä‚îVer`": "‚Á‚Ä‚îI@`‚¦‚¢‚¦‚ñ‚Ä‚îVer`",
-        "­—Œ¶‘’íœÉ‹È ` Necro Fantasia": "­—Œ¶‘’íœÉ‹È@`@Necro Fantasia",
-        "ƒLƒ…ƒAƒŠƒAƒXŒõ‹gŒÃ”v |Õ|": "ƒLƒ…ƒAƒŠƒAƒXŒõ‹gŒÃ”v@|Õ|",
-        "ƒZƒCƒNƒŠƒbƒh ƒ‹ƒCƒ“": "ƒZƒCƒNƒŠƒbƒh@ƒ‹ƒCƒ“",
-        "ƒI[ƒP[H ƒI[ƒ‰ƒCI": "ƒI[ƒP[H@ƒI[ƒ‰ƒCI",
-        "‚±‚±‚ÅˆêÈI Oshama Scramble!": "‚±‚±‚ÅˆêÈI@Oshama Scramble!",
-        "D•t‚«‚Ìƒƒ‹ `ƒ}ƒCƒPƒ‹‚Ì‚¤‚½`": "D•t‚«‚Ìƒƒ‹@`ƒ}ƒCƒPƒ‹‚Ì‚¤‚½`",
-    };
-
-    public static convertMusicName(musicName: string): string {
-        if (musicName in this.convertMusicNameMap) {
-            return this.convertMusicNameMap[musicName];
-        }
-        return musicName;
     }
 }

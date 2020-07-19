@@ -1,4 +1,4 @@
-﻿using CefSharp.WinForms;
+using CefSharp.WinForms;
 using ChunithmClientLibrary.ChunithmNet.API;
 using System;
 

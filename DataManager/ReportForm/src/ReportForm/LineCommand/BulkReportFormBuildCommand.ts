@@ -13,7 +13,7 @@ export class BulkReportFormBuildCommand extends LINECommand {
         this.replyMessage(event.replyToken, [`一括報告フォームを構築します:${versionName}`]);
         this.module.report.buildBulkReportForm(versionName);
 
-        let url = this.module.report.bulkReportGoogleForm.getPublishedUrl();
+        let url = this.module.report.levelBulkReportGoogleForm.getPublishedUrl();
         this.pushMessage([`一括報告フォームの構築が完了しました
 URL: ${url}`]);
     }

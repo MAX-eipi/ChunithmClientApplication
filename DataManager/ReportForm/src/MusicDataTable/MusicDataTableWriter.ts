@@ -1,4 +1,4 @@
-﻿import { MusicDataTable } from "./MusicDataTable";
+import { MusicDataTable } from "./MusicDataTable";
 
 export class MusicDataTableWriter {
     private musicDataTable: MusicDataTable;

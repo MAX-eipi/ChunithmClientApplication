@@ -1,4 +1,4 @@
-﻿using ChunithmClientLibrary.ChunithmNet;
+using ChunithmClientLibrary.ChunithmNet;
 using ChunithmClientLibrary.ChunithmNet.API;
 using System;
 using System.Runtime.InteropServices;

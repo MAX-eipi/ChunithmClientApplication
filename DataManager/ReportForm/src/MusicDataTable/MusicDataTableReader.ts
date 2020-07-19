@@ -1,4 +1,4 @@
-﻿import { MusicDataTable } from "./MusicDataTable";
+import { MusicDataTable } from "./MusicDataTable";
 
 export class MusicDataTableReader {
     public readFromTable(sheet: GoogleAppsScript.Spreadsheet.Sheet): MusicDataTable {

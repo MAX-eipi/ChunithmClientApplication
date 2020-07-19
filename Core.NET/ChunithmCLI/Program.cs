@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace ChunithmCLI
 {
@@ -6,11 +6,16 @@ namespace ChunithmCLI
     {
         static void Main(string[] args)
         {
-            var command = new GenreGet();
-            if (command.Called(args))
+            var command = CommandFactroy.Get(args);
+            if (command == null)
             {
-                command.Call(args);
+                Console.WriteLine("Command not found");
+                return;
             }
+
+            Console.WriteLine($"Execute: {command.GetCommandName()}");
+            command.Call(args);
+            Console.WriteLine("Done");
         }
     }
 }

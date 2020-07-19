@@ -1,4 +1,4 @@
-﻿using AngleSharp.Html.Parser;
+using AngleSharp.Html.Parser;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;

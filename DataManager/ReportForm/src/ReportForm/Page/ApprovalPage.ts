@@ -1,5 +1,5 @@
 import { Difficulty } from "../../MusicDataTable/Difficulty";
-import { ReportStatus } from "../Report/Report";
+import { ReportStatus } from "../Report/ReportStatus";
 import { Role } from "../Role";
 import { Utility } from "../Utility";
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
@@ -33,7 +33,7 @@ export class ApprovalPage extends ReportFormPage {
 
     public call(parameter: ApprovalPageParameter): GoogleAppsScript.HTML.HtmlOutput {
         let reportId = parseInt(parameter.reportId);
-        let report = this.module.report.getReportSheet(parameter.versionName).getReport(reportId);
+        const report = this.module.report.getReport(parameter.versionName, reportId);
         if (!report) {
             return this.module.router.callErrorPage("該当する検証報告が存在しません");
         }

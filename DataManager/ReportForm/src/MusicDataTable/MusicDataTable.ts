@@ -1,4 +1,4 @@
-﻿import { MusicData, MusicDataParameter } from "./MusicData";
+import { MusicData, MusicDataParameter } from "./MusicData";
 import { Difficulty } from "./Difficulty";
 
 export class MusicDataTable {

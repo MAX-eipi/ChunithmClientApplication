@@ -1,4 +1,4 @@
-﻿import { ReportFormModule } from "../Modules/@ReportFormModule";
+import { ReportFormModule } from "../Modules/@ReportFormModule";
 
 export abstract class LINECommand {
     private _module: ReportFormModule;

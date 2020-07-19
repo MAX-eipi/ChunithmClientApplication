@@ -7,8 +7,8 @@ import { ReportGroupListPage } from "../Page/ReportGroupListPage";
 import { TopPage } from "../Page/TopPage";
 import { UnverifiedListByGenrePage } from "../Page/UnverifiedListByGenrePage";
 import { UnverifiedListByLevelPage } from "../Page/UnverifiedListByLevelPage";
-import { BulkApprovalPage } from "../Page/BulkApprovalPage";
-import { BulkReportListPage } from "../Page/BulkReportListPage";
+import { LevelBulkApprovalPage } from "../Page/LevelBulkApprovalPage";
+import { LevelBulkReportListPage } from "../Page/LevelBulkReportListPage";
 
 export class PageDI {
     public static setPageFactories(module: ReportFormModule): void {
@@ -23,8 +23,8 @@ export class PageDI {
                 UnverifiedListByLevelPage,
                 ApprovalPage,
                 GroupApprovalPage,
-                BulkApprovalPage,
-                BulkReportListPage,
+                LevelBulkApprovalPage,
+                LevelBulkReportListPage,
             ]
         );
     }
