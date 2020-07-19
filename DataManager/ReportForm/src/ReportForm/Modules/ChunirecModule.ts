@@ -38,17 +38,24 @@ export class ChunirecModule extends ReportFormModule {
                     diff: this.toDifficultyText(param.difficulty),
                     const: param.baseRating,
                     token: this.apiToken,
-                }
+                },
+                muteHttpExceptions: true,
             });
         }
-        const responses = UrlFetchApp.fetchAll(requests);
         let success = true;
-        for (const response of responses) {
-            if (response.getResponseCode() !== 200) {
-                Debug.logError(`failure ChunirecModule.requestUpdateMusics.
+        try {
+            const responses = UrlFetchApp.fetchAll(requests);
+            for (const response of responses) {
+                if (response.getResponseCode() !== 200) {
+                    Debug.logError(`failure ChunirecModule.requestUpdateMusics.
 ${response.getContentText()}`);
-                success = false;
+                    success = false;
+                }
             }
+        }
+        catch (e) {
+            Debug.logError(e);
+            success = false;
         }
         return success;
     }
