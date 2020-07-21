@@ -3,6 +3,8 @@ import { Role } from "../Role";
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { GroupApprovalPage } from "./GroupApprovalPage";
 import { TopPage } from "./TopPage";
+import { Difficulty } from "../../MusicDataTable/Difficulty";
+import { Utility } from "../Utility";
 
 interface ReportGroupListPageParameter extends ReportFormPageParameter { }
 
@@ -42,10 +44,35 @@ export class ReportGroupListPage extends ReportFormPage {
 
     private getListItemHtml(reportGroup: MusicDataReportGroup): string {
         let title = `ID: ${reportGroup.groupId}`;
+        let maxDiffuclty = Difficulty.Invalid;
         if (reportGroup.verified) {
-            title = `<span style="color:#02d507;">【済】</span>` + title;
+            title = `<span style="color:#02d507;">[DONE]</span>` + title;
         }
-        const template = `<div class="music_list bg_master" onclick="transition('${encodeURI(reportGroup.groupId)}')">${title}</div>`;
+        else {
+            let anyWip = false;
+            let allWip = true;
+            for (const report of reportGroup.getMusicDataReports()) {
+                if (report.difficulty > maxDiffuclty) {
+                    maxDiffuclty = report.difficulty;
+                }
+                if (report.verified) {
+                    continue;
+                }
+                if (report.mainReport) {
+                    anyWip = true;
+                }
+                else {
+                    allWip = false;
+                }
+            }
+            if (allWip) {
+                title = `<span style="color:#f7dd24;">[FILL]</span>` + title;
+            }
+            else if (anyWip) {
+                title = `<span style="color:#f7dd24;">[WIP]</span>` + title;
+            }
+        }
+        const template = `<div class="music_list bg_${Utility.toDifficultyTextLowerCase(maxDiffuclty)}" onclick="transition('${encodeURI(reportGroup.groupId)}')">${title}</div>`;
         return template;
     }
 }
