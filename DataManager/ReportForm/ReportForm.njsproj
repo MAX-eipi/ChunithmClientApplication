@@ -30,6 +30,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include=".editorconfig" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="src\Resources\Page\approval\main.html" />
@@ -73,6 +74,7 @@
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
+    <Folder Include="src\UrlFetch\" />
     <Folder Include="src\ReportForm\Modules\" />
     <Folder Include="src\Configurations\" />
     <Folder Include="src\ReportForm\Logger\" />
@@ -317,6 +319,13 @@
     <TypeScriptCompile Include="src\ReportForm\Logger\SpreadSheetLogger.ts" />
     <TypeScriptCompile Include="src\ReportForm\Utility.ts" />
     <TypeScriptCompile Include="src\ReportForm\ReportForm.ts" />
+    <TypeScriptCompile Include="src\UrlFetch\UrlFetch.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\UrlFetch\UrlFetchManager.ts" />
+    <TypeScriptCompile Include="src\UrlFetch\UrlFetchStreamStatus.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="test\MusicDataTable.spec.ts" />
     <TypeScriptCompile Include="test\Rating.spec.ts" />
   </ItemGroup>
