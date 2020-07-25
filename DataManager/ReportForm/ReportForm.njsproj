@@ -74,6 +74,8 @@
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
+    <Folder Include="src\Slack\API\Stream\" />
+    <Folder Include="src\Slack\API\Payload\" />
     <Folder Include="src\UrlFetch\" />
     <Folder Include="src\Slack\" />
     <Folder Include="src\ReportForm\Modules\" />
@@ -89,6 +91,7 @@
     <Folder Include="src\ReportForm\Report\LevelBulkReport\" />
     <Folder Include="src\Resources\Page\bulk_approval\" />
     <Folder Include="src\Resources\Page\wip_bulk_report_list\" />
+    <Folder Include="src\Slack\API\Payload\Chat\" />
     <Folder Include="src\Slack\API\" />
     <Folder Include="src\Twitter\" />
     <Folder Include="src\ReportForm\" />
@@ -309,6 +312,10 @@
     <TypeScriptCompile Include="src\Slack\BlockElementFactory.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\API\Payload\Chat\PostMessage.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\API\Stream\PostMessage.ts" />
     <TypeScriptCompile Include="src\Slack\BlockElements.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
