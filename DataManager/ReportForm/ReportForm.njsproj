@@ -75,6 +75,7 @@
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
     <Folder Include="src\UrlFetch\" />
+    <Folder Include="src\Slack\" />
     <Folder Include="src\ReportForm\Modules\" />
     <Folder Include="src\Configurations\" />
     <Folder Include="src\ReportForm\Logger\" />
@@ -88,6 +89,7 @@
     <Folder Include="src\ReportForm\Report\LevelBulkReport\" />
     <Folder Include="src\Resources\Page\bulk_approval\" />
     <Folder Include="src\Resources\Page\wip_bulk_report_list\" />
+    <Folder Include="src\Slack\API\" />
     <Folder Include="src\Twitter\" />
     <Folder Include="src\ReportForm\" />
     <Folder Include="src\ReportForm\PostCommand\" />
@@ -302,6 +304,24 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Modules\WebhookModule.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\BlockElementFactory.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\BlockElements.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\BlockFactory.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\CompositionObjectFactory.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\CompositionObjects.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\Blocks.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Twitter\TwitterConnector.ts" />
