@@ -7,8 +7,8 @@ import { ReportConfiguration } from "./ReportConfiguration";
 import { TwitterConfiguration } from "./TwitterConfiguration";
 
 export class ReportFormConfiguration implements Configuration, ReportFormConfigurationFormat {
-    public static instantiate(config: ConfigurationObject, properties: { [key: string]: string }): ReportFormConfiguration {
-        let instance = new ReportFormConfiguration();
+    public static instantiate(config: ConfigurationObject, properties: Record<string, string>): ReportFormConfiguration {
+        const instance = new ReportFormConfiguration();
         instance._root = instance;
         instance._config = config;
         instance._properties = properties;

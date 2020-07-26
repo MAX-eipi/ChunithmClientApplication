@@ -5,13 +5,10 @@ import { Debug } from "../Debug";
 export class ChunirecModule extends ReportFormModule {
     public static readonly moduleName = 'chunirec';
 
-    private readonly CONFIG_PROP_CHUNIREC_API_HOST = 'chunirec_api_host';
-    private readonly CONFIG_PROP_CHUNIREC_API_TOKEN = 'chunirec_api_token';
-
     private _apiHost: string = null;
     public get apiHost(): string {
         if (!this._apiHost) {
-            this._apiHost = this.module.config.getProperty(this.CONFIG_PROP_CHUNIREC_API_HOST, '');
+            this._apiHost = this.module.config.global.chunirecApiHost;
         }
         return this._apiHost;
     }
@@ -19,7 +16,7 @@ export class ChunirecModule extends ReportFormModule {
     private _apiToken: string = null;
     public get apiToken(): string {
         if (!this._apiToken) {
-            this._apiToken = this.module.config.getProperty(this.CONFIG_PROP_CHUNIREC_API_TOKEN, '');
+            this._apiToken = this.module.config.global.chunirecApiToken;
         }
         return this._apiToken;
     }
