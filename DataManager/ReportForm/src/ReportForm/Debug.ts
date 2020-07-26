@@ -19,15 +19,15 @@ export class Debug {
         this._logger = value;
     }
 
-    public static log(message: string): void {
+    public static log(message): void {
         this.logger.log(message);
     }
 
-    public static logWarning(message: string): void {
+    public static logWarning(message): void {
         this.logger.logWarning(message);
     }
 
-    public static logError(message: string): void {
+    public static logError(message): void {
         this.logger.logError(message);
     }
 

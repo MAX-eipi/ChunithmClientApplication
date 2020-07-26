@@ -4,7 +4,7 @@ export class ReportFormLogger implements Logger {
     private loggerCollection: Logger[] = [];
 
     public addLogger(logger: Logger): void {
-        if (this.loggerCollection.indexOf(logger) == -1) {
+        if (this.loggerCollection.indexOf(logger) === -1) {
             this.loggerCollection.push(logger);
         }
     }
@@ -12,13 +12,13 @@ export class ReportFormLogger implements Logger {
         this.loggerCollection = this.loggerCollection.filter(x => x != logger);
     }
 
-    log(message: object): void {
+    log(message): void {
         this.loggerCollection.forEach(logger => logger.log(message));
     }
-    logWarning(message: object): void {
+    logWarning(message): void {
         this.loggerCollection.forEach(logger => logger.logWarning(message));
     }
-    logError(message: object): void {
+    logError(message): void {
         this.loggerCollection.forEach(logger => logger.logError(message));
     }
 }

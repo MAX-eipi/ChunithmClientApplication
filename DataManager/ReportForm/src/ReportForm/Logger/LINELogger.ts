@@ -12,17 +12,17 @@ export class LINELogger implements Logger {
         this._error = error;
     }
 
-    public log(message: object): void {
+    public log(message): void {
         if (this._log) {
             this._log.pushTextMessage([message.toString()]);
         }
     }
-    public logWarning(message: object): void {
+    public logWarning(message): void {
         if (this._warning) {
             this._warning.pushTextMessage([message.toString()]);
         }
     }
-    public logError(message: object): void {
+    public logError(message): void {
         if (this._error) {
             this._error.pushTextMessage([message.toString()]);
         }
