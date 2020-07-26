@@ -30,5 +30,17 @@ export class Debug {
     public static logError(message: string): void {
         Debug.logger.logError(message);
     }
+
+    public static logException(error: Error): void {
+        Debug.logger.logError(this.toExceptionMessage(error));
+    }
+
+    private static toExceptionMessage(error: Error): string {
+        return `[Message]
+${error.message}
+
+[Stack Trace]
+${error.stack}`;
+    }
 }
 
