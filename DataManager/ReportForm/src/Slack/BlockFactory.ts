@@ -16,7 +16,7 @@ export class BlockFactory {
         return ret;
     }
 
-    public static divider(options: Blocks.DividerOptions): Blocks.Divider {
+    public static divider(options: Blocks.DividerOptions = {}): Blocks.Divider {
         const ret: Blocks.Divider = {
             type: 'divider',
         };

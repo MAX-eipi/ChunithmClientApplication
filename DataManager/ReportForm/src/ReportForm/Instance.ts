@@ -30,7 +30,7 @@ export class Instance {
     private static getConfig(properties: Record<string, string>): ConfigurationObject {
         switch (getConstValues().configurationSourceType) {
             case ConfigurationSourceType.ScriptProperties:
-                return JsonConfiguration.createByJson(properties['feature_config']);
+                return JsonConfiguration.createByJson(properties[ConfigurationScriptProperty.GLOBAL_CONFIG]);
             case ConfigurationSourceType.Json:
                 return JsonConfiguration.createByFileId(getConstValues().configurationJsonFileId);
         }
