@@ -1,12 +1,12 @@
 import * as DebugLog from './Logger';
 export class DefaultLogger implements DebugLog.Logger {
-    log(message: string): void {
+    log(message: object): void {
         Logger.log(message);
     }
-    logWarning(message: string): void {
+    logWarning(message: object): void {
         Logger.log(message);
     }
-    logError(message: string): void {
+    logError(message: object): void {
         Logger.log(message);
     }
 }

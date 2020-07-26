@@ -6,7 +6,7 @@ export class Debug {
     private static _logger: Logger;
 
     public static get logger(): Logger {
-        if (this._logger !== null) {
+        if (this._logger) {
             return this._logger;
         }
 
@@ -20,19 +20,19 @@ export class Debug {
     }
 
     public static log(message: string): void {
-        Debug.logger.log(message);
+        this.logger.log(message);
     }
 
     public static logWarning(message: string): void {
-        Debug.logger.logWarning(message);
+        this.logger.logWarning(message);
     }
 
     public static logError(message: string): void {
-        Debug.logger.logError(message);
+        this.logger.logError(message);
     }
 
     public static logException(error: Error): void {
-        Debug.logger.logError(this.toExceptionMessage(error));
+        this.logger.logError(this.toExceptionMessage(error));
     }
 
     private static toExceptionMessage(error: Error): string {

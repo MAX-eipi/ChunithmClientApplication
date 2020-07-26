@@ -12,13 +12,13 @@ export class ReportFormLogger implements Logger {
         this.loggerCollection = this.loggerCollection.filter(x => x != logger);
     }
 
-    log(message: string): void {
+    log(message: object): void {
         this.loggerCollection.forEach(logger => logger.log(message));
     }
-    logWarning(message: string): void {
+    logWarning(message: object): void {
         this.loggerCollection.forEach(logger => logger.logWarning(message));
     }
-    logError(message: string): void {
+    logError(message: object): void {
         this.loggerCollection.forEach(logger => logger.logError(message));
     }
 }

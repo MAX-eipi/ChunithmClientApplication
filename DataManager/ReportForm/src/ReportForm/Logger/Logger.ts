@@ -1,5 +1,5 @@
 export interface Logger {
-    log(message: string): void;
-    logWarning(message: string): void;
-    logError(message: string): void;
+    log(message: object): void;
+    logWarning(message: object): void;
+    logError(message: object): void;
 }
