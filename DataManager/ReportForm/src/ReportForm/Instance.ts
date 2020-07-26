@@ -1,23 +1,23 @@
-import { Configuration } from "../Configurations/Configuration";
-import { ScriptPropertiesConfiguration } from "../Configurations/ScriptPropertiesConfiguration";
-import { SpreadsheetConfiguration } from "../Configurations/SpreadsheetConfiguration";
+import { getConstValues } from "../@const";
+import { ConfigurationScriptProperty, ConfigurationSpreadsheet } from "../Configurations/ConfigurationDefinition";
+import { ConfigurationObject, ConfigurationSourceType } from "../Configurations/ConfigurationObject";
+import { JsonConfiguration } from "../Configurations/JsonConfiguration";
 import { ReportFormConfiguration } from "./Configurations/@ReportFormConfiguration";
+import { Debug } from "./Debug";
 import { LINECommandDI } from "./Dependencies/LINECommand";
 import { LoggerDI } from "./Dependencies/Logger";
 import { PageDI } from "./Dependencies/Page";
 import { PostCommandDI } from "./Dependencies/PostCommand";
 import { ReportFormModule } from "./Modules/@ReportFormModule";
-import { Debug } from "./Debug";
-import { ConfigurationScriptProperty, ConfigurationSpreadsheet } from "../Configurations/ConfigurationDefinition";
 import { WebhookSettingsManager } from "./Modules/WebhookModule";
 
 export class Instance {
     private static _instance: Instance = null;
     public static get instance(): Instance {
-        if (this._instance == null) {
-            let properties = PropertiesService.getScriptProperties().getProperties();
-            let config = ReportFormConfiguration.instantiate(this.getConfig(properties), properties);
-            let module = ReportFormModule.instantiate(config);
+        if (!this._instance) {
+            const properties = PropertiesService.getScriptProperties().getProperties();
+            const config = ReportFormConfiguration.instantiate(this.getConfig(properties), properties);
+            const module = ReportFormModule.instantiate(config);
             this._instance = new Instance(module);
         }
         return this._instance;
@@ -27,19 +27,13 @@ export class Instance {
         this.instance;
     }
 
-    private static getConfig(properties: { [key: string]: string }): Configuration {
-        switch (properties['config_type']) {
-            case 'sheet': {
-                let sheet = SpreadsheetApp
-                    .openById(properties[ConfigurationScriptProperty.CONFIG_SHEET_ID])
-                    .getSheetByName(ConfigurationSpreadsheet.GLOBAL_CONFIG_SHEET_NAME);
-                return new SpreadsheetConfiguration(sheet);
-            }
-            case 'prop': {
-                return new ScriptPropertiesConfiguration(properties['config']);
-            }
+    private static getConfig(properties: Record<string, string>): ConfigurationObject {
+        switch (getConstValues().configurationSourceType) {
+            case ConfigurationSourceType.ScriptProperties:
+                return JsonConfiguration.createByJson(properties['feature_config']);
+            case ConfigurationSourceType.Json:
+                return JsonConfiguration.createByFileId(getConstValues().configurationJsonFileId);
         }
-        return null;
     }
 
     private _module: ReportFormModule = null;

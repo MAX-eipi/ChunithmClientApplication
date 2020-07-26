@@ -1,4 +1,3 @@
-import { ConfigurationPropertyName } from "../../../Configurations/ConfigurationDefinition";
 import { Debug } from "../../Debug";
 import { Environment } from "../../Environment";
 import { ReportFormModule } from "../@ReportFormModule";
@@ -13,7 +12,8 @@ export class LevelBulkReportGoogleForm {
         if (!this._form) {
             const formId = this._module.config.report.bulkReportFormId;
             if (!formId) {
-                throw new Error(`${ConfigurationPropertyName.BULK_REPORT_GOOGLE_FORM_ID} is not set.`);
+                Debug.logError(`bulkReportFormId is not set.`);
+                return null;
             }
             const form = FormApp.openById(formId);
             if (!form) {

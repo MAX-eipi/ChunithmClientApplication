@@ -111,6 +111,15 @@
     <TypeScriptCompile Include="src\Configurations\ConfigurationDefinition.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Configurations\ConfigurationObject.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Configurations\JsonConfiguration.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ConstDefinition.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Configurations\CommonConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -123,6 +132,7 @@
     <TypeScriptCompile Include="src\ReportForm\Configurations\TwitterConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Logger\DefaultLogger.ts" />
     <TypeScriptCompile Include="src\ReportForm\Dependencies\LINECommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -183,7 +193,6 @@
     <TypeScriptCompile Include="src\Configurations\SpreadsheetConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Configurations\VersionConfiguration.ts" />
     <TypeScriptCompile Include="src\ReportForm\Environment.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

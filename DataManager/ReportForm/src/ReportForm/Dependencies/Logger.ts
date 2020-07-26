@@ -9,11 +9,11 @@ export class LoggerDI {
         let logger = new ReportFormLogger();
         {
             let log = LogSheet.openLogSheet(
-                module.config.log.logSheetId,
-                module.config.log.logSheetName);
+                module.config.log.logSpreadSheetId,
+                module.config.log.logWorkSheetName);
             let error = LogSheet.openLogSheet(
-                module.config.log.errorLogSheetId,
-                module.config.log.errorLogSheetName);
+                module.config.log.errorLogSpreadSheetId,
+                module.config.log.errorLogWorkSheetName);
             logger.addLogger(new SpreadsheetLogger(log, error, error));
         }
         {

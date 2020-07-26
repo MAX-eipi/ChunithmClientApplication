@@ -1,24 +1,18 @@
-import { ConfigurationScriptProperty, ConfigurationSpreadsheet } from "../Configurations/ConfigurationDefinition";
+import { CommonConfiguration } from "./Configurations/CommonConfiguration";
 import { ConfigurationEditor } from "./Configurations/ConfigurationEditor";
 import { Debug } from "./Debug";
-import { InProgressListPage } from "./Page/InProgressListPage";
-import { ReportStatus } from "./Report/ReportStatus";
 import { Instance } from "./Instance";
-import { CommonConfiguration } from "./Configurations/CommonConfiguration";
-import { ReportModule } from "./Modules/Report/ReportModule";
 import { MusicDataModule } from "./Modules/MusicDataModule";
+import { ReportModule } from "./Modules/Report/ReportModule";
 import { VersionModule } from "./Modules/VersionModule";
+import { InProgressListPage } from "./Page/InProgressListPage";
 import { BulkReportTableReader } from "./Report/BulkReport/BulkReportTableReader";
 import { BulkReportTableWriter } from "./Report/BulkReport/BulkReportTableWriter";
+import { ReportStatus } from "./Report/ReportStatus";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {
-    let properties = PropertiesService.getScriptProperties().getProperties();
-    let ret = ConfigurationEditor.store(
-        properties[ConfigurationScriptProperty.CONFIG_SHEET_ID],
-        ConfigurationSpreadsheet.GLOBAL_CONFIG_SHEET_NAME,
-        ConfigurationSpreadsheet.VERSION_LIST_SHEET_NAME);
-    let json = JSON.stringify(ret.getProperties());
-    Debug.log(json);
+    const ret = ConfigurationEditor.store();
+    Debug.log(ret.getProperties());
     return ret;
 }
 

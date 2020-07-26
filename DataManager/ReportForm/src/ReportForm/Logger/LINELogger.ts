@@ -12,20 +12,19 @@ export class LINELogger implements Logger {
         this._error = error;
     }
 
-    public log(message: string): void {
+    public log(message): void {
         if (this._log) {
-            this._log.pushTextMessage([message]);
+            this._log.pushTextMessage([message.toString()]);
         }
     }
-    public logWarning(message: string): void {
+    public logWarning(message): void {
         if (this._warning) {
-            this._warning.pushTextMessage([message]);
+            this._warning.pushTextMessage([message.toString()]);
         }
     }
-    public logError(message: string): void {
+    public logError(message): void {
         if (this._error) {
-            this._error.pushTextMessage([message]);
+            this._error.pushTextMessage([message.toString()]);
         }
     }
-
 }
