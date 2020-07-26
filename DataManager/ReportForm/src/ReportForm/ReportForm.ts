@@ -111,8 +111,7 @@ URL:${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(ver
             }
         }
         catch (error) {
-            let message = this.toExceptionMessage(error);
-            Debug.logError(message);
+            Debug.logException(error);
         }
     }
 
