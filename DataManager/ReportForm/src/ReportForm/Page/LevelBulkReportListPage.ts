@@ -3,9 +3,9 @@ import { TopPage } from "./TopPage";
 import { LevelBulkApprovalPage } from "./LevelBulkApprovalPage";
 import { Role } from "../Role";
 import { ReportStatus } from "../Report/ReportStatus";
-import { LevelBulkReport } from "../Report/LevelBulkReport";
 import { Utility } from "../Utility";
 import { Difficulty } from "../../MusicDataTable/Difficulty";
+import { LevelBulkReport } from "../Report/LevelBulkReport/LevelBulkReport";
 
 export interface BulkReportListPageParameter extends ReportFormPageParameter {
 }
