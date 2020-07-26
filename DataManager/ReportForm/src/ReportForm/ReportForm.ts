@@ -5,11 +5,10 @@ import { storeConfig } from "./operations";
 import { ApprovalPage } from "./Page/ApprovalPage";
 import { LevelBulkApprovalPage } from "./Page/LevelBulkApprovalPage";
 import { GoogleFormReport } from "./Report/GoogleFormReport";
-import { Utility } from "./Utility";
 import { GoogleFormLevelBulkReport } from "./Report/LevelBulkReport/GoogleFormLevelBulkReport";
-import { PostLocation } from "./Report/ReportStorage";
 import { ReportStatus } from "./Report/ReportStatus";
-import { version } from "punycode";
+import { PostLocation } from "./Report/ReportStorage";
+import { Utility } from "./Utility";
 
 export class ReportForm {
     public static doGet(e: any): any {

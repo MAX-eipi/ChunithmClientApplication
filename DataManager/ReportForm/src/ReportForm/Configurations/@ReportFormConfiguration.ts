@@ -1,12 +1,13 @@
-import { Configuration } from "../../Configurations/Configuration";
+import { Configuration, GlobalConfigurationFormat, ReportFormConfigurationFormat, VersionConfigurationTable } from "../../Configurations/Configuration";
+import { ConfigurationObject } from "../../Configurations/ConfigurationObject";
 import { CommonConfiguration } from "./CommonConfiguration";
 import { LINEConfiguration } from "./LineConfiguration";
 import { LogConfiguration } from "./LogConfiguration";
-import { TwitterConfiguration } from "./TwitterConfiguration";
 import { ReportConfiguration } from "./ReportConfiguration";
+import { TwitterConfiguration } from "./TwitterConfiguration";
 
-export class ReportFormConfiguration implements Configuration {
-    public static instantiate(config: Configuration, properties: { [key: string]: string }): ReportFormConfiguration {
+export class ReportFormConfiguration implements Configuration, ReportFormConfigurationFormat {
+    public static instantiate(config: ConfigurationObject, properties: { [key: string]: string }): ReportFormConfiguration {
         let instance = new ReportFormConfiguration();
         instance._root = instance;
         instance._config = config;
@@ -15,8 +16,16 @@ export class ReportFormConfiguration implements Configuration {
     }
 
     private _root: ReportFormConfiguration = null;
-    private _config: Configuration = null;
+    private _config: ConfigurationObject = null;
     private _properties: { [key: string]: string } = null;
+
+    public get global(): GlobalConfigurationFormat {
+        return this._root._config.global;
+    }
+
+    public get versions(): VersionConfigurationTable {
+        return this._root._config.versions;
+    }
 
     public hasProperty(key: string): boolean {
         return this._root._config.hasProperty(key);
