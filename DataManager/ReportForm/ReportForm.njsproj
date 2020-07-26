@@ -123,6 +123,7 @@
     <TypeScriptCompile Include="src\ReportForm\Configurations\TwitterConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Logger\DefaultLogger.ts" />
     <TypeScriptCompile Include="src\ReportForm\Dependencies\LINECommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
