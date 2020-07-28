@@ -32,6 +32,10 @@ export class ChatPostMessage implements ConcreteStream<Payload.Request, Payload.
     }
 
     public setRawResponse(response: GoogleAppsScript.URL_Fetch.HTTPResponse): void {
+        this._response = JSON.parse(response.getContentText());
+        if (this._response.error) {
+            this._error = this._response.error;
+        }
     }
 
     private _response: Payload.Response = null;
