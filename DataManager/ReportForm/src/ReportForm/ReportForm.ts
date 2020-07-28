@@ -8,6 +8,10 @@ import { GoogleFormLevelBulkReport } from "./Report/LevelBulkReport/GoogleFormLe
 import { ReportStatus } from "./Report/ReportStatus";
 import { PostLocation } from "./Report/ReportStorage";
 import { Utility } from "./Utility";
+import { UrlFetchManager } from "../UrlFetch/UrlFetchManager";
+import { BlockFactory } from "../Slack/BlockFactory";
+import { ChatPostMessage } from "../Slack/API/Stream/PostMessage";
+import { CompositionObjectFactory } from "../Slack/CompositionObjectFactory";
 
 export class ReportForm {
     public static doGet(e: any): any {
@@ -103,6 +107,21 @@ export class ReportForm {
                     difficulty: Utility.toDifficultyText(report.difficulty),
                     baseRating: report.calcBaseRating().toFixed(1),
                 })}`);
+
+                UrlFetchManager.execute([new ChatPostMessage({
+                    token: Instance.instance.module.config.global.slackApiToken,
+                    channel: Instance.instance.module.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                    text: '新規の検証報告',
+                    attachments: [{
+                        color: '#ECB22E',
+                        blocks: [
+                            BlockFactory.section(
+                                CompositionObjectFactory.markdownText(`*<${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, report.reportId)}|${report.musicName}>*
+難易度: ${Utility.toDifficultyText(report.difficulty)}`)),
+                        ],
+                    }]
+                })]);
+
                 Instance.instance.module.report.noticeReportPost(`[検証報告]
 楽曲名:${report.musicName}
 難易度:${Utility.toDifficultyText(report.difficulty)}
@@ -111,8 +130,7 @@ URL:${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(ver
             }
         }
         catch (error) {
-            let message = this.toExceptionMessage(error);
-            Debug.logError(message);
+            Debug.logException(error);
         }
     }
 
@@ -132,6 +150,21 @@ URL:${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(ver
                     op: bulkReport.op,
                     opRatio: bulkReport.opRatio,
                 }));
+
+                UrlFetchManager.execute([new ChatPostMessage({
+                    token: Instance.instance.module.config.global.slackApiToken,
+                    channel: Instance.instance.module.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                    text: '新規の検証報告',
+                    attachments: [{
+                        color: '#ECB22E',
+                        blocks: [
+                            BlockFactory.section(
+                                CompositionObjectFactory.markdownText(`*<${Instance.instance.module.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReport.reportId)}|Lv.${bulkReport.targetLevel}>*
+楽曲数: ${bulkReport.musicCount}`)),
+                        ],
+                    }]
+                })]);
+
                 Instance.instance.module.report.noticeReportPost(`[一括検証報告]
 対象レベル:${bulkReport.targetLevel}
 URL:${Instance.instance.module.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReport.reportId)}`);

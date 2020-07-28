@@ -1,6 +1,11 @@
 import { MusicData, MusicDataParameter } from "../../MusicDataTable/MusicData";
 import { PostCommand, PostCommandParameter } from "./@PostCommand";
 import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
+import { UrlFetchManager } from "../../UrlFetch/UrlFetchManager";
+import { BlockFactory } from "../../Slack/BlockFactory";
+import { BlockElementFactory } from "../../Slack/BlockElementFactory";
+import { CompositionObjectFactory } from "../../Slack/CompositionObjectFactory";
+import { ChatPostMessage } from "../../Slack/API/Stream/PostMessage";
 
 interface TableUpdateCommandParameter extends PostCommandParameter {
     MusicDatas: MusicDataParameter[];
@@ -20,33 +25,78 @@ export class TableUpdateCommand extends PostCommand {
             }
         }
 
-        let addedMusicDatas = this.getAddedMusicDatas(oldMusicDatas, musicDataTable.getTable());
+        const addedMusicDatas = this.getAddedMusicDatas(oldMusicDatas, musicDataTable.getTable());
 
         if (addedMusicDatas.length > 0) {
-            let musicCounts = this.setMusicList(postData.versionName, musicDataTable.datas);
+            const musicCounts = this.setMusicList(postData.versionName, musicDataTable.datas);
             if (oldMusicDatas.length > 0) {
-                var message = "[新曲追加]";
-                for (var i = 0; i < addedMusicDatas.length; i++) {
-                    let m = addedMusicDatas[i];
-                    let basicLevelText = m.BasicLevel.toString().replace(".7", "+");
-                    let advancedLevelText = m.AdvancedLevel.toString().replace(".7", "+");
-                    let expertLevelText = m.ExpertLevel.toString().replace(".7", "+");
-                    let masterLevelText = m.MasterLevel.toString().replace(".7", "+");
+                let message = "[新曲追加]";
+                for (let i = 0; i < addedMusicDatas.length; i++) {
+                    const m = addedMusicDatas[i];
+                    const basicLevelText = m.BasicLevel.toString().replace(".7", "+");
+                    const advancedLevelText = m.AdvancedLevel.toString().replace(".7", "+");
+                    const expertLevelText = m.ExpertLevel.toString().replace(".7", "+");
+                    const masterLevelText = m.MasterLevel.toString().replace(".7", "+");
                     message += `
 ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLevelText}`;
                 }
                 this.module.line.notice.pushTextMessage([message]);
                 this.module.twitter.postTweet(message);
 
+                let slackMessage = `:musical_keyboard: *新曲追加* (${addedMusicDatas.length}曲)`;
+                for (let i = 0; i < addedMusicDatas.length; i++) {
+                    const m = addedMusicDatas[i];
+                    const basicLevelText = m.BasicLevel.toString().replace(".7", "+");
+                    const advancedLevelText = m.AdvancedLevel.toString().replace(".7", "+");
+                    const expertLevelText = m.ExpertLevel.toString().replace(".7", "+");
+                    const masterLevelText = m.MasterLevel.toString().replace(".7", "+");
+                    slackMessage += `
+${i + 1}. ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLevelText}`;
+                }
+                UrlFetchManager.execute([
+                    new ChatPostMessage({
+                        token: this.module.config.global.slackApiToken,
+                        channel: this.module.config.global.slackChannelIdTable['updateMusicDataTable'],
+                        text: `新曲追加(${addedMusicDatas.length}曲)`,
+                        blocks: [
+                            BlockFactory.section(
+                                CompositionObjectFactory.markdownText(
+                                    slackMessage
+                                )
+                            )
+                        ]
+                    })
+                ]);
+
                 this.module.webhook.invoke(WebhookEventName.ON_UPDATE_TABLE);
             }
             else {
-                message = '[新規定数表作成]\n';
-                for (var genre in musicCounts) {
+                let message = '[新規定数表作成]\n';
+                for (const genre in musicCounts) {
                     message += `${genre}: ${musicCounts[genre]}\n`;
                 }
                 this.module.line.notice.pushTextMessage([message]);
                 this.module.twitter.postTweet(message);
+
+                let slackMessage = ':musical_keyboard: *新規定数表作成*';
+                for (const genre in musicCounts) {
+                    slackMessage += `
+${genre}: ${musicCounts[genre]}曲`;
+                }
+                UrlFetchManager.execute([
+                    new ChatPostMessage({
+                        token: this.module.config.global.slackApiToken,
+                        channel: this.module.config.global.slackChannelIdTable['updateMusicDataTable'],
+                        text: `新規定数表作成`,
+                        blocks: [
+                            BlockFactory.section(
+                                CompositionObjectFactory.markdownText(
+                                    slackMessage
+                                )
+                            )
+                        ]
+                    })
+                ]);
 
                 this.module.webhook.invoke(WebhookEventName.ON_UPDATE_TABLE);
             }
