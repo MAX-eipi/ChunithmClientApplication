@@ -101,6 +101,19 @@ export class ApprovalModule extends ReportFormModule {
                     })
                 ],
             }),
+            new ChatPostMessage({
+                token: this.config.global.slackApiToken,
+                channel: this.config.global.slackChannelIdTable['updateMusicDataTable'],
+                text: `譜面定数更新`,
+                blocks: [
+                    BlockFactory.section(
+                        CompositionObjectFactory.markdownText(`:pushpin: *譜面定数更新*
+楽曲名: ${report.musicName}
+難易度: ${difficulty}
+譜面定数: ${baseRating.toFixed(1)}`)
+                    )
+                ],
+            }),
         ]);
 
         this.report.noticeReportPost(`⭕️[検証結果 承認]⭕️
@@ -146,20 +159,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
                         ]
                     })
                 ],
-            }),
-            new ChatPostMessage({
-                token: this.config.global.slackApiToken,
-                channel: this.config.global.slackChannelIdTable['updateMusicDataTable'],
-                text: `譜面定数更新`,
-                blocks: [
-                    BlockFactory.section(
-                        CompositionObjectFactory.markdownText(`:pushpin: *譜面定数更新*
-楽曲名: ${report.musicName}
-難易度: ${difficulty}
-譜面定数: ${baseRating.toFixed(1)}`)
-                    )
-                ],
-            }),
+            })
         ]);
 
         this.report.noticeReportPost(`✖️[検証結果 却下]✖️
@@ -275,7 +275,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
     }
 
     private requestChunirecUpdateMusics(reports: IReport[]): boolean {
-        if (this.config.common.environment === Environment.Release) {
+        if (this.config.common.environment !== Environment.Release) {
             return true;
         }
         const params: { musicId: number; difficulty: Difficulty; baseRating: number; }[] = [];

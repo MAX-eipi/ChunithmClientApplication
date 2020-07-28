@@ -103,13 +103,13 @@ export function notifyUnverified() {
             }
         }
 
-        if (wipReportCount > 0) {
-            const wipListUrl = Instance.instance.module.router.getPage(InProgressListPage).getPageUrl(versionName);
-            const message = `未承認の報告が${wipReportCount}件あります
-[報告リストURL]
-${wipListUrl}`;
-            Instance.instance.module.line.notice.pushTextMessage([message]);
-        }
+//        if (wipReportCount > 0) {
+//            const wipListUrl = Instance.instance.module.router.getPage(InProgressListPage).getPageUrl(versionName);
+//            const message = `未承認の報告が${wipReportCount}件あります
+//[報告リストURL]
+//${wipListUrl}`;
+//            Instance.instance.module.line.notice.pushTextMessage([message]);
+//        }
 
         const bulkReports = Instance.instance.module.getModule(ReportModule).getLevelBulkReports(versionName);
         let wipBulkReportCount = 0;
