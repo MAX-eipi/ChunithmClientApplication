@@ -1,24 +1,26 @@
-import { ConfigurationScriptProperty, ConfigurationSpreadsheet } from "../Configurations/ConfigurationDefinition";
+import { CommonConfiguration } from "./Configurations/CommonConfiguration";
 import { ConfigurationEditor } from "./Configurations/ConfigurationEditor";
 import { Debug } from "./Debug";
-import { InProgressListPage } from "./Page/InProgressListPage";
-import { ReportStatus } from "./Report/ReportStatus";
 import { Instance } from "./Instance";
-import { CommonConfiguration } from "./Configurations/CommonConfiguration";
-import { ReportModule } from "./Modules/Report/ReportModule";
 import { MusicDataModule } from "./Modules/MusicDataModule";
+import { ReportModule } from "./Modules/Report/ReportModule";
 import { VersionModule } from "./Modules/VersionModule";
+import { InProgressListPage } from "./Page/InProgressListPage";
 import { BulkReportTableReader } from "./Report/BulkReport/BulkReportTableReader";
 import { BulkReportTableWriter } from "./Report/BulkReport/BulkReportTableWriter";
+import { ReportStatus } from "./Report/ReportStatus";
+import { Report } from "./Report/Report";
+import { Block } from "../Slack/Blocks";
+import { UrlFetchManager } from "../UrlFetch/UrlFetchManager";
+import { ChatPostMessage } from "../Slack/API/Stream/PostMessage";
+import { BlockFactory } from "../Slack/BlockFactory";
+import { BlockElementFactory } from "../Slack/BlockElementFactory";
+import { CompositionObjectFactory } from "../Slack/CompositionObjectFactory";
+import { LevelBulkReportListPage } from "./Page/LevelBulkReportListPage";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {
-    let properties = PropertiesService.getScriptProperties().getProperties();
-    let ret = ConfigurationEditor.store(
-        properties[ConfigurationScriptProperty.CONFIG_SHEET_ID],
-        ConfigurationSpreadsheet.GLOBAL_CONFIG_SHEET_NAME,
-        ConfigurationSpreadsheet.VERSION_LIST_SHEET_NAME);
-    let json = JSON.stringify(ret.getProperties());
-    Debug.log(json);
+    const ret = ConfigurationEditor.store();
+    Debug.log(ret.getProperties());
     return ret;
 }
 
@@ -92,21 +94,58 @@ export function notifyUnverified() {
     try {
         Instance.initialize();
 
-        let versionName = Instance.instance.module.config.common.defaultVersionName;
-        let reports = Instance.instance.module.report.getReports(versionName);
-        var unverifiedCount = 0;
-        for (var i = 0; i < reports.length; i++) {
-            if (reports[i].reportStatus == ReportStatus.InProgress) {
-                unverifiedCount++;
+        const versionName = Instance.instance.module.config.common.defaultVersionName;
+        const reports = Instance.instance.module.getModule(ReportModule).getReports(versionName);
+        let wipReportCount = 0;
+        for (let i = 0; i < reports.length; i++) {
+            if (reports[i].reportStatus === ReportStatus.InProgress) {
+                wipReportCount++;
             }
         }
 
-        if (unverifiedCount > 0) {
-            let unverifiedListUrl = Instance.instance.module.router.getPage(InProgressListPage).getPageUrl(versionName);
-            let message = `未承認の報告が${unverifiedCount}件あります
-[報告リストURL]
-${unverifiedListUrl}`;
-            Instance.instance.module.line.notice.pushTextMessage([message]);
+//        if (wipReportCount > 0) {
+//            const wipListUrl = Instance.instance.module.router.getPage(InProgressListPage).getPageUrl(versionName);
+//            const message = `未承認の報告が${wipReportCount}件あります
+//[報告リストURL]
+//${wipListUrl}`;
+//            Instance.instance.module.line.notice.pushTextMessage([message]);
+//        }
+
+        const bulkReports = Instance.instance.module.getModule(ReportModule).getLevelBulkReports(versionName);
+        let wipBulkReportCount = 0;
+        for (const bulkReport of bulkReports) {
+            if (bulkReport.reportStatus === ReportStatus.InProgress) {
+                wipBulkReportCount++;
+            }
+        }
+
+        if (wipReportCount > 0 || wipBulkReportCount > 0) {
+            const blocks: Block[] = [];
+            blocks.push(BlockFactory.section(
+                CompositionObjectFactory.markdownText('*[定期]未検証 件数報告*')
+            ));
+            if (wipReportCount > 0) {
+                const wipReportsUrl = Instance.instance.module.router.getPage(InProgressListPage).getPageUrl(versionName);
+                blocks.push(BlockFactory.section(
+                    CompositionObjectFactory.markdownText(`:page_with_curl:未承認の単曲検証報告が${wipReportCount}件あります
+<${wipReportsUrl}|検証報告一覧(単曲)ページへ>`)
+                ));
+                blocks.push(BlockFactory.divider());
+            }
+            if (wipBulkReportCount > 0) {
+                const wipBulkReporturl = Instance.instance.module.router.getPage(LevelBulkReportListPage).getPageUrl(versionName);
+                blocks.push(BlockFactory.section(
+                    CompositionObjectFactory.markdownText(`:page_with_curl:未承認のレベル別検証報告が${wipBulkReportCount}件あります
+<${wipBulkReporturl}|検証報告一覧(レベル別)ページへ>`)
+                ))
+                blocks.push(BlockFactory.divider());
+            }
+            UrlFetchManager.execute([new ChatPostMessage({
+                token: Instance.instance.module.config.global.slackApiToken,
+                channel: Instance.instance.module.config.global.slackChannelIdTable['noticeWipReportCount'],
+                text: '[定期]未承認 件数報告',
+                blocks: blocks,
+            })]);
         }
     }
     catch (e) {

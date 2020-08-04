@@ -1,4 +1,3 @@
-import { ConfigurationPropertyName } from "../../../Configurations/ConfigurationDefinition";
 import { MusicDataTable } from "../../../MusicDataTable/MusicDataTable";
 import { Debug } from "../../Debug";
 import { ReportFormModule } from "../@ReportFormModule";
@@ -6,19 +5,20 @@ import { MusicDataModule } from "../MusicDataModule";
 import { VersionModule } from "../VersionModule";
 
 export class ReportGoogleForm {
-    public constructor(private readonly _module: ReportFormModule) {
-    }
+    public constructor(private readonly _module: ReportFormModule) { }
 
     private _form: GoogleAppsScript.Forms.Form;
     public get form(): GoogleAppsScript.Forms.Form {
         if (!this._form) {
             const formId = this._module.config.report.reportFormId;
             if (!formId) {
-                throw new Error(`${ConfigurationPropertyName.REPORT_GOOGLE_FORM_ID} is not set.`);
+                Debug.logError(`reportFormId is not set.`);
+                return null;
             }
             const form = FormApp.openById(formId);
             if (!form) {
-                throw new Error(`Form is invalid. formId: ${formId}`);
+                Debug.logError(`Form is invalid. formId: ${formId}`);
+                return null;
             }
             this._form = form;
         }

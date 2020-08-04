@@ -1,15 +1,17 @@
-import { ConfigurationScriptProperty } from "../Configurations/ConfigurationDefinition";
 import { Debug } from "./Debug";
 import { Instance } from "./Instance";
 import { storeConfig } from "./operations";
 import { ApprovalPage } from "./Page/ApprovalPage";
 import { LevelBulkApprovalPage } from "./Page/LevelBulkApprovalPage";
 import { GoogleFormReport } from "./Report/GoogleFormReport";
-import { Utility } from "./Utility";
 import { GoogleFormLevelBulkReport } from "./Report/LevelBulkReport/GoogleFormLevelBulkReport";
-import { PostLocation } from "./Report/ReportStorage";
 import { ReportStatus } from "./Report/ReportStatus";
-import { version } from "punycode";
+import { PostLocation } from "./Report/ReportStorage";
+import { Utility } from "./Utility";
+import { UrlFetchManager } from "../UrlFetch/UrlFetchManager";
+import { BlockFactory } from "../Slack/BlockFactory";
+import { ChatPostMessage } from "../Slack/API/Stream/PostMessage";
+import { CompositionObjectFactory } from "../Slack/CompositionObjectFactory";
 
 export class ReportForm {
     public static doGet(e: any): any {
@@ -40,41 +42,13 @@ export class ReportForm {
         return null;
     }
 
-    private static storeConfig(request: { replyToken: string }): void {
-        let ret = storeConfig();
-        Instance.initialize();
-
-        let properties = ret.getProperties();
-        Debug.log(JSON.stringify(properties));
-
-        let versionConfigText = null;
-        for (const versionName of Instance.instance.module.config.common.versionNames) {
-            if (versionConfigText) {
-                versionConfigText += '\n';
-                versionConfigText += properties[ConfigurationScriptProperty.getVersionConfigName(versionName)];
-            }
-            else {
-                versionConfigText = properties[ConfigurationScriptProperty.getVersionConfigName(versionName)];
-            }
-        }
-
-        Instance.instance.module.line.notice.replyTextMessage(
-            request.replyToken,
-            [
-                properties[ConfigurationScriptProperty.GLOBAL_CONFIG],
-                properties[ConfigurationScriptProperty.VERSION_NAME_LIST],
-                versionConfigText,
-            ]);
-    }
-
-
     public static doPost(e: any): any {
         try {
             let postData = JSON.parse(e.postData.getDataAsString());
 
             let storeConfigRequest = this.getStoreConfigRequest(postData);
             if (storeConfigRequest) {
-                this.storeConfig(storeConfigRequest);
+                storeConfig();
                 return this.getSuccessResponseContent();
             }
 
@@ -133,6 +107,21 @@ export class ReportForm {
                     difficulty: Utility.toDifficultyText(report.difficulty),
                     baseRating: report.calcBaseRating().toFixed(1),
                 })}`);
+
+                UrlFetchManager.execute([new ChatPostMessage({
+                    token: Instance.instance.module.config.global.slackApiToken,
+                    channel: Instance.instance.module.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                    text: '新規の検証報告',
+                    attachments: [{
+                        color: '#ECB22E',
+                        blocks: [
+                            BlockFactory.section(
+                                CompositionObjectFactory.markdownText(`*<${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, report.reportId)}|${report.musicName}>*
+難易度: ${Utility.toDifficultyText(report.difficulty)}`)),
+                        ],
+                    }]
+                })]);
+
                 Instance.instance.module.report.noticeReportPost(`[検証報告]
 楽曲名:${report.musicName}
 難易度:${Utility.toDifficultyText(report.difficulty)}
@@ -141,8 +130,7 @@ URL:${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(ver
             }
         }
         catch (error) {
-            let message = this.toExceptionMessage(error);
-            Debug.logError(message);
+            Debug.logException(error);
         }
     }
 
@@ -162,6 +150,21 @@ URL:${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(ver
                     op: bulkReport.op,
                     opRatio: bulkReport.opRatio,
                 }));
+
+                UrlFetchManager.execute([new ChatPostMessage({
+                    token: Instance.instance.module.config.global.slackApiToken,
+                    channel: Instance.instance.module.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                    text: '新規の検証報告',
+                    attachments: [{
+                        color: '#ECB22E',
+                        blocks: [
+                            BlockFactory.section(
+                                CompositionObjectFactory.markdownText(`*<${Instance.instance.module.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReport.reportId)}|Lv.${bulkReport.targetLevel}>*
+楽曲数: ${bulkReport.musicCount}`)),
+                        ],
+                    }]
+                })]);
+
                 Instance.instance.module.report.noticeReportPost(`[一括検証報告]
 対象レベル:${bulkReport.targetLevel}
 URL:${Instance.instance.module.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReport.reportId)}`);

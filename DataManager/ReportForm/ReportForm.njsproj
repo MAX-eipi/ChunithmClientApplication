@@ -30,6 +30,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include=".editorconfig" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="src\Resources\Page\approval\main.html" />
@@ -73,6 +74,10 @@
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
+    <Folder Include="src\Slack\API\Stream\" />
+    <Folder Include="src\Slack\API\Payload\" />
+    <Folder Include="src\UrlFetch\" />
+    <Folder Include="src\Slack\" />
     <Folder Include="src\ReportForm\Modules\" />
     <Folder Include="src\Configurations\" />
     <Folder Include="src\ReportForm\Logger\" />
@@ -86,6 +91,8 @@
     <Folder Include="src\ReportForm\Report\LevelBulkReport\" />
     <Folder Include="src\Resources\Page\bulk_approval\" />
     <Folder Include="src\Resources\Page\wip_bulk_report_list\" />
+    <Folder Include="src\Slack\API\Payload\Chat\" />
+    <Folder Include="src\Slack\API\" />
     <Folder Include="src\Twitter\" />
     <Folder Include="src\ReportForm\" />
     <Folder Include="src\ReportForm\PostCommand\" />
@@ -111,6 +118,15 @@
     <TypeScriptCompile Include="src\Configurations\ConfigurationDefinition.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Configurations\ConfigurationObject.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Configurations\JsonConfiguration.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ConstDefinition.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Configurations\CommonConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -123,6 +139,7 @@
     <TypeScriptCompile Include="src\ReportForm\Configurations\TwitterConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Logger\DefaultLogger.ts" />
     <TypeScriptCompile Include="src\ReportForm\Dependencies\LINECommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -183,7 +200,6 @@
     <TypeScriptCompile Include="src\Configurations\SpreadsheetConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Configurations\VersionConfiguration.ts" />
     <TypeScriptCompile Include="src\ReportForm\Environment.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -293,6 +309,28 @@
     <TypeScriptCompile Include="src\ReportForm\Modules\WebhookModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\BlockElementFactory.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\API\Payload\Chat\PostMessage.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\API\Stream\PostMessage.ts" />
+    <TypeScriptCompile Include="src\Slack\BlockElements.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\BlockFactory.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\CompositionObjectFactory.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\CompositionObjects.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Slack\Blocks.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\Twitter\TwitterConnector.ts" />
     <TypeScriptCompile Include="src\ReportForm\Approval.ts" />
     <TypeScriptCompile Include="src\Configurations\Configuration.ts" />
@@ -308,6 +346,13 @@
     <TypeScriptCompile Include="src\ReportForm\Logger\SpreadSheetLogger.ts" />
     <TypeScriptCompile Include="src\ReportForm\Utility.ts" />
     <TypeScriptCompile Include="src\ReportForm\ReportForm.ts" />
+    <TypeScriptCompile Include="src\UrlFetch\UrlFetch.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\UrlFetch\UrlFetchManager.ts" />
+    <TypeScriptCompile Include="src\UrlFetch\UrlFetchStreamStatus.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="test\MusicDataTable.spec.ts" />
     <TypeScriptCompile Include="test\Rating.spec.ts" />
   </ItemGroup>

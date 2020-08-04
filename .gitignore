@@ -333,5 +333,6 @@ ASALocalRun/
 CoreTS/CoreTS/out
 **/.clasp.json
 **/appsscript.json
+**/@const.ts
 DataManager/VerificationReportForm/.**
 .**

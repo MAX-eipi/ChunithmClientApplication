@@ -16,10 +16,8 @@ export class SpreadsheetLogger implements Logger {
     }
 
     private static getThreadId(): number {
-        var min = 100000;
-        var max = 999999;
-        min = Math.ceil(min);
-        max = Math.floor(max);
+        const min = 100000;
+        const max = 999999;
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
@@ -33,17 +31,17 @@ export class SpreadsheetLogger implements Logger {
         return this._error;
     }
 
-    public log(message: string): void {
+    public log(message): void {
         if (this._log) {
             this._log.write([this.threadId, new Date().toString(), 'log', message]);
         }
     }
-    public logWarning(message: string): void {
+    public logWarning(message): void {
         if (this._warning) {
             this._warning.write([this.threadId, new Date().toString(), 'warning', message]);
         }
     }
-    public logError(message: string): void {
+    public logError(message): void {
         if (this._error) {
             this._error.write([this.threadId, new Date().toString(), 'error', message]);
         }
