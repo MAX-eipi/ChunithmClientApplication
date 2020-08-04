@@ -9,6 +9,12 @@ import { ReportStatus } from "../Report/ReportStatus";
 import { Utility } from "../Utility";
 import { ReportFormModule } from "./@ReportFormModule";
 import { ChunirecModule } from "./ChunirecModule";
+import { UrlFetchManager } from "../../UrlFetch/UrlFetchManager";
+import { ChatPostMessage } from "../../Slack/API/Stream/PostMessage";
+import { BlockFactory } from "../../Slack/BlockFactory";
+import { CompositionObjectFactory } from "../../Slack/CompositionObjectFactory";
+import { BlockElementFactory } from "../../Slack/BlockElementFactory";
+import { Environment } from "../Environment";
 
 class ApprovalError implements Error {
     public name: string = "ApprovalError";
@@ -76,6 +82,40 @@ export class ApprovalModule extends ReportFormModule {
 譜面定数:${baseRating.toFixed(1)}
 
 バージョン:${this.version.getVersionConfig(versionName).displayVersionName}`);
+
+        UrlFetchManager.execute([
+            new ChatPostMessage({
+                token: this.config.global.slackApiToken,
+                channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                text: `報告結果承認`,
+                attachments: [
+                    BlockElementFactory.attachment({
+                        color: '#49c39e',
+                        blocks: [
+                            BlockFactory.section(
+                                CompositionObjectFactory.markdownText(`*<${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}|${report.musicName}>*
+難易度: ${difficulty}
+譜面定数: ${baseRating.toFixed(1)}`)
+                            )
+                        ]
+                    })
+                ],
+            }),
+            new ChatPostMessage({
+                token: this.config.global.slackApiToken,
+                channel: this.config.global.slackChannelIdTable['updateMusicDataTable'],
+                text: `譜面定数更新`,
+                blocks: [
+                    BlockFactory.section(
+                        CompositionObjectFactory.markdownText(`:pushpin: *譜面定数更新*
+楽曲名: ${report.musicName}
+難易度: ${difficulty}
+譜面定数: ${baseRating.toFixed(1)}`)
+                    )
+                ],
+            }),
+        ]);
+
         this.report.noticeReportPost(`⭕️[検証結果 承認]⭕️
 楽曲名:${report.musicName}
 難易度:${difficulty}
@@ -101,6 +141,27 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
             'difficulty': difficulty,
             'baseRating': baseRating.toFixed(1),
         }));
+
+        UrlFetchManager.execute([
+            new ChatPostMessage({
+                token: this.config.global.slackApiToken,
+                channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                text: `報告結果却下`,
+                attachments: [
+                    BlockElementFactory.attachment({
+                        color: '#333333',
+                        blocks: [
+                            BlockFactory.section(
+                                CompositionObjectFactory.markdownText(`*<${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}|${report.musicName}>*
+難易度: ${difficulty}
+譜面定数: ${baseRating.toFixed(1)}`)
+                            )
+                        ]
+                    })
+                ],
+            })
+        ]);
+
         this.report.noticeReportPost(`✖️[検証結果 却下]✖️
 楽曲名:${musicName}
 難易度:${difficulty}
@@ -171,6 +232,39 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
 譜面定数:${baseRating.toFixed(1)}
 
 バージョン:${versionText}`);
+
+            UrlFetchManager.execute([
+                new ChatPostMessage({
+                    token: this.config.global.slackApiToken,
+                    channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                    text: `報告結果承認`,
+                    attachments: [
+                        BlockElementFactory.attachment({
+                            color: '#49c39e',
+                            blocks: [
+                                BlockFactory.section(
+                                    CompositionObjectFactory.markdownText(`*<${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, report.reportId)}|${report.musicName}>*
+難易度: ${difficulty}
+譜面定数: ${baseRating.toFixed(1)}`)
+                                )
+                            ]
+                        })
+                    ],
+                }),
+                new ChatPostMessage({
+                    token: this.config.global.slackApiToken,
+                    channel: this.config.global.slackChannelIdTable['updateMusicDataTable'],
+                    text: `譜面定数更新`,
+                    blocks: [
+                        BlockFactory.section(
+                            CompositionObjectFactory.markdownText(`:pushpin: *譜面定数更新*
+楽曲名: ${report.musicName}
+難易度: ${difficulty}
+譜面定数: ${baseRating.toFixed(1)}`)
+                        )
+                    ],
+                }),
+            ]);
         }
 
         this.requestChunirecUpdateMusics(approvedReports);
@@ -181,6 +275,9 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
     }
 
     private requestChunirecUpdateMusics(reports: IReport[]): boolean {
+        if (this.config.common.environment !== Environment.Release) {
+            return true;
+        }
         const params: { musicId: number; difficulty: Difficulty; baseRating: number; }[] = [];
         for (const report of reports) {
             params.push({
@@ -227,6 +324,25 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
             targetLevel: bulkReport.targetLevel,
         }));
 
+        UrlFetchManager.execute([
+            new ChatPostMessage({
+                token: this.config.global.slackApiToken,
+                channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                text: `報告結果承認`,
+                attachments: [
+                    BlockElementFactory.attachment({
+                        color: '#49c39e',
+                        blocks: [
+                            BlockFactory.section(
+                                CompositionObjectFactory.markdownText(`*<${this.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}|Lv.${bulkReport.targetLevel}>*
+楽曲数: ${bulkReport.musicCount}`)
+                            )
+                        ]
+                    })
+                ],
+            }),
+        ]);
+
         this.report.noticeReportPost(`⭕️[一括検証結果 承認]⭕️
 Lv:${bulkReport.targetLevel}
 URL:${this.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}`);
@@ -246,6 +362,25 @@ URL:${this.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, b
             header: '一括承認',
             targetLevel: bulkReport.targetLevel,
         }));
+
+        UrlFetchManager.execute([
+            new ChatPostMessage({
+                token: this.config.global.slackApiToken,
+                channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                text: `報告結果却下`,
+                attachments: [
+                    BlockElementFactory.attachment({
+                        color: '#333333',
+                        blocks: [
+                            BlockFactory.section(
+                                CompositionObjectFactory.markdownText(`*<${this.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}|Lv.${bulkReport.targetLevel}>*
+楽曲数: ${bulkReport.musicCount}`)
+                            )
+                        ]
+                    })
+                ],
+            }),
+        ]);
 
         this.report.noticeReportPost(`✖️[一括検証結果 却下]✖️
 Lv:${bulkReport.targetLevel}

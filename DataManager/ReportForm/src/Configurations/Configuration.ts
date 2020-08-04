@@ -30,6 +30,8 @@ export interface GlobalConfigurationFormat {
     readonly jenkinsApiToken: string;
     readonly chunirecApiHost: string;
     readonly chunirecApiToken: string;
+    readonly slackApiToken: string;
+    readonly slackChannelIdTable: Record<string, string>;
 }
 
 export interface VersionConfigurationFormat {
