@@ -71,6 +71,7 @@
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Dependencies\OAuth1\" />
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
@@ -110,6 +111,12 @@
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Dependencies\OAuth1\OAuth1.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dependencies\OAuth1\Service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Dependencies\TwitterWebService.ts" />
     <TypeScriptCompile Include="src\%40test.ts">
       <SubType>Code</SubType>

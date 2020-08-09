@@ -1,26 +1,12 @@
+import { Service } from "./OAuth1/Service";
+
 export function getInstance(consumer_key: string, consumre_secret: string): ITwitterWebService {
-    return new DummyTwitterWebService();
+    return null;
 }
 
 export interface ITwitterWebService {
-    getService(): any;
+    getService(): Service;
     authorize(): void;
     reset(): void;
     authCallback(request: object): void;
-}
-
-class DummyTwitterWebService implements ITwitterWebService {
-
-    getService(): any {
-        return {};
-    }
-
-    authorize(): void {
-    }
-
-    reset(): void {
-    }
-
-    authCallback(request: object): void {
-    }
 }
