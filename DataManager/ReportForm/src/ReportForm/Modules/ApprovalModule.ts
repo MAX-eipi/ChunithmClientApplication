@@ -10,10 +10,10 @@ import { Utility } from "../Utility";
 import { ReportFormModule } from "./@ReportFormModule";
 import { ChunirecModule } from "./ChunirecModule";
 import { UrlFetchManager } from "../../UrlFetch/UrlFetchManager";
-import { ChatPostMessage } from "../../Slack/API/Stream/PostMessage";
-import { BlockFactory } from "../../Slack/BlockFactory";
-import { CompositionObjectFactory } from "../../Slack/CompositionObjectFactory";
-import { BlockElementFactory } from "../../Slack/BlockElementFactory";
+import { SlackChatPostMessageStream } from "../../Slack/API/Chat/PostMessage/Stream";
+import { SlackBlockFactory } from "../../Slack/BlockFactory";
+import { SlackCompositionObjectFactory } from "../../Slack/CompositionObjectFactory";
+import { SlackBlockElementFactory } from "../../Slack/BlockElementFactory";
 import { Environment } from "../Environment";
 
 class ApprovalError implements Error {
@@ -84,16 +84,16 @@ export class ApprovalModule extends ReportFormModule {
 バージョン:${this.version.getVersionConfig(versionName).displayVersionName}`);
 
         UrlFetchManager.execute([
-            new ChatPostMessage({
+            new SlackChatPostMessageStream({
                 token: this.config.global.slackApiToken,
                 channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
                 text: `報告結果承認`,
                 attachments: [
-                    BlockElementFactory.attachment({
+                    SlackBlockElementFactory.attachment({
                         color: '#49c39e',
                         blocks: [
-                            BlockFactory.section(
-                                CompositionObjectFactory.markdownText(`*<${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}|${report.musicName}>*
+                            SlackBlockFactory.section(
+                                SlackCompositionObjectFactory.markdownText(`*<${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}|${report.musicName}>*
 難易度: ${difficulty}
 譜面定数: ${baseRating.toFixed(1)}`)
                             )
@@ -101,13 +101,13 @@ export class ApprovalModule extends ReportFormModule {
                     })
                 ],
             }),
-            new ChatPostMessage({
+            new SlackChatPostMessageStream({
                 token: this.config.global.slackApiToken,
                 channel: this.config.global.slackChannelIdTable['updateMusicDataTable'],
                 text: `譜面定数更新`,
                 blocks: [
-                    BlockFactory.section(
-                        CompositionObjectFactory.markdownText(`:pushpin: *譜面定数更新*
+                    SlackBlockFactory.section(
+                        SlackCompositionObjectFactory.markdownText(`:pushpin: *譜面定数更新*
 楽曲名: ${report.musicName}
 難易度: ${difficulty}
 譜面定数: ${baseRating.toFixed(1)}`)
@@ -143,16 +143,16 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
         }));
 
         UrlFetchManager.execute([
-            new ChatPostMessage({
+            new SlackChatPostMessageStream({
                 token: this.config.global.slackApiToken,
                 channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
                 text: `報告結果却下`,
                 attachments: [
-                    BlockElementFactory.attachment({
+                    SlackBlockElementFactory.attachment({
                         color: '#333333',
                         blocks: [
-                            BlockFactory.section(
-                                CompositionObjectFactory.markdownText(`*<${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}|${report.musicName}>*
+                            SlackBlockFactory.section(
+                                SlackCompositionObjectFactory.markdownText(`*<${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}|${report.musicName}>*
 難易度: ${difficulty}
 譜面定数: ${baseRating.toFixed(1)}`)
                             )
@@ -234,16 +234,16 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
 バージョン:${versionText}`);
 
             UrlFetchManager.execute([
-                new ChatPostMessage({
+                new SlackChatPostMessageStream({
                     token: this.config.global.slackApiToken,
                     channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
                     text: `報告結果承認`,
                     attachments: [
-                        BlockElementFactory.attachment({
+                        SlackBlockElementFactory.attachment({
                             color: '#49c39e',
                             blocks: [
-                                BlockFactory.section(
-                                    CompositionObjectFactory.markdownText(`*<${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, report.reportId)}|${report.musicName}>*
+                                SlackBlockFactory.section(
+                                    SlackCompositionObjectFactory.markdownText(`*<${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, report.reportId)}|${report.musicName}>*
 難易度: ${difficulty}
 譜面定数: ${baseRating.toFixed(1)}`)
                                 )
@@ -251,13 +251,13 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
                         })
                     ],
                 }),
-                new ChatPostMessage({
+                new SlackChatPostMessageStream({
                     token: this.config.global.slackApiToken,
                     channel: this.config.global.slackChannelIdTable['updateMusicDataTable'],
                     text: `譜面定数更新`,
                     blocks: [
-                        BlockFactory.section(
-                            CompositionObjectFactory.markdownText(`:pushpin: *譜面定数更新*
+                        SlackBlockFactory.section(
+                            SlackCompositionObjectFactory.markdownText(`:pushpin: *譜面定数更新*
 楽曲名: ${report.musicName}
 難易度: ${difficulty}
 譜面定数: ${baseRating.toFixed(1)}`)
@@ -325,16 +325,16 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, reportId)}
         }));
 
         UrlFetchManager.execute([
-            new ChatPostMessage({
+            new SlackChatPostMessageStream({
                 token: this.config.global.slackApiToken,
                 channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
                 text: `報告結果承認`,
                 attachments: [
-                    BlockElementFactory.attachment({
+                    SlackBlockElementFactory.attachment({
                         color: '#49c39e',
                         blocks: [
-                            BlockFactory.section(
-                                CompositionObjectFactory.markdownText(`*<${this.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}|Lv.${bulkReport.targetLevel}>*
+                            SlackBlockFactory.section(
+                                SlackCompositionObjectFactory.markdownText(`*<${this.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}|Lv.${bulkReport.targetLevel}>*
 楽曲数: ${bulkReport.musicCount}`)
                             )
                         ]
@@ -364,16 +364,16 @@ URL:${this.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, b
         }));
 
         UrlFetchManager.execute([
-            new ChatPostMessage({
+            new SlackChatPostMessageStream({
                 token: this.config.global.slackApiToken,
                 channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
                 text: `報告結果却下`,
                 attachments: [
-                    BlockElementFactory.attachment({
+                    SlackBlockElementFactory.attachment({
                         color: '#333333',
                         blocks: [
-                            BlockFactory.section(
-                                CompositionObjectFactory.markdownText(`*<${this.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}|Lv.${bulkReport.targetLevel}>*
+                            SlackBlockFactory.section(
+                                SlackCompositionObjectFactory.markdownText(`*<${this.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReportId)}|Lv.${bulkReport.targetLevel}>*
 楽曲数: ${bulkReport.musicCount}`)
                             )
                         ]

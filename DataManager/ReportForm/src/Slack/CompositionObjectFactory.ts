@@ -1,6 +1,6 @@
-import { ConfirmationDialog, Filter, Option, OptionGroup, Text } from "./CompositionObjects";
+import { ConfirmationDialog, Filter, Option, OptionGroup, Text } from "./API/CompositionObjects";
 
-export class CompositionObjectFactory {
+export class SlackCompositionObjectFactory {
     public static plainText(text: string, emoji?: boolean): Text {
         const ret: Text = {
             type: 'plain_text',

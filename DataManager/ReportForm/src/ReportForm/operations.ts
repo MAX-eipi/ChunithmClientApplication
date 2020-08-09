@@ -10,12 +10,12 @@ import { BulkReportTableReader } from "./Report/BulkReport/BulkReportTableReader
 import { BulkReportTableWriter } from "./Report/BulkReport/BulkReportTableWriter";
 import { ReportStatus } from "./Report/ReportStatus";
 import { Report } from "./Report/Report";
-import { Block } from "../Slack/Blocks";
+import { Block } from "../Slack/API/Blocks";
 import { UrlFetchManager } from "../UrlFetch/UrlFetchManager";
-import { ChatPostMessage } from "../Slack/API/Stream/PostMessage";
-import { BlockFactory } from "../Slack/BlockFactory";
-import { BlockElementFactory } from "../Slack/BlockElementFactory";
-import { CompositionObjectFactory } from "../Slack/CompositionObjectFactory";
+import { SlackChatPostMessageStream } from "../Slack/API/Chat/PostMessage/Stream";
+import { SlackBlockFactory } from "../Slack/BlockFactory";
+import { SlackBlockElementFactory } from "../Slack/BlockElementFactory";
+import { SlackCompositionObjectFactory } from "../Slack/CompositionObjectFactory";
 import { LevelBulkReportListPage } from "./Page/LevelBulkReportListPage";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {
@@ -121,26 +121,26 @@ export function notifyUnverified() {
 
         if (wipReportCount > 0 || wipBulkReportCount > 0) {
             const blocks: Block[] = [];
-            blocks.push(BlockFactory.section(
-                CompositionObjectFactory.markdownText('*[定期]未検証 件数報告*')
+            blocks.push(SlackBlockFactory.section(
+                SlackCompositionObjectFactory.markdownText('*[定期]未検証 件数報告*')
             ));
             if (wipReportCount > 0) {
                 const wipReportsUrl = Instance.instance.module.router.getPage(InProgressListPage).getPageUrl(versionName);
-                blocks.push(BlockFactory.section(
-                    CompositionObjectFactory.markdownText(`:page_with_curl:未承認の単曲検証報告が${wipReportCount}件あります
+                blocks.push(SlackBlockFactory.section(
+                    SlackCompositionObjectFactory.markdownText(`:page_with_curl:未承認の単曲検証報告が${wipReportCount}件あります
 <${wipReportsUrl}|検証報告一覧(単曲)ページへ>`)
                 ));
-                blocks.push(BlockFactory.divider());
+                blocks.push(SlackBlockFactory.divider());
             }
             if (wipBulkReportCount > 0) {
                 const wipBulkReporturl = Instance.instance.module.router.getPage(LevelBulkReportListPage).getPageUrl(versionName);
-                blocks.push(BlockFactory.section(
-                    CompositionObjectFactory.markdownText(`:page_with_curl:未承認のレベル別検証報告が${wipBulkReportCount}件あります
+                blocks.push(SlackBlockFactory.section(
+                    SlackCompositionObjectFactory.markdownText(`:page_with_curl:未承認のレベル別検証報告が${wipBulkReportCount}件あります
 <${wipBulkReporturl}|検証報告一覧(レベル別)ページへ>`)
                 ))
-                blocks.push(BlockFactory.divider());
+                blocks.push(SlackBlockFactory.divider());
             }
-            UrlFetchManager.execute([new ChatPostMessage({
+            UrlFetchManager.execute([new SlackChatPostMessageStream({
                 token: Instance.instance.module.config.global.slackApiToken,
                 channel: Instance.instance.module.config.global.slackChannelIdTable['noticeWipReportCount'],
                 text: '[定期]未承認 件数報告',

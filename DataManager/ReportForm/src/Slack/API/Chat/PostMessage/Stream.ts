@@ -1,7 +1,7 @@
-import { ConcreteStream } from '../../../UrlFetch/UrlFetch';
-import * as Payload from '../Payload/Chat/PostMessage';
+import { ConcreteStream } from '../../../../UrlFetch/UrlFetch';
+import * as Payload from './Payload';
 
-export class ChatPostMessage implements ConcreteStream<Payload.Request, Payload.Response> {
+export class SlackChatPostMessageStream implements ConcreteStream<Payload.Request, Payload.Response> {
     private readonly methodUrl = 'https://slack.com/api/chat.postMessage';
     private readonly method = 'post';
 
@@ -28,6 +28,7 @@ export class ChatPostMessage implements ConcreteStream<Payload.Request, Payload.
             headers: this.getHeader(this.request),
             method: this.method,
             payload: JSON.stringify(this.request),
+            muteHttpExceptions: true,
         };
     }
 

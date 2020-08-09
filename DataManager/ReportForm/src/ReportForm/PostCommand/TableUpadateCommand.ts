@@ -2,10 +2,10 @@ import { MusicData, MusicDataParameter } from "../../MusicDataTable/MusicData";
 import { PostCommand, PostCommandParameter } from "./@PostCommand";
 import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
 import { UrlFetchManager } from "../../UrlFetch/UrlFetchManager";
-import { BlockFactory } from "../../Slack/BlockFactory";
-import { BlockElementFactory } from "../../Slack/BlockElementFactory";
-import { CompositionObjectFactory } from "../../Slack/CompositionObjectFactory";
-import { ChatPostMessage } from "../../Slack/API/Stream/PostMessage";
+import { SlackBlockFactory } from "../../Slack/BlockFactory";
+import { SlackBlockElementFactory } from "../../Slack/BlockElementFactory";
+import { SlackCompositionObjectFactory } from "../../Slack/CompositionObjectFactory";
+import { SlackChatPostMessageStream } from "../../Slack/API/Chat/PostMessage/Stream";
 
 interface TableUpdateCommandParameter extends PostCommandParameter {
     MusicDatas: MusicDataParameter[];
@@ -54,13 +54,13 @@ ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLeve
 ${i + 1}. ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLevelText}`;
                 }
                 UrlFetchManager.execute([
-                    new ChatPostMessage({
+                    new SlackChatPostMessageStream({
                         token: this.module.config.global.slackApiToken,
                         channel: this.module.config.global.slackChannelIdTable['updateMusicDataTable'],
                         text: `新曲追加(${addedMusicDatas.length}曲)`,
                         blocks: [
-                            BlockFactory.section(
-                                CompositionObjectFactory.markdownText(
+                            SlackBlockFactory.section(
+                                SlackCompositionObjectFactory.markdownText(
                                     slackMessage
                                 )
                             )
@@ -84,13 +84,13 @@ ${i + 1}. ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${
 ${genre}: ${musicCounts[genre]}曲`;
                 }
                 UrlFetchManager.execute([
-                    new ChatPostMessage({
+                    new SlackChatPostMessageStream({
                         token: this.module.config.global.slackApiToken,
                         channel: this.module.config.global.slackChannelIdTable['updateMusicDataTable'],
                         text: `新規定数表作成`,
                         blocks: [
-                            BlockFactory.section(
-                                CompositionObjectFactory.markdownText(
+                            SlackBlockFactory.section(
+                                SlackCompositionObjectFactory.markdownText(
                                     slackMessage
                                 )
                             )

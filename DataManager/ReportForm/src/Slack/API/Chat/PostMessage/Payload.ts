@@ -1,8 +1,8 @@
-import * as UrlFetch from "../../../../UrlFetch/UrlFetch";
-import { Attachment } from "../../../BlockElements";
-import { Section, Block } from "../../../Blocks";
+import { Attachment } from "../../BlockElements";
+import { Section, Block } from "../../Blocks";
+import { UrlFetchRequest, UrlFetchResponse } from "../../../../UrlFetch/UrlFetch";
 
-export interface Request extends UrlFetch.Request {
+export interface Request extends UrlFetchRequest {
     token: string;
     channel: string;
     text: string;
@@ -21,10 +21,13 @@ export interface Request extends UrlFetch.Request {
     username?: boolean;
 }
 
-export interface Response extends UrlFetch.Response {
+export interface Response extends UrlFetchResponse {
     readonly ok: boolean;
     readonly error?: string;
     readonly channel?: string;
     readonly ts?: string;
     readonly message?: Record<string, any>;
 }
+
+export type SlackChatPostMessageRequest = Request;
+export type SlackChatPostMessageResponse = Response;
