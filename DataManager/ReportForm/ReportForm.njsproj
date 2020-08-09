@@ -72,6 +72,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\OAuth1\" />
+    <Folder Include="src\LINE\API\" />
+    <Folder Include="src\LINE\API\Message\" />
+    <Folder Include="src\LINE\API\Message\Reply\" />
+    <Folder Include="src\LINE\API\Message\Push\" />
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
@@ -131,6 +135,24 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ConstDefinition.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LINE\API\MessageObjects.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LINE\API\LINEPayload.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LINE\API\Message\Push\Payload.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LINE\API\Message\Reply\Payload.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LINE\API\Message\Push\Stream.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LINE\API\Message\Reply\Stream.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Configurations\CommonConfiguration.ts">
