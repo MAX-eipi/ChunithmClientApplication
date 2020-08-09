@@ -79,8 +79,10 @@
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
+    <Folder Include="src\Cache\" />
     <Folder Include="src\Slack\API\Chat\" />
     <Folder Include="src\Slack\API\Chat\PostMessage\" />
+    <Folder Include="src\Spreadsheet\" />
     <Folder Include="src\UrlFetch\" />
     <Folder Include="src\Slack\" />
     <Folder Include="src\ReportForm\Modules\" />
@@ -123,6 +125,15 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dependencies\TwitterWebService.ts" />
     <TypeScriptCompile Include="src\%40test.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Cache\CacheProvider.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Cache\CacheServiceProvider.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Cache\SpreadsheetCacheProvider.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Configurations\ConfigurationDefinition.ts">
@@ -359,6 +370,7 @@
     <TypeScriptCompile Include="src\Slack\API\Blocks.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Spreadsheet\SpreadsheetRegistry.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Twitter\TwitterConnector.ts" />
