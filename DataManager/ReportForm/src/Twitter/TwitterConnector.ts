@@ -11,14 +11,14 @@ export class TwitterConnector {
         this.twitter.authorize();
     }
 
-    public authCallback(request: any): any {
-        return this.twitter.authCallback(request);
+    public authCallback(request): void {
+        this.twitter.authCallback(request);
     }
 
-    public postTweet(message: string): any {
-        var service = this.twitter.getService();
-        var endPointUrl = 'https://api.twitter.com/1.1/statuses/update.json';
-        var response = service.fetch(endPointUrl, {
+    public postTweet(message: string): GoogleAppsScript.URL_Fetch.HTTPResponse {
+        const service = this.twitter.getService();
+        const endPointUrl = 'https://api.twitter.com/1.1/statuses/update.json';
+        const response = service.fetch(endPointUrl, {
             method: 'post',
             payload: {
                 status: message

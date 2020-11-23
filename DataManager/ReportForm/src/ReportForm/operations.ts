@@ -17,6 +17,7 @@ import { SlackBlockFactory } from "../Slack/BlockFactory";
 import { SlackBlockElementFactory } from "../Slack/BlockElementFactory";
 import { SlackCompositionObjectFactory } from "../Slack/CompositionObjectFactory";
 import { LevelBulkReportListPage } from "./Page/LevelBulkReportListPage";
+import { TwitterModule } from "./Modules/TwitterModule";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {
     const ret = ConfigurationEditor.store();
@@ -50,7 +51,7 @@ function setupBulkReportForm() {
 
 function authorizeTwitter() {
     try {
-        Instance.instance.module.twitter.connector.authorize();
+        Instance.instance.module.getModule(TwitterModule).connector.authorize();
     }
     catch (e) {
         Instance.exception(e);
@@ -59,7 +60,7 @@ function authorizeTwitter() {
 
 function authCallback(request): any {
     try {
-        return Instance.instance.module.twitter.connector.authCallback(request);
+        return Instance.instance.module.getModule(TwitterModule).connector.authCallback(request);
     }
     catch (e) {
         Instance.exception(e);
@@ -103,13 +104,13 @@ export function notifyUnverified() {
             }
         }
 
-//        if (wipReportCount > 0) {
-//            const wipListUrl = Instance.instance.module.router.getPage(InProgressListPage).getPageUrl(versionName);
-//            const message = `未承認の報告が${wipReportCount}件あります
-//[報告リストURL]
-//${wipListUrl}`;
-//            Instance.instance.module.line.notice.pushTextMessage([message]);
-//        }
+        //        if (wipReportCount > 0) {
+        //            const wipListUrl = Instance.instance.module.router.getPage(InProgressListPage).getPageUrl(versionName);
+        //            const message = `未承認の報告が${wipReportCount}件あります
+        //[報告リストURL]
+        //${wipListUrl}`;
+        //            Instance.instance.module.line.notice.pushTextMessage([message]);
+        //        }
 
         const bulkReports = Instance.instance.module.getModule(ReportModule).getLevelBulkReports(versionName);
         let wipBulkReportCount = 0;

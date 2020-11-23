@@ -1,11 +1,11 @@
 import { MusicData, MusicDataParameter } from "../../MusicDataTable/MusicData";
-import { PostCommand, PostCommandParameter } from "./@PostCommand";
-import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
-import { UrlFetchManager } from "../../UrlFetch/UrlFetchManager";
-import { SlackBlockFactory } from "../../Slack/BlockFactory";
-import { SlackBlockElementFactory } from "../../Slack/BlockElementFactory";
-import { SlackCompositionObjectFactory } from "../../Slack/CompositionObjectFactory";
 import { SlackChatPostMessageStream } from "../../Slack/API/Chat/PostMessage/Stream";
+import { SlackBlockFactory } from "../../Slack/BlockFactory";
+import { SlackCompositionObjectFactory } from "../../Slack/CompositionObjectFactory";
+import { UrlFetchManager } from "../../UrlFetch/UrlFetchManager";
+import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
+import { TwitterModule } from "../Modules/TwitterModule";
+import { PostCommand, PostCommandParameter } from "./@PostCommand";
 
 interface TableUpdateCommandParameter extends PostCommandParameter {
     MusicDatas: MusicDataParameter[];
@@ -40,8 +40,8 @@ export class TableUpdateCommand extends PostCommand {
                     message += `
 ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLevelText}`;
                 }
-                this.module.line.notice.pushTextMessage([message]);
-                this.module.twitter.postTweet(message);
+                this.module.line.noticeConnector.pushTextMessage([message]);
+                this.module.getModule(TwitterModule).postTweet(message);
 
                 let slackMessage = `:musical_keyboard: *新曲追加* (${addedMusicDatas.length}曲)`;
                 for (let i = 0; i < addedMusicDatas.length; i++) {
@@ -75,8 +75,8 @@ ${i + 1}. ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${
                 for (const genre in musicCounts) {
                     message += `${genre}: ${musicCounts[genre]}\n`;
                 }
-                this.module.line.notice.pushTextMessage([message]);
-                this.module.twitter.postTweet(message);
+                this.module.line.noticeConnector.pushTextMessage([message]);
+                this.module.getModule(TwitterModule).postTweet(message);
 
                 let slackMessage = ':musical_keyboard: *新規定数表作成*';
                 for (const genre in musicCounts) {

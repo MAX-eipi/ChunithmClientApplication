@@ -54,7 +54,6 @@ export class ReportFormModule {
     public get postCommand(): PostCommandModule { return this.getModuleInternal('postCommand', PostCommandModule); }
     public get router(): Router { return this.getModuleInternal('router', Router); }
     public get report(): ReportModule { return this.getModuleInternal(ReportModule.moduleName, ReportModule); }
-    public get twitter(): TwitterModule { return this.getModuleInternal('twitter', TwitterModule); }
     public get musicData(): MusicDataModule { return this.getModuleInternal(MusicDataModule.moduleName, MusicDataModule); }
     public get approval(): ApprovalModule { return this.getModuleInternal('approval', ApprovalModule); }
     public get version(): VersionModule { return this.getModuleInternal(VersionModule.moduleName, VersionModule); }

@@ -2,7 +2,7 @@ export interface UrlFetchRequest { }
 
 export interface UrlFetchResponse { }
 
-export interface Stream {
+export interface UrlFetchStream {
     getRawRequest(): GoogleAppsScript.URL_Fetch.URLFetchRequest;
     setRawResponse(response: GoogleAppsScript.URL_Fetch.HTTPResponse): void;
     readonly hasError: boolean;
@@ -10,7 +10,7 @@ export interface Stream {
 }
 
 export interface ConcreteStream<TRequest extends UrlFetchRequest, TResponse extends UrlFetchResponse>
-    extends Stream {
+    extends UrlFetchStream {
     readonly request: TRequest;
     readonly response: TResponse;
 }

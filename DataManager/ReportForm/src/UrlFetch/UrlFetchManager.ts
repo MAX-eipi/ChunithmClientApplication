@@ -7,7 +7,7 @@ class UrlFetchResult implements UrlFetch.Result {
         return result;
     }
 
-    private static toErrorMessage(error: Error): string {
+    public static toErrorMessage(error: Error): string {
         return `[Message]
 ${error.message}
 
@@ -22,7 +22,10 @@ ${error.stack}`;
 }
 
 export class UrlFetchManager {
-    public static execute(streams: UrlFetch.Stream[]): UrlFetch.Result {
+    public static execute(streams: UrlFetch.UrlFetchStream | UrlFetch.UrlFetchStream[]): UrlFetch.Result {
+        if (!Array.isArray(streams)) {
+            streams = [streams];
+        }
         const length = streams.length;
         const requests: GoogleAppsScript.URL_Fetch.URLFetchRequest[] = [];
         for (let i = 0; i < length; i++) {
