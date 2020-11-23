@@ -80,6 +80,7 @@
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
     <Folder Include="src\Cache\" />
+    <Folder Include="src\ReportForm\Modules\Notice\" />
     <Folder Include="src\Slack\API\Chat\" />
     <Folder Include="src\Slack\API\Chat\PostMessage\" />
     <Folder Include="src\Spreadsheet\" />
@@ -280,6 +281,12 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Modules\VersionModule.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Modules\Notice\NoticeModule.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Modules\Notice\NoticeQueue.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Page\ApprovalPage.ts" />
