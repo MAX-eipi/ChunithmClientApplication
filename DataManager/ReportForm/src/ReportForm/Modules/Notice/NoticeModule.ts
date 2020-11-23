@@ -53,7 +53,7 @@ export class NoticeModule extends ReportFormModule {
                 SlackCompositionObjectFactory.markdownText(`:mailbox_with_mail: *新規単曲検証報告(${reports.length}件)*`)
             ));
             for (const r of reports) {
-                const diffText = Utility.toDifficultyText(r.difficulty);
+                const diffText = Utility.toDifficultyTextLowerCase(r.difficulty);
                 const url = this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId);
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`<${url}|:chunithm_difficulty_${diffText}: ${r.musicName}>`)
@@ -148,7 +148,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
                     SlackCompositionObjectFactory.markdownText(`:o: *単曲検証報告 承認(${reports.length}件)*`)
                 ));
                 for (const r of reports) {
-                    const diffText = Utility.toDifficultyText(r.difficulty);
+                    const diffText = Utility.toDifficultyTextLowerCase(r.difficulty);
                     const url = this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId);
                     blocks.push(SlackBlockFactory.section(
                         SlackCompositionObjectFactory.markdownText(`<${url}|:chunithm_difficulty_${diffText}: ${r.musicName}>`)
@@ -169,7 +169,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
                     SlackCompositionObjectFactory.markdownText(`:pushpin: *譜面定数更新(${reports.length}件)*`)
                 ));
                 for (const r of reports) {
-                    const diffText = Utility.toDifficultyText(r.difficulty);
+                    const diffText = Utility.toDifficultyTextLowerCase(r.difficulty);
                     blocks.push(SlackBlockFactory.section(
                         SlackCompositionObjectFactory.markdownText(`:chunithm_difficulty_${diffText}: ${r.musicName}
 :arrow_right: 譜面定数: ${r.calcBaseRating().toFixed(1)}`)
@@ -252,7 +252,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
                 SlackCompositionObjectFactory.markdownText(`:x: *報告結果却下(${reports.length}件)*`)
             ));
             for (const r of reports) {
-                const diffText = Utility.toDifficultyText(r.difficulty);
+                const diffText = Utility.toDifficultyTextLowerCase(r.difficulty);
                 const url = this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId);
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`<${url}|:chunithm_difficulty_${diffText}: ${r.musicName}>`)
@@ -365,7 +365,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
             ));
             for (const r of reports) {
                 const difficulty = r.targetLevel >= 4 ? Difficulty.Advanced : Difficulty.Basic;
-                const diffText = Utility.toDifficultyText(difficulty);
+                const diffText = Utility.toDifficultyTextLowerCase(difficulty);
                 const url = this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId);
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`<${url}|:chunithm_difficulty_${diffText}: Lv.${r.targetLevel} (${r.musicCount}曲)>`)
@@ -446,7 +446,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
                 ));
                 for (const r of reports) {
                     const difficulty = r.targetLevel >= 4 ? Difficulty.Advanced : Difficulty.Basic;
-                    const diffText = Utility.toDifficultyText(difficulty);
+                    const diffText = Utility.toDifficultyTextLowerCase(difficulty);
                     const url = this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId);
                     blocks.push(SlackBlockFactory.section(
                         SlackCompositionObjectFactory.markdownText(`<${url}|:chunithm_difficulty_${diffText}: Lv.${r.targetLevel} (${r.musicCount}曲)>`)
@@ -468,7 +468,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
                 ));
                 for (const r of reports) {
                     const difficulty = r.targetLevel >= 4 ? Difficulty.Advanced : Difficulty.Basic;
-                    const diffText = Utility.toDifficultyText(difficulty);
+                    const diffText = Utility.toDifficultyTextLowerCase(difficulty);
                     blocks.push(SlackBlockFactory.section(
                         SlackCompositionObjectFactory.markdownText(`:chunithm_difficulty_${diffText}: Lv.${r.targetLevel} (${r.musicCount}曲)`)
                     ));
@@ -548,7 +548,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
             ));
             for (const r of reports) {
                 const difficulty = r.targetLevel >= 4 ? Difficulty.Advanced : Difficulty.Basic;
-                const diffText = Utility.toDifficultyText(difficulty);
+                const diffText = Utility.toDifficultyTextLowerCase(difficulty);
                 const url = this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId);
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`<${url}|:chunithm_difficulty_${diffText}: Lv.${r.targetLevel} (${r.musicCount}曲)>`)
