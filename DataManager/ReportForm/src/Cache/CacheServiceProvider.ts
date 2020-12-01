@@ -22,7 +22,7 @@ export class CacheServiceProvider implements CacheProvider {
     }
 
     private _intermediateCache: Record<string, string> = {};
-    private _putKeyRequests: Set<string> = new Set<string>();
+    private _putKeyRequests: string[] = [];
     private _poolPut = false;
     private getIntermediateCache(key: string): string {
         if (key in this._intermediateCache) {
@@ -34,7 +34,9 @@ export class CacheServiceProvider implements CacheProvider {
     private putIntermediateCache(key: string, value: string): void {
         this._intermediateCache[key] = value;
         if (this._poolPut) {
-            this._putKeyRequests.add(key);
+            if (this._putKeyRequests.indexOf(value) === -1) {
+                this._putKeyRequests.push(key);
+            }
         }
         else {
             this.getCache().put(key, value);
@@ -57,7 +59,7 @@ export class CacheServiceProvider implements CacheProvider {
     }
 
     public syncServer(): void {
-        if (this._putKeyRequests.size === 0) {
+        if (this._putKeyRequests.length === 0) {
             return;
         }
         const values: Record<string, string> = {};
@@ -65,6 +67,6 @@ export class CacheServiceProvider implements CacheProvider {
             values[key] = this._intermediateCache[key];
         });
         this.getCache().putAll(values);
-        this._putKeyRequests.clear();
+        this._putKeyRequests.length = 0;
     }
 }
