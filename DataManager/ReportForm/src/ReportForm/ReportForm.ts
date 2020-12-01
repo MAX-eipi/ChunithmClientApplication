@@ -12,6 +12,7 @@ import { UrlFetchManager } from "../UrlFetch/UrlFetchManager";
 import { SlackBlockFactory } from "../Slack/BlockFactory";
 import { SlackChatPostMessageStream } from "../Slack/API/Chat/PostMessage/Stream";
 import { SlackCompositionObjectFactory } from "../Slack/CompositionObjectFactory";
+import { NoticeModule } from "./Modules/Notice/NoticeModule";
 
 export class ReportForm {
     public static doGet(e: any): any {
@@ -108,25 +109,7 @@ export class ReportForm {
                     baseRating: report.calcBaseRating().toFixed(1),
                 })}`);
 
-                UrlFetchManager.execute([new SlackChatPostMessageStream({
-                    token: Instance.instance.module.config.global.slackApiToken,
-                    channel: Instance.instance.module.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
-                    text: '新規の検証報告',
-                    attachments: [{
-                        color: '#ECB22E',
-                        blocks: [
-                            SlackBlockFactory.section(
-                                SlackCompositionObjectFactory.markdownText(`*<${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, report.reportId)}|${report.musicName}>*
-難易度: ${Utility.toDifficultyText(report.difficulty)}`)),
-                        ],
-                    }]
-                })]);
-
-                Instance.instance.module.report.noticeReportPost(`[検証報告]
-楽曲名:${report.musicName}
-難易度:${Utility.toDifficultyText(report.difficulty)}
-譜面定数:${report.calcBaseRating().toFixed(1)}
-URL:${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, report.reportId)}`);
+                Instance.instance.module.getModule(NoticeModule).getQueue().enqueueCreateUnitReport(report);
             }
         }
         catch (error) {
@@ -151,23 +134,7 @@ URL:${Instance.instance.module.router.getPage(ApprovalPage).getReportPageUrl(ver
                     opRatio: bulkReport.opRatio,
                 }));
 
-                UrlFetchManager.execute([new SlackChatPostMessageStream({
-                    token: Instance.instance.module.config.global.slackApiToken,
-                    channel: Instance.instance.module.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
-                    text: '新規の検証報告',
-                    attachments: [{
-                        color: '#ECB22E',
-                        blocks: [
-                            SlackBlockFactory.section(
-                                SlackCompositionObjectFactory.markdownText(`*<${Instance.instance.module.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReport.reportId)}|Lv.${bulkReport.targetLevel}>*
-楽曲数: ${bulkReport.musicCount}`)),
-                        ],
-                    }]
-                })]);
-
-                Instance.instance.module.report.noticeReportPost(`[一括検証報告]
-対象レベル:${bulkReport.targetLevel}
-URL:${Instance.instance.module.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, bulkReport.reportId)}`);
+                Instance.instance.module.getModule(NoticeModule).getQueue().enqueueCreateLevelReport(bulkReport);
             }
         }
         catch (error) {
