@@ -1,6 +1,7 @@
 import { Debug } from "../Debug";
 import { notifyUnverified } from "../operations";
 import { LINECommand } from "./@LINECommand";
+import { TwitterModule } from "../Modules/TwitterModule";
 
 export class TestCommand extends LINECommand {
     public called(command: string): boolean {
@@ -26,7 +27,7 @@ export class TestCommand extends LINECommand {
             case "tweet":
                 {
                     const date = new Date();
-                    this.module.twitter.postTweet(`これはテストツイートです。\n${date.toString()}`);
+                    this.module.getModule(TwitterModule).postTweet(`これはテストツイートです。\n${date.toString()}`);
                 }
                 break;
             default:
