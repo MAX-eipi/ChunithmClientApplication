@@ -34,7 +34,7 @@ export class NoticeQueue {
     public enqueueCreateLevelReport(report: LevelBulkReport): void {
         this.enqueue<number>(NoticeQueue.KEY_NOTICE_CREATE_LEVEL_REPORTS, report.reportId);
     }
-    public dequeueCreateLevelReprot(count: number): number[] {
+    public dequeueCreateLevelReport(count: number): number[] {
         return this.dequeue<number>(NoticeQueue.KEY_NOTICE_CREATE_LEVEL_REPORTS, count);
     }
 

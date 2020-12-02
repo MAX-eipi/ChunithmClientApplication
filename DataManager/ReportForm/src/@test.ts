@@ -4,6 +4,7 @@ import { TextMessage } from "./LINE/API/MessageObjects";
 import { Instance } from "./ReportForm/Instance";
 import { NoticeModule } from "./ReportForm/Modules/Notice/NoticeModule";
 import { UrlFetchManager } from "./UrlFetch/UrlFetchManager";
+import { execute } from "./ReportForm/operations";
 
 // implements test core here
 function cacheTest() {
@@ -46,11 +47,11 @@ function noticeApproveUnitReportsTest() {
 }
 
 function noticeRejectUnitReportsTest() {
-    Instance.initialize();
-    const versionName = Instance.instance.module.config.common.latestVersionName;
-    const reportIds = [1, 2, 3, 11, 12, 13];
-    Instance.instance.module.getModule(NoticeModule)
-        .noticeRejectUnitReport(versionName, reportIds);
+    execute(instance => {
+        const versionName = instance.module.config.common.latestVersionName;
+        const reportIds = [1, 2, 3, 11, 12, 13];
+        instance.module.getModule(NoticeModule).noticeRejectUnitReport(versionName, reportIds);
+    });
 }
 
 function noticeCreateLevelReportToSlackTest() {
