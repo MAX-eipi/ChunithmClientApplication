@@ -33,7 +33,7 @@ export class ReportFormModule {
 
     public getModule<TModule extends ReportFormModule>(factory: { moduleName: string; new(): TModule }): TModule {
         if (factory.moduleName in this._root._modules) {
-            return this._root.module[factory.moduleName] as TModule;
+            return this._root._modules[factory.moduleName] as TModule;
         }
         const module = new factory();
         module._root = this._root;
