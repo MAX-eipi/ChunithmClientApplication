@@ -1,16 +1,5 @@
 import { Instance } from "./Instance";
-
-class ApprovalError implements Error {
-    public name: string = "ApprovalError";
-    public message: string;
-    public constructor(message: string) {
-        this.message = message;
-    }
-
-    toString(): string {
-        return `${this.name}:${this.message};`
-    }
-}
+import { ApprovalError } from "./Modules/ApprovalModule";
 
 function approve(reportIdText: string, versionName: string): void {
     try {

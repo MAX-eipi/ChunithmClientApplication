@@ -1,16 +1,16 @@
-export interface Request { }
+export interface UrlFetchRequest { }
 
-export interface Response { }
+export interface UrlFetchResponse { }
 
-export interface Stream {
+export interface UrlFetchStream {
     getRawRequest(): GoogleAppsScript.URL_Fetch.URLFetchRequest;
     setRawResponse(response: GoogleAppsScript.URL_Fetch.HTTPResponse): void;
     readonly hasError: boolean;
     readonly error: string;
 }
 
-export interface ConcreteStream<TRequest extends Request, TResponse extends Response>
-    extends Stream {
+export interface ConcreteStream<TRequest extends UrlFetchRequest, TResponse extends UrlFetchResponse>
+    extends UrlFetchStream {
     readonly request: TRequest;
     readonly response: TResponse;
 }

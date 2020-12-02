@@ -1,11 +1,11 @@
 import { MusicData, MusicDataParameter } from "../../MusicDataTable/MusicData";
-import { PostCommand, PostCommandParameter } from "./@PostCommand";
-import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
+import { SlackChatPostMessageStream } from "../../Slack/API/Chat/PostMessage/Stream";
+import { SlackBlockFactory } from "../../Slack/BlockFactory";
+import { SlackCompositionObjectFactory } from "../../Slack/CompositionObjectFactory";
 import { UrlFetchManager } from "../../UrlFetch/UrlFetchManager";
-import { BlockFactory } from "../../Slack/BlockFactory";
-import { BlockElementFactory } from "../../Slack/BlockElementFactory";
-import { CompositionObjectFactory } from "../../Slack/CompositionObjectFactory";
-import { ChatPostMessage } from "../../Slack/API/Stream/PostMessage";
+import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
+import { TwitterModule } from "../Modules/TwitterModule";
+import { PostCommand, PostCommandParameter } from "./@PostCommand";
 
 interface TableUpdateCommandParameter extends PostCommandParameter {
     MusicDatas: MusicDataParameter[];
@@ -40,8 +40,8 @@ export class TableUpdateCommand extends PostCommand {
                     message += `
 ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLevelText}`;
                 }
-                this.module.line.notice.pushTextMessage([message]);
-                this.module.twitter.postTweet(message);
+                this.module.line.noticeConnector.pushTextMessage([message]);
+                this.module.getModule(TwitterModule).postTweet(message);
 
                 let slackMessage = `:musical_keyboard: *新曲追加* (${addedMusicDatas.length}曲)`;
                 for (let i = 0; i < addedMusicDatas.length; i++) {
@@ -54,13 +54,13 @@ ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLeve
 ${i + 1}. ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLevelText}`;
                 }
                 UrlFetchManager.execute([
-                    new ChatPostMessage({
+                    new SlackChatPostMessageStream({
                         token: this.module.config.global.slackApiToken,
                         channel: this.module.config.global.slackChannelIdTable['updateMusicDataTable'],
                         text: `新曲追加(${addedMusicDatas.length}曲)`,
                         blocks: [
-                            BlockFactory.section(
-                                CompositionObjectFactory.markdownText(
+                            SlackBlockFactory.section(
+                                SlackCompositionObjectFactory.markdownText(
                                     slackMessage
                                 )
                             )
@@ -75,8 +75,8 @@ ${i + 1}. ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${
                 for (const genre in musicCounts) {
                     message += `${genre}: ${musicCounts[genre]}\n`;
                 }
-                this.module.line.notice.pushTextMessage([message]);
-                this.module.twitter.postTweet(message);
+                this.module.line.noticeConnector.pushTextMessage([message]);
+                this.module.getModule(TwitterModule).postTweet(message);
 
                 let slackMessage = ':musical_keyboard: *新規定数表作成*';
                 for (const genre in musicCounts) {
@@ -84,13 +84,13 @@ ${i + 1}. ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${
 ${genre}: ${musicCounts[genre]}曲`;
                 }
                 UrlFetchManager.execute([
-                    new ChatPostMessage({
+                    new SlackChatPostMessageStream({
                         token: this.module.config.global.slackApiToken,
                         channel: this.module.config.global.slackChannelIdTable['updateMusicDataTable'],
                         text: `新規定数表作成`,
                         blocks: [
-                            BlockFactory.section(
-                                CompositionObjectFactory.markdownText(
+                            SlackBlockFactory.section(
+                                SlackCompositionObjectFactory.markdownText(
                                     slackMessage
                                 )
                             )

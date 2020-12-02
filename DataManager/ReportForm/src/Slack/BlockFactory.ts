@@ -1,8 +1,8 @@
-import * as Elements from "./BlockElements";
-import * as Blocks from "./Blocks";
-import { Text } from "./CompositionObjects";
+import * as Elements from "./API/BlockElements";
+import * as Blocks from "./API/Blocks";
+import { Text } from "./API/CompositionObjects";
 
-export class BlockFactory {
+export class SlackBlockFactory {
     public static section(text: Text, options: Blocks.SectionOptions = {}): Blocks.Section {
         const ret: Blocks.Section = {
             type: 'section',

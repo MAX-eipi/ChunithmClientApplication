@@ -1,22 +1,22 @@
+import { Block } from "../Slack/API/Blocks";
+import { SlackChatPostMessageStream } from "../Slack/API/Chat/PostMessage/Stream";
+import { SlackBlockFactory } from "../Slack/BlockFactory";
+import { SlackCompositionObjectFactory } from "../Slack/CompositionObjectFactory";
+import { UrlFetchManager } from "../UrlFetch/UrlFetchManager";
 import { CommonConfiguration } from "./Configurations/CommonConfiguration";
 import { ConfigurationEditor } from "./Configurations/ConfigurationEditor";
 import { Debug } from "./Debug";
 import { Instance } from "./Instance";
 import { MusicDataModule } from "./Modules/MusicDataModule";
+import { NoticeModule } from "./Modules/Notice/NoticeModule";
 import { ReportModule } from "./Modules/Report/ReportModule";
+import { TwitterModule } from "./Modules/TwitterModule";
 import { VersionModule } from "./Modules/VersionModule";
 import { InProgressListPage } from "./Page/InProgressListPage";
+import { LevelBulkReportListPage } from "./Page/LevelBulkReportListPage";
 import { BulkReportTableReader } from "./Report/BulkReport/BulkReportTableReader";
 import { BulkReportTableWriter } from "./Report/BulkReport/BulkReportTableWriter";
 import { ReportStatus } from "./Report/ReportStatus";
-import { Report } from "./Report/Report";
-import { Block } from "../Slack/Blocks";
-import { UrlFetchManager } from "../UrlFetch/UrlFetchManager";
-import { ChatPostMessage } from "../Slack/API/Stream/PostMessage";
-import { BlockFactory } from "../Slack/BlockFactory";
-import { BlockElementFactory } from "../Slack/BlockElementFactory";
-import { CompositionObjectFactory } from "../Slack/CompositionObjectFactory";
-import { LevelBulkReportListPage } from "./Page/LevelBulkReportListPage";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {
     const ret = ConfigurationEditor.store();
@@ -24,70 +24,127 @@ export function storeConfig(): GoogleAppsScript.Properties.Properties {
     return ret;
 }
 
-function setupForm() {
+export function execute<T>(action: (instance: Instance) => T) {
     try {
         Instance.initialize();
-
-        let versionName = Instance.instance.module.config.common.defaultVersionName;
-        Instance.instance.module.report.buildForm(versionName);
+        return action(Instance.instance);
     }
     catch (e) {
         Instance.exception(e);
     }
+}
+
+function getDefaultVersionName(instance: Instance): string {
+    return instance.module.config.common.defaultVersionName;
+}
+
+function setupForm() {
+    execute(instance => {
+        const versionName = getDefaultVersionName(instance);
+        instance.module.getModule(ReportModule).buildForm(versionName);
+    });
 }
 
 function setupBulkReportForm() {
-    try {
-        Instance.initialize();
-
-        let versionName = Instance.instance.module.config.common.defaultVersionName;
-        Instance.instance.module.report.buildBulkReportForm(versionName);
-    }
-    catch (e) {
-        Instance.exception(e);
-    }
+    execute(instance => {
+        const versionName = getDefaultVersionName(instance);
+        instance.module.getModule(ReportModule).buildBulkReportForm(versionName);
+    });
 }
 
 function authorizeTwitter() {
-    try {
-        Instance.instance.module.twitter.connector.authorize();
-    }
-    catch (e) {
-        Instance.exception(e);
-    }
+    execute(instance => instance.module.getModule(TwitterModule).connector.authorize());
 }
 
-function authCallback(request): any {
-    try {
-        return Instance.instance.module.twitter.connector.authCallback(request);
-    }
-    catch (e) {
-        Instance.exception(e);
-    }
+function authCallback(request) {
+    execute(instance => instance.module.getModule(TwitterModule).connector.authCallback(request));
 }
 
 function getGenres(): string[] {
-    try {
-        Instance.initialize();
-
-        let versionName = Instance.instance.module.config.common.defaultVersionName;
-        let genres: string[] = [];
-        let musicDatas = Instance.instance.module.musicData.getTable(versionName).datas;
-        for (var i = 0; i < musicDatas.length; i++) {
-            let genre = musicDatas[i].Genre;
-            if (genres.indexOf(genre) == -1) {
+     return execute(instance => {
+        const versionName = getDefaultVersionName(instance);
+        const genres: string[] = [];
+        const musicDatas = Instance.instance.module.getModule(MusicDataModule).getTable(versionName).datas;
+        for (const md of musicDatas) {
+            const genre = md.Genre;
+            if (genres.indexOf(genre) === -1) {
                 genres.push(genre);
             }
         }
+
         Debug.log(JSON.stringify({
             versionName: versionName,
             genres: genres,
         }));
+
         return genres;
-    }
-    catch (e) {
-        Instance.exception(e);
-    }
+    });
+}
+
+export function noticeCreatedUnitReports() {
+    execute(instance => {
+        const versionName = getDefaultVersionName(instance);
+        const notice = instance.module.getModule(NoticeModule);
+        const reportIds = notice.getQueue().dequeueCreateUnitReport(10);
+        if (reportIds.length > 0) {
+            notice.noticeCreateUnitReport(versionName, reportIds);
+        }
+    });
+}
+
+export function noticeApprovedUnitReports() {
+    execute(instance => {
+        const versionName = getDefaultVersionName(instance);
+        const notice = instance.module.getModule(NoticeModule);
+        const reportIds = notice.getQueue().dequeueApproveUnitReport(10);
+        if (reportIds.length > 0) {
+            notice.noticeApproveUnitReport(versionName, reportIds);
+        }
+    });
+}
+
+export function noticeRejectedUnitReports() {
+    execute(instance => {
+        const versionName = getDefaultVersionName(instance);
+        const notice = instance.module.getModule(NoticeModule);
+        const reportIds = notice.getQueue().dequeueRejectUnitReport(10);
+        if (reportIds.length > 0) {
+            notice.noticeRejectUnitReport(versionName, reportIds);
+        }
+    });
+}
+
+export function noticeCreatedLevelReports() {
+    execute(instance => {
+        const versionName = getDefaultVersionName(instance);
+        const notice = instance.module.getModule(NoticeModule);
+        const reportIds = notice.getQueue().dequeueCreateLevelReport(10);
+        if (reportIds.length > 0) {
+            notice.noticeCreateLevelReport(versionName, reportIds);
+        }
+    });
+}
+
+export function noticeApprovedLevelReports() {
+    execute(instance => {
+        const versionName = getDefaultVersionName(instance);
+        const notice = instance.module.getModule(NoticeModule);
+        const reportIds = notice.getQueue().dequeueApproveLevelReport(10);
+        if (reportIds.length > 0) {
+            notice.noticeApproveLevelReport(versionName, reportIds);
+        }
+    });
+}
+
+export function noticeRejectedLevelReports() {
+    execute(instance => {
+        const versionName = getDefaultVersionName(instance);
+        const notice = instance.module.getModule(NoticeModule);
+        const reportIds = notice.getQueue().dequeueRejectLevelReport(10);
+        if (reportIds.length > 0) {
+            notice.noticeRejectLevelReport(versionName, reportIds);
+        }
+    })
 }
 
 export function notifyUnverified() {
@@ -103,14 +160,6 @@ export function notifyUnverified() {
             }
         }
 
-//        if (wipReportCount > 0) {
-//            const wipListUrl = Instance.instance.module.router.getPage(InProgressListPage).getPageUrl(versionName);
-//            const message = `未承認の報告が${wipReportCount}件あります
-//[報告リストURL]
-//${wipListUrl}`;
-//            Instance.instance.module.line.notice.pushTextMessage([message]);
-//        }
-
         const bulkReports = Instance.instance.module.getModule(ReportModule).getLevelBulkReports(versionName);
         let wipBulkReportCount = 0;
         for (const bulkReport of bulkReports) {
@@ -121,26 +170,26 @@ export function notifyUnverified() {
 
         if (wipReportCount > 0 || wipBulkReportCount > 0) {
             const blocks: Block[] = [];
-            blocks.push(BlockFactory.section(
-                CompositionObjectFactory.markdownText('*[定期]未検証 件数報告*')
+            blocks.push(SlackBlockFactory.section(
+                SlackCompositionObjectFactory.markdownText('*[定期]未検証 件数報告*')
             ));
             if (wipReportCount > 0) {
                 const wipReportsUrl = Instance.instance.module.router.getPage(InProgressListPage).getPageUrl(versionName);
-                blocks.push(BlockFactory.section(
-                    CompositionObjectFactory.markdownText(`:page_with_curl:未承認の単曲検証報告が${wipReportCount}件あります
+                blocks.push(SlackBlockFactory.section(
+                    SlackCompositionObjectFactory.markdownText(`:page_with_curl:未承認の単曲検証報告が${wipReportCount}件あります
 <${wipReportsUrl}|検証報告一覧(単曲)ページへ>`)
                 ));
-                blocks.push(BlockFactory.divider());
+                blocks.push(SlackBlockFactory.divider());
             }
             if (wipBulkReportCount > 0) {
                 const wipBulkReporturl = Instance.instance.module.router.getPage(LevelBulkReportListPage).getPageUrl(versionName);
-                blocks.push(BlockFactory.section(
-                    CompositionObjectFactory.markdownText(`:page_with_curl:未承認のレベル別検証報告が${wipBulkReportCount}件あります
+                blocks.push(SlackBlockFactory.section(
+                    SlackCompositionObjectFactory.markdownText(`:page_with_curl:未承認のレベル別検証報告が${wipBulkReportCount}件あります
 <${wipBulkReporturl}|検証報告一覧(レベル別)ページへ>`)
                 ))
-                blocks.push(BlockFactory.divider());
+                blocks.push(SlackBlockFactory.divider());
             }
-            UrlFetchManager.execute([new ChatPostMessage({
+            UrlFetchManager.execute([new SlackChatPostMessageStream({
                 token: Instance.instance.module.config.global.slackApiToken,
                 channel: Instance.instance.module.config.global.slackChannelIdTable['noticeWipReportCount'],
                 text: '[定期]未承認 件数報告',

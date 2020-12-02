@@ -20,7 +20,7 @@ interface LINECommandHandler {
 
 export class LINEModule extends ReportFormModule {
     private _notice: LINEConnector;
-    public get notice(): LINEConnector {
+    public get noticeConnector(): LINEConnector {
         if (!this._notice) {
             this._notice = new LINEConnector(
                 this.config.line.channelAccessToken,
@@ -84,7 +84,7 @@ export class LINEModule extends ReportFormModule {
         let self = this;
         return {
             invoke() {
-                self.line.notice.pushTextMessage([`存在しないコマンド:${commandText}`]);
+                self.line.noticeConnector.pushTextMessage([`存在しないコマンド:${commandText}`]);
             }
         }
     }
