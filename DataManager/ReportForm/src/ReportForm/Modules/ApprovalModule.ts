@@ -71,12 +71,6 @@ export class ApprovalModule extends ReportFormModule {
             'difficulty': difficulty,
             'baseRating': baseRating.toFixed(1),
         }));
-        this.getModule(TwitterModule).postTweet(`[譜面定数 検証結果]
-楽曲名:${report.musicName}
-難易度:${difficulty}
-譜面定数:${baseRating.toFixed(1)}
-
-バージョン:${this.version.getVersionConfig(versionName).displayVersionName}`);
 
         const noticeQueue = this.getModule(NoticeModule).getQueue();
         noticeQueue.enqueueApproveUnitReport(report);
