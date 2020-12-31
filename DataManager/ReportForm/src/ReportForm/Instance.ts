@@ -36,6 +36,7 @@ export class Instance {
         }
     }
 
+    // TODO: ここが気になる. DI-Containerを実装する
     private _module: ReportFormModule = null;
     public get module(): ReportFormModule { return this._module; }
 

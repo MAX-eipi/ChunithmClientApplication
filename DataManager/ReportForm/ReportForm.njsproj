@@ -210,6 +210,9 @@
     <TypeScriptCompile Include="src\ReportForm\LineCommand\TargetLevelMusicCountGetCommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Logger\SlackLogger.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Modules\ApprovalModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

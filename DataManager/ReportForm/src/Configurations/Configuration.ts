@@ -1,5 +1,7 @@
 import { Role } from "../ReportForm/Role";
 
+// TODO: mv /ReportForm
+
 export interface Configuration {
     hasProperty(key: string): boolean;
     getProperty<T>(key: string, defaultValue: T): T;
