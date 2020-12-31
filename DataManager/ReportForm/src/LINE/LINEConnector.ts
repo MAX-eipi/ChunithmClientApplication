@@ -1,3 +1,5 @@
+// TODO: 消す
+
 export class LINEConnector {
     private channelAccessToken: string;
     private noticeTargetIds: string[];
