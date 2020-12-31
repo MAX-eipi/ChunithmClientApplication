@@ -9,7 +9,7 @@ import { LoggerDI } from "./Dependencies/Logger";
 import { PageDI } from "./Dependencies/Page";
 import { PostCommandDI } from "./Dependencies/PostCommand";
 import { ReportFormModule } from "./Modules/@ReportFormModule";
-import { WebhookSettingsManager } from "./Modules/WebhookModule";
+import { WebhookSettingsManager, WebhookModule } from "./Modules/WebhookModule";
 
 export class Instance {
     private static _instance: Instance = null;
@@ -47,7 +47,7 @@ export class Instance {
         LINECommandDI.setCommandFactories(this._module);
         PostCommandDI.setCommandFactories(this._module);
 
-        this.module.webhook.settingsManager = WebhookSettingsManager.readBySheet(
+        this.module.getModule(WebhookModule).settingsManager = WebhookSettingsManager.readBySheet(
             this.module.config.getScriptProperty(ConfigurationScriptProperty.CONFIG_SHEET_ID),
             ConfigurationSpreadsheet.WEBHOOK_SETTINGS_SHEET_NAME);
     }

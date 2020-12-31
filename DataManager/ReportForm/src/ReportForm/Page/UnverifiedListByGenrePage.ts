@@ -3,6 +3,9 @@ import { MusicData } from "../../MusicDataTable/MusicData";
 import { Utility } from "../Utility";
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { TopPage } from "./TopPage";
+import { VersionModule } from "../Modules/VersionModule";
+import { MusicDataModule } from "../Modules/MusicDataModule";
+import { Router } from "../Modules/Router";
 
 interface UnverifiedListByGenrePageParameter extends ReportFormPageParameter {
     send: string;
@@ -51,6 +54,10 @@ export class UnverifiedListByGenrePage extends ReportFormPage {
 
     public static readonly PAGE_NAME = "unverified_list_genre";
 
+    private get router(): Router { return this.module.getModule(Router); }
+    private get versionModule(): VersionModule { return this.module.getModule(VersionModule); }
+    private get musicDataModule(): MusicDataModule { return this.module.getModule(MusicDataModule); }
+
     public get pageName(): string {
         return UnverifiedListByGenrePage.PAGE_NAME;
     }
@@ -58,16 +65,16 @@ export class UnverifiedListByGenrePage extends ReportFormPage {
     public call(parameter: UnverifiedListByGenrePageParameter): GoogleAppsScript.HTML.HtmlOutput {
         var source = this.readMainHtml();
 
-        source = this.module.router.bindRoot(source);
+        source = this.router.bindRoot(source);
         source = this.bind(TopPage, parameter, source);
         source = this.resolveVersionName(source, parameter.versionName);
 
         let filter = new Filter(parameter);
-        let genres = this.module.version.getVersionConfig(parameter.versionName).genres;
+        let genres = this.versionModule.getVersionConfig(parameter.versionName).genres;
         source = source.replace(/%difficulty_select_list%/g, this.getDifficultySelectListHtml(filter));
         source = source.replace(/%genre_select_list%/g, this.getGenreSelectListHtml(filter, genres));
         if (parameter.send) {
-            let musicDatas = this.module.musicData.getTable(parameter.versionName).datas;
+            let musicDatas = this.musicDataModule.getTable(parameter.versionName).datas;
             let listItemDatas = this.getUnverifiedMusicDatas(musicDatas);
             source = source.replace(/%list%/g, this.getListHtml(filter, genres, listItemDatas));
         }

@@ -17,6 +17,7 @@ import { LevelBulkReportListPage } from "./Page/LevelBulkReportListPage";
 import { BulkReportTableReader } from "./Report/BulkReport/BulkReportTableReader";
 import { BulkReportTableWriter } from "./Report/BulkReport/BulkReportTableWriter";
 import { ReportStatus } from "./Report/ReportStatus";
+import { Router } from "./Modules/Router";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {
     const ret = ConfigurationEditor.store();
@@ -174,7 +175,7 @@ export function notifyUnverified() {
                 SlackCompositionObjectFactory.markdownText('*[定期]未検証 件数報告*')
             ));
             if (wipReportCount > 0) {
-                const wipReportsUrl = Instance.instance.module.router.getPage(InProgressListPage).getPageUrl(versionName);
+                const wipReportsUrl = Instance.instance.module.getModule(Router).getPage(InProgressListPage).getPageUrl(versionName);
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`:page_with_curl:未承認の単曲検証報告が${wipReportCount}件あります
 <${wipReportsUrl}|検証報告一覧(単曲)ページへ>`)
@@ -182,7 +183,7 @@ export function notifyUnverified() {
                 blocks.push(SlackBlockFactory.divider());
             }
             if (wipBulkReportCount > 0) {
-                const wipBulkReporturl = Instance.instance.module.router.getPage(LevelBulkReportListPage).getPageUrl(versionName);
+                const wipBulkReporturl = Instance.instance.module.getModule(Router).getPage(LevelBulkReportListPage).getPageUrl(versionName);
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`:page_with_curl:未承認のレベル別検証報告が${wipBulkReportCount}件あります
 <${wipBulkReporturl}|検証報告一覧(レベル別)ページへ>`)

@@ -15,10 +15,11 @@ import { TestCommand } from "../LINECommand/TestCommand";
 import { TopUrlGetCommand } from "../LINECommand/TopUrlGetCommand";
 import { VersionGetCommand } from "../LINECommand/VersionGetCommand";
 import { ReportFormModule } from "../Modules/@ReportFormModule";
+import { LINEModule } from "../Modules/LINEModule";
 
 export class LINECommandDI {
     public static setCommandFactories(module: ReportFormModule): void {
-        module.line.setCommandFactories([
+        module.getModule(LINEModule).setCommandFactories([
             BulkReportFormBuildCommand,
             BulkReportFormUrlGetCommand,
             DefaultGameVersionGetCommand,

@@ -9,10 +9,11 @@ import { UnverifiedListByGenrePage } from "../Page/UnverifiedListByGenrePage";
 import { UnverifiedListByLevelPage } from "../Page/UnverifiedListByLevelPage";
 import { LevelBulkApprovalPage } from "../Page/LevelBulkApprovalPage";
 import { LevelBulkReportListPage } from "../Page/LevelBulkReportListPage";
+import { Router } from "../Modules/Router";
 
 export class PageDI {
     public static setPageFactories(module: ReportFormModule): void {
-        module.router.setPageFactories(
+        module.getModule(Router).setPageFactories(
             ErrorPage,
             [
                 ErrorPage,

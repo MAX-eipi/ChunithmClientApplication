@@ -7,18 +7,21 @@ import { ReportFormPageParameter, ReportFormPage } from "./@ReportFormPage";
 import { getAppVersion } from "../../@app";
 import { LevelBulkApprovalPage } from "./LevelBulkApprovalPage";
 import { LevelBulkReportListPage } from "./LevelBulkReportListPage";
+import { VersionModule } from "../Modules/VersionModule";
 
 interface TopPageParameter extends ReportFormPageParameter { }
 
 export class TopPage extends ReportFormPage {
     public static readonly PAGE_NAME: string = "top";
 
+    private get versionModule(): VersionModule { return this.module.getModule(VersionModule); }
+
     public get pageName(): string {
         return TopPage.PAGE_NAME;
     }
 
     public call(parameter: TopPageParameter): GoogleAppsScript.HTML.HtmlOutput {
-        let versionText = this.module.version.getVersionConfig(parameter.versionName).displayVersionName;
+        let versionText = this.versionModule.getVersionConfig(parameter.versionName).displayVersionName;
 
         var source = this.readMainHtml();
 

@@ -1,4 +1,5 @@
 import { LINECommand } from "./@LINECommand";
+import { ReportModule } from "../Modules/Report/ReportModule";
 
 export class FormUrlGetCommand extends LINECommand {
     public called(command: string): boolean {
@@ -6,7 +7,7 @@ export class FormUrlGetCommand extends LINECommand {
     }
 
     public invoke(command: string, event: any, postData: any): void {
-        let url = this.module.report.reportGoogleForm.getPublishedUrl();
+        let url = this.module.getModule(ReportModule).reportGoogleForm.getPublishedUrl();
         this.replyMessage(event.replyToken, [`[検証報告フォーム]\n${url}`]);
     }
 }

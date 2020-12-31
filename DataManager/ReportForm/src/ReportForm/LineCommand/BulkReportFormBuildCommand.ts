@@ -1,4 +1,5 @@
 import { LINECommand } from "./@LINECommand";
+import { ReportModule } from "../Modules/Report/ReportModule";
 
 export class BulkReportFormBuildCommand extends LINECommand {
     public called(command: string): boolean {
@@ -11,9 +12,9 @@ export class BulkReportFormBuildCommand extends LINECommand {
             versionName = this.module.config.common.defaultVersionName;
         }
         this.replyMessage(event.replyToken, [`一括報告フォームを構築します:${versionName}`]);
-        this.module.report.buildBulkReportForm(versionName);
+        this.module.getModule(ReportModule).buildBulkReportForm(versionName);
 
-        let url = this.module.report.levelBulkReportGoogleForm.getPublishedUrl();
+        let url = this.module.getModule(ReportModule).levelBulkReportGoogleForm.getPublishedUrl();
         this.pushMessage([`一括報告フォームの構築が完了しました
 URL: ${url}`]);
     }

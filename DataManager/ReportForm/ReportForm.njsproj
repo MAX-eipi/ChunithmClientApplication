@@ -80,6 +80,7 @@
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
     <Folder Include="src\Cache\" />
+    <Folder Include="src\Logger\" />
     <Folder Include="src\ReportForm\Modules\Notice\" />
     <Folder Include="src\Slack\API\Chat\" />
     <Folder Include="src\Slack\API\Chat\PostMessage\" />

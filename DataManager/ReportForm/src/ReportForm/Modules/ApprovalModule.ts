@@ -8,8 +8,11 @@ import { ReportStatus } from "../Report/ReportStatus";
 import { Utility } from "../Utility";
 import { ReportFormModule } from "./@ReportFormModule";
 import { ChunirecModule } from "./ChunirecModule";
-import { TwitterModule } from "./TwitterModule";
 import { NoticeModule } from "./Notice/NoticeModule";
+import { WebhookModule } from "./WebhookModule";
+import { VersionModule } from "./VersionModule";
+import { MusicDataModule } from "./MusicDataModule";
+import { ReportModule } from "./Report/ReportModule";
 
 export class ApprovalError implements Error {
     public name: string = "ApprovalError";
@@ -24,13 +27,22 @@ export class ApprovalError implements Error {
 }
 
 export class ApprovalModule extends ReportFormModule {
+    public static readonly moduleName = "approval";
+
+    private get musicDataModule(): MusicDataModule { return this.getModule(MusicDataModule); }
+    private get versionModule(): VersionModule { return this.getModule(VersionModule); }
+    private get noticeModule(): NoticeModule { return this.getModule(NoticeModule); }
+    private get reportModule(): ReportModule { return this.getModule(ReportModule); }
+    private get chunirecModule(): ChunirecModule { return this.getModule(ChunirecModule); }
+    private get webhookModule(): WebhookModule { return this.getModule(WebhookModule); }
+
     public approve(versionName: string, reportId: number) {
-        const report = this.report.getReport(versionName, reportId);
+        const report = this.reportModule.getReport(versionName, reportId);
         if (!report) {
             throw new ApprovalError(`検証報告取得の失敗. ID:${reportId}`);
         }
 
-        let musicDataTable = this.musicData.getTable(versionName);
+        let musicDataTable = this.musicDataModule.getTable(versionName);
         let targetMusicData = musicDataTable.getMusicDataById(report.musicId);
         if (!targetMusicData) {
             throw new ApprovalError(`楽曲情報取得の失敗. 楽曲名:${report.musicName}`);
@@ -57,11 +69,11 @@ export class ApprovalModule extends ReportFormModule {
                 break;
         }
 
-        this.musicData.updateMusicData(versionName, [targetMusicData]);
-        this.report.approve(versionName, reportId);
+        this.musicDataModule.updateMusicData(versionName, [targetMusicData]);
+        this.reportModule.approve(versionName, reportId);
 
         this.requestChunirecUpdateMusics([report]);
-        this.webhook.invoke(WebhookEventName.ON_APPROVE);
+        this.webhookModule.invoke(WebhookEventName.ON_APPROVE);
 
         const difficulty = Utility.toDifficultyText(report.difficulty);
         Debug.log(JSON.stringify({
@@ -72,17 +84,17 @@ export class ApprovalModule extends ReportFormModule {
             'baseRating': baseRating.toFixed(1),
         }));
 
-        const noticeQueue = this.getModule(NoticeModule).getQueue();
+        const noticeQueue = this.noticeModule.getQueue();
         noticeQueue.enqueueApproveUnitReport(report);
         noticeQueue.save();
     }
 
     public reject(versionName: string, reportId: number): void {
-        const report = this.report.getReport(versionName, reportId);
+        const report = this.reportModule.getReport(versionName, reportId);
         if (!report) {
             throw new ApprovalError(`検証報告取得の失敗. ID:${reportId}`);
         }
-        this.report.reject(versionName, reportId);
+        this.reportModule.reject(versionName, reportId);
 
         let musicName = report.musicName;
         let difficulty = Utility.toDifficultyText(report.difficulty);
@@ -96,20 +108,20 @@ export class ApprovalModule extends ReportFormModule {
             'baseRating': baseRating.toFixed(1),
         }));
 
-        const noticeQueue = this.getModule(NoticeModule).getQueue();
+        const noticeQueue = this.noticeModule.getQueue();
         noticeQueue.enqueueRejectUnitReport(report);
         noticeQueue.save();
     }
 
     public approveGroup(versionName: string, reportGroupId: string): void {
-        const reportGroup = this.report
+        const reportGroup = this.reportModule
             .getMusicDataReportGroupContainer(versionName)
             .getMusicDataReportGroup(reportGroupId);
         if (!reportGroup) {
             throw new ApprovalError(`報告グループ取得の失敗. ID:${reportGroupId}`);
         }
 
-        const musicDataTable = this.musicData.getTable(versionName);
+        const musicDataTable = this.musicDataModule.getTable(versionName);
         const targetMusicDatas: MusicData[] = [];
         const approvedReports: IReport[] = [];
         for (const rep of reportGroup.getMusicDataReports()) {
@@ -144,10 +156,10 @@ export class ApprovalModule extends ReportFormModule {
             targetMusicDatas.push(targetMusicData);
         }
 
-        this.musicData.updateMusicData(versionName, targetMusicDatas);
-        this.report.approveGroup(versionName, approvedReports.map(r => r.reportId));
+        this.musicDataModule.updateMusicData(versionName, targetMusicDatas);
+        this.reportModule.approveGroup(versionName, approvedReports.map(r => r.reportId));
 
-        const versionText = this.version.getVersionConfig(versionName).displayVersionName;
+        const versionText = this.versionModule.getVersionConfig(versionName).displayVersionName;
         for (const report of approvedReports) {
             const difficulty = Utility.toDifficultyText(report.difficulty);
             const baseRating = report.calcBaseRating();
@@ -160,14 +172,14 @@ export class ApprovalModule extends ReportFormModule {
                 'baseRating': baseRating.toFixed(1),
             }));
 
-            this.getModule(NoticeModule).getQueue().enqueueApproveUnitReport(report);
+            this.noticeModule.getQueue().enqueueApproveUnitReport(report);
         }
 
         this.requestChunirecUpdateMusics(approvedReports);
-        this.getModule(NoticeModule).getQueue().save();
-        this.webhook.invoke(WebhookEventName.ON_APPROVE);
+        this.noticeModule.getQueue().save();
+        this.webhookModule.invoke(WebhookEventName.ON_APPROVE);
 
-        this.report.noticeReportPost(`検証報告グループが一括承認されました
+        this.reportModule.noticeReportPost(`検証報告グループが一括承認されました
 グループID: ${reportGroupId}`);
     }
 
@@ -183,19 +195,19 @@ export class ApprovalModule extends ReportFormModule {
                 baseRating: report.calcBaseRating(),
             });
         }
-        return this.getModule(ChunirecModule).requestUpdateMusics(params);
+        return this.chunirecModule.requestUpdateMusics(params);
     }
 
     // Lv.1-6用
     public bulkApprove(versionName: string, bulkReportId: number): void {
-        const bulkReport = this.report.getLevelBulkReportSheet(versionName).getBulkReport(bulkReportId);
+        const bulkReport = this.reportModule.getLevelBulkReportSheet(versionName).getBulkReport(bulkReportId);
         if (!bulkReport) {
             throw new ApprovalError(`一括検証報告取得の失敗. ID:${bulkReportId}`);
         }
 
         const targetLevelList = [bulkReport.targetLevel];
 
-        const musicDataTable = this.musicData.getTable(versionName);
+        const musicDataTable = this.musicDataModule.getTable(versionName);
         const targetMusicDatas: MusicData[] = [];
         for (const data of musicDataTable.datas) {
             let update: MusicData = null;
@@ -213,34 +225,35 @@ export class ApprovalModule extends ReportFormModule {
             }
         }
 
-        this.musicData.updateMusicData(versionName, targetMusicDatas);
-        this.report.approveLevelBulkReport(versionName, bulkReportId);
+        this.musicDataModule.updateMusicData(versionName, targetMusicDatas);
+        this.reportModule.approveLevelBulkReport(versionName, bulkReportId);
 
         Debug.log(JSON.stringify({
             header: '一括承認',
             targetLevel: bulkReport.targetLevel,
         }));
 
-        this.getModule(NoticeModule).getQueue().enqueueApproveLevelReport(bulkReport);
-        this.getModule(NoticeModule).getQueue().save();
+        this.noticeModule.getQueue().enqueueApproveLevelReport(bulkReport);
+        this.noticeModule.getQueue().save();
 
-        this.webhook.invoke(WebhookEventName.ON_APPROVE);
+        this.webhookModule.invoke(WebhookEventName.ON_APPROVE);
     }
 
     public bulkReject(versionName: string, bulkReportId: number): void {
-        const bulkReport = this.report.getLevelBulkReportSheet(versionName).getBulkReport(bulkReportId);
+        const bulkReport = this.reportModule.getLevelBulkReportSheet(versionName).getBulkReport(bulkReportId);
         if (!bulkReport) {
             throw new ApprovalError(`一括検証報告取得の失敗. ID:${bulkReportId}`);
         }
 
-        this.report.rejectLevelBulkReport(versionName, bulkReportId);
+        this.reportModule.rejectLevelBulkReport(versionName, bulkReportId);
 
         Debug.log(JSON.stringify({
             header: '一括却下',
             targetLevel: bulkReport.targetLevel,
         }));
 
-        this.getModule(NoticeModule).getQueue().enqueueRejectLevelReport(bulkReport);
-        this.getModule(NoticeModule).getQueue().save();
+        this.noticeModule.getQueue().enqueueRejectLevelReport(bulkReport);
+        this.noticeModule.getQueue().save();
     }
+
 }
