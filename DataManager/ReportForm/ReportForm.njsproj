@@ -80,7 +80,6 @@
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
     <Folder Include="src\Cache\" />
-    <Folder Include="src\Logger\" />
     <Folder Include="src\ReportForm\Modules\Notice\" />
     <Folder Include="src\Slack\API\Chat\" />
     <Folder Include="src\Slack\API\Chat\PostMessage\" />
@@ -384,8 +383,8 @@
     <TypeScriptCompile Include="src\Twitter\TwitterConnector.ts" />
     <TypeScriptCompile Include="src\ReportForm\Approval.ts" />
     <TypeScriptCompile Include="src\Configurations\Configuration.ts" />
-    <TypeScriptCompile Include="src\ReportForm\events.ts" />
-    <TypeScriptCompile Include="src\ReportForm\operations.ts" />
+    <TypeScriptCompile Include="src\%40events.ts" />
+    <TypeScriptCompile Include="src\%40operations.ts" />
     <TypeScriptCompile Include="src\ReportForm\PostCommand\%40PostCommand.ts" />
     <TypeScriptCompile Include="src\ReportForm\PostCommand\TableGetCommand.ts" />
     <TypeScriptCompile Include="src\ReportForm\PostCommand\TableUpadateCommand.ts" />

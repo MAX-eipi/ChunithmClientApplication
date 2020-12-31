@@ -1,7 +1,4 @@
 import { ReportFormConfiguration } from "../Configurations/@ReportFormConfiguration";
-import { MusicDataModule } from "./MusicDataModule";
-import { ReportModule } from "./Report/ReportModule";
-import { Router } from "./Router";
 
 export class ReportFormModule {
     public static instantiate(config: ReportFormConfiguration): ReportFormModule {

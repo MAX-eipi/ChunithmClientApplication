@@ -5,12 +5,12 @@ import { NoticeModule } from "./Modules/Notice/NoticeModule";
 import { PostCommandModule } from "./Modules/PostCommandModule";
 import { ReportModule } from "./Modules/Report/ReportModule";
 import { Router } from "./Modules/Router";
-import { storeConfig } from "./operations";
 import { GoogleFormReport } from "./Report/GoogleFormReport";
 import { GoogleFormLevelBulkReport } from "./Report/LevelBulkReport/GoogleFormLevelBulkReport";
 import { ReportStatus } from "./Report/ReportStatus";
 import { PostLocation } from "./Report/ReportStorage";
 import { Utility } from "./Utility";
+import { storeConfig } from "../@operations";
 
 export class ReportForm {
     public static doGet(e: any): any {
