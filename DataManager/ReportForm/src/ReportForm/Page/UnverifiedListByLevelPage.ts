@@ -4,6 +4,8 @@ import { Utility } from "../Utility";
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { TopPage } from "./TopPage";
 import { ListItemMusicData } from "./UnverifiedListByGenrePage";
+import { MusicDataModule } from "../Modules/MusicDataModule";
+import { Router } from "../Modules/Router";
 
 let levelTexts = [
     '1', '2', '3', '4', '5', '6', '7', '7p', '8', '8p', '9', '9p', '10', '10p', '11', '11p', '12', '12p', '13', '13p', '14',
@@ -40,13 +42,18 @@ function enabledLevel(parameter: UnverifiedListByLevelPageParameter, levelText: 
 
 export class UnverifiedListByLevelPage extends ReportFormPage {
     public static readonly PAGE_NAME: string = "unverified_list_level";
+
+    private get router(): Router { return this.module.getModule(Router); }
+    private get musicDataModule(): MusicDataModule { return this.module.getModule(MusicDataModule); }
+
     public get pageName(): string {
         return UnverifiedListByLevelPage.PAGE_NAME;
     }
+
     public call(parameter: UnverifiedListByLevelPageParameter): GoogleAppsScript.HTML.HtmlOutput {
         var source = this.readMainHtml();
 
-        source = this.module.router.bindRoot(source);
+        source = this.router.bindRoot(source);
         source = this.bind(TopPage, parameter, source);
 
         source = this.resolveVersionName(source, parameter.versionName);
@@ -145,7 +152,7 @@ export class UnverifiedListByLevelPage extends ReportFormPage {
     }
 
     private getUnverifiedMusicDatas(versionName: string): ListItemMusicData[] {
-        let musicDatas = this.module.musicData.getTable(versionName).datas;
+        let musicDatas = this.musicDataModule.getTable(versionName).datas;
         let unverifiedMusicDatas: ListItemMusicData[] = new Array();
         let difficulties = [
             Difficulty.Basic,

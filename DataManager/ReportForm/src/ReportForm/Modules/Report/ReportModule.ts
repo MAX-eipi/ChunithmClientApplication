@@ -16,9 +16,16 @@ import { BulkReportTableReader } from "../../Report/BulkReport/BulkReportTableRe
 import { Difficulty } from "../../../MusicDataTable/Difficulty";
 import { IMusicDataReport } from "../../Report/IMusicDataReport";
 import { BulkReportTableContainer } from "../../Report/BulkReport/BulkReportTableContainer";
+import { LINEModule } from "../LINEModule";
+import { VersionModule } from "../VersionModule";
 
 export class ReportModule extends ReportFormModule {
     public static readonly moduleName = 'report';
+
+    private get lineModule(): LINEModule { return this.getModule(LINEModule); }
+    private get musicDataModule(): MusicDataModule { return this.getModule(MusicDataModule); }
+    private get versionModule(): VersionModule { return this.getModule(VersionModule); }
+    private get reportModule(): ReportModule { return this.getModule(ReportModule); }
 
     private readonly _reportGoogleForm = new ReportGoogleForm(this);
     private readonly _levelBulkReportGoogleForm = new LevelBulkReportGoogleForm(this);
@@ -34,7 +41,7 @@ export class ReportModule extends ReportFormModule {
 
     public noticeReportPost(message: string): void {
         if (this.config.line.reportPostNoticeEnabled) {
-            this.line.noticeConnector.pushTextMessage([message]);
+            this.lineModule.noticeConnector.pushTextMessage([message]);
         }
     }
 
@@ -44,9 +51,9 @@ export class ReportModule extends ReportFormModule {
             return this._reportStorage[versionName];
         }
         this._reportStorage[versionName] = new ReportStorage(
-            this.musicData.getTable(versionName),
-            this.version.getVersionConfig(versionName).reportSpreadsheetId,
-            this.version.getVersionConfig(versionName).reportWorksheetName);
+            this.musicDataModule.getTable(versionName),
+            this.versionModule.getVersionConfig(versionName).reportSpreadsheetId,
+            this.versionModule.getVersionConfig(versionName).reportWorksheetName);
         return this._reportStorage[versionName];
     }
 
@@ -64,7 +71,7 @@ export class ReportModule extends ReportFormModule {
             return this._musicDataReportGroupContainer[versionName];
         }
 
-        const versionConfig = this.version.getVersionConfig(versionName);
+        const versionConfig = this.versionModule.getVersionConfig(versionName);
         const sheet = SpreadsheetApp
             .openById(versionConfig.reportSpreadsheetId)
             .getSheetByName(versionConfig.reportGroupWorksheetName);
@@ -80,9 +87,9 @@ export class ReportModule extends ReportFormModule {
             return this._levelBulkReportSheetMap[versionName];
         }
         this._levelBulkReportSheetMap[versionName] = new LevelBulkReportSheet(
-            this.musicData.getTable(versionName),
-            this.version.getVersionConfig(versionName).reportSpreadsheetId,
-            this.version.getVersionConfig(versionName).bulkReportWorksheetName);
+            this.musicDataModule.getTable(versionName),
+            this.versionModule.getVersionConfig(versionName).reportSpreadsheetId,
+            this.versionModule.getVersionConfig(versionName).bulkReportWorksheetName);
         return this._levelBulkReportSheetMap[versionName];
     }
 
@@ -130,7 +137,7 @@ export class ReportModule extends ReportFormModule {
 
     public getBulkReportTableContainer(versionName: string): BulkReportTableContainer {
         const reader = new BulkReportTableReader();
-        const spreadsheetId = this.version.getVersionConfig(versionName).bulkReportSpreadsheetId;
+        const spreadsheetId = this.versionModule.getVersionConfig(versionName).bulkReportSpreadsheetId;
         const container = reader.read(spreadsheetId);
         return container;
     }
@@ -142,7 +149,7 @@ export class ReportModule extends ReportFormModule {
                 if (!row.isValid()) {
                     continue;
                 }
-                const musicData = this.musicData.getTable(versionName).getMusicDataById(row.musicId);
+                const musicData = this.musicDataModule.getTable(versionName).getMusicDataById(row.musicId);
                 if (musicData.getVerified(row.difficulty)) {
                     continue;
                 }
@@ -156,7 +163,7 @@ export class ReportModule extends ReportFormModule {
     }
 
     public insertReport(versionName: string, formReport: GoogleFormReport): IReport {
-        const table = this.getModule(MusicDataModule).getTable(versionName);
+        const table = this.musicDataModule.getTable(versionName);
 
         const targetMusicData = table.getMusicDataByName(formReport.musicName);
         if (!targetMusicData) {
@@ -182,7 +189,7 @@ ${JSON.stringify(formReport)}`);
         }
 
         formReport.setMusicData(table);
-        const storage = this.getModule(ReportModule).getReportStorage(versionName);
+        const storage = this.reportModule.getReportStorage(versionName);
         const report = storage.push(formReport, PostLocation.GoogleForm, formReport.imagePaths);
         storage.write();
         return report;
@@ -199,7 +206,7 @@ ${JSON.stringify(formReport)}`);
     }
 
     public insertLevelBulkReport(versionName: string, formReport: GoogleFormLevelBulkReport): LevelBulkReport {
-        const table = this.musicData.getTable(versionName);
+        const table = this.musicDataModule.getTable(versionName);
         const bulkReportSheet = this.getLevelBulkReportSheet(versionName);
 
         const musicCount = table.getTargetLevelMusicCount(formReport.targetLevel);
@@ -217,7 +224,7 @@ OP理論値:${maxOp}
 OP実測値:${formReport.op}
 OP割合[万分率]:${opRatio100Fold}
 実測値と理論値の比率[万分率]:${calcOpRatio100Fold}`;
-            this.line.noticeConnector.pushTextMessage([message]);
+            this.lineModule.noticeConnector.pushTextMessage([message]);
             Debug.logError(message);
             return null;
         }
@@ -229,7 +236,7 @@ OP理論値:${maxOp}
 OP実測値:${formReport.op}
 OP割合[万分率]:${opRatio100Fold}
 実測値と理論値の比率[万分率]:${calcOpRatio100Fold}`;
-            this.line.noticeConnector.pushTextMessage([message]);
+            this.lineModule.noticeConnector.pushTextMessage([message]);
             Debug.logError(message);
             return null;
         }

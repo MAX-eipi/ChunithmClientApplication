@@ -1,4 +1,5 @@
 import { LINECommand } from "./@LINECommand";
+import { MusicDataModule } from "../Modules/MusicDataModule";
 
 export class TargetLevelMusicCountGetCommand extends LINECommand {
     public called(command: string): boolean {
@@ -11,7 +12,7 @@ export class TargetLevelMusicCountGetCommand extends LINECommand {
             return;
         }
         let versionName = this.module.config.common.defaultVersionName;
-        let table = this.module.musicData.getTable(versionName);
+        let table = this.module.getModule(MusicDataModule).getTable(versionName);
         let musicCount = table.getTargetLevelMusicCount(targetLevel);
         this.replyMessage(event.replyToken, [`対象レベル:${targetLevel}
 楽曲数:${musicCount}`]);

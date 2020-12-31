@@ -1,4 +1,5 @@
 import { ReportFormModule } from "../Modules/@ReportFormModule";
+import { LINEModule } from "../Modules/LINEModule";
 
 export abstract class LINECommand {
     private _module: ReportFormModule;
@@ -14,10 +15,10 @@ export abstract class LINECommand {
     public abstract invoke(command: string, event: any, postData: any): void;
 
     protected pushMessage(messages: string[]): void {
-        this.module.line.noticeConnector.pushTextMessage(messages);
+        this.module.getModule(LINEModule).noticeConnector.pushTextMessage(messages);
     }
 
     protected replyMessage(replyToken: string, messages: string[]): void {
-        this.module.line.noticeConnector.replyTextMessage(replyToken, messages);
+        this.module.getModule(LINEModule).noticeConnector.replyTextMessage(replyToken, messages);
     }
 }

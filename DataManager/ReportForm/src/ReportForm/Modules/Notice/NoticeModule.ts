@@ -15,9 +15,17 @@ import { ReportFormModule } from "../@ReportFormModule";
 import { TwitterModule } from "../TwitterModule";
 import { NoticeQueue } from "./NoticeQueue";
 import { CacheServiceProvider } from "../../../Cache/CacheServiceProvider";
+import { VersionModule } from "../VersionModule";
+import { ReportModule } from "../Report/ReportModule";
+import { Router } from "../Router";
 
 export class NoticeModule extends ReportFormModule {
     public static readonly moduleName = 'notice';
+
+    private get router(): Router { return this.getModule(Router); }
+    private get reportModule(): ReportModule { return this.getModule(ReportModule); }
+    private get twitterModule(): TwitterModule { return this.getModule(TwitterModule); }
+    private get versionModule(): VersionModule { return this.getModule(VersionModule); }
 
     private _queue: NoticeQueue;
     public getQueue(): NoticeQueue {
@@ -34,7 +42,7 @@ export class NoticeModule extends ReportFormModule {
         const reports: IReport[] = [];
         const missingReportIds: number[] = [];
         for (const id of reportIds) {
-            const r = this.report.getReport(versionName, id);
+            const r = this.reportModule.getReport(versionName, id);
             if (r) {
                 reports.push(r);
             }
@@ -86,7 +94,7 @@ export class NoticeModule extends ReportFormModule {
                     text: `[単曲検証報告]
 楽曲名:${r.musicName}
 難易度:${Utility.toDifficultyText(r.difficulty)}
-URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId)}`
+URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId)}`
                 };
                 for (const target of this.config.global.lineNoticeTargetIdList) {
                     streams.push(new LINEMessagePushStream({
@@ -114,7 +122,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
         const reports: IReport[] = [];
         const missingReportIds: number[] = [];
         for (const id of reportIds) {
-            const r = this.report.getReport(versionName, id);
+            const r = this.reportModule.getReport(versionName, id);
             if (r) {
                 reports.push(r);
             }
@@ -129,12 +137,12 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
         // twitter
         if (this.config.twitter.postTweetEnabled) {
             for (const r of reports) {
-                this.getModule(TwitterModule).postTweet(`[譜面定数 検証結果]
+                this.twitterModule.postTweet(`[譜面定数 検証結果]
 楽曲名:${r.musicName}
 難易度:${Utility.toDifficultyText(r.difficulty)}
 譜面定数:${r.calcBaseRating().toFixed(1)}
 
-バージョン:${this.version.getVersionConfig(versionName).displayVersionName}`);
+バージョン:${this.versionModule.getVersionConfig(versionName).displayVersionName}`);
             }
         }
 
@@ -205,7 +213,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
 楽曲名:${r.musicName}
 難易度:${Utility.toDifficultyText(r.difficulty)}
 譜面定数:${r.calcBaseRating().toFixed(1)}
-URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId)}`
+URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId)}`
                 };
                 for (const target of this.config.global.lineNoticeTargetIdList) {
                     streams.push(new LINEMessagePushStream({
@@ -233,7 +241,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
         const reports: IReport[] = [];
         const missingReportIds: number[] = [];
         for (const id of reportIds) {
-            const r = this.report.getReport(versionName, id);
+            const r = this.reportModule.getReport(versionName, id);
             if (r) {
                 reports.push(r);
             }
@@ -285,7 +293,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
                     text: `✖️[検証結果 却下]✖️
 楽曲名:${r.musicName}
 難易度:${Utility.toDifficultyText(r.difficulty)}
-URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId)}`
+URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId)}`
                 };
                 for (const target of this.config.global.lineNoticeTargetIdList) {
                     streams.push(new LINEMessagePushStream({
@@ -345,7 +353,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
         const reports: LevelBulkReport[] = [];
         const missingReportIds: number[] = [];
         for (const id of reportIds) {
-            const r = this.report.getLevelBulkReportSheet(versionName).getBulkReport(id);
+            const r = this.reportModule.getLevelBulkReportSheet(versionName).getBulkReport(id);
             if (r) {
                 reports.push(r);
             }
@@ -423,7 +431,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
         const reports: LevelBulkReport[] = [];
         const missingReportIds: number[] = [];
         for (const id of reportIds) {
-            const r = this.report.getLevelBulkReportSheet(versionName).getBulkReport(id);
+            const r = this.reportModule.getLevelBulkReportSheet(versionName).getBulkReport(id);
             if (r) {
                 reports.push(r);
             }
@@ -528,7 +536,7 @@ URL:${this.module.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.r
         const reports: LevelBulkReport[] = [];
         const missingReportIds: number[] = [];
         for (const id of reportIds) {
-            const r = this.report.getLevelBulkReportSheet(versionName).getBulkReport(id);
+            const r = this.reportModule.getLevelBulkReportSheet(versionName).getBulkReport(id);
             if (r) {
                 reports.push(r);
             }

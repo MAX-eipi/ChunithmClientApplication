@@ -5,11 +5,14 @@ import { GroupApprovalPage } from "./GroupApprovalPage";
 import { TopPage } from "./TopPage";
 import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { Utility } from "../Utility";
+import { ReportModule } from "../Modules/Report/ReportModule";
 
 interface ReportGroupListPageParameter extends ReportFormPageParameter { }
 
 export class ReportGroupListPage extends ReportFormPage {
     public static readonly PAGE_NAME = "report_group_list";
+
+    private get reportModule(): ReportModule { return this.module.getModule(ReportModule); }
 
     public get pageName(): string {
         return ReportGroupListPage.PAGE_NAME;
@@ -20,7 +23,7 @@ export class ReportGroupListPage extends ReportFormPage {
     }
 
     public call(parameter: ReportGroupListPageParameter): GoogleAppsScript.HTML.HtmlOutput {
-        const reportGroups = this.module.report.getMusicDataReportGroupContainer(parameter.versionName).musicDataReportGroups;
+        const reportGroups = this.reportModule.getMusicDataReportGroupContainer(parameter.versionName).musicDataReportGroups;
         const listHtml = this.getListHtml(reportGroups);
 
         let source = this.readMainHtml();

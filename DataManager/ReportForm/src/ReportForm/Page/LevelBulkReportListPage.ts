@@ -6,12 +6,15 @@ import { ReportStatus } from "../Report/ReportStatus";
 import { Utility } from "../Utility";
 import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { LevelBulkReport } from "../Report/LevelBulkReport/LevelBulkReport";
+import { ReportModule } from "../Modules/Report/ReportModule";
 
 export interface BulkReportListPageParameter extends ReportFormPageParameter {
 }
 
 export class LevelBulkReportListPage extends ReportFormPage {
     public static readonly PAGE_NAME = 'wip_bulk_report_list';
+
+    private get reportModule(): ReportModule { return this.module.getModule(ReportModule); }
 
     public get pageName(): string {
         return LevelBulkReportListPage.PAGE_NAME;
@@ -22,7 +25,7 @@ export class LevelBulkReportListPage extends ReportFormPage {
     }
 
     public call(parameter: BulkReportListPageParameter): GoogleAppsScript.HTML.HtmlOutput {
-        let listHtml = this.module.report.getLevelBulkReports(parameter.versionName)
+        let listHtml = this.reportModule.getLevelBulkReports(parameter.versionName)
             .filter(r => r.reportStatus == ReportStatus.InProgress)
             .map(report => this.getListItemHtml(this, report))
             .reduce((acc, src) => `${acc}\n${src}`, '');

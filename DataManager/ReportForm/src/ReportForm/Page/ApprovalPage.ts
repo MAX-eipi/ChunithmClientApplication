@@ -4,6 +4,8 @@ import { Role } from "../Role";
 import { Utility } from "../Utility";
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { InProgressListPage } from "./InProgressListPage";
+import { ReportModule } from "../Modules/Report/ReportModule";
+import { Router } from "../Modules/Router";
 
 interface ApprovalPageParameter extends ReportFormPageParameter {
     reportId: string;
@@ -11,6 +13,9 @@ interface ApprovalPageParameter extends ReportFormPageParameter {
 
 export class ApprovalPage extends ReportFormPage {
     public static readonly PAGE_NAME = "approval";
+
+    private get reportModule(): ReportModule { return this.module.getModule(ReportModule); }
+    private get router(): Router { return this.module.getModule(Router); }
 
     public get pageName(): string {
         return ApprovalPage.PAGE_NAME;
@@ -33,9 +38,9 @@ export class ApprovalPage extends ReportFormPage {
 
     public call(parameter: ApprovalPageParameter): GoogleAppsScript.HTML.HtmlOutput {
         let reportId = parseInt(parameter.reportId);
-        const report = this.module.report.getReport(parameter.versionName, reportId);
+        const report = this.reportModule.getReport(parameter.versionName, reportId);
         if (!report) {
-            return this.module.router.callErrorPage("該当する検証報告が存在しません");
+            return this.router.callErrorPage("該当する検証報告が存在しません");
         }
 
         let beforeOp = report.beforeOp;

@@ -5,6 +5,7 @@ export interface WebhookParameter {
 }
 
 export class WebhookModule extends ReportFormModule {
+    public static readonly moduleName = "webhook";
 
     private _settingsManager: WebhookSettingsManager;
     public get settingsManager(): WebhookSettingsManager {

@@ -1,4 +1,5 @@
 import { LINECommand } from "./@LINECommand";
+import { ReportModule } from "../Modules/Report/ReportModule";
 
 export class ReportFormBuildCommand extends LINECommand {
     public called(command: string): boolean {
@@ -11,9 +12,9 @@ export class ReportFormBuildCommand extends LINECommand {
             versionName = this.module.config.common.defaultVersionName;
         }
         this.replyMessage(event.replyToken, [`報告フォームを構築します:${versionName}`]);
-        this.module.report.buildForm(versionName);
+        this.module.getModule(ReportModule).buildForm(versionName);
 
-        let url = this.module.report.reportGoogleForm.getPublishedUrl();
+        let url = this.module.getModule(ReportModule).reportGoogleForm.getPublishedUrl();
         this.pushMessage([`報告フォームの構築が完了しました
 URL: ${url}`])
     }

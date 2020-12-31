@@ -1,18 +1,16 @@
 import { Debug } from "./Debug";
 import { Instance } from "./Instance";
-import { storeConfig } from "./operations";
-import { ApprovalPage } from "./Page/ApprovalPage";
-import { LevelBulkApprovalPage } from "./Page/LevelBulkApprovalPage";
+import { LINEModule } from "./Modules/LINEModule";
+import { NoticeModule } from "./Modules/Notice/NoticeModule";
+import { PostCommandModule } from "./Modules/PostCommandModule";
+import { ReportModule } from "./Modules/Report/ReportModule";
+import { Router } from "./Modules/Router";
 import { GoogleFormReport } from "./Report/GoogleFormReport";
 import { GoogleFormLevelBulkReport } from "./Report/LevelBulkReport/GoogleFormLevelBulkReport";
 import { ReportStatus } from "./Report/ReportStatus";
 import { PostLocation } from "./Report/ReportStorage";
 import { Utility } from "./Utility";
-import { UrlFetchManager } from "../UrlFetch/UrlFetchManager";
-import { SlackBlockFactory } from "../Slack/BlockFactory";
-import { SlackChatPostMessageStream } from "../Slack/API/Chat/PostMessage/Stream";
-import { SlackCompositionObjectFactory } from "../Slack/CompositionObjectFactory";
-import { NoticeModule } from "./Modules/Notice/NoticeModule";
+import { storeConfig } from "../@operations";
 
 export class ReportForm {
     public static doGet(e: any): any {
@@ -21,12 +19,12 @@ export class ReportForm {
             if (!e.parameter.versionName) {
                 e.parameter.versionName = Instance.instance.module.config.common.defaultVersionName;
             }
-            return Instance.instance.module.router.call(e.parameter.page, e.parameter);
+            return Instance.instance.module.getModule(Router).call(e.parameter.page, e.parameter);
         }
         catch (error) {
             let message = this.toExceptionMessage(error);
             Debug.logError(message);
-            return Instance.instance.module.router.callErrorPage(message, e.parameter.versionName);
+            return Instance.instance.module.getModule(Router).callErrorPage(message, e.parameter.versionName);
         }
     }
 
@@ -59,13 +57,13 @@ export class ReportForm {
                 postData.versionName = Instance.instance.module.config.common.defaultVersionName;
             }
 
-            let lineCommand = Instance.instance.module.line.findCommand(postData);
+            let lineCommand = Instance.instance.module.getModule(LINEModule).findCommand(postData);
             if (lineCommand) {
                 lineCommand.invoke();
                 return this.getSuccessResponseContent();
             }
 
-            let postCommand = Instance.instance.module.postCommand.findCommand(postData);
+            let postCommand = Instance.instance.module.getModule(PostCommandModule).findCommand(postData);
             if (postCommand) {
                 let response = postCommand.invoke();
                 return this.getSuccessResponseContent(response);
@@ -99,7 +97,7 @@ export class ReportForm {
                 versionName = Instance.instance.module.config.common.defaultVersionName;
             }
 
-            let report = Instance.instance.module.report.insertReport(versionName, new GoogleFormReport(e.response));
+            let report = Instance.instance.module.getModule(ReportModule).insertReport(versionName, new GoogleFormReport(e.response));
             if (report) {
                 Debug.log(`${JSON.stringify({
                     header: `検証報告`,
@@ -123,7 +121,7 @@ export class ReportForm {
             if (!versionName) {
                 versionName = Instance.instance.module.config.common.defaultVersionName;
             }
-            let bulkReport = Instance.instance.module.report.insertLevelBulkReport(versionName, new GoogleFormLevelBulkReport(e.response));
+            let bulkReport = Instance.instance.module.getModule(ReportModule).insertLevelBulkReport(versionName, new GoogleFormLevelBulkReport(e.response));
             if (bulkReport) {
                 Debug.log(JSON.stringify({
                     header: `一括検証報告`,
@@ -157,22 +155,22 @@ export class ReportForm {
                 .split(',')
                 .map(p => `https://drive.google.com/uc?id=${p}`);
 
-            const targetReport = Instance.instance.module.report
+            const targetReport = Instance.instance.module.getModule(ReportModule)
                 .getReportStorage(versionName)
                 .getMusicDataReport(musicId, difficulty)
                 .find(r => r.postLocation === PostLocation.BulkSheet && r.reportStatus === ReportStatus.InProgress);
             if (targetReport) {
                 targetReport.setImagePaths(imagePaths);
-                Instance.instance.module.report.getReportStorage(versionName).write();
+                Instance.instance.module.getModule(ReportModule).getReportStorage(versionName).write();
             }
             else {
-                const tableContainer = Instance.instance.module.report.getBulkReportTableContainer(versionName);
+                const tableContainer = Instance.instance.module.getModule(ReportModule).getBulkReportTableContainer(versionName);
                 const row = tableContainer.getTableByDifficulty(difficulty).getRowByMusicId(musicId);
                 if (row && row.isValid()) {
-                    Instance.instance.module.report
+                    Instance.instance.module.getModule(ReportModule)
                         .getReportStorage(versionName)
                         .push(row, PostLocation.BulkSheet, imagePaths);
-                    Instance.instance.module.report.getReportStorage(versionName).write();
+                    Instance.instance.module.getModule(ReportModule).getReportStorage(versionName).write();
                 }
                 else {
                     // 入力前に画像が投稿された

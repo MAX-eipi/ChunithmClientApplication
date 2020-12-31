@@ -10,6 +10,8 @@ interface PostCommandHandler {
 }
 
 export class PostCommandModule extends ReportFormModule {
+    public static readonly moduleName = "postCommand"
+
     private _commands: PostCommand[] = [];
     public setCommandFactories(commandFactories: PostCommandFactory[]): void {
         this._commands = commandFactories.map(cmd => new cmd(this.module));

@@ -19,6 +19,10 @@ interface LINECommandHandler {
 }
 
 export class LINEModule extends ReportFormModule {
+    public static readonly moduleName = 'line';
+
+    private get lineModule(): LINEModule { return this.getModule(LINEModule); }
+
     private _notice: LINEConnector;
     public get noticeConnector(): LINEConnector {
         if (!this._notice) {
@@ -84,7 +88,7 @@ export class LINEModule extends ReportFormModule {
         let self = this;
         return {
             invoke() {
-                self.line.noticeConnector.pushTextMessage([`存在しないコマンド:${commandText}`]);
+                self.lineModule.noticeConnector.pushTextMessage([`存在しないコマンド:${commandText}`]);
             }
         }
     }

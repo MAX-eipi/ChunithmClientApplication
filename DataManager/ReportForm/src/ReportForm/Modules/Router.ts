@@ -8,6 +8,8 @@ interface PageFactory {
 }
 
 export class Router extends ReportFormModule {
+    public static readonly moduleName = "router";
+
     private pages: { [key: string]: ReportFormPage } = {};
 
     public getPage<TPage extends ReportFormPage>(page: { new(module: ReportFormModule): TPage, PAGE_NAME: string }): TPage {
