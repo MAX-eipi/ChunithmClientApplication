@@ -2,9 +2,12 @@ import { MusicData, MusicDataParameter } from "../../MusicDataTable/MusicData";
 import { MusicDataTable } from "../../MusicDataTable/MusicDataTable";
 import { MusicDataTableWriter } from "../../MusicDataTable/MusicDataTableWriter";
 import { ReportFormModule } from "./@ReportFormModule";
+import { VersionModule } from "./VersionModule";
 
 export class MusicDataModule extends ReportFormModule {
     public static readonly moduleName = 'musicData';
+
+    private get versionModule(): VersionModule { return this.getModule(VersionModule); }
 
     private _tables: { [key: string]: MusicDataTable } = {};
 
@@ -13,7 +16,7 @@ export class MusicDataModule extends ReportFormModule {
             return this._tables[versionName];
         }
 
-        let versionConfig = this.module.version.getVersionConfig(versionName);
+        let versionConfig = this.versionModule.getVersionConfig(versionName);
         if (!versionConfig) {
             return null;
         }
@@ -51,7 +54,7 @@ export class MusicDataModule extends ReportFormModule {
     }
 
     private getSheet(versionName: string): GoogleAppsScript.Spreadsheet.Sheet {
-        let versionConfig = this.version.getVersionConfig(versionName);
+        let versionConfig = this.versionModule.getVersionConfig(versionName);
         return SpreadsheetApp
             .openById(versionConfig.musicDataTableSpreadsheetId)
             .getSheetByName(versionConfig.musicDataTableWorksheetName);

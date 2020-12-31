@@ -210,6 +210,9 @@
     <TypeScriptCompile Include="src\ReportForm\LineCommand\TargetLevelMusicCountGetCommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Logger\SlackLogger.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Modules\ApprovalModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -383,8 +386,8 @@
     <TypeScriptCompile Include="src\Twitter\TwitterConnector.ts" />
     <TypeScriptCompile Include="src\ReportForm\Approval.ts" />
     <TypeScriptCompile Include="src\Configurations\Configuration.ts" />
-    <TypeScriptCompile Include="src\ReportForm\events.ts" />
-    <TypeScriptCompile Include="src\ReportForm\operations.ts" />
+    <TypeScriptCompile Include="src\%40events.ts" />
+    <TypeScriptCompile Include="src\%40operations.ts" />
     <TypeScriptCompile Include="src\ReportForm\PostCommand\%40PostCommand.ts" />
     <TypeScriptCompile Include="src\ReportForm\PostCommand\TableGetCommand.ts" />
     <TypeScriptCompile Include="src\ReportForm\PostCommand\TableUpadateCommand.ts" />

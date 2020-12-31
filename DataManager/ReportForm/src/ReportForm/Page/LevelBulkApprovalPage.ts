@@ -4,6 +4,8 @@ import { ReportStatus } from "../Report/ReportStatus";
 import { Utility } from "../Utility";
 import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { LevelBulkReportListPage } from "./LevelBulkReportListPage";
+import { Router } from "../Modules/Router";
+import { ReportModule } from "../Modules/Report/ReportModule";
 
 export interface LevelBulkApprovePageParameter extends ReportFormPageParameter {
     reportId: string;
@@ -11,6 +13,9 @@ export interface LevelBulkApprovePageParameter extends ReportFormPageParameter {
 
 export class LevelBulkApprovalPage extends ReportFormPage {
     public static PAGE_NAME: string = 'bulk_approval';
+
+    private get reportModule(): ReportModule { return this.module.getModule(ReportModule); }
+    private get router(): Router { return this.module.getModule(Router); }
 
     public get pageName(): string {
         return LevelBulkApprovalPage.PAGE_NAME;
@@ -32,9 +37,9 @@ export class LevelBulkApprovalPage extends ReportFormPage {
 
     public call(parameter: LevelBulkApprovePageParameter): GoogleAppsScript.HTML.HtmlOutput {
         let reportId = parseInt(parameter.reportId);
-        let report = this.module.report.getLevelBulkReportSheet(parameter.versionName).getBulkReport(reportId);
+        let report = this.reportModule.getLevelBulkReportSheet(parameter.versionName).getBulkReport(reportId);
         if (!report) {
-            return this.module.router.callErrorPage("該当する検証報告が存在しません");
+            return this.router.callErrorPage("該当する検証報告が存在しません");
         }
 
         var source = this.readMainHtml();

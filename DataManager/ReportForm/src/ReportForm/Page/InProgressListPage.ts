@@ -5,11 +5,14 @@ import { Utility } from "../Utility";
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { ApprovalPage } from "./ApprovalPage";
 import { TopPage } from "./TopPage";
+import { ReportModule } from "../Modules/Report/ReportModule";
 
 interface InProgressListPageParameter extends ReportFormPageParameter { }
 
 export class InProgressListPage extends ReportFormPage {
     public static readonly PAGE_NAME = "wip_list";
+
+    private get reportModule(): ReportModule { return this.module.getModule(ReportModule); }
 
     public get pageName(): string {
         return InProgressListPage.PAGE_NAME;
@@ -20,7 +23,7 @@ export class InProgressListPage extends ReportFormPage {
     }
 
     public call(parameter: InProgressListPageParameter): GoogleAppsScript.HTML.HtmlOutput {
-        const listHtml = this.module.report.getReports(parameter.versionName)
+        const listHtml = this.reportModule.getReports(parameter.versionName)
             .filter(r => r.reportStatus === ReportStatus.InProgress)
             .map(this.getListItemHtml)
             .reduce((acc, src) => `${acc}\n${src}`, '');

@@ -6,6 +6,11 @@ import { UrlFetchManager } from "../../UrlFetch/UrlFetchManager";
 import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
 import { TwitterModule } from "../Modules/TwitterModule";
 import { PostCommand, PostCommandParameter } from "./@PostCommand";
+import { LINEModule } from "../Modules/LINEModule";
+import { WebhookModule } from "../Modules/WebhookModule";
+import { VersionModule } from "../Modules/VersionModule";
+import { MusicDataModule } from "../Modules/MusicDataModule";
+import { ReportModule } from "../Modules/Report/ReportModule";
 
 interface TableUpdateCommandParameter extends PostCommandParameter {
     MusicDatas: MusicDataParameter[];
@@ -16,9 +21,16 @@ export class TableUpdateCommand extends PostCommand {
         return api == "table/update";
     }
 
+    private get musicDataModule(): MusicDataModule { return this.module.getModule(MusicDataModule); }
+    private get lineModule(): LINEModule { return this.module.getModule(LINEModule); }
+    private get twitterModule(): TwitterModule { return this.module.getModule(TwitterModule); }
+    private get reportModule(): ReportModule { return this.module.getModule(ReportModule); }
+    private get versionModule(): VersionModule { return this.module.getModule(VersionModule); }
+    private get webhookModule(): WebhookModule { return this.module.getModule(WebhookModule); }
+
     invoke(api: string, postData: TableUpdateCommandParameter): any {
-        let oldMusicDatas = this.module.musicData.getTable(postData.versionName).datas;
-        let musicDataTable = this.module.musicData.updateTable(postData.versionName, postData.MusicDatas);
+        let oldMusicDatas = this.musicDataModule.getTable(postData.versionName).datas;
+        let musicDataTable = this.musicDataModule.updateTable(postData.versionName, postData.MusicDatas);
         let response = {
             MusicDataTable: {
                 MusicDatas: musicDataTable.getTable(),
@@ -40,8 +52,8 @@ export class TableUpdateCommand extends PostCommand {
                     message += `
 ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLevelText}`;
                 }
-                this.module.line.noticeConnector.pushTextMessage([message]);
-                this.module.getModule(TwitterModule).postTweet(message);
+                this.lineModule.noticeConnector.pushTextMessage([message]);
+                this.twitterModule.postTweet(message);
 
                 let slackMessage = `:musical_keyboard: *新曲追加* (${addedMusicDatas.length}曲)`;
                 for (let i = 0; i < addedMusicDatas.length; i++) {
@@ -68,15 +80,15 @@ ${i + 1}. ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${
                     })
                 ]);
 
-                this.module.webhook.invoke(WebhookEventName.ON_UPDATE_TABLE);
+                this.webhookModule.invoke(WebhookEventName.ON_UPDATE_TABLE);
             }
             else {
                 let message = '[新規定数表作成]\n';
                 for (const genre in musicCounts) {
                     message += `${genre}: ${musicCounts[genre]}\n`;
                 }
-                this.module.line.noticeConnector.pushTextMessage([message]);
-                this.module.getModule(TwitterModule).postTweet(message);
+                this.lineModule.noticeConnector.pushTextMessage([message]);
+                this.twitterModule.postTweet(message);
 
                 let slackMessage = ':musical_keyboard: *新規定数表作成*';
                 for (const genre in musicCounts) {
@@ -98,7 +110,7 @@ ${genre}: ${musicCounts[genre]}曲`;
                     })
                 ]);
 
-                this.module.webhook.invoke(WebhookEventName.ON_UPDATE_TABLE);
+                this.webhookModule.invoke(WebhookEventName.ON_UPDATE_TABLE);
             }
         }
 
@@ -122,10 +134,10 @@ ${genre}: ${musicCounts[genre]}曲`;
     }
 
     private setMusicList(versionName: string, musicDatas: MusicData[]): { [genre: string]: number } {
-        var form = this.module.report.reportGoogleForm;
+        var form = this.reportModule.reportGoogleForm;
         var list = form.getItems(FormApp.ItemType.LIST);
 
-        let genres = this.module.version.getVersionConfig(versionName).genres;
+        let genres = this.versionModule.getVersionConfig(versionName).genres;
         genres.push("ALL");
         let musicCounts: { [genre: string]: number } = {};
         for (var i = 0; i < genres.length; i++) {

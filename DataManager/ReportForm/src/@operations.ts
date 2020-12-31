@@ -1,22 +1,23 @@
-import { Block } from "../Slack/API/Blocks";
-import { SlackChatPostMessageStream } from "../Slack/API/Chat/PostMessage/Stream";
-import { SlackBlockFactory } from "../Slack/BlockFactory";
-import { SlackCompositionObjectFactory } from "../Slack/CompositionObjectFactory";
-import { UrlFetchManager } from "../UrlFetch/UrlFetchManager";
-import { CommonConfiguration } from "./Configurations/CommonConfiguration";
-import { ConfigurationEditor } from "./Configurations/ConfigurationEditor";
-import { Debug } from "./Debug";
-import { Instance } from "./Instance";
-import { MusicDataModule } from "./Modules/MusicDataModule";
-import { NoticeModule } from "./Modules/Notice/NoticeModule";
-import { ReportModule } from "./Modules/Report/ReportModule";
-import { TwitterModule } from "./Modules/TwitterModule";
-import { VersionModule } from "./Modules/VersionModule";
-import { InProgressListPage } from "./Page/InProgressListPage";
-import { LevelBulkReportListPage } from "./Page/LevelBulkReportListPage";
-import { BulkReportTableReader } from "./Report/BulkReport/BulkReportTableReader";
-import { BulkReportTableWriter } from "./Report/BulkReport/BulkReportTableWriter";
-import { ReportStatus } from "./Report/ReportStatus";
+import { Block } from "./Slack/API/Blocks";
+import { SlackChatPostMessageStream } from "./Slack/API/Chat/PostMessage/Stream";
+import { SlackBlockFactory } from "./Slack/BlockFactory";
+import { SlackCompositionObjectFactory } from "./Slack/CompositionObjectFactory";
+import { UrlFetchManager } from "./UrlFetch/UrlFetchManager";
+import { CommonConfiguration } from "./ReportForm/Configurations/CommonConfiguration";
+import { ConfigurationEditor } from "./ReportForm/Configurations/ConfigurationEditor";
+import { Debug } from "./ReportForm/Debug";
+import { Instance } from "./ReportForm/Instance";
+import { MusicDataModule } from "./ReportForm/Modules/MusicDataModule";
+import { NoticeModule } from "./ReportForm/Modules/Notice/NoticeModule";
+import { ReportModule } from "./ReportForm/Modules/Report/ReportModule";
+import { TwitterModule } from "./ReportForm/Modules/TwitterModule";
+import { VersionModule } from "./ReportForm/Modules/VersionModule";
+import { InProgressListPage } from "./ReportForm/Page/InProgressListPage";
+import { LevelBulkReportListPage } from "./ReportForm/Page/LevelBulkReportListPage";
+import { BulkReportTableReader } from "./ReportForm/Report/BulkReport/BulkReportTableReader";
+import { BulkReportTableWriter } from "./ReportForm/Report/BulkReport/BulkReportTableWriter";
+import { ReportStatus } from "./ReportForm/Report/ReportStatus";
+import { Router } from "./ReportForm/Modules/Router";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {
     const ret = ConfigurationEditor.store();
@@ -174,7 +175,7 @@ export function notifyUnverified() {
                 SlackCompositionObjectFactory.markdownText('*[定期]未検証 件数報告*')
             ));
             if (wipReportCount > 0) {
-                const wipReportsUrl = Instance.instance.module.router.getPage(InProgressListPage).getPageUrl(versionName);
+                const wipReportsUrl = Instance.instance.module.getModule(Router).getPage(InProgressListPage).getPageUrl(versionName);
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`:page_with_curl:未承認の単曲検証報告が${wipReportCount}件あります
 <${wipReportsUrl}|検証報告一覧(単曲)ページへ>`)
@@ -182,7 +183,7 @@ export function notifyUnverified() {
                 blocks.push(SlackBlockFactory.divider());
             }
             if (wipBulkReportCount > 0) {
-                const wipBulkReporturl = Instance.instance.module.router.getPage(LevelBulkReportListPage).getPageUrl(versionName);
+                const wipBulkReporturl = Instance.instance.module.getModule(Router).getPage(LevelBulkReportListPage).getPageUrl(versionName);
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`:page_with_curl:未承認のレベル別検証報告が${wipBulkReportCount}件あります
 <${wipBulkReporturl}|検証報告一覧(レベル別)ページへ>`)

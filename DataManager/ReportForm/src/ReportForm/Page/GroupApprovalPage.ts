@@ -6,6 +6,8 @@ import { Role } from "../Role";
 import { Utility } from "../Utility";
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { ReportGroupListPage } from "./ReportGroupListPage";
+import { MusicDataModule } from "../Modules/MusicDataModule";
+import { ReportModule } from "../Modules/Report/ReportModule";
 
 interface GroupApprovalPageParameter extends ReportFormPageParameter {
     groupId: string;
@@ -19,6 +21,9 @@ export class GroupApprovalPage extends ReportFormPage {
     不明な楽曲です。 楽曲ID: %musicId%
 </div>`;
 
+    private get musicDataModule(): MusicDataModule { return this.module.getModule(MusicDataModule); }
+    private get reportModule(): ReportModule { return this.module.getModule(ReportModule); }
+
     public get pageName(): string {
         return GroupApprovalPage.PAGE_NAME;
     }
@@ -28,8 +33,8 @@ export class GroupApprovalPage extends ReportFormPage {
     }
 
     public call(parameter: GroupApprovalPageParameter): GoogleAppsScript.HTML.HtmlOutput {
-        const table = this.module.musicData.getTable(parameter.versionName);
-        const reportGroup = this.module.report
+        const table = this.musicDataModule.getTable(parameter.versionName);
+        const reportGroup = this.reportModule
             .getMusicDataReportGroupContainer(parameter.versionName)
             .getMusicDataReportGroup(parameter.groupId);
 
