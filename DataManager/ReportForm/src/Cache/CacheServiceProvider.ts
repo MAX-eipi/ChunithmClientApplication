@@ -39,7 +39,7 @@ export class CacheServiceProvider implements CacheProvider {
             }
         }
         else {
-            this.getCache().put(key, value);
+            this.getCache().put(key, value, 3600);
         }
     }
 
@@ -66,7 +66,7 @@ export class CacheServiceProvider implements CacheProvider {
         this._putKeyRequests.forEach(key => {
             values[key] = this._intermediateCache[key];
         });
-        this.getCache().putAll(values);
+        this.getCache().putAll(values, 3600);
         this._putKeyRequests.length = 0;
     }
 }
