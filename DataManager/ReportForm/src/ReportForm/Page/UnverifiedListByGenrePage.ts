@@ -27,7 +27,7 @@ class Filter {
     }
 }
 
-class ListItemMusicData {
+export class ListItemMusicData {
     public name: string;
     public difficulty: Difficulty;
     public genre: string;

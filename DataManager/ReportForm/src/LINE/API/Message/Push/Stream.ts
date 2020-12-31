@@ -1,8 +1,8 @@
-import { ConcreteStream } from '../../../UrlFetch/UrlFetch';
-import * as Payload from '../Payload/Chat/PostMessage';
+import { ConcreteStream } from "../../../../UrlFetch/UrlFetch";
+import * as Payload from "./Payload";
 
-export class ChatPostMessage implements ConcreteStream<Payload.Request, Payload.Response> {
-    private readonly methodUrl = 'https://slack.com/api/chat.postMessage';
+export class LINEMessagePushStream implements ConcreteStream<Payload.Request, Payload.Response> {
+    private readonly url = 'https://api.line.me/v2/bot/message/push';
     private readonly method = 'post';
 
     constructor(readonly request: Payload.Request) { }
@@ -18,23 +18,24 @@ export class ChatPostMessage implements ConcreteStream<Payload.Request, Payload.
 
     private getHeader(request: Payload.Request): GoogleAppsScript.URL_Fetch.HttpHeaders {
         return {
-            'content-type': 'application/json; charset=utf-8',
-            'authorization': `Bearer ${request.token}`
-        };
+            'content-Type': 'application/json; charset=utf-8',
+            'authorization': 'Bearer ' + request.channelAccessToken,
+        }
     }
-    public getRawRequest(): GoogleAppsScript.URL_Fetch.URLFetchRequest {
+
+    getRawRequest(): GoogleAppsScript.URL_Fetch.URLFetchRequest {
         return {
-            url: this.methodUrl,
+            url: this.url,
             headers: this.getHeader(this.request),
             method: this.method,
             payload: JSON.stringify(this.request),
-        };
+            muteHttpExceptions: true,
+        }
     }
-
-    public setRawResponse(response: GoogleAppsScript.URL_Fetch.HTTPResponse): void {
+    setRawResponse(response: GoogleAppsScript.URL_Fetch.HTTPResponse): void {
         this._response = JSON.parse(response.getContentText());
-        if (this._response.error) {
-            this._error = this._response.error;
+        if (this._response.message) {
+            this._error = this._response.message;
         }
     }
 

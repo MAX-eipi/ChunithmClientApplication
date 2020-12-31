@@ -4,6 +4,8 @@ import { Environment } from "../Environment";
 import { ReportFormModule } from "./@ReportFormModule";
 
 export class TwitterModule extends ReportFormModule {
+    public static readonly moduleName = 'twitter';
+
     private _connector: TwitterConnector;
     public get connector(): TwitterConnector {
         if (!this._connector) {

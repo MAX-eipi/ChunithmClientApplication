@@ -1,12 +1,11 @@
 import { ReportFormConfiguration } from "../Configurations/@ReportFormConfiguration";
+import { ApprovalModule } from "./ApprovalModule";
 import { LINEModule } from "./LINEModule";
 import { MusicDataModule } from "./MusicDataModule";
 import { PostCommandModule } from "./PostCommandModule";
 import { ReportModule } from "./Report/ReportModule";
 import { Router } from "./Router";
-import { TwitterModule } from "./TwitterModule";
 import { VersionModule } from "./VersionModule";
-import { ApprovalModule } from "./ApprovalModule";
 import { WebhookModule } from "./WebhookModule";
 
 export class ReportFormModule {
@@ -34,7 +33,7 @@ export class ReportFormModule {
 
     public getModule<TModule extends ReportFormModule>(factory: { moduleName: string; new(): TModule }): TModule {
         if (factory.moduleName in this._root._modules) {
-            return this._root.module[factory.moduleName] as TModule;
+            return this._root._modules[factory.moduleName] as TModule;
         }
         const module = new factory();
         module._root = this._root;
@@ -54,7 +53,6 @@ export class ReportFormModule {
     public get postCommand(): PostCommandModule { return this.getModuleInternal('postCommand', PostCommandModule); }
     public get router(): Router { return this.getModuleInternal('router', Router); }
     public get report(): ReportModule { return this.getModuleInternal(ReportModule.moduleName, ReportModule); }
-    public get twitter(): TwitterModule { return this.getModuleInternal('twitter', TwitterModule); }
     public get musicData(): MusicDataModule { return this.getModuleInternal(MusicDataModule.moduleName, MusicDataModule); }
     public get approval(): ApprovalModule { return this.getModuleInternal('approval', ApprovalModule); }
     public get version(): VersionModule { return this.getModuleInternal(VersionModule.moduleName, VersionModule); }

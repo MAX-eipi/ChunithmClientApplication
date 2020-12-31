@@ -1,7 +1,7 @@
-import * as Elements from "./BlockElements";
-import * as CompositionObjects from "./CompositionObjects";
+import * as Elements from "./API/BlockElements";
+import * as CompositionObjects from "./API/CompositionObjects";
 
-export class BlockElementFactory {
+export class SlackBlockElementFactory {
     public static button(text: CompositionObjects.Text, actionId: string, options: Elements.ButtonOptions = {}): Elements.Button {
         const ret: Elements.Button = {
             type: 'button',

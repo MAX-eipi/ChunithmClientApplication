@@ -71,11 +71,19 @@
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Dependencies\OAuth1\" />
+    <Folder Include="src\LINE\API\" />
+    <Folder Include="src\LINE\API\Message\" />
+    <Folder Include="src\LINE\API\Message\Reply\" />
+    <Folder Include="src\LINE\API\Message\Push\" />
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
-    <Folder Include="src\Slack\API\Stream\" />
-    <Folder Include="src\Slack\API\Payload\" />
+    <Folder Include="src\Cache\" />
+    <Folder Include="src\ReportForm\Modules\Notice\" />
+    <Folder Include="src\Slack\API\Chat\" />
+    <Folder Include="src\Slack\API\Chat\PostMessage\" />
+    <Folder Include="src\Spreadsheet\" />
     <Folder Include="src\UrlFetch\" />
     <Folder Include="src\Slack\" />
     <Folder Include="src\ReportForm\Modules\" />
@@ -91,7 +99,6 @@
     <Folder Include="src\ReportForm\Report\LevelBulkReport\" />
     <Folder Include="src\Resources\Page\bulk_approval\" />
     <Folder Include="src\Resources\Page\wip_bulk_report_list\" />
-    <Folder Include="src\Slack\API\Payload\Chat\" />
     <Folder Include="src\Slack\API\" />
     <Folder Include="src\Twitter\" />
     <Folder Include="src\ReportForm\" />
@@ -111,8 +118,23 @@
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Dependencies\OAuth1\OAuth1.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dependencies\OAuth1\Service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Dependencies\TwitterWebService.ts" />
     <TypeScriptCompile Include="src\%40test.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Cache\CacheProvider.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Cache\CacheServiceProvider.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Cache\SpreadsheetCacheProvider.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Configurations\ConfigurationDefinition.ts">
@@ -125,6 +147,24 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ConstDefinition.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LINE\API\MessageObjects.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LINE\API\LINEPayload.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LINE\API\Message\Push\Payload.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LINE\API\Message\Reply\Payload.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LINE\API\Message\Push\Stream.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\LINE\API\Message\Reply\Stream.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Configurations\CommonConfiguration.ts">
@@ -243,6 +283,12 @@
     <TypeScriptCompile Include="src\ReportForm\Modules\VersionModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Modules\Notice\NoticeModule.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Modules\Notice\NoticeQueue.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Page\ApprovalPage.ts" />
     <TypeScriptCompile Include="src\ReportForm\Page\LevelBulkApprovalPage.ts">
       <SubType>Code</SubType>
@@ -312,11 +358,11 @@
     <TypeScriptCompile Include="src\Slack\BlockElementFactory.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Slack\API\Payload\Chat\PostMessage.ts">
+    <TypeScriptCompile Include="src\Slack\API\Chat\PostMessage\Payload.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Slack\API\Stream\PostMessage.ts" />
-    <TypeScriptCompile Include="src\Slack\BlockElements.ts">
+    <TypeScriptCompile Include="src\Slack\API\Chat\PostMessage\Stream.ts" />
+    <TypeScriptCompile Include="src\Slack\API\BlockElements.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Slack\BlockFactory.ts">
@@ -325,10 +371,13 @@
     <TypeScriptCompile Include="src\Slack\CompositionObjectFactory.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Slack\CompositionObjects.ts">
+    <TypeScriptCompile Include="src\Slack\API\CompositionObjects.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Slack\Blocks.ts">
+    <TypeScriptCompile Include="src\Slack\API\Blocks.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Spreadsheet\SpreadsheetRegistry.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Twitter\TwitterConnector.ts" />

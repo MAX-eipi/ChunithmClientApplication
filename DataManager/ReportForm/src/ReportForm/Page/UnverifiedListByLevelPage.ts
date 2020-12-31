@@ -3,6 +3,7 @@ import { MusicData } from "../../MusicDataTable/MusicData";
 import { Utility } from "../Utility";
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { TopPage } from "./TopPage";
+import { ListItemMusicData } from "./UnverifiedListByGenrePage";
 
 let levelTexts = [
     '1', '2', '3', '4', '5', '6', '7', '7p', '8', '8p', '9', '9p', '10', '10p', '11', '11p', '12', '12p', '13', '13p', '14',
@@ -35,20 +36,6 @@ function enabledDifficulty(parameter: UnverifiedListByLevelPageParameter, diffic
 
 function enabledLevel(parameter: UnverifiedListByLevelPageParameter, levelText: string): boolean {
     return parameter[`level_${levelText}`] ? true : false;
-}
-
-class ListItemMusicData {
-    public name: string;
-    public difficulty: Difficulty;
-    public genre: string;
-    public level: number;
-
-    public setByMusicData(musicData: MusicData, difficulty: Difficulty): void {
-        this.name = musicData.Name;
-        this.difficulty = difficulty;
-        this.genre = musicData.Genre;
-        this.level = musicData.getLevel(difficulty);
-    }
 }
 
 export class UnverifiedListByLevelPage extends ReportFormPage {
