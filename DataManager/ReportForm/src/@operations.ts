@@ -1,7 +1,3 @@
-import { Block } from "./Slack/API/Blocks";
-import { SlackChatPostMessageStream } from "./Slack/API/Chat/PostMessage/Stream";
-import { SlackBlockFactory } from "./Slack/BlockFactory";
-import { SlackCompositionObjectFactory } from "./Slack/CompositionObjectFactory";
 import { UrlFetchManager } from "./UrlFetch/UrlFetchManager";
 import { CommonConfiguration } from "./ReportForm/Configurations/CommonConfiguration";
 import { ConfigurationEditor } from "./ReportForm/Configurations/ConfigurationEditor";
@@ -18,6 +14,10 @@ import { BulkReportTableReader } from "./ReportForm/Report/BulkReport/BulkReport
 import { BulkReportTableWriter } from "./ReportForm/Report/BulkReport/BulkReportTableWriter";
 import { ReportStatus } from "./ReportForm/Report/ReportStatus";
 import { Router } from "./ReportForm/Modules/Router";
+import { SlackChatPostMessageStream } from "./UrlFetch.Slack/API/Chat/PostMessage/Stream";
+import { SlackBlockFactory } from "./UrlFetch.Slack/BlockFactory";
+import { SlackCompositionObjectFactory } from "./UrlFetch.Slack/CompositionObjectFactory";
+import { Block } from "./UrlFetch.Slack/API/Blocks";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {
     const ret = ConfigurationEditor.store();
@@ -62,7 +62,7 @@ function authCallback(request) {
 }
 
 function getGenres(): string[] {
-     return execute(instance => {
+    return execute(instance => {
         const versionName = getDefaultVersionName(instance);
         const genres: string[] = [];
         const musicDatas = Instance.instance.module.getModule(MusicDataModule).getTable(versionName).datas;

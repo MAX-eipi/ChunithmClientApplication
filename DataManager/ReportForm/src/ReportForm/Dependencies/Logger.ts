@@ -1,36 +1,21 @@
-import { Debug } from "../Debug";
+import { SlackLogger } from "../../CustomLogger.Slack/SlackLogger";
+import { ConsoleLogger } from "../../CustomLogger/ConsoleLogger";
+import { LogLevel } from "../../CustomLogger/CustomLogger";
+import { CustomLogManager } from "../../CustomLogger/CustomLogManager";
 import { ReportFormModule } from "../Modules/@ReportFormModule";
-import { LogSheet, SpreadsheetLogger } from "../Logger/SpreadSheetLogger";
-import { ReportFormLogger } from "../Logger/ReportFormLogger";
-import { LINELogger } from "../Logger/LINELogger";
-import { LINEModule } from "../Modules/LINEModule";
-import { SlackLogger } from "../Logger/SlackLogger";
 
 export class LoggerDI {
     public static initialize(module: ReportFormModule): void {
-        const logger = new ReportFormLogger();
         {
-            const log = LogSheet.openLogSheet(
-                module.config.log.logSpreadSheetId,
-                module.config.log.logWorkSheetName);
-            const error = LogSheet.openLogSheet(
-                module.config.log.errorLogSpreadSheetId,
-                module.config.log.errorLogWorkSheetName);
-            logger.addLogger(new SpreadsheetLogger(log, error, error));
+            const logger = new ConsoleLogger();
+            CustomLogManager.addLogger(logger);
         }
         {
-            const error = module.getModule(LINEModule).errorNotice;
-            logger.addLogger(new LINELogger(null, error, error));
+            const logger = new SlackLogger();
+            logger.slackApiToken = module.config.global.slackApiToken;
+            logger.channelIdTable[LogLevel.Warning] = [module.config.global.slackChannelIdTable['alert']];
+            logger.channelIdTable[LogLevel.Error] = [module.config.global.slackChannelIdTable['alert']];
+            CustomLogManager.addLogger(logger);
         }
-        {
-            const error = module.config.global.slackChannelIdTable['alert'];
-            logger.addLogger(new SlackLogger(
-                module.config.global.slackApiToken,
-                null,
-                error,
-                error
-            ));
-        }
-        Debug.logger = logger;
     }
 }

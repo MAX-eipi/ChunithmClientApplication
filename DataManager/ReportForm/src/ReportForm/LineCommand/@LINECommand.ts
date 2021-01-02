@@ -15,10 +15,10 @@ export abstract class LINECommand {
     public abstract invoke(command: string, event: any, postData: any): void;
 
     protected pushMessage(messages: string[]): void {
-        this.module.getModule(LINEModule).noticeConnector.pushTextMessage(messages);
+        this.module.getModule(LINEModule).pushNoticeMessage(messages);
     }
 
     protected replyMessage(replyToken: string, messages: string[]): void {
-        this.module.getModule(LINEModule).noticeConnector.replyTextMessage(replyToken, messages);
+        this.module.getModule(LINEModule).replyMessage(replyToken, messages);
     }
 }

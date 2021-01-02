@@ -1,16 +1,16 @@
 import { MusicData, MusicDataParameter } from "../../MusicDataTable/MusicData";
-import { SlackChatPostMessageStream } from "../../Slack/API/Chat/PostMessage/Stream";
-import { SlackBlockFactory } from "../../Slack/BlockFactory";
-import { SlackCompositionObjectFactory } from "../../Slack/CompositionObjectFactory";
+import { SlackChatPostMessageStream } from "../../UrlFetch.Slack/API/Chat/PostMessage/Stream";
+import { SlackBlockFactory } from "../../UrlFetch.Slack/BlockFactory";
+import { SlackCompositionObjectFactory } from "../../UrlFetch.Slack/CompositionObjectFactory";
 import { UrlFetchManager } from "../../UrlFetch/UrlFetchManager";
 import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
-import { TwitterModule } from "../Modules/TwitterModule";
-import { PostCommand, PostCommandParameter } from "./@PostCommand";
 import { LINEModule } from "../Modules/LINEModule";
-import { WebhookModule } from "../Modules/WebhookModule";
-import { VersionModule } from "../Modules/VersionModule";
 import { MusicDataModule } from "../Modules/MusicDataModule";
 import { ReportModule } from "../Modules/Report/ReportModule";
+import { TwitterModule } from "../Modules/TwitterModule";
+import { VersionModule } from "../Modules/VersionModule";
+import { WebhookModule } from "../Modules/WebhookModule";
+import { PostCommand, PostCommandParameter } from "./@PostCommand";
 
 interface TableUpdateCommandParameter extends PostCommandParameter {
     MusicDatas: MusicDataParameter[];
@@ -52,7 +52,7 @@ export class TableUpdateCommand extends PostCommand {
                     message += `
 ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${masterLevelText}`;
                 }
-                this.lineModule.noticeConnector.pushTextMessage([message]);
+                this.lineModule.pushNoticeMessage([message]);
                 this.twitterModule.postTweet(message);
 
                 let slackMessage = `:musical_keyboard: *新曲追加* (${addedMusicDatas.length}曲)`;
@@ -87,7 +87,7 @@ ${i + 1}. ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${
                 for (const genre in musicCounts) {
                     message += `${genre}: ${musicCounts[genre]}\n`;
                 }
-                this.lineModule.noticeConnector.pushTextMessage([message]);
+                this.lineModule.pushNoticeMessage([message]);
                 this.twitterModule.postTweet(message);
 
                 let slackMessage = ':musical_keyboard: *新規定数表作成*';

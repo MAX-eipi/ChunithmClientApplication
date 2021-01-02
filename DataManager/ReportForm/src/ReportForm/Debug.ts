@@ -1,46 +1,25 @@
-import { Logger } from './Logger/Logger';
-import { DefaultLogger } from './Logger/DefaultLogger';
+import { CustomLogger, LogLevel } from '../CustomLogger/CustomLogger';
+import { CustomLogManager } from '../CustomLogger/CustomLogManager';
 
 export class Debug {
-    private static _defaultLogger: Logger;
-    private static _logger: Logger;
-
-    public static get logger(): Logger {
-        if (this._logger) {
-            return this._logger;
-        }
-
-        if (!this._defaultLogger) {
-            this._defaultLogger = new DefaultLogger();
-        }
-        return this._defaultLogger;
-    }
-    public static set logger(value: Logger) {
-        this._logger = value;
+    public static addLogger(logger: CustomLogger): void {
+        CustomLogManager.addLogger(logger);
     }
 
     public static log(message): void {
-        this.logger.log(message);
+        CustomLogManager.log(LogLevel.Info, message);
     }
 
     public static logWarning(message): void {
-        this.logger.logWarning(message);
+        CustomLogManager.log(LogLevel.Warning, message);
     }
 
     public static logError(message): void {
-        this.logger.logError(message);
+        CustomLogManager.log(LogLevel.Error, message);
     }
 
     public static logException(error: Error): void {
-        this.logger.logError(this.toExceptionMessage(error));
-    }
-
-    private static toExceptionMessage(error: Error): string {
-        return `[Message]
-${error.message}
-
-[Stack Trace]
-${error.stack}`;
+        CustomLogManager.exception(error);
     }
 }
 

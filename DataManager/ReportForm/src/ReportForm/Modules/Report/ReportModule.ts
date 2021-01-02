@@ -41,7 +41,7 @@ export class ReportModule extends ReportFormModule {
 
     public noticeReportPost(message: string): void {
         if (this.config.line.reportPostNoticeEnabled) {
-            this.lineModule.noticeConnector.pushTextMessage([message]);
+            this.lineModule.pushNoticeMessage([message]);
         }
     }
 
@@ -224,7 +224,6 @@ OP理論値:${maxOp}
 OP実測値:${formReport.op}
 OP割合[万分率]:${opRatio100Fold}
 実測値と理論値の比率[万分率]:${calcOpRatio100Fold}`;
-            this.lineModule.noticeConnector.pushTextMessage([message]);
             Debug.logError(message);
             return null;
         }
@@ -236,7 +235,6 @@ OP理論値:${maxOp}
 OP実測値:${formReport.op}
 OP割合[万分率]:${opRatio100Fold}
 実測値と理論値の比率[万分率]:${calcOpRatio100Fold}`;
-            this.lineModule.noticeConnector.pushTextMessage([message]);
             Debug.logError(message);
             return null;
         }

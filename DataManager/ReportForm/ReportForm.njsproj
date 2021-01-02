@@ -75,19 +75,12 @@
     <Folder Include="src\CustomLogger.Slack\" />
     <Folder Include="src\CustomLogger\" />
     <Folder Include="src\CutomLogger.LINE\" />
-    <Folder Include="src\LINE\API\" />
-    <Folder Include="src\LINE\API\Message\" />
-    <Folder Include="src\LINE\API\Message\Reply\" />
-    <Folder Include="src\LINE\API\Message\Push\" />
     <Folder Include="src\MusicDataTable\" />
-    <Folder Include="src\LINE\" />
     <Folder Include="Dependencies\" />
     <Folder Include="src\Cache\" />
     <Folder Include="src\ReportForm\Modules\Notice\" />
     <Folder Include="src\ReportForm\Repository\" />
     <Folder Include="src\Repository\" />
-    <Folder Include="src\Slack\API\Chat\" />
-    <Folder Include="src\Slack\API\Chat\PostMessage\" />
     <Folder Include="src\Spreadsheet\" />
     <Folder Include="src\UrlFetch.LINE\" />
     <Folder Include="src\UrlFetch.LINE\API\" />
@@ -99,7 +92,6 @@
     <Folder Include="src\UrlFetch.Slack\API\Chat\" />
     <Folder Include="src\UrlFetch.Slack\API\Chat\PostMessage\" />
     <Folder Include="src\UrlFetch\" />
-    <Folder Include="src\Slack\" />
     <Folder Include="src\ReportForm\Modules\" />
     <Folder Include="src\Configurations\" />
     <Folder Include="src\ReportForm\Logger\" />
@@ -113,7 +105,6 @@
     <Folder Include="src\ReportForm\Report\LevelBulkReport\" />
     <Folder Include="src\Resources\Page\bulk_approval\" />
     <Folder Include="src\Resources\Page\wip_bulk_report_list\" />
-    <Folder Include="src\Slack\API\" />
     <Folder Include="src\Twitter\" />
     <Folder Include="src\ReportForm\" />
     <Folder Include="src\ReportForm\PostCommand\" />
@@ -168,24 +159,6 @@
     <TypeScriptCompile Include="src\CustomLogger\CustomLogger.ts" />
     <TypeScriptCompile Include="src\CustomLogger\CustomLogManager.ts" />
     <TypeScriptCompile Include="src\CutomLogger.LINE\LINELogger.ts" />
-    <TypeScriptCompile Include="src\LINE\API\MessageObjects.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\LINE\API\LINEPayload.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\LINE\API\Message\Push\Payload.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\LINE\API\Message\Reply\Payload.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\LINE\API\Message\Push\Stream.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\LINE\API\Message\Reply\Stream.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Configurations\CommonConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -198,7 +171,6 @@
     <TypeScriptCompile Include="src\ReportForm\Configurations\TwitterConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Logger\DefaultLogger.ts" />
     <TypeScriptCompile Include="src\ReportForm\Dependencies\LINECommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -227,9 +199,6 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\LineCommand\TargetLevelMusicCountGetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Logger\SlackLogger.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Modules\ApprovalModule.ts">
@@ -266,7 +235,6 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\LineCommand\%40LINECommand.ts" />
-    <TypeScriptCompile Include="src\LINE\LINEConnector.ts" />
     <TypeScriptCompile Include="src\ReportForm\Configurations\ConfigurationEditor.ts" />
     <TypeScriptCompile Include="src\ReportForm\Debug.ts">
       <SubType>Code</SubType>
@@ -285,15 +253,6 @@
     <TypeScriptCompile Include="src\ReportForm\LineCommand\TestCommand.ts" />
     <TypeScriptCompile Include="src\ReportForm\LineCommand\TopUrlGetCommand.ts" />
     <TypeScriptCompile Include="src\ReportForm\LineCommand\VersionGetCommand.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Logger\LINELogger.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Logger\Logger.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Logger\ReportFormLogger.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Modules\MusicDataModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -382,28 +341,6 @@
     <TypeScriptCompile Include="SRC\REPOSITORY\RepositorySchema.ts" />
     <TypeScriptCompile Include="SRC\REPOSITORY\RepositorySchemaImpl.ts" />
     <TypeScriptCompile Include="src\Repository\SpreadsheetRepository.ts" />
-    <TypeScriptCompile Include="src\Slack\BlockElementFactory.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Slack\API\Chat\PostMessage\Payload.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Slack\API\Chat\PostMessage\Stream.ts" />
-    <TypeScriptCompile Include="src\Slack\API\BlockElements.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Slack\BlockFactory.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Slack\CompositionObjectFactory.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Slack\API\CompositionObjects.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Slack\API\Blocks.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\Spreadsheet\SpreadsheetRegistry.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

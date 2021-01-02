@@ -1,6 +1,4 @@
-import { Logger } from "./Logger";
-
-export class SpreadsheetLogger implements Logger {
+export class SpreadsheetLogger {
     private _log: LogSheet;
     private _warning: LogSheet;
     private _error: LogSheet;

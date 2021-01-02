@@ -1,4 +1,8 @@
-import { LINEConnector } from "../../LINE/LINEConnector";
+import { LINEMessagePushStream } from "../../UrlFetch.LINE/API/Message/Push/Stream";
+import { LINEMessageReplyStream } from "../../UrlFetch.LINE/API/Message/Reply/Stream";
+import { TextMessage } from "../../UrlFetch.LINE/API/MessageObjects";
+import { Result, UrlFetchStream } from "../../UrlFetch/UrlFetch";
+import { UrlFetchManager } from "../../UrlFetch/UrlFetchManager";
 import { LINECommand } from "../LINECommand/@LINECommand";
 import { ReportFormModule } from "./@ReportFormModule";
 
@@ -23,24 +27,38 @@ export class LINEModule extends ReportFormModule {
 
     private get lineModule(): LINEModule { return this.getModule(LINEModule); }
 
-    private _notice: LINEConnector;
-    public get noticeConnector(): LINEConnector {
-        if (!this._notice) {
-            this._notice = new LINEConnector(
-                this.config.line.channelAccessToken,
-                this.config.line.noticeTargetIdList);
+    public pushNoticeMessage(messages: string[]): Result {
+        const textMessages: TextMessage[] = messages.map(m => {
+            return {
+                type: 'text',
+                text: m,
+            };
+        });
+        const streams: UrlFetchStream[] = [];
+        for (const target of this.config.line.noticeTargetIdList) {
+            const stream = new LINEMessagePushStream({
+                channelAccessToken: this.config.line.channelAccessToken,
+                to: target,
+                messages: textMessages,
+            });
+            streams.push(stream);
         }
-        return this._notice;
+        return UrlFetchManager.execute(streams);
     }
 
-    private _errorNotice: LINEConnector;
-    public get errorNotice(): LINEConnector {
-        if (!this._errorNotice) {
-            this._errorNotice = new LINEConnector(
-                this.config.line.channelAccessToken,
-                this.config.line.errorNoticeTargetIdList);
-        }
-        return this._errorNotice;
+    public replyMessage(replyToken: string, messages: string[]): Result {
+        const textMessages: TextMessage[] = messages.map(m => {
+            return {
+                type: 'text',
+                text: m,
+            };
+        });
+        const stream = new LINEMessageReplyStream({
+            channelAccessToken: this.config.line.channelAccessToken,
+            replyToken: replyToken,
+            messages: textMessages,
+        });
+        return UrlFetchManager.execute(stream);
     }
 
     private _commands: LINECommand[] = [];
@@ -88,7 +106,7 @@ export class LINEModule extends ReportFormModule {
         let self = this;
         return {
             invoke() {
-                self.lineModule.noticeConnector.pushTextMessage([`存在しないコマンド:${commandText}`]);
+                self.lineModule.pushNoticeMessage([`存在しないコマンド:${commandText}`]);
             }
         }
     }

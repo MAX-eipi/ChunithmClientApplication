@@ -1,10 +1,11 @@
-import { LINEMessagePushStream } from "../../../LINE/API/Message/Push/Stream";
-import { TextMessage } from "../../../LINE/API/MessageObjects";
+import { CacheServiceProvider } from "../../../Cache/CacheServiceProvider";
 import { Difficulty } from "../../../MusicDataTable/Difficulty";
-import { Block } from "../../../Slack/API/Blocks";
-import { SlackChatPostMessageStream } from "../../../Slack/API/Chat/PostMessage/Stream";
-import { SlackBlockFactory } from "../../../Slack/BlockFactory";
-import { SlackCompositionObjectFactory } from "../../../Slack/CompositionObjectFactory";
+import { LINEMessagePushStream } from "../../../UrlFetch.LINE/API/Message/Push/Stream";
+import { TextMessage } from "../../../UrlFetch.LINE/API/MessageObjects";
+import { Block } from "../../../UrlFetch.Slack/API/Blocks";
+import { SlackChatPostMessageStream } from "../../../UrlFetch.Slack/API/Chat/PostMessage/Stream";
+import { SlackBlockFactory } from "../../../UrlFetch.Slack/BlockFactory";
+import { SlackCompositionObjectFactory } from "../../../UrlFetch.Slack/CompositionObjectFactory";
 import { UrlFetchStream } from "../../../UrlFetch/UrlFetch";
 import { UrlFetchManager } from "../../../UrlFetch/UrlFetchManager";
 import { ApprovalPage } from "../../Page/ApprovalPage";
@@ -12,12 +13,11 @@ import { IReport } from "../../Report/IReport";
 import { LevelBulkReport } from "../../Report/LevelBulkReport/LevelBulkReport";
 import { Utility } from "../../Utility";
 import { ReportFormModule } from "../@ReportFormModule";
-import { TwitterModule } from "../TwitterModule";
-import { NoticeQueue } from "./NoticeQueue";
-import { CacheServiceProvider } from "../../../Cache/CacheServiceProvider";
-import { VersionModule } from "../VersionModule";
 import { ReportModule } from "../Report/ReportModule";
 import { Router } from "../Router";
+import { TwitterModule } from "../TwitterModule";
+import { VersionModule } from "../VersionModule";
+import { NoticeQueue } from "./NoticeQueue";
 
 export class NoticeModule extends ReportFormModule {
     public static readonly moduleName = 'notice';
