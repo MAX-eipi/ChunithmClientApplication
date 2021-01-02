@@ -7,3 +7,9 @@
 [submodule "DataManager/ReportForm/src/CustomLogger"]
 	path = DataManager/ReportForm/src/CustomLogger
 	url = git@github.com:max-eipi-gas-modules/CustomLogger.git
+[submodule "DataManager/ReportForm/src/UrlFetch.LINE"]
+	path = DataManager/ReportForm/src/UrlFetch.LINE
+	url = git@github.com:max-eipi-gas-modules/UrlFetch.LINE.git
+[submodule "DataManager/ReportForm/src/UrlFetch.Slack"]
+	path = DataManager/ReportForm/src/UrlFetch.Slack
+	url = git@github.com:max-eipi-gas-modules/UrlFetch.Slack.git

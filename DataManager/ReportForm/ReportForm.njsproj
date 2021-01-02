@@ -87,6 +87,15 @@
     <Folder Include="src\Slack\API\Chat\" />
     <Folder Include="src\Slack\API\Chat\PostMessage\" />
     <Folder Include="src\Spreadsheet\" />
+    <Folder Include="src\UrlFetch.LINE\" />
+    <Folder Include="src\UrlFetch.LINE\API\" />
+    <Folder Include="src\UrlFetch.LINE\API\Message\" />
+    <Folder Include="src\UrlFetch.LINE\API\Message\Push\" />
+    <Folder Include="src\UrlFetch.LINE\API\Message\Reply\" />
+    <Folder Include="src\UrlFetch.Slack\" />
+    <Folder Include="src\UrlFetch.Slack\API\" />
+    <Folder Include="src\UrlFetch.Slack\API\Chat\" />
+    <Folder Include="src\UrlFetch.Slack\API\Chat\PostMessage\" />
     <Folder Include="src\UrlFetch\" />
     <Folder Include="src\Slack\" />
     <Folder Include="src\ReportForm\Modules\" />
@@ -365,6 +374,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="SRC\REPOSITORY\RepositoryInterface.ts" />
+    <TypeScriptCompile Include="src\Repository\RepositoryRow.ts" />
     <TypeScriptCompile Include="SRC\REPOSITORY\RepositorySchema.ts" />
     <TypeScriptCompile Include="SRC\REPOSITORY\RepositorySchemaImpl.ts" />
     <TypeScriptCompile Include="src\Repository\SpreadsheetRepository.ts" />
@@ -408,6 +418,20 @@
     <TypeScriptCompile Include="src\ReportForm\Logger\SpreadSheetLogger.ts" />
     <TypeScriptCompile Include="src\ReportForm\Utility.ts" />
     <TypeScriptCompile Include="src\ReportForm\ReportForm.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.LINE\API\LINEPayload.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.LINE\API\MessageObjects.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.LINE\API\Message\Push\Payload.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.LINE\API\Message\Push\Stream.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.LINE\API\Message\Reply\Payload.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.LINE\API\Message\Reply\Stream.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.Slack\API\BlockElements.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.Slack\API\Blocks.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.Slack\API\Chat\PostMessage\Payload.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.Slack\API\Chat\PostMessage\Stream.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.Slack\API\CompositionObjects.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.Slack\BlockElementFactory.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.Slack\BlockFactory.ts" />
+    <TypeScriptCompile Include="src\UrlFetch.Slack\CompositionObjectFactory.ts" />
     <TypeScriptCompile Include="src\UrlFetch\UrlFetch.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
