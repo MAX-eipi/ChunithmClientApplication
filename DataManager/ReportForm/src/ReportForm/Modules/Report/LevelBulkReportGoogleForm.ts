@@ -1,4 +1,5 @@
-import { Debug } from "../../Debug";
+import { LogLevel } from "../../../CustomLogger/CustomLogger";
+import { CustomLogManager } from "../../../CustomLogger/CustomLogManager";
 import { Environment } from "../../Environment";
 import { ReportFormModule } from "../@ReportFormModule";
 import { VersionModule } from "../VersionModule";
@@ -12,7 +13,7 @@ export class LevelBulkReportGoogleForm {
         if (!this._form) {
             const formId = this._module.config.report.bulkReportFormId;
             if (!formId) {
-                Debug.logError(`bulkReportFormId is not set.`);
+                CustomLogManager.log(LogLevel.Error, `bulkReportFormId is not set.`);
                 return null;
             }
             const form = FormApp.openById(formId);
@@ -25,8 +26,8 @@ export class LevelBulkReportGoogleForm {
     }
 
     public buildForm(versionName: string): void {
-        Debug.log(`一括報告フォームを構築します: ${versionName}`);
-        Debug.log('フォームに送信された回答の削除...');
+        CustomLogManager.log(LogLevel.Info, `一括報告フォームを構築します: ${versionName}`);
+        CustomLogManager.log(LogLevel.Info, 'フォームに送信された回答の削除...');
         const form = this._module.getModule(ReportModule).levelBulkReportGoogleForm;
         form.deleteAllResponses();
         {
@@ -35,7 +36,7 @@ export class LevelBulkReportGoogleForm {
                 Utilities.sleep(100);
             }
         }
-        Debug.log(`フォームに送信された回答の削除が完了しました`);
+        CustomLogManager.log(LogLevel.Info, `フォームに送信された回答の削除が完了しました`);
         const versionConfig = this._module.getModule(VersionModule).getVersionConfig(versionName);
         if (this._module.config.common.environment === Environment.Release) {
             form.setTitle(`譜面定数 一括検証報告 ${versionConfig.displayVersionName}`);
@@ -43,7 +44,7 @@ export class LevelBulkReportGoogleForm {
         else {
             form.setTitle(`譜面定数 一括検証報告 ${versionConfig.displayVersionName} [Dev]`);
         }
-        Debug.log('パラメータ記入画面の作成...');
+        CustomLogManager.log(LogLevel.Info, 'パラメータ記入画面の作成...');
         {
             const levelSelector = form.addListItem();
             levelSelector.setTitle('レベルを選択してください');
@@ -71,12 +72,12 @@ export class LevelBulkReportGoogleForm {
                 .requireNumberBetween(0, 100)
                 .build());
         }
-        Debug.log(`パラメータ記入画面の作成が完了しました`);
+        CustomLogManager.log(LogLevel, `パラメータ記入画面の作成が完了しました`);
         // 検証画像を添付してください
         // 特定のファイル形式のみ許可
         //  - 画像
         // ファイルの最大数 1
         // 最大ファイルサイズ 10MB
-        Debug.log(`一括報告フォームの構築が完了しました`);
+        CustomLogManager.log(LogLevel, `一括報告フォームの構築が完了しました`);
     }
 }

@@ -1,6 +1,7 @@
+import { LogLevel } from "../../CustomLogger/CustomLogger";
+import { CustomLogManager } from "../../CustomLogger/CustomLogManager";
 import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { MusicData } from "../../MusicDataTable/MusicData";
-import { Debug } from "../Debug";
 import { WebhookEventName } from "../Dependencies/WebhookEventDefinition";
 import { Environment } from "../Environment";
 import { IReport } from "../Report/IReport";
@@ -8,11 +9,11 @@ import { ReportStatus } from "../Report/ReportStatus";
 import { Utility } from "../Utility";
 import { ReportFormModule } from "./@ReportFormModule";
 import { ChunirecModule } from "./ChunirecModule";
-import { NoticeModule } from "./Notice/NoticeModule";
-import { WebhookModule } from "./WebhookModule";
-import { VersionModule } from "./VersionModule";
 import { MusicDataModule } from "./MusicDataModule";
+import { NoticeModule } from "./Notice/NoticeModule";
 import { ReportModule } from "./Report/ReportModule";
+import { VersionModule } from "./VersionModule";
+import { WebhookModule } from "./WebhookModule";
 
 export class ApprovalError implements Error {
     public name: string = "ApprovalError";
@@ -76,13 +77,15 @@ export class ApprovalModule extends ReportFormModule {
         this.webhookModule.invoke(WebhookEventName.ON_APPROVE);
 
         const difficulty = Utility.toDifficultyText(report.difficulty);
-        Debug.log(JSON.stringify({
-            'header': '検証報告承認',
-            'reportId': report.reportId,
-            'musicName': report.musicName,
-            'difficulty': difficulty,
-            'baseRating': baseRating.toFixed(1),
-        }));
+        CustomLogManager.log(
+            LogLevel.Info,
+            {
+                'header': '検証報告承認',
+                'reportId': report.reportId,
+                'musicName': report.musicName,
+                'difficulty': difficulty,
+                'baseRating': baseRating.toFixed(1),
+            });
 
         const noticeQueue = this.noticeModule.getQueue();
         noticeQueue.enqueueApproveUnitReport(report);
@@ -100,13 +103,15 @@ export class ApprovalModule extends ReportFormModule {
         let difficulty = Utility.toDifficultyText(report.difficulty);
         let baseRating = report.calcBaseRating();
 
-        Debug.log(JSON.stringify({
-            'header': '検証報告却下',
-            'reportId': report.reportId,
-            'musicName': report.musicName,
-            'difficulty': difficulty,
-            'baseRating': baseRating.toFixed(1),
-        }));
+        CustomLogManager.log(
+            LogLevel.Info,
+            {
+                'header': '検証報告却下',
+                'reportId': report.reportId,
+                'musicName': report.musicName,
+                'difficulty': difficulty,
+                'baseRating': baseRating.toFixed(1),
+            });
 
         const noticeQueue = this.noticeModule.getQueue();
         noticeQueue.enqueueRejectUnitReport(report);
@@ -164,13 +169,15 @@ export class ApprovalModule extends ReportFormModule {
             const difficulty = Utility.toDifficultyText(report.difficulty);
             const baseRating = report.calcBaseRating();
 
-            Debug.log(JSON.stringify({
-                'header': '検証報告承認',
-                'reportId': report.reportId,
-                'musicName': report.musicName,
-                'difficulty': difficulty,
-                'baseRating': baseRating.toFixed(1),
-            }));
+            CustomLogManager.log(
+                LogLevel.Info,
+                {
+                    'header': '検証報告承認',
+                    'reportId': report.reportId,
+                    'musicName': report.musicName,
+                    'difficulty': difficulty,
+                    'baseRating': baseRating.toFixed(1),
+                });
 
             this.noticeModule.getQueue().enqueueApproveUnitReport(report);
         }
@@ -228,10 +235,12 @@ export class ApprovalModule extends ReportFormModule {
         this.musicDataModule.updateMusicData(versionName, targetMusicDatas);
         this.reportModule.approveLevelBulkReport(versionName, bulkReportId);
 
-        Debug.log(JSON.stringify({
-            header: '一括承認',
-            targetLevel: bulkReport.targetLevel,
-        }));
+        CustomLogManager.log(
+            LogLevel.Info,
+            {
+                header: '一括承認',
+                targetLevel: bulkReport.targetLevel,
+            });
 
         this.noticeModule.getQueue().enqueueApproveLevelReport(bulkReport);
         this.noticeModule.getQueue().save();
@@ -247,10 +256,12 @@ export class ApprovalModule extends ReportFormModule {
 
         this.reportModule.rejectLevelBulkReport(versionName, bulkReportId);
 
-        Debug.log(JSON.stringify({
-            header: '一括却下',
-            targetLevel: bulkReport.targetLevel,
-        }));
+        CustomLogManager.log(
+            LogLevel.Info,
+            {
+                header: '一括却下',
+                targetLevel: bulkReport.targetLevel,
+            });
 
         this.noticeModule.getQueue().enqueueRejectLevelReport(bulkReport);
         this.noticeModule.getQueue().save();

@@ -1,11 +1,12 @@
-import { UrlFetchManager } from "./UrlFetch/UrlFetchManager";
+import { LogLevel } from "./CustomLogger/CustomLogger";
+import { CustomLogManager } from "./CustomLogger/CustomLogManager";
 import { CommonConfiguration } from "./ReportForm/Configurations/CommonConfiguration";
 import { ConfigurationEditor } from "./ReportForm/Configurations/ConfigurationEditor";
-import { Debug } from "./ReportForm/Debug";
 import { Instance } from "./ReportForm/Instance";
 import { MusicDataModule } from "./ReportForm/Modules/MusicDataModule";
 import { NoticeModule } from "./ReportForm/Modules/Notice/NoticeModule";
 import { ReportModule } from "./ReportForm/Modules/Report/ReportModule";
+import { Router } from "./ReportForm/Modules/Router";
 import { TwitterModule } from "./ReportForm/Modules/TwitterModule";
 import { VersionModule } from "./ReportForm/Modules/VersionModule";
 import { InProgressListPage } from "./ReportForm/Page/InProgressListPage";
@@ -13,15 +14,15 @@ import { LevelBulkReportListPage } from "./ReportForm/Page/LevelBulkReportListPa
 import { BulkReportTableReader } from "./ReportForm/Report/BulkReport/BulkReportTableReader";
 import { BulkReportTableWriter } from "./ReportForm/Report/BulkReport/BulkReportTableWriter";
 import { ReportStatus } from "./ReportForm/Report/ReportStatus";
-import { Router } from "./ReportForm/Modules/Router";
+import { Block } from "./UrlFetch.Slack/API/Blocks";
 import { SlackChatPostMessageStream } from "./UrlFetch.Slack/API/Chat/PostMessage/Stream";
 import { SlackBlockFactory } from "./UrlFetch.Slack/BlockFactory";
 import { SlackCompositionObjectFactory } from "./UrlFetch.Slack/CompositionObjectFactory";
-import { Block } from "./UrlFetch.Slack/API/Blocks";
+import { UrlFetchManager } from "./UrlFetch/UrlFetchManager";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {
     const ret = ConfigurationEditor.store();
-    Debug.log(ret.getProperties());
+    CustomLogManager.log(LogLevel.Info, ret.getProperties());
     return ret;
 }
 
@@ -73,10 +74,12 @@ function getGenres(): string[] {
             }
         }
 
-        Debug.log(JSON.stringify({
-            versionName: versionName,
-            genres: genres,
-        }));
+        CustomLogManager.log(
+            LogLevel.Info,
+            {
+                versionName: versionName,
+                genres: genres,
+            });
 
         return genres;
     });
@@ -206,10 +209,10 @@ export function notifyUnverified() {
 function importBulkReportSheet() {
     try {
         Instance.initialize();
-        Debug.log("開始: importBulkReportSheet");
+        CustomLogManager.log(LogLevel.Info, "開始: importBulkReportSheet");
         const versionName = Instance.instance.module.config.getConfig(CommonConfiguration).defaultVersionName;
         Instance.instance.module.getModule(ReportModule).importBulkReport(versionName);
-        Debug.log("完了: importBulkReportSheet");
+        CustomLogManager.log(LogLevel.Info, "完了: importBulkReportSheet");
     }
     catch (e) {
         Instance.exception(e);
@@ -220,7 +223,7 @@ function updateCurrentVersionBulkReportTable() {
     try {
         Instance.initialize();
 
-        Debug.log("開始: updateCurrentVersionBulkReportSheet");
+        CustomLogManager.log(LogLevel.Info, "開始: updateCurrentVersionBulkReportSheet");
 
         const config = Instance.instance.module.config.getConfig(CommonConfiguration);
         const versionName = config.defaultVersionName;
@@ -237,7 +240,7 @@ function updateCurrentVersionBulkReportTable() {
         const writer = new BulkReportTableWriter();
         writer.write(spreadsheetId, container);
 
-        Debug.log("完了: updateCurrentVersionBulkReportSheet");
+        CustomLogManager.log(LogLevel.Info, "完了: updateCurrentVersionBulkReportSheet");
     }
     catch (e) {
         Instance.exception(e);
@@ -248,7 +251,7 @@ function updateNextVersionBulkReportTable() {
     try {
         Instance.initialize();
 
-        Debug.log("開始: updateNextVersionBulkReportTable");
+        CustomLogManager.log(LogLevel.Info, "開始: updateNextVersionBulkReportTable");
 
         const config = Instance.instance.module.config.getConfig(CommonConfiguration);
         const versionName = config.defaultVersionName;
@@ -263,7 +266,7 @@ function updateNextVersionBulkReportTable() {
         const writer = new BulkReportTableWriter();
         writer.write(spreadsheetId, container);
 
-        Debug.log("完了: updateNextVersionBulkReportTable");
+        CustomLogManager.log(LogLevel.Info, "完了: updateNextVersionBulkReportTable");
     }
     catch (e) {
         Instance.exception(e);

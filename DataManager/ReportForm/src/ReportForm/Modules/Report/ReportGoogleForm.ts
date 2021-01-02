@@ -1,5 +1,6 @@
+import { LogLevel } from "../../../CustomLogger/CustomLogger";
+import { CustomLogManager } from "../../../CustomLogger/CustomLogManager";
 import { MusicDataTable } from "../../../MusicDataTable/MusicDataTable";
-import { Debug } from "../../Debug";
 import { ReportFormModule } from "../@ReportFormModule";
 import { MusicDataModule } from "../MusicDataModule";
 import { VersionModule } from "../VersionModule";
@@ -12,12 +13,12 @@ export class ReportGoogleForm {
         if (!this._form) {
             const formId = this._module.config.report.reportFormId;
             if (!formId) {
-                Debug.logError(`reportFormId is not set.`);
+                CustomLogManager.log(LogLevel.Error, `reportFormId is not set.`);
                 return null;
             }
             const form = FormApp.openById(formId);
             if (!form) {
-                Debug.logError(`Form is invalid. formId: ${formId}`);
+                CustomLogManager.log(LogLevel.Error, `Form is invalid. formId: ${formId}`);
                 return null;
             }
             this._form = form;
@@ -26,8 +27,8 @@ export class ReportGoogleForm {
     }
 
     public buildForm(versionName: string): void {
-        Debug.log(`報告フォームを構築します: ${versionName}`);
-        Debug.log('フォームに送信された回答の削除...');
+        CustomLogManager.log(LogLevel.Info, `報告フォームを構築します: ${versionName}`);
+        CustomLogManager.log(LogLevel.Info, 'フォームに送信された回答の削除...');
         const form = this.form;
         form.deleteAllResponses();
         {
@@ -36,12 +37,12 @@ export class ReportGoogleForm {
                 Utilities.sleep(100);
             }
         }
-        Debug.log(`フォームに送信された回答の削除が完了しました`);
+        CustomLogManager.log(LogLevel.Info, `フォームに送信された回答の削除が完了しました`);
         form.setTitle('譜面定数 検証報告');
         const genreSelect = form.addListItem();
         genreSelect.setTitle('ジャンルを選択してください');
         genreSelect.setRequired(true);
-        Debug.log(`楽曲選択画面の作成...`);
+        CustomLogManager.log(LogLevel.Info, `楽曲選択画面の作成...`);
         const table = this._module.getModule(MusicDataModule).getTable(versionName);
         const genres = this._module.getModule(VersionModule).getVersionConfig(versionName).genres;
         genres.push('ALL');
@@ -52,21 +53,21 @@ export class ReportGoogleForm {
             musicSelectPages[genre] = this.buildFormMusicSelectPage(form, table, genre);
             Utilities.sleep(500);
         }
-        Debug.log(`楽曲選択画面の作成が完了しました`);
-        Debug.log(`ジャンル選択画面の構築...`);
+        CustomLogManager.log(LogLevel.Info, `楽曲選択画面の作成が完了しました`);
+        CustomLogManager.log(LogLevel.Info, `ジャンル選択画面の構築...`);
         this.buildGenreSelect(genreSelect, genres, musicSelectPages);
-        Debug.log(`ジャンル選択画面の構築中が完了しました`);
+        CustomLogManager.log(LogLevel.Info, `ジャンル選択画面の構築中が完了しました`);
         Utilities.sleep(1000);
-        Debug.log(`パラメータ記入画面の作成...`);
+        CustomLogManager.log(LogLevel.Info, `パラメータ記入画面の作成...`);
         const scoreInputPage = this.buildInputPage(form);
-        Debug.log(`パラメータ記入画面の作成が完了しました`);
+        CustomLogManager.log(LogLevel.Info, `パラメータ記入画面の作成が完了しました`);
         Utilities.sleep(1000);
-        Debug.log(`ページ遷移の構築...`);
+        CustomLogManager.log(LogLevel.Info, `ページ遷移の構築...`);
         for (const genre of genres) {
             musicSelectPages[genre].setGoToPage(scoreInputPage);
         }
-        Debug.log(`ページ遷移の構築が完了しました`);
-        Debug.log(`報告フォームの構築が完了しました`);
+        CustomLogManager.log(LogLevel.Info, `ページ遷移の構築が完了しました`);
+        CustomLogManager.log(LogLevel.Info, `報告フォームの構築が完了しました`);
     }
     private buildFormMusicSelectPage(form: GoogleAppsScript.Forms.Form, table: MusicDataTable, targetGenre: string): GoogleAppsScript.Forms.PageBreakItem {
         const page = form.addPageBreakItem();

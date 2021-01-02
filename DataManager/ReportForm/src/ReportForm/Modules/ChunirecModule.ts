@@ -1,6 +1,7 @@
+import { LogLevel } from "../../CustomLogger/CustomLogger";
+import { CustomLogManager } from "../../CustomLogger/CustomLogManager";
 import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { ReportFormModule } from "./@ReportFormModule";
-import { Debug } from "../Debug";
 
 export class ChunirecModule extends ReportFormModule {
     public static readonly moduleName = 'chunirec';
@@ -44,14 +45,16 @@ export class ChunirecModule extends ReportFormModule {
             const responses = UrlFetchApp.fetchAll(requests);
             for (const response of responses) {
                 if (response.getResponseCode() !== 200) {
-                    Debug.logError(`failure ChunirecModule.requestUpdateMusics.
+                    CustomLogManager.log(
+                        LogLevel.Error,
+                        `failure ChunirecModule.requestUpdateMusics.
 ${response.getContentText()}`);
                     success = false;
                 }
             }
         }
         catch (e) {
-            Debug.logError(e);
+            CustomLogManager.exception(e);
             success = false;
         }
         return success;

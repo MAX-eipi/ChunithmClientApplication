@@ -1,4 +1,4 @@
-import { Debug } from "../ReportForm/Debug";
+import { CustomLogManager } from "../CustomLogger/CustomLogManager";
 import { ConfigurationObject } from "./ConfigurationObject";
 
 export class JsonConfiguration extends ConfigurationObject {
@@ -9,7 +9,7 @@ export class JsonConfiguration extends ConfigurationObject {
             return this.createByJson(json);
         }
         catch (e) {
-            Debug.logException(e);
+            CustomLogManager.exception(e);
             return null;
         }
     }
@@ -20,7 +20,7 @@ export class JsonConfiguration extends ConfigurationObject {
             jsonObject = JSON.parse(json);
         }
         catch (e) {
-            Debug.logException(e)
+            CustomLogManager.exception(e);
             return null;
         }
         return new JsonConfiguration(jsonObject);

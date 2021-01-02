@@ -1,4 +1,6 @@
-import { Debug } from "./Debug";
+import { storeConfig } from "../@operations";
+import { LogLevel } from "../CustomLogger/CustomLogger";
+import { CustomLogManager } from "../CustomLogger/CustomLogManager";
 import { Instance } from "./Instance";
 import { LINEModule } from "./Modules/LINEModule";
 import { NoticeModule } from "./Modules/Notice/NoticeModule";
@@ -10,7 +12,6 @@ import { GoogleFormLevelBulkReport } from "./Report/LevelBulkReport/GoogleFormLe
 import { ReportStatus } from "./Report/ReportStatus";
 import { PostLocation } from "./Report/ReportStorage";
 import { Utility } from "./Utility";
-import { storeConfig } from "../@operations";
 
 export class ReportForm {
     public static doGet(e: any): any {
@@ -22,9 +23,8 @@ export class ReportForm {
             return Instance.instance.module.getModule(Router).call(e.parameter.page, e.parameter);
         }
         catch (error) {
-            let message = this.toExceptionMessage(error);
-            Debug.logError(message);
-            return Instance.instance.module.getModule(Router).callErrorPage(message, e.parameter.versionName);
+            CustomLogManager.exception(error);
+            return Instance.instance.module.getModule(Router).callErrorPage(error.toString(), e.parameter.versionName);
         }
     }
 
@@ -72,8 +72,7 @@ export class ReportForm {
             return this.getSuccessResponseContent();
         }
         catch (error) {
-            let message = this.toExceptionMessage(error);
-            Debug.logError(message);
+            CustomLogManager.exception(error);
             return this.getSuccessResponseContent();
         }
     }
@@ -99,19 +98,20 @@ export class ReportForm {
 
             let report = Instance.instance.module.getModule(ReportModule).insertReport(versionName, new GoogleFormReport(e.response));
             if (report) {
-                Debug.log(`${JSON.stringify({
+                const data = {
                     header: `検証報告`,
                     reportId: report.reportId,
                     musicName: report.musicName,
                     difficulty: Utility.toDifficultyText(report.difficulty),
                     baseRating: report.calcBaseRating().toFixed(1),
-                })}`);
+                };
+                CustomLogManager.log(LogLevel.Info, data);
 
                 Instance.instance.module.getModule(NoticeModule).getQueue().enqueueCreateUnitReport(report);
             }
         }
         catch (error) {
-            Debug.logException(error);
+            CustomLogManager.exception(error);
         }
     }
 
@@ -123,21 +123,20 @@ export class ReportForm {
             }
             let bulkReport = Instance.instance.module.getModule(ReportModule).insertLevelBulkReport(versionName, new GoogleFormLevelBulkReport(e.response));
             if (bulkReport) {
-                Debug.log(JSON.stringify({
+                const data = {
                     header: `一括検証報告`,
                     reportId: bulkReport.reportId,
                     targetLevel: bulkReport.targetLevel,
                     musicCount: bulkReport.musicCount,
                     op: bulkReport.op,
                     opRatio: bulkReport.opRatio,
-                }));
-
+                };
+                CustomLogManager.log(LogLevel.Info, data);
                 Instance.instance.module.getModule(NoticeModule).getQueue().enqueueCreateLevelReport(bulkReport);
             }
         }
         catch (error) {
-            let message = this.toExceptionMessage(error);
-            Debug.logError(message);
+            CustomLogManager.exception(error);
         }
     }
 
@@ -174,25 +173,17 @@ export class ReportForm {
                 }
                 else {
                     // 入力前に画像が投稿された
-                    Debug.logError(`データが未入力のまま検証画像が投稿されました
+                    const message = `データが未入力のまま検証画像が投稿されました
 楽曲ID: ${musicId}
 難易度: ${items[2].getResponse()}
 画像URL:
-${imagePaths.reduce((acc, src) => acc + '\n' + src)}`);
+${imagePaths.reduce((acc, src) => acc + '\n' + src)}`
+                    CustomLogManager.log(LogLevel.Error, message);
                 }
             }
         }
         catch (error) {
-            const message = this.toExceptionMessage(error);
-            Debug.logError(message);
+            CustomLogManager.exception(error);
         }
-    }
-
-    private static toExceptionMessage(error: Error): string {
-        return `[Message]
-${error.message}
-
-[Stack Trace]
-${error.stack}`;
     }
 }

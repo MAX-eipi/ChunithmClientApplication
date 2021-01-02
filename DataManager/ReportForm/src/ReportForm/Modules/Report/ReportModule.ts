@@ -1,5 +1,10 @@
-import { Debug } from "../../Debug";
+import { LogLevel } from "../../../CustomLogger/CustomLogger";
+import { CustomLogManager } from "../../../CustomLogger/CustomLogManager";
+import { Difficulty } from "../../../MusicDataTable/Difficulty";
+import { BulkReportTableContainer } from "../../Report/BulkReport/BulkReportTableContainer";
+import { BulkReportTableReader } from "../../Report/BulkReport/BulkReportTableReader";
 import { GoogleFormReport } from "../../Report/GoogleFormReport";
+import { IMusicDataReport } from "../../Report/IMusicDataReport";
 import { IReport } from "../../Report/IReport";
 import { GoogleFormLevelBulkReport } from "../../Report/LevelBulkReport/GoogleFormLevelBulkReport";
 import { LevelBulkReport } from "../../Report/LevelBulkReport/LevelBulkReport";
@@ -9,15 +14,11 @@ import { ReportStatus } from "../../Report/ReportStatus";
 import { PostLocation, ReportStorage } from "../../Report/ReportStorage";
 import { Utility } from "../../Utility";
 import { ReportFormModule } from "../@ReportFormModule";
+import { LINEModule } from "../LINEModule";
 import { MusicDataModule } from "../MusicDataModule";
+import { VersionModule } from "../VersionModule";
 import { LevelBulkReportGoogleForm } from "./LevelBulkReportGoogleForm";
 import { ReportGoogleForm } from "./ReportGoogleForm";
-import { BulkReportTableReader } from "../../Report/BulkReport/BulkReportTableReader";
-import { Difficulty } from "../../../MusicDataTable/Difficulty";
-import { IMusicDataReport } from "../../Report/IMusicDataReport";
-import { BulkReportTableContainer } from "../../Report/BulkReport/BulkReportTableContainer";
-import { LINEModule } from "../LINEModule";
-import { VersionModule } from "../VersionModule";
 
 export class ReportModule extends ReportFormModule {
     public static readonly moduleName = 'report';
@@ -167,14 +168,18 @@ export class ReportModule extends ReportFormModule {
 
         const targetMusicData = table.getMusicDataByName(formReport.musicName);
         if (!targetMusicData) {
-            Debug.logError(`[検証報告エラー]楽曲表に存在しない楽曲
+            CustomLogManager.log(
+                LogLevel.Error,
+                `[検証報告エラー]楽曲表に存在しない楽曲
 楽曲名: ${formReport.musicName}
 VERSION: ${versionName}`);
             return null;
         }
 
         if (targetMusicData.getVerified(formReport.difficulty)) {
-            Debug.logError(`[検証報告エラー]既に検証済みの楽曲
+            CustomLogManager.log(
+                LogLevel.Error,
+                `[検証報告エラー]既に検証済みの楽曲
 楽曲名: ${formReport.musicName}
 難易度: ${Utility.toDifficultyText(formReport.difficulty)}
 VERSION: ${versionName}`);
@@ -183,7 +188,9 @@ VERSION: ${versionName}`);
 
         const diff = formReport.afterOp - formReport.beforeOp;
         if (diff <= 0 || diff > 100) {
-            Debug.logError(`[検証報告エラー]OP変動値が範囲外
+            CustomLogManager.log(
+                LogLevel.Error,
+                `[検証報告エラー]OP変動値が範囲外
 ${JSON.stringify(formReport)}`);
             return null;
         }
@@ -224,7 +231,7 @@ OP理論値:${maxOp}
 OP実測値:${formReport.op}
 OP割合[万分率]:${opRatio100Fold}
 実測値と理論値の比率[万分率]:${calcOpRatio100Fold}`;
-            Debug.logError(message);
+            CustomLogManager.log(LogLevel.Error, message);
             return null;
         }
         if (calcOpRatio100Fold === checkCalcOpRatio100Fold) {
@@ -235,7 +242,7 @@ OP理論値:${maxOp}
 OP実測値:${formReport.op}
 OP割合[万分率]:${opRatio100Fold}
 実測値と理論値の比率[万分率]:${calcOpRatio100Fold}`;
-            Debug.logError(message);
+            CustomLogManager.log(LogLevel.Error, message);
             return null;
         }
 

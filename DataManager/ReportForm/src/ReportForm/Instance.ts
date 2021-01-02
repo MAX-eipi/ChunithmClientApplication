@@ -2,14 +2,14 @@ import { getConstValues } from "../@const";
 import { ConfigurationScriptProperty, ConfigurationSpreadsheet } from "../Configurations/ConfigurationDefinition";
 import { ConfigurationObject, ConfigurationSourceType } from "../Configurations/ConfigurationObject";
 import { JsonConfiguration } from "../Configurations/JsonConfiguration";
+import { CustomLogManager } from "../CustomLogger/CustomLogManager";
 import { ReportFormConfiguration } from "./Configurations/@ReportFormConfiguration";
-import { Debug } from "./Debug";
 import { LINECommandDI } from "./Dependencies/LINECommand";
 import { LoggerDI } from "./Dependencies/Logger";
 import { PageDI } from "./Dependencies/Page";
 import { PostCommandDI } from "./Dependencies/PostCommand";
 import { ReportFormModule } from "./Modules/@ReportFormModule";
-import { WebhookSettingsManager, WebhookModule } from "./Modules/WebhookModule";
+import { WebhookModule, WebhookSettingsManager } from "./Modules/WebhookModule";
 
 export class Instance {
     private static _instance: Instance = null;
@@ -54,11 +54,6 @@ export class Instance {
     }
 
     public static exception(error: Error): void {
-        let message = `[Message]
-${error.message}
-
-[Stack Trace]
-${error.stack}`;
-        Debug.logError(message);
+        CustomLogManager.exception(error);
     }
 }

@@ -236,9 +236,6 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\LineCommand\%40LINECommand.ts" />
     <TypeScriptCompile Include="src\ReportForm\Configurations\ConfigurationEditor.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Debug.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Instance.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

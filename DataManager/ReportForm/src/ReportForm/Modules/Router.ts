@@ -1,4 +1,5 @@
-import { Debug } from "../Debug";
+import { LogLevel } from "../../CustomLogger/CustomLogger";
+import { CustomLogManager } from "../../CustomLogger/CustomLogManager";
 import { ReportFormPage } from "../Page/@ReportFormPage";
 import { ReportFormModule } from "./@ReportFormModule";
 
@@ -45,13 +46,13 @@ export class Router extends ReportFormModule {
 
         let factory = this.getPageFactory(page);
         if (!factory) {
-            Debug.logError(`存在しないページにアクセスされました\n指定ページ:${page}`);
+            CustomLogManager.log(LogLevel.Error, `存在しないページにアクセスされました\n指定ページ:${page}`);
             return this.callErrorPage("存在しないページが指定されました");
         }
 
         this.pages[page] = new factory(this.module);
         if (!this.pages[page].isAccessable(this.config.common.role)) {
-            Debug.logError(`権限のないページにアクセスされました\n指定ページ:${page}`);
+            CustomLogManager.log(LogLevel.Error, `権限のないページにアクセスされました\n指定ページ:${page}`);
             return this.callErrorPage("存在しないページが指定されました");
         }
 

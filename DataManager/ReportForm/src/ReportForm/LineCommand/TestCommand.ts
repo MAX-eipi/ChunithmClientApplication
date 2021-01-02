@@ -1,7 +1,8 @@
-import { Debug } from "../Debug";
+import { LogLevel } from "../../CustomLogger/CustomLogger";
+import { CustomLogManager } from "../../CustomLogger/CustomLogManager";
+import { TwitterModule } from "../Modules/TwitterModule";
 import { notifyUnverified } from "../operations";
 import { LINECommand } from "./@LINECommand";
-import { TwitterModule } from "../Modules/TwitterModule";
 
 export class TestCommand extends LINECommand {
     public called(command: string): boolean {
@@ -18,7 +19,7 @@ export class TestCommand extends LINECommand {
                 this.pushMessage(['テスト:通知']);
                 break;
             case "error-notice":
-                Debug.logError('テスト:エラー通知');
+                CustomLogManager.log(LogLevel.Error, 'テスト:エラー通知');
                 break;
             case "operation-notifyUnverified":
                 notifyUnverified();

@@ -1,5 +1,6 @@
+import { LogLevel } from "../../CustomLogger/CustomLogger";
+import { CustomLogManager } from "../../CustomLogger/CustomLogManager";
 import { TwitterConnector } from "../../Twitter/TwitterConnector";
-import { Debug } from "../Debug";
 import { Environment } from "../Environment";
 import { ReportFormModule } from "./@ReportFormModule";
 
@@ -12,10 +13,11 @@ export class TwitterModule extends ReportFormModule {
             let apiToken = this.config.twitter.apiToken;
             let secretKey = this.config.twitter.secretKey;
             if (!apiToken || !secretKey) {
-                Debug.logError(`[TwitterModule]Instantiation failed. ${JSON.stringify({
+                const message = `[TwitterModule]Instantiation failed. ${JSON.stringify({
                     apiToken: apiToken,
                     secretKey: secretKey,
-                })}`);
+                })}`;
+                CustomLogManager.log(LogLevel.Error, message);
                 return null;
             }
             this._connector = new TwitterConnector(apiToken, secretKey);
