@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\OAuth1\" />
+    <Folder Include="src\CustomLogger\" />
     <Folder Include="src\LINE\API\" />
     <Folder Include="src\LINE\API\Message\" />
     <Folder Include="src\LINE\API\Message\Reply\" />
@@ -151,6 +152,9 @@
     <TypeScriptCompile Include="src\ConstDefinition.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\CustomLogger\ConsoleLogger.ts" />
+    <TypeScriptCompile Include="src\CustomLogger\CustomLogger.ts" />
+    <TypeScriptCompile Include="src\CustomLogger\CustomLogManager.ts" />
     <TypeScriptCompile Include="src\LINE\API\MessageObjects.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

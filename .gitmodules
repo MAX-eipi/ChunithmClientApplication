@@ -4,3 +4,6 @@
 [submodule "DataManager/ReportForm/src/UrlFetch"]
 	path = DataManager/ReportForm/src/UrlFetch
 	url = git@github.com:max-eipi-gas-modules/UrlFetch.git
+[submodule "DataManager/ReportForm/src/CustomLogger"]
+	path = DataManager/ReportForm/src/CustomLogger
+	url = git@github.com:max-eipi-gas-modules/CustomLogger.git
