@@ -1,3 +1,6 @@
 [submodule "DataManager/ReportForm/src/Repository"]
 	path = DataManager/ReportForm/src/Repository
 	url = git@github.com:max-eipi-gas-modules/Repository.git
+[submodule "DataManager/ReportForm/src/UrlFetch"]
+	path = DataManager/ReportForm/src/UrlFetch
+	url = git@github.com:max-eipi-gas-modules/UrlFetch.git
