@@ -81,6 +81,8 @@
     <Folder Include="Dependencies\" />
     <Folder Include="src\Cache\" />
     <Folder Include="src\ReportForm\Modules\Notice\" />
+    <Folder Include="src\ReportForm\Repository\" />
+    <Folder Include="src\Repository\" />
     <Folder Include="src\Slack\API\Chat\" />
     <Folder Include="src\Slack\API\Chat\PostMessage\" />
     <Folder Include="src\Spreadsheet\" />
@@ -358,6 +360,10 @@
     <TypeScriptCompile Include="src\ReportForm\Modules\WebhookModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="SRC\REPOSITORY\RepositoryInterface.ts" />
+    <TypeScriptCompile Include="SRC\REPOSITORY\RepositorySchema.ts" />
+    <TypeScriptCompile Include="SRC\REPOSITORY\RepositorySchemaImpl.ts" />
+    <TypeScriptCompile Include="src\Repository\SpreadsheetRepository.ts" />
     <TypeScriptCompile Include="src\Slack\BlockElementFactory.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
