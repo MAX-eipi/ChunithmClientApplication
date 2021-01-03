@@ -1,7 +1,7 @@
+import { notifyUnverified } from "../../@operations";
 import { LogLevel } from "../../CustomLogger/CustomLogger";
 import { CustomLogManager } from "../../CustomLogger/CustomLogManager";
 import { TwitterModule } from "../Modules/TwitterModule";
-import { notifyUnverified } from "../operations";
 import { LINECommand } from "./@LINECommand";
 
 export class TestCommand extends LINECommand {

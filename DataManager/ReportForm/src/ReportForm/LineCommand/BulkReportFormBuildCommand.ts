@@ -9,7 +9,7 @@ export class BulkReportFormBuildCommand extends LINECommand {
     public invoke(command: string, event: any, postData: any): void {
         let versionName = command.replace('build-bulk-report-form<<', '');
         if (!versionName) {
-            versionName = this.module.config.common.defaultVersionName;
+            versionName = this.module.configuration.common.defaultVersionName;
         }
         this.replyMessage(event.replyToken, [`一括報告フォームを構築します:${versionName}`]);
         this.module.getModule(ReportModule).buildBulkReportForm(versionName);

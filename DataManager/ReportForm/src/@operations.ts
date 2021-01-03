@@ -1,6 +1,5 @@
 import { LogLevel } from "./CustomLogger/CustomLogger";
 import { CustomLogManager } from "./CustomLogger/CustomLogManager";
-import { CommonConfiguration } from "./ReportForm/Configurations/CommonConfiguration";
 import { ConfigurationEditor } from "./ReportForm/Configurations/ConfigurationEditor";
 import { Instance } from "./ReportForm/Instance";
 import { MusicDataModule } from "./ReportForm/Modules/MusicDataModule";
@@ -37,7 +36,7 @@ export function execute<T>(action: (instance: Instance) => T) {
 }
 
 function getDefaultVersionName(instance: Instance): string {
-    return instance.module.config.common.defaultVersionName;
+    return instance.module.configuration.defaultVersionName;
 }
 
 function setupForm() {
@@ -155,7 +154,7 @@ export function notifyUnverified() {
     try {
         Instance.initialize();
 
-        const versionName = Instance.instance.module.config.common.defaultVersionName;
+        const versionName = Instance.instance.module.configuration.defaultVersionName;
         const reports = Instance.instance.module.getModule(ReportModule).getReports(versionName);
         let wipReportCount = 0;
         for (let i = 0; i < reports.length; i++) {
@@ -194,8 +193,8 @@ export function notifyUnverified() {
                 blocks.push(SlackBlockFactory.divider());
             }
             UrlFetchManager.execute([new SlackChatPostMessageStream({
-                token: Instance.instance.module.config.global.slackApiToken,
-                channel: Instance.instance.module.config.global.slackChannelIdTable['noticeWipReportCount'],
+                token: Instance.instance.module.configuration.global.slackApiToken,
+                channel: Instance.instance.module.configuration.global.slackChannelIdTable['noticeWipReportCount'],
                 text: '[定期]未承認 件数報告',
                 blocks: blocks,
             })]);
@@ -210,7 +209,7 @@ function importBulkReportSheet() {
     try {
         Instance.initialize();
         CustomLogManager.log(LogLevel.Info, "開始: importBulkReportSheet");
-        const versionName = Instance.instance.module.config.getConfig(CommonConfiguration).defaultVersionName;
+        const versionName = Instance.instance.module.configuration.defaultVersionName;
         Instance.instance.module.getModule(ReportModule).importBulkReport(versionName);
         CustomLogManager.log(LogLevel.Info, "完了: importBulkReportSheet");
     }
@@ -225,7 +224,7 @@ function updateCurrentVersionBulkReportTable() {
 
         CustomLogManager.log(LogLevel.Info, "開始: updateCurrentVersionBulkReportSheet");
 
-        const config = Instance.instance.module.config.getConfig(CommonConfiguration);
+        const config = Instance.instance.module.configuration;
         const versionName = config.defaultVersionName;
         const prevVersionName = config.getPreviousVersionName(versionName);
 
@@ -253,7 +252,7 @@ function updateNextVersionBulkReportTable() {
 
         CustomLogManager.log(LogLevel.Info, "開始: updateNextVersionBulkReportTable");
 
-        const config = Instance.instance.module.config.getConfig(CommonConfiguration);
+        const config = Instance.instance.module.configuration;
         const versionName = config.defaultVersionName;
 
         const spreadsheetId = Instance.instance.module.getModule(VersionModule)

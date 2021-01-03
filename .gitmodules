@@ -19,3 +19,12 @@
 [submodule "DataManager/ReportForm/src/CustomLogger.Slack"]
 	path = DataManager/ReportForm/src/CustomLogger.Slack
 	url = git@github.com:max-eipi-gas-modules/CustomLogger.Slack.git
+[submodule "DataManager/ReportForm/src/Configuration"]
+	path = DataManager/ReportForm/src/Configuration
+	url = git@github.com:max-eipi-gas-modules/Configuration.git
+[submodule "DataManager/ReportForm/src/DIProperty"]
+	path = DataManager/ReportForm/src/DIProperty
+	url = git@github.com:max-eipi-gas-modules/DIProperty.git
+[submodule "DataManager/ReportForm/src/CustomCacheProvider"]
+	path = DataManager/ReportForm/src/CustomCacheProvider
+	url = git@github.com:max-eipi-gas-modules/CustomCacheProvider.git

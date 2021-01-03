@@ -1,10 +1,9 @@
-import { Report } from "../../Report/Report";
-import { LevelBulkReport } from "../../Report/LevelBulkReport/LevelBulkReport";
-import { CacheProvider } from "../../../Cache/CacheProvider";
+import { CustomCacheProvider } from "../../../CustomCacheProvider/CustomCacheProvider";
 import { IReport } from "../../Report/IReport";
+import { LevelBulkReport } from "../../Report/LevelBulkReport/LevelBulkReport";
 
 export class NoticeQueue {
-    public constructor(private readonly _cacheProvider: CacheProvider) { }
+    public constructor(private readonly _cacheProvider: CustomCacheProvider) { }
 
     private static readonly KEY_NOTICE_CREATE_UNIT_REPORTS = 'notice_create_unit_reports';
     public enqueueCreateUnitReport(report: IReport): void {
@@ -75,7 +74,7 @@ export class NoticeQueue {
     }
 
     public save(): void {
-        this._cacheProvider.syncServer();
+        this._cacheProvider.apply();
     }
 
     public dump(): void {

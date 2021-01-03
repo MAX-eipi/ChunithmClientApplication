@@ -72,12 +72,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\OAuth1\" />
+    <Folder Include="src\Configuration\" />
+    <Folder Include="src\CustomCacheProvider\" />
     <Folder Include="src\CustomLogger.Slack\" />
     <Folder Include="src\CustomLogger\" />
     <Folder Include="src\CutomLogger.LINE\" />
+    <Folder Include="src\DIProperty\" />
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="Dependencies\" />
-    <Folder Include="src\Cache\" />
     <Folder Include="src\ReportForm\Modules\Notice\" />
     <Folder Include="src\ReportForm\Repository\" />
     <Folder Include="src\Repository\" />
@@ -93,7 +95,6 @@
     <Folder Include="src\UrlFetch.Slack\API\Chat\PostMessage\" />
     <Folder Include="src\UrlFetch\" />
     <Folder Include="src\ReportForm\Modules\" />
-    <Folder Include="src\Configurations\" />
     <Folder Include="src\ReportForm\Logger\" />
     <Folder Include="src\ReportForm\Configurations\" />
     <Folder Include="src\ReportForm\Dependencies\" />
@@ -133,42 +134,27 @@
     <TypeScriptCompile Include="src\%40test.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Cache\CacheProvider.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Cache\CacheServiceProvider.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Cache\SpreadsheetCacheProvider.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Configurations\ConfigurationDefinition.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Configurations\ConfigurationObject.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Configurations\JsonConfiguration.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Configuration\Configuration.ts" />
+    <TypeScriptCompile Include="src\Configuration\JsonConfigurationFactory.ts" />
+    <TypeScriptCompile Include="src\Configuration\JsonFileRuntimeConfiguration.ts" />
+    <TypeScriptCompile Include="src\Configuration\RuntimeConfiguration.ts" />
+    <TypeScriptCompile Include="src\Configuration\ScriptPropertyRuntimeConfiguration.ts" />
     <TypeScriptCompile Include="src\ConstDefinition.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\CustomCacheProvider\CustomCacheProvider.ts" />
+    <TypeScriptCompile Include="src\CustomCacheProvider\ScriptCacheProvider.ts" />
+    <TypeScriptCompile Include="src\CustomCacheProvider\SpreadsheetCacheProvider.ts" />
     <TypeScriptCompile Include="src\CustomLogger.Slack\SlackLogger.ts" />
     <TypeScriptCompile Include="src\CustomLogger\ConsoleLogger.ts" />
     <TypeScriptCompile Include="src\CustomLogger\CustomLogger.ts" />
     <TypeScriptCompile Include="src\CustomLogger\CustomLogManager.ts" />
     <TypeScriptCompile Include="src\CutomLogger.LINE\LINELogger.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Configurations\CommonConfiguration.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Configurations\LogConfiguration.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\DIProperty\DIProperty.ts" />
     <TypeScriptCompile Include="src\ReportForm\Configurations\ReportConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ReportForm\Configurations\TwitterConfiguration.ts">
+    <TypeScriptCompile Include="src\ReportForm\Configurations\RuntimeConfigurationSchema.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Dependencies\LINECommand.ts">
@@ -219,16 +205,7 @@
     <TypeScriptCompile Include="src\MusicDataTable\MusicDataTableWriter.ts" />
     <TypeScriptCompile Include="src\MusicDataTable\Difficulty.ts" />
     <TypeScriptCompile Include="src\%40app.ts" />
-    <TypeScriptCompile Include="src\ReportForm\Configurations\LINEConfiguration.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Configurations\%40ReportFormConfiguration.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Configurations\ScriptPropertiesConfiguration.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Configurations\SpreadsheetConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ReportForm\Environment.ts">
@@ -343,7 +320,6 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Twitter\TwitterConnector.ts" />
     <TypeScriptCompile Include="src\ReportForm\Approval.ts" />
-    <TypeScriptCompile Include="src\Configurations\Configuration.ts" />
     <TypeScriptCompile Include="src\%40events.ts" />
     <TypeScriptCompile Include="src\%40operations.ts" />
     <TypeScriptCompile Include="src\ReportForm\PostCommand\%40PostCommand.ts" />
@@ -377,6 +353,8 @@
     <TypeScriptCompile Include="src\UrlFetch\UrlFetchStreamStatus.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ReportForm\Configurations\ConfigurationSchema.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Configurations\ConfigurationSourceType.ts" />
     <TypeScriptCompile Include="test\MusicDataTable.spec.ts" />
     <TypeScriptCompile Include="test\Rating.spec.ts" />
   </ItemGroup>

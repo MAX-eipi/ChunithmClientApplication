@@ -35,9 +35,9 @@ export class LINEModule extends ReportFormModule {
             };
         });
         const streams: UrlFetchStream[] = [];
-        for (const target of this.config.line.noticeTargetIdList) {
+        for (const target of this.configuration.properties.global.lineNoticeTargetIdList) {
             const stream = new LINEMessagePushStream({
-                channelAccessToken: this.config.line.channelAccessToken,
+                channelAccessToken: this.configuration.properties.global.lineChannelAccessToken,
                 to: target,
                 messages: textMessages,
             });
@@ -54,7 +54,7 @@ export class LINEModule extends ReportFormModule {
             };
         });
         const stream = new LINEMessageReplyStream({
-            channelAccessToken: this.config.line.channelAccessToken,
+            channelAccessToken: this.configuration.properties.global.lineChannelAccessToken,
             replyToken: replyToken,
             messages: textMessages,
         });

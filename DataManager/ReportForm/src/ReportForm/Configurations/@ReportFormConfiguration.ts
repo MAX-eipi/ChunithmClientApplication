@@ -1,74 +1,87 @@
-import { Configuration, GlobalConfigurationFormat, ReportFormConfigurationFormat, VersionConfigurationTable } from "../../Configurations/Configuration";
-import { ConfigurationObject } from "../../Configurations/ConfigurationObject";
-import { CommonConfiguration } from "./CommonConfiguration";
-import { LINEConfiguration } from "./LineConfiguration";
-import { LogConfiguration } from "./LogConfiguration";
-import { ReportConfiguration } from "./ReportConfiguration";
-import { TwitterConfiguration } from "./TwitterConfiguration";
+import { getConstValues } from "../../@const";
+import { Configuration } from "../../Configuration/Configuration";
+import { RuntimeConfiguration } from "../../Configuration/RuntimeConfiguration";
+import { Environment } from "../Environment";
+import { Role } from "../Role";
+import { GlobalConfigurationSchema, ReportFormConfigurationSchema, VersionConfigurationSchema, WebhookConfigurationSchema } from "./ConfigurationSchema";
+import { RuntimeConfigurationSchema } from "./RuntimeConfigurationSchema";
 
-export class ReportFormConfiguration implements Configuration, ReportFormConfigurationFormat {
-    public static instantiate(config: ConfigurationObject, properties: Record<string, string>): ReportFormConfiguration {
-        const instance = new ReportFormConfiguration();
-        instance._root = instance;
-        instance._config = config;
-        instance._properties = properties;
-        return instance;
+export class ReportFormConfiguration {
+    public constructor(
+        private readonly _config: Configuration<ReportFormConfigurationSchema>,
+        private readonly _runtime: RuntimeConfiguration<RuntimeConfigurationSchema>) {
     }
 
-    private _root: ReportFormConfiguration = null;
-    private _config: ConfigurationObject = null;
-    private _properties: { [key: string]: string } = null;
-
-    public get global(): GlobalConfigurationFormat {
-        return this._root._config.global;
+    public get runtime(): RuntimeConfigurationSchema {
+        return this._runtime.properties;
     }
 
-    public get versions(): VersionConfigurationTable {
-        return this._root._config.versions;
+    public applyRuntimeConfiguration(): void {
+        this._runtime.apply();
     }
 
-    public hasProperty(key: string): boolean {
-        return this._root._config.hasProperty(key);
-    }
-    public getProperty<T>(key: string, defaultValue: T): T {
-        return this._root._config.getProperty<T>(key, defaultValue);
+    public get global(): GlobalConfigurationSchema {
+        return this._config.properties.global;
     }
 
-    public hasScriptProperty(key: string): boolean {
-        return key in this._root._properties;
-    }
-    public getScriptProperty(key: string): string {
-        return this._root._properties[key];
+    public get versions(): Record<string, VersionConfigurationSchema> {
+        return this._config.properties.versions;
     }
 
-    protected setScriptProperty(key: string, value: string) {
-        this._root._properties[key] = value;
-        PropertiesService.getScriptProperties().setProperty(key, value);
+    public get webhook(): WebhookConfigurationSchema {
+        return this._config.properties.webhook;
     }
 
-    private _configList: { [key: string]: ReportFormConfiguration } = {};
-    private getConfigInternal<TConfig extends ReportFormConfiguration>(key: string, factory: { new(): TConfig }): TConfig {
-        if (!(key in this._root._configList)) {
-            let config = new factory();
-            config._root = this._root;
-            this._root._configList[key] = config;
+    public get environment(): Environment { return getConstValues().environment; }
+
+    private _overrideRootUrl: string = null;
+    public get rootUrl(): string {
+        return this._overrideRootUrl
+            ? this._overrideRootUrl
+            : this.global.rootUrl;
+    }
+
+    public overrideRootUrl(rootUrl: string): void {
+        this._overrideRootUrl = rootUrl;
+    }
+
+    private _overrideRole: Role = -1;
+    public get role(): Role {
+        return this._overrideRole >= 0
+            ? this._overrideRole
+            : this.global.role;
+    }
+
+    public overrideRole(role: Role): void {
+        this._overrideRole = role;
+    }
+
+    public get defaultVersionName(): string {
+        const versionName = this.global.defaultVersionName;
+        if (!versionName) {
+            return this.latestVersionName;
         }
-        return this._root._configList[key] as TConfig;
+        return versionName;
     }
 
-    public getConfig<TConfig extends ReportFormConfiguration>(factory: { configName: string; new(): TConfig }): TConfig {
-        if (factory.configName in this._root._configList) {
-            return this._root._configList[factory.configName] as TConfig;
+    public get latestVersionName(): string {
+        return this.versionNames[this.versionNames.length - 1];
+    }
+
+    private _versionNames: string[];
+    public get versionNames(): string[] {
+        if (!this._versionNames) {
+            this._versionNames = Object.keys(this.versions);
         }
-        const config = new factory();
-        config._root = this._root;
-        this._root._configList[factory.configName] = config;
-        return config;
+        return this._versionNames;
     }
 
-    public get common(): CommonConfiguration { return this.getConfigInternal(CommonConfiguration.configName, CommonConfiguration); }
-    public get line(): LINEConfiguration { return this.getConfigInternal('line', LINEConfiguration); }
-    public get log(): LogConfiguration { return this.getConfigInternal('log', LogConfiguration); }
-    public get twitter(): TwitterConfiguration { return this.getConfigInternal('twitter', TwitterConfiguration); }
-    public get report(): ReportConfiguration { return this.getConfigInternal('report', ReportConfiguration); }
+    public getPreviousVersionName(currentVersionName: string): string {
+        for (let i = 1; i < this.versionNames.length; i++) {
+            if (this.versionNames[i] === currentVersionName) {
+                return this.versionNames[i - 1];
+            }
+        }
+        return '';
+    }
 }

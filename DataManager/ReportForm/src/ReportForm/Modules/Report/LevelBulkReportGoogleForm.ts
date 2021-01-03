@@ -11,7 +11,7 @@ export class LevelBulkReportGoogleForm {
     private _form: GoogleAppsScript.Forms.Form;
     public get form(): GoogleAppsScript.Forms.Form {
         if (!this._form) {
-            const formId = this._module.config.report.bulkReportFormId;
+            const formId = this._module.configuration.report.bulkReportFormId;
             if (!formId) {
                 CustomLogManager.log(LogLevel.Error, `bulkReportFormId is not set.`);
                 return null;
@@ -38,7 +38,7 @@ export class LevelBulkReportGoogleForm {
         }
         CustomLogManager.log(LogLevel.Info, `フォームに送信された回答の削除が完了しました`);
         const versionConfig = this._module.getModule(VersionModule).getVersionConfig(versionName);
-        if (this._module.config.common.environment === Environment.Release) {
+        if (this._module.configuration.common.environment === Environment.Release) {
             form.setTitle(`譜面定数 一括検証報告 ${versionConfig.displayVersionName}`);
         }
         else {

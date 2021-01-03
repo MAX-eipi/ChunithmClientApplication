@@ -67,8 +67,8 @@ ${i + 1}. ${m.Name} ${basicLevelText}/${advancedLevelText}/${expertLevelText}/${
                 }
                 UrlFetchManager.execute([
                     new SlackChatPostMessageStream({
-                        token: this.module.config.global.slackApiToken,
-                        channel: this.module.config.global.slackChannelIdTable['updateMusicDataTable'],
+                        token: this.module.configuration.global.slackApiToken,
+                        channel: this.module.configuration.global.slackChannelIdTable['updateMusicDataTable'],
                         text: `新曲追加(${addedMusicDatas.length}曲)`,
                         blocks: [
                             SlackBlockFactory.section(
@@ -97,8 +97,8 @@ ${genre}: ${musicCounts[genre]}曲`;
                 }
                 UrlFetchManager.execute([
                     new SlackChatPostMessageStream({
-                        token: this.module.config.global.slackApiToken,
-                        channel: this.module.config.global.slackChannelIdTable['updateMusicDataTable'],
+                        token: this.module.configuration.global.slackApiToken,
+                        channel: this.module.configuration.global.slackChannelIdTable['updateMusicDataTable'],
                         text: `新規定数表作成`,
                         blocks: [
                             SlackBlockFactory.section(

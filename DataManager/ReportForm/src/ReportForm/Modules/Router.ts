@@ -21,7 +21,7 @@ export class Router extends ReportFormModule {
     }
 
     public getRootUrl(): string {
-        return this.config.common.rootUrl;
+        return this.configuration.rootUrl;
     }
 
     public bindRoot(source: string): string {
@@ -51,7 +51,7 @@ export class Router extends ReportFormModule {
         }
 
         this.pages[page] = new factory(this.module);
-        if (!this.pages[page].isAccessable(this.config.common.role)) {
+        if (!this.pages[page].isAccessable(this.configuration.role)) {
             CustomLogManager.log(LogLevel.Error, `権限のないページにアクセスされました\n指定ページ:${page}`);
             return this.callErrorPage("存在しないページが指定されました");
         }

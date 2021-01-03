@@ -1,20 +1,14 @@
-import { Role } from "../ReportForm/Role";
+import { Role } from "../Role";
 
-// TODO: mv /ReportForm
+export type VersionConfigurationTable = Record<string, VersionConfigurationSchema>;
 
-export interface Configuration {
-    hasProperty(key: string): boolean;
-    getProperty<T>(key: string, defaultValue: T): T;
-}
-
-export type VersionConfigurationTable = Record<string, VersionConfigurationFormat>;
-
-export interface ReportFormConfigurationFormat extends Record<string, any> {
-    readonly global: GlobalConfigurationFormat;
+export interface ReportFormConfigurationSchema {
+    readonly global: GlobalConfigurationSchema;
     readonly versions: VersionConfigurationTable;
+    readonly webhook: WebhookConfigurationSchema;
 }
 
-export interface GlobalConfigurationFormat {
+export interface GlobalConfigurationSchema {
     readonly logSpreadSheetId: string;
     readonly logWorkSheetName: string;
     readonly errorLogSpreadSheetId: string;
@@ -36,7 +30,7 @@ export interface GlobalConfigurationFormat {
     readonly slackChannelIdTable: Record<string, string>;
 }
 
-export interface VersionConfigurationFormat {
+export interface VersionConfigurationSchema {
     readonly displayVersionName: string;
     readonly genres: string[];
     readonly musicDataTableSpreadsheetId: string;
@@ -47,4 +41,9 @@ export interface VersionConfigurationFormat {
     readonly bulkReportWorksheetName: string;
     readonly bulkReportSpreadsheetId: string;
     readonly nextVersionBulkReportSpreadsheetId: string;
+}
+
+export interface WebhookConfigurationSchema {
+    readonly settingsSpreadsheetId: string;
+    readonly settingsWorksheetName: string;
 }

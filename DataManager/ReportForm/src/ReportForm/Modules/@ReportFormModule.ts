@@ -29,5 +29,5 @@ export class ReportFormModule {
 
     protected get module(): ReportFormModule { return this._root; }
 
-    public get config(): ReportFormConfiguration { return this._config; }
+    public get configuration(): ReportFormConfiguration { return this._config; }
 }

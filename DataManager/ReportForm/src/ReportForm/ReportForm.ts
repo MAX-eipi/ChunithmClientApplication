@@ -18,7 +18,7 @@ export class ReportForm {
         try {
             Instance.initialize();
             if (!e.parameter.versionName) {
-                e.parameter.versionName = Instance.instance.module.config.common.defaultVersionName;
+                e.parameter.versionName = Instance.instance.module.configuration.defaultVersionName;
             }
             return Instance.instance.module.getModule(Router).call(e.parameter.page, e.parameter);
         }
@@ -54,7 +54,7 @@ export class ReportForm {
             Instance.initialize();
 
             if (!postData.versionName) {
-                postData.versionName = Instance.instance.module.config.common.defaultVersionName;
+                postData.versionName = Instance.instance.module.configuration.defaultVersionName;
             }
 
             let lineCommand = Instance.instance.module.getModule(LINEModule).findCommand(postData);
@@ -93,7 +93,7 @@ export class ReportForm {
         try {
             Instance.initialize();
             if (!versionName) {
-                versionName = Instance.instance.module.config.common.defaultVersionName;
+                versionName = Instance.instance.module.configuration.defaultVersionName;
             }
 
             let report = Instance.instance.module.getModule(ReportModule).insertReport(versionName, new GoogleFormReport(e.response));
@@ -119,7 +119,7 @@ export class ReportForm {
         try {
             Instance.initialize();
             if (!versionName) {
-                versionName = Instance.instance.module.config.common.defaultVersionName;
+                versionName = Instance.instance.module.configuration.defaultVersionName;
             }
             let bulkReport = Instance.instance.module.getModule(ReportModule).insertLevelBulkReport(versionName, new GoogleFormLevelBulkReport(e.response));
             if (bulkReport) {
@@ -144,7 +144,7 @@ export class ReportForm {
         try {
             Instance.initialize();
             if (!versionName) {
-                versionName = Instance.instance.module.config.common.defaultVersionName;
+                versionName = Instance.instance.module.configuration.defaultVersionName;
             }
             const items = e.response.getItemResponses();
             const musicId = parseInt(items[0].getResponse() as string);

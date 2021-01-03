@@ -28,7 +28,7 @@ export class TopPage extends ReportFormPage {
         source = source.replace(/%version%/g, getAppVersion());
         source = source.replace(/%versionText%/g, versionText);
 
-        source = this.replaceWipContainer(source, this.module.config.common.role);
+        source = this.replaceWipContainer(source, this.module.configuration.role);
 
         source = this.binds(
             source,

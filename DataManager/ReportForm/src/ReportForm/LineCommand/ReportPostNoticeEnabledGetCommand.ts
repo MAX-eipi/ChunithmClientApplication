@@ -6,7 +6,7 @@ export class ReportPostNoticeEnabledGetCommand extends LINECommand {
     }
 
     public invoke(command: string, event: any, postData: any): void {
-        let enabledText = this.module.config.line.reportPostNoticeEnabled ? "ON" : "OFF";
+        let enabledText = this.module.runtimeConfiguration.properties.lineNoticeUnitReportEnabled ? "ON" : "OFF";
         this.replyMessage(event.replyToken, [`検証報告通知設定:${enabledText}`]);
     }
 }

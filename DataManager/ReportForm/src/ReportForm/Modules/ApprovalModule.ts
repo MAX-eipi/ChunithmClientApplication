@@ -191,7 +191,7 @@ export class ApprovalModule extends ReportFormModule {
     }
 
     private requestChunirecUpdateMusics(reports: IReport[]): boolean {
-        if (this.config.common.environment !== Environment.Release) {
+        if (this.configuration.global.environment !== Environment.Release) {
             return true;
         }
         const params: { musicId: number; difficulty: Difficulty; baseRating: number; }[] = [];

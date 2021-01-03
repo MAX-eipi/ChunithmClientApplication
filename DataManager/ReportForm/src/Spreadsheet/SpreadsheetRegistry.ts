@@ -1,7 +1,5 @@
 export class SpreadsheetWorksheetHandler {
     public constructor(public readonly sheet: GoogleAppsScript.Spreadsheet.Sheet) { }
-
-    // キャッシュできるような作りにしたいなー
 }
 
 export class SpreadsheetWorksheetRegistry {

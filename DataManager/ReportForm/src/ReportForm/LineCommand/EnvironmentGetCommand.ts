@@ -8,7 +8,7 @@ export class EnvironmentGetCommand extends LINECommand {
     }
 
     public invoke(command: string, event: any, postData: any): void {
-        let environmentText = this.getEnvironmentText(this.module.config.common.environment);
+        let environmentText = this.getEnvironmentText(this.module.configuration.common.environment);
         let message = `環境:${environmentText}`;
         this.replyMessage(event.replyToken, [message]);
     }

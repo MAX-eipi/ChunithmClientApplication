@@ -8,7 +8,8 @@ export class ReportPostNoticeEnabledSetCommand extends LINECommand {
     public invoke(command: string, event: any, postData: any): void {
         let value = command.replace("report-post-notice-enabled=", "") == "true";
         let result = value ? "ON" : "OFF";
-        this.module.config.line.reportPostNoticeEnabled = value;
+        this.module.runtimeConfiguration.properties.lineNoticeUnitReportEnabled = value;
+        this.module.runtimeConfiguration.apply();
         this.replyMessage(event.replyToken, [`検証報告通知を${result}にしました`]);
     }
 }

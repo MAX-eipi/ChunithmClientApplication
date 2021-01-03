@@ -1,4 +1,5 @@
-import { CacheServiceProvider } from "../../../Cache/CacheServiceProvider";
+import { CustomCacheProvider } from "../../../CustomCacheProvider/CustomCacheProvider";
+import { DIProperty } from "../../../DIProperty/DIProperty";
 import { Difficulty } from "../../../MusicDataTable/Difficulty";
 import { LINEMessagePushStream } from "../../../UrlFetch.LINE/API/Message/Push/Stream";
 import { TextMessage } from "../../../UrlFetch.LINE/API/MessageObjects";
@@ -27,10 +28,13 @@ export class NoticeModule extends ReportFormModule {
     private get twitterModule(): TwitterModule { return this.getModule(TwitterModule); }
     private get versionModule(): VersionModule { return this.getModule(VersionModule); }
 
+    @DIProperty.inject('CacheProvider')
+    private readonly _cacheProvider: CustomCacheProvider;
+
     private _queue: NoticeQueue;
     public getQueue(): NoticeQueue {
         if (!this._queue) {
-            this._queue = new NoticeQueue(new CacheServiceProvider());
+            this._queue = new NoticeQueue(this._cacheProvider);
         }
         return this._queue;
     }
@@ -68,8 +72,8 @@ export class NoticeModule extends ReportFormModule {
                 ));
             }
             const stream = new SlackChatPostMessageStream({
-                token: this.config.global.slackApiToken,
-                channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                token: this.configuration.global.slackApiToken,
+                channel: this.configuration.global.slackChannelIdTable['noticeUpdateReportStatus'],
                 text: '検証結果報告',
                 blocks: blocks,
             });
@@ -82,7 +86,7 @@ export class NoticeModule extends ReportFormModule {
         }
 
         // line
-        if (this.config.line.reportPostNoticeEnabled) {
+        if (this.configuration.runtime.lineNoticeUnitReportEnabled) {
             const streams: LINEMessagePushStream[] = [];
             for (const r of reports) {
                 // LINEグループに対しては低難易度帯の報告を投げない
@@ -96,9 +100,9 @@ export class NoticeModule extends ReportFormModule {
 難易度:${Utility.toDifficultyText(r.difficulty)}
 URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId)}`
                 };
-                for (const target of this.config.global.lineNoticeTargetIdList) {
+                for (const target of this.configuration.global.lineNoticeTargetIdList) {
                     streams.push(new LINEMessagePushStream({
-                        channelAccessToken: this.config.global.lineChannelAccessToken,
+                        channelAccessToken: this.configuration.global.lineChannelAccessToken,
                         to: target,
                         messages: [message]
                     }));
@@ -135,7 +139,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
 
         // 通知処理
         // twitter
-        if (this.config.twitter.postTweetEnabled) {
+        if (this.configuration.runtime.postTweetEnabled) {
             for (const r of reports) {
                 this.twitterModule.postTweet(`[譜面定数 検証結果]
 楽曲名:${r.musicName}
@@ -163,8 +167,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
                     ));
                 }
                 const stream = new SlackChatPostMessageStream({
-                    token: this.config.global.slackApiToken,
-                    channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                    token: this.configuration.global.slackApiToken,
+                    channel: this.configuration.global.slackChannelIdTable['noticeUpdateReportStatus'],
                     text: '検証結果承認',
                     blocks: blocks,
                 });
@@ -184,8 +188,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
                     ));
                 }
                 const stream = new SlackChatPostMessageStream({
-                    token: this.config.global.slackApiToken,
-                    channel: this.config.global.slackChannelIdTable['updateMusicDataTable'],
+                    token: this.configuration.global.slackApiToken,
+                    channel: this.configuration.global.slackChannelIdTable['updateMusicDataTable'],
                     text: '譜面定数更新',
                     blocks: blocks,
                 });
@@ -201,7 +205,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
         }
 
         // line
-        if (this.config.line.reportPostNoticeEnabled) {
+        if (this.configuration.runtime.lineNoticeUnitReportEnabled) {
             const streams: LINEMessagePushStream[] = [];
             for (const r of reports) {
                 if (r.difficulty !== Difficulty.Master && (r.difficulty !== Difficulty.Expert || r.calcBaseRating() < 11)) {
@@ -215,9 +219,9 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
 譜面定数:${r.calcBaseRating().toFixed(1)}
 URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId)}`
                 };
-                for (const target of this.config.global.lineNoticeTargetIdList) {
+                for (const target of this.configuration.global.lineNoticeTargetIdList) {
                     streams.push(new LINEMessagePushStream({
-                        channelAccessToken: this.config.global.lineChannelAccessToken,
+                        channelAccessToken: this.configuration.global.lineChannelAccessToken,
                         to: target,
                         messages: [message]
                     }));
@@ -267,8 +271,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
                 ));
             }
             const stream = new SlackChatPostMessageStream({
-                token: this.config.global.slackApiToken,
-                channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                token: this.configuration.global.slackApiToken,
+                channel: this.configuration.global.slackChannelIdTable['noticeUpdateReportStatus'],
                 text: '検証結果却下',
                 blocks: blocks,
             });
@@ -282,7 +286,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
         }
 
         // line
-        if (this.config.line.reportPostNoticeEnabled) {
+        if (this.configuration.runtime.lineNoticeUnitReportEnabled) {
             const streams: LINEMessagePushStream[] = [];
             for (const r of reports) {
                 if (r.difficulty !== Difficulty.Master && (r.difficulty !== Difficulty.Expert || r.calcBaseRating() < 11)) {
@@ -295,9 +299,9 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
 難易度:${Utility.toDifficultyText(r.difficulty)}
 URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId)}`
                 };
-                for (const target of this.config.global.lineNoticeTargetIdList) {
+                for (const target of this.configuration.global.lineNoticeTargetIdList) {
                     streams.push(new LINEMessagePushStream({
-                        channelAccessToken: this.config.global.lineChannelAccessToken,
+                        channelAccessToken: this.configuration.global.lineChannelAccessToken,
                         to: target,
                         messages: [message]
                     }));
@@ -329,8 +333,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
             }
         }
         const stream = new SlackChatPostMessageStream({
-            token: this.config.global.slackApiToken,
-            channel: this.config.global.slackChannelIdTable['alert'],
+            token: this.configuration.global.slackApiToken,
+            channel: this.configuration.global.slackChannelIdTable['alert'],
             text: 'Missing Report',
             blocks: [
                 SlackBlockFactory.section(
@@ -380,8 +384,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
                 ));
             }
             const stream = new SlackChatPostMessageStream({
-                token: this.config.global.slackApiToken,
-                channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                token: this.configuration.global.slackApiToken,
+                channel: this.configuration.global.slackChannelIdTable['noticeUpdateReportStatus'],
                 text: '検証結果報告',
                 blocks: blocks,
             });
@@ -461,8 +465,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
                     ));
                 }
                 const stream = new SlackChatPostMessageStream({
-                    token: this.config.global.slackApiToken,
-                    channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                    token: this.configuration.global.slackApiToken,
+                    channel: this.configuration.global.slackChannelIdTable['noticeUpdateReportStatus'],
                     text: '検証結果承認',
                     blocks: blocks,
                 });
@@ -482,8 +486,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
                     ));
                 }
                 const stream = new SlackChatPostMessageStream({
-                    token: this.config.global.slackApiToken,
-                    channel: this.config.global.slackChannelIdTable['updateMusicDataTable'],
+                    token: this.configuration.global.slackApiToken,
+                    channel: this.configuration.global.slackChannelIdTable['updateMusicDataTable'],
                     text: '譜面定数更新',
                     blocks: blocks,
                 });
@@ -563,8 +567,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
                 ));
             }
             const stream = new SlackChatPostMessageStream({
-                token: this.config.global.slackApiToken,
-                channel: this.config.global.slackChannelIdTable['noticeUpdateReportStatus'],
+                token: this.configuration.global.slackApiToken,
+                channel: this.configuration.global.slackChannelIdTable['noticeUpdateReportStatus'],
                 text: '検証結果却下',
                 blocks: blocks,
             });
@@ -623,8 +627,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
             }
         }
         const stream = new SlackChatPostMessageStream({
-            token: this.config.global.slackApiToken,
-            channel: this.config.global.slackChannelIdTable['alert'],
+            token: this.configuration.global.slackApiToken,
+            channel: this.configuration.global.slackChannelIdTable['alert'],
             text: 'Missing Report',
             blocks: [
                 SlackBlockFactory.section(
@@ -660,8 +664,8 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
             blocks.push(SlackBlockFactory.divider());
         }
         const stream = new SlackChatPostMessageStream({
-            token: this.config.global.slackApiToken,
-            channel: this.config.global.slackChannelIdTable['alert'],
+            token: this.configuration.global.slackApiToken,
+            channel: this.configuration.global.slackChannelIdTable['alert'],
             text: 'Error(s) occurred',
             blocks: blocks,
         })
