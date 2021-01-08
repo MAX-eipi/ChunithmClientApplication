@@ -11,7 +11,7 @@ export class ReportGoogleForm {
     private _form: GoogleAppsScript.Forms.Form;
     public get form(): GoogleAppsScript.Forms.Form {
         if (!this._form) {
-            const formId = this._module.configuration.report.reportFormId;
+            const formId = this._module.configuration.global.reportFormId;
             if (!formId) {
                 CustomLogManager.log(LogLevel.Error, `reportFormId is not set.`);
                 return null;

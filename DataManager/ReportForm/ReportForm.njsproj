@@ -74,9 +74,9 @@
     <Folder Include="Dependencies\OAuth1\" />
     <Folder Include="src\Configuration\" />
     <Folder Include="src\CustomCacheProvider\" />
+    <Folder Include="src\CustomLogger.LINE\" />
     <Folder Include="src\CustomLogger.Slack\" />
     <Folder Include="src\CustomLogger\" />
-    <Folder Include="src\CutomLogger.LINE\" />
     <Folder Include="src\DIProperty\" />
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="Dependencies\" />
@@ -145,11 +145,11 @@
     <TypeScriptCompile Include="src\CustomCacheProvider\CustomCacheProvider.ts" />
     <TypeScriptCompile Include="src\CustomCacheProvider\ScriptCacheProvider.ts" />
     <TypeScriptCompile Include="src\CustomCacheProvider\SpreadsheetCacheProvider.ts" />
+    <TypeScriptCompile Include="src\CustomLogger.LINE\LINELogger.ts" />
     <TypeScriptCompile Include="src\CustomLogger.Slack\SlackLogger.ts" />
     <TypeScriptCompile Include="src\CustomLogger\ConsoleLogger.ts" />
     <TypeScriptCompile Include="src\CustomLogger\CustomLogger.ts" />
     <TypeScriptCompile Include="src\CustomLogger\CustomLogManager.ts" />
-    <TypeScriptCompile Include="src\CutomLogger.LINE\LINELogger.ts" />
     <TypeScriptCompile Include="src\DIProperty\DIProperty.ts" />
     <TypeScriptCompile Include="src\ReportForm\Configurations\ReportConfiguration.ts">
       <SubType>Code</SubType>

@@ -28,3 +28,6 @@
 [submodule "DataManager/ReportForm/src/CustomCacheProvider"]
 	path = DataManager/ReportForm/src/CustomCacheProvider
 	url = git@github.com:max-eipi-gas-modules/CustomCacheProvider.git
+[submodule "DataManager/ReportForm/src/CustomLogger.LINE"]
+	path = DataManager/ReportForm/src/CustomLogger.LINE
+	url = git@github.com:max-eipi-gas-modules/CustomLogger.LINE.git
