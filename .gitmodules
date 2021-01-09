@@ -31,3 +31,6 @@
 [submodule "DataManager/ReportForm/src/CustomLogger.LINE"]
 	path = DataManager/ReportForm/src/CustomLogger.LINE
 	url = git@github.com:max-eipi-gas-modules/CustomLogger.LINE.git
+[submodule "DataManager/ReportForm/src/Router"]
+	path = DataManager/ReportForm/src/Router
+	url = git@github.com:max-eipi-gas-modules/Router.git

@@ -15,7 +15,7 @@ import { LevelBulkReport } from "../../Report/LevelBulkReport/LevelBulkReport";
 import { Utility } from "../../Utility";
 import { ReportFormModule } from "../@ReportFormModule";
 import { ReportModule } from "../Report/ReportModule";
-import { Router } from "../Router";
+import { RoutingModule } from "../Router";
 import { TwitterModule } from "../TwitterModule";
 import { VersionModule } from "../VersionModule";
 import { NoticeQueue } from "./NoticeQueue";
@@ -23,7 +23,7 @@ import { NoticeQueue } from "./NoticeQueue";
 export class NoticeModule extends ReportFormModule {
     public static readonly moduleName = 'notice';
 
-    private get router(): Router { return this.getModule(Router); }
+    private get router(): RoutingModule { return this.getModule(RoutingModule); }
     private get reportModule(): ReportModule { return this.getModule(ReportModule); }
     private get twitterModule(): TwitterModule { return this.getModule(TwitterModule); }
     private get versionModule(): VersionModule { return this.getModule(VersionModule); }

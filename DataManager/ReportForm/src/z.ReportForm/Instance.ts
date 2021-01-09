@@ -7,6 +7,8 @@ import { ScriptPropertyRuntimeConfiguration } from "../Configuration/ScriptPrope
 import { ScriptCacheProvider } from "../CustomCacheProvider/ScriptCacheProvider";
 import { CustomLogManager } from "../CustomLogger/CustomLogManager";
 import { DIProperty } from "../DIProperty/DIProperty";
+import { Router } from "../Router/Router";
+import { RoutingParameterType } from "../Router/RoutingParameterType";
 import { ReportFormConfiguration } from "./Configurations/@ReportFormConfiguration";
 import { ReportFormConfigurationSchema } from "./Configurations/ConfigurationSchema";
 import { ConfigurationSourceType } from "./Configurations/ConfigurationSourceType";
@@ -17,6 +19,8 @@ import { PageDI } from "./Dependencies/Page";
 import { PostCommandDI } from "./Dependencies/PostCommand";
 import { ReportFormModule } from "./Modules/@ReportFormModule";
 import { WebhookModule, WebhookSettingsManager } from "./Modules/WebhookModule";
+import { InProgressListWebsiteController, InProgressListWebsiteParameter } from "./WebsiteControllers/InProgressListWebsiteController";
+import { TopWebsiteController, TopWebsiteParameter } from "./WebsiteControllers/TopWebsiteController";
 
 export class Instance {
     private static _instance: Instance = null;
@@ -63,11 +67,21 @@ export class Instance {
     }
 
     private setupDIContainer(module: ReportFormModule): void {
+        DIProperty.register(ReportFormModule, module);
         DIProperty.register(ReportFormConfiguration, module.configuration);
 
         const cacheProvider = new ScriptCacheProvider();
         cacheProvider.expirationInSeconds = 3600;
         DIProperty.register('CacheProvider', cacheProvider);
+    }
+
+    public setupWebsiteControllers(e: GoogleAppsScript.Events.DoGet & { pathInfo: string }): void {
+        const router = new Router();
+        const topNode = router.getOrCreateNodeWithType<TopWebsiteParameter>(`version:${RoutingParameterType.TEXT}`, TopWebsiteController);
+        topNode.bindController(() => new TopWebsiteController(e));
+        topNode.getOrCreateNodeWithType<InProgressListWebsiteParameter>("inProgress", InProgressListWebsiteController)
+            .bindController(() => new InProgressListWebsiteController(e));
+        DIProperty.register(Router, router);
     }
 
     private static createReportFormConfiguration(propTable: { [key: string]: string }, props: GoogleAppsScript.Properties.Properties) {

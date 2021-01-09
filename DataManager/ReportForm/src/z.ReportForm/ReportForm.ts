@@ -1,12 +1,14 @@
 import { storeConfig } from "../@operations";
 import { LogLevel } from "../CustomLogger/CustomLogger";
 import { CustomLogManager } from "../CustomLogger/CustomLogManager";
+import { DIProperty } from "../DIProperty/DIProperty";
+import { Router } from "../Router/Router";
 import { Instance } from "./Instance";
 import { LINEModule } from "./Modules/LINEModule";
 import { NoticeModule } from "./Modules/Notice/NoticeModule";
 import { PostCommandModule } from "./Modules/PostCommandModule";
 import { ReportModule } from "./Modules/Report/ReportModule";
-import { Router } from "./Modules/Router";
+import { RoutingModule } from "./Modules/Router";
 import { GoogleFormReport } from "./Report/GoogleFormReport";
 import { GoogleFormLevelBulkReport } from "./Report/LevelBulkReport/GoogleFormLevelBulkReport";
 import { ReportStatus } from "./Report/ReportStatus";
@@ -20,11 +22,15 @@ export class ReportForm {
             if (!e.parameter.versionName) {
                 e.parameter.versionName = Instance.instance.module.configuration.defaultVersionName;
             }
-            return Instance.instance.module.getModule(Router).call(e.parameter.page, e.parameter);
+            if (e.pathInfo) {
+                Instance.instance.setupWebsiteControllers(e);
+                return DIProperty.resolve(Router).call(e.pathInfo);
+            }
+            return Instance.instance.module.getModule(RoutingModule).call(e.parameter.page, e.parameter);
         }
         catch (error) {
             CustomLogManager.exception(error);
-            return Instance.instance.module.getModule(Router).callErrorPage(error.toString(), e.parameter.versionName);
+            return Instance.instance.module.getModule(RoutingModule).callErrorPage(error.toString(), e.parameter.versionName);
         }
     }
 

@@ -1,6 +1,6 @@
 import { Role } from "../Role";
 import { ReportFormModule } from "../Modules/@ReportFormModule";
-import { Router } from "../Modules/Router";
+import { RoutingModule } from "../Modules/Router";
 
 export interface ReportFormPageParameter {
     versionName?: string;
@@ -31,14 +31,14 @@ export abstract class ReportFormPage {
     public abstract call(parameter: ReportFormPageParameter): GoogleAppsScript.HTML.HtmlOutput;
 
     protected getPage<TPage extends ReportFormPage>(page: ReportFormPageFactory<TPage>): TPage {
-        return this.module.getModule(Router).getPage(page);
+        return this.module.getModule(RoutingModule).getPage(page);
     }
 
     public getPageUrl(versionName?: string): string {
         if (!versionName) {
             versionName = "";
         }
-        return `${this.module.getModule(Router).getRootUrl()}?versionName=${versionName}&page=${this.pageName}`;
+        return `${this.module.getModule(RoutingModule).getRootUrl()}?versionName=${versionName}&page=${this.pageName}`;
     }
 
     protected bind<TPage extends ReportFormPage>(targetPage: ReportFormPageFactory<TPage>, parameter: ReportFormPageParameter, source: string): string {

@@ -4,7 +4,7 @@ import { ReportStatus } from "../Report/ReportStatus";
 import { Utility } from "../Utility";
 import { Difficulty } from "../../MusicDataTable/Difficulty";
 import { LevelBulkReportListPage } from "./LevelBulkReportListPage";
-import { Router } from "../Modules/Router";
+import { RoutingModule } from "../Modules/Router";
 import { ReportModule } from "../Modules/Report/ReportModule";
 
 export interface LevelBulkApprovePageParameter extends ReportFormPageParameter {
@@ -15,7 +15,7 @@ export class LevelBulkApprovalPage extends ReportFormPage {
     public static PAGE_NAME: string = 'bulk_approval';
 
     private get reportModule(): ReportModule { return this.module.getModule(ReportModule); }
-    private get router(): Router { return this.module.getModule(Router); }
+    private get router(): RoutingModule { return this.module.getModule(RoutingModule); }
 
     public get pageName(): string {
         return LevelBulkApprovalPage.PAGE_NAME;

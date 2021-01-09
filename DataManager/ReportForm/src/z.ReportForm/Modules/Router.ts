@@ -8,7 +8,7 @@ interface PageFactory {
     new(module: ReportFormModule): ReportFormPage;
 }
 
-export class Router extends ReportFormModule {
+export class RoutingModule extends ReportFormModule {
     public static readonly moduleName = "router";
 
     private pages: { [key: string]: ReportFormPage } = {};

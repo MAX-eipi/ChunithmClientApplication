@@ -5,7 +5,7 @@ import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { TopPage } from "./TopPage";
 import { VersionModule } from "../Modules/VersionModule";
 import { MusicDataModule } from "../Modules/MusicDataModule";
-import { Router } from "../Modules/Router";
+import { RoutingModule } from "../Modules/Router";
 
 interface UnverifiedListByGenrePageParameter extends ReportFormPageParameter {
     send: string;
@@ -54,7 +54,7 @@ export class UnverifiedListByGenrePage extends ReportFormPage {
 
     public static readonly PAGE_NAME = "unverified_list_genre";
 
-    private get router(): Router { return this.module.getModule(Router); }
+    private get router(): RoutingModule { return this.module.getModule(RoutingModule); }
     private get versionModule(): VersionModule { return this.module.getModule(VersionModule); }
     private get musicDataModule(): MusicDataModule { return this.module.getModule(MusicDataModule); }
 

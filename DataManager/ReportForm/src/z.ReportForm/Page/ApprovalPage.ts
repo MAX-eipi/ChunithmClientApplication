@@ -5,7 +5,7 @@ import { Utility } from "../Utility";
 import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { InProgressListPage } from "./InProgressListPage";
 import { ReportModule } from "../Modules/Report/ReportModule";
-import { Router } from "../Modules/Router";
+import { RoutingModule } from "../Modules/Router";
 
 interface ApprovalPageParameter extends ReportFormPageParameter {
     reportId: string;
@@ -15,7 +15,7 @@ export class ApprovalPage extends ReportFormPage {
     public static readonly PAGE_NAME = "approval";
 
     private get reportModule(): ReportModule { return this.module.getModule(ReportModule); }
-    private get router(): Router { return this.module.getModule(Router); }
+    private get router(): RoutingModule { return this.module.getModule(RoutingModule); }
 
     public get pageName(): string {
         return ApprovalPage.PAGE_NAME;

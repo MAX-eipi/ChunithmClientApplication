@@ -5,7 +5,7 @@ import { ReportFormPage, ReportFormPageParameter } from "./@ReportFormPage";
 import { TopPage } from "./TopPage";
 import { ListItemMusicData } from "./UnverifiedListByGenrePage";
 import { MusicDataModule } from "../Modules/MusicDataModule";
-import { Router } from "../Modules/Router";
+import { RoutingModule } from "../Modules/Router";
 
 let levelTexts = [
     '1', '2', '3', '4', '5', '6', '7', '7p', '8', '8p', '9', '9p', '10', '10p', '11', '11p', '12', '12p', '13', '13p', '14',
@@ -43,7 +43,7 @@ function enabledLevel(parameter: UnverifiedListByLevelPageParameter, levelText: 
 export class UnverifiedListByLevelPage extends ReportFormPage {
     public static readonly PAGE_NAME: string = "unverified_list_level";
 
-    private get router(): Router { return this.module.getModule(Router); }
+    private get router(): RoutingModule { return this.module.getModule(RoutingModule); }
     private get musicDataModule(): MusicDataModule { return this.module.getModule(MusicDataModule); }
 
     public get pageName(): string {
