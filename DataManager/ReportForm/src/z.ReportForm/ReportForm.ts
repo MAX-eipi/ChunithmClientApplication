@@ -14,6 +14,7 @@ import { GoogleFormLevelBulkReport } from "./Report/LevelBulkReport/GoogleFormLe
 import { ReportStatus } from "./Report/ReportStatus";
 import { PostLocation } from "./Report/ReportStorage";
 import { Utility } from "./Utility";
+import { ErrorWebsiteController } from "./WebsiteControllers/ErrorWebsiteController";
 
 export class ReportForm {
     public static doGet(e: any): any {
@@ -22,15 +23,12 @@ export class ReportForm {
             if (!e.parameter.versionName) {
                 e.parameter.versionName = Instance.instance.module.configuration.defaultVersionName;
             }
-            if (e.pathInfo) {
-                Instance.instance.setupWebsiteControllers(e);
-                return DIProperty.resolve(Router).call(e.pathInfo);
-            }
-            return Instance.instance.module.getModule(RoutingModule).call(e.parameter.page, e.parameter);
+            Instance.instance.setupWebsiteControllers(e);
+            return DIProperty.resolve(Router).call(e.pathInfo);
         }
         catch (error) {
             CustomLogManager.exception(error);
-            return Instance.instance.module.getModule(RoutingModule).callErrorPage(error.toString(), e.parameter.versionName);
+            return new ErrorWebsiteController(e).call({ version: e.parameter.versionName, message: error.message }, null);
         }
     }
 

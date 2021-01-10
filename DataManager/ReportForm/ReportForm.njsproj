@@ -317,6 +317,9 @@
     <TypeScriptCompile Include="src\z.ReportForm\Modules\WebhookModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\ErrorWebsiteController.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\LevelReport\LevelReportListWebsiteController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
