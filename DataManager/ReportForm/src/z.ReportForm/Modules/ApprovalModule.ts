@@ -164,7 +164,6 @@ export class ApprovalModule extends ReportFormModule {
         this.musicDataModule.updateMusicData(versionName, targetMusicDatas);
         this.reportModule.approveGroup(versionName, approvedReports.map(r => r.reportId));
 
-        const versionText = this.versionModule.getVersionConfig(versionName).displayVersionName;
         for (const report of approvedReports) {
             const difficulty = Utility.toDifficultyText(report.difficulty);
             const baseRating = report.calcBaseRating();
@@ -191,7 +190,7 @@ export class ApprovalModule extends ReportFormModule {
     }
 
     private requestChunirecUpdateMusics(reports: IReport[]): boolean {
-        if (this.configuration.global.environment !== Environment.Release) {
+        if (this.configuration.environment !== Environment.Release) {
             return true;
         }
         const params: { musicId: number; difficulty: Difficulty; baseRating: number; }[] = [];

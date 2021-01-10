@@ -1,15 +1,14 @@
 import { Environment } from "../Environment";
 import { LINECommand } from "./@LINECommand";
 
-
 export class EnvironmentGetCommand extends LINECommand {
     public called(command: string): boolean {
-        return command == "environment";
+        return command === "environment";
     }
 
     public invoke(command: string, event: any, postData: any): void {
-        let environmentText = this.getEnvironmentText(this.module.configuration.common.environment);
-        let message = `環境:${environmentText}`;
+        const environmentText = this.getEnvironmentText(this.module.configuration.environment);
+        const message = `環境:${environmentText}`;
         this.replyMessage(event.replyToken, [message]);
     }
 

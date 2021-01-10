@@ -27,20 +27,20 @@ export enum ChainStatus {
     FullChainPlatinum,
 }
 
-const RANK_MAX_BORDER_SCORE: number = 1010000;
-const RANK_SSS_BORDER_SCORE: number = 1007500;
-const RANK_SSA_BORDER_SCORE: number = 1005000;
-const RANK_SS_BORDER_SCORE: number = 1000000;
-const RANK_S_BORDER_SCORE: number = 975000;
-const RANK_AAA_BORDER_SCORE: number = 950000;
-const RANK_AA_BORDER_SCORE: number = 925000;
-const RANK_A_BORDER_SCORE: number = 900000;
-const RANK_BBB_BORDER_SCORE: number = 800000;
-const RANK_BB_BORDER_SCORE: number = 700000;
-const RANK_B_BORDER_SCORE: number = 600000;
-const RANK_C_BORDER_SCORE: number = 500000;
-const RANK_D_BORDER_SCORE: number = 0;
-const RANK_NONE_BORDER_SCORE: number = 0;
+const RANK_MAX_BORDER_SCORE = 1010000;
+const RANK_SSS_BORDER_SCORE = 1007500;
+const RANK_SSA_BORDER_SCORE = 1005000;
+const RANK_SS_BORDER_SCORE = 1000000;
+const RANK_S_BORDER_SCORE = 975000;
+const RANK_AAA_BORDER_SCORE = 950000;
+const RANK_AA_BORDER_SCORE = 925000;
+const RANK_A_BORDER_SCORE = 900000;
+const RANK_BBB_BORDER_SCORE = 800000;
+const RANK_BB_BORDER_SCORE = 700000;
+const RANK_B_BORDER_SCORE = 600000;
+const RANK_C_BORDER_SCORE = 500000;
+const RANK_D_BORDER_SCORE = 0;
+const RANK_NONE_BORDER_SCORE = 0;
 
 export function getBorderScore(rank: Rank): number {
     switch (rank) {
@@ -75,8 +75,8 @@ export function getBorderScore(rank: Rank): number {
 }
 
 export function getBorderBaseRating(levelText: string): number {
-    var integer = 0;
-    var decimal = 0;
+    let integer = 0;
+    let decimal = 0;
 
     if (levelText.indexOf("+") !== -1) {
         decimal = 0.7;
@@ -84,73 +84,18 @@ export function getBorderBaseRating(levelText: string): number {
 
     levelText = levelText.replace("+", "");
     integer = parseInt(levelText);
-    if (integer === NaN) {
+    if (isNaN(integer)) {
         return 0;
     }
 
     return integer + decimal;
 }
 
-export function getRating(baseRating: number, score: number): number {
-    return Math.floor(getIntegerPlayRating(baseRating, score)) / 100;
+function convertToIntegerRating(rating: number): number {
+    return Math.round(rating * 100);
 }
 
-export function getOverPower(baseRating: number, score: number, comboStatus: ComboStatus): number {
-    var integerPlayRating = getIntegerPlayRating(baseRating, score, true);
-    if (integerPlayRating <= 0) {
-        return 0;
-    }
-
-    var basePoint = integerPlayRating;
-    if (score >= RANK_MAX_BORDER_SCORE) {
-        basePoint += 25;
-    }
-    else {
-        switch (comboStatus) {
-            case ComboStatus.AllJustice:
-                basePoint += 20;
-                break;
-            case ComboStatus.FullCombo:
-                basePoint += 10;
-                break;
-        }
-    }
-
-    var overPower = basePoint * 5;
-    if (score < RANK_S_BORDER_SCORE) {
-        overPower = Math.floor(overPower) / 100;
-    }
-    else {
-        overPower = overPower / 100;
-    }
-
-    return overPower;
-}
-
-function getIntegerPlayRating(baseRating: number, score: number, asOverPower: boolean = false): number {
-    if (baseRating <= 0 || score <= 0) {
-        return 0;
-    }
-
-    var integerBaseRating = convertToIntegerRating(baseRating);
-    var borders = getBordersAsIntegerRating(integerBaseRating, asOverPower);
-
-    for (var i = 1; i < borders.length; i++) {
-        var nextBorder = borders[i - 1];
-        var border = borders[i];
-        if (score >= border.score) {
-            var diffScore = score - border.score;
-            var diffBorderScore = nextBorder.score - border.score;
-            var diffBorderIntegerRating = nextBorder.integerRating - border.integerRating;
-            var integerPlayRating = (diffScore * diffBorderIntegerRating + diffBorderScore * border.integerRating) / diffBorderScore;
-            return integerPlayRating;
-        }
-    }
-
-    return 0;
-}
-
-function getBordersAsIntegerRating(integerBaseRating: number, asOverPower: boolean): { score: number, integerRating: number }[] {
+function getBordersAsIntegerRating(integerBaseRating: number, asOverPower: boolean): { score: number; integerRating: number }[] {
     if (asOverPower) {
         return [
             { score: RANK_MAX_BORDER_SCORE + 1, integerRating: integerBaseRating + 275 },
@@ -182,21 +127,76 @@ function getBordersAsIntegerRating(integerBaseRating: number, asOverPower: boole
     }
 }
 
-function convertToIntegerRating(rating: number): number {
-    return Math.round(rating * 100);
+function getIntegerPlayRating(baseRating: number, score: number, asOverPower = false): number {
+    if (baseRating <= 0 || score <= 0) {
+        return 0;
+    }
+
+    const integerBaseRating = convertToIntegerRating(baseRating);
+    const borders = getBordersAsIntegerRating(integerBaseRating, asOverPower);
+
+    for (let i = 1; i < borders.length; i++) {
+        const nextBorder = borders[i - 1];
+        const border = borders[i];
+        if (score >= border.score) {
+            const diffScore = score - border.score;
+            const diffBorderScore = nextBorder.score - border.score;
+            const diffBorderIntegerRating = nextBorder.integerRating - border.integerRating;
+            const integerPlayRating = (diffScore * diffBorderIntegerRating + diffBorderScore * border.integerRating) / diffBorderScore;
+            return integerPlayRating;
+        }
+    }
+
+    return 0;
+}
+
+export function getRating(baseRating: number, score: number): number {
+    return Math.floor(getIntegerPlayRating(baseRating, score)) / 100;
+}
+
+export function getOverPower(baseRating: number, score: number, comboStatus: ComboStatus): number {
+    const integerPlayRating = getIntegerPlayRating(baseRating, score, true);
+    if (integerPlayRating <= 0) {
+        return 0;
+    }
+
+    let basePoint = integerPlayRating;
+    if (score >= RANK_MAX_BORDER_SCORE) {
+        basePoint += 25;
+    }
+    else {
+        switch (comboStatus) {
+            case ComboStatus.AllJustice:
+                basePoint += 20;
+                break;
+            case ComboStatus.FullCombo:
+                basePoint += 10;
+                break;
+        }
+    }
+
+    let overPower = basePoint * 5;
+    if (score < RANK_S_BORDER_SCORE) {
+        overPower = Math.floor(overPower) / 100;
+    }
+    else {
+        overPower = overPower / 100;
+    }
+
+    return overPower;
 }
 
 export function calcBaseRating(beforeOp: number, afterOp: number, score: number, comboStatus: ComboStatus): number {
     if (score < RANK_AA_BORDER_SCORE || score > RANK_MAX_BORDER_SCORE) {
         return 0;
     }
-    
+
     if (beforeOp > afterOp) {
         return 0;
     }
-    
-    let diffOp = afterOp - beforeOp;
-    var added = 0;
+
+    const diffOp = afterOp - beforeOp;
+    let added = 0;
     if (score >= RANK_MAX_BORDER_SCORE) {
         added = 2.75;
     }
@@ -228,7 +228,7 @@ export function calcBaseRating(beforeOp: number, afterOp: number, score: number,
             break;
     }
 
-    let baseRating = score >= RANK_S_BORDER_SCORE
+    const baseRating = score >= RANK_S_BORDER_SCORE
         ? Math.round((diffOp / 5 - added) * 100) / 100
         : Math.round((diffOp / 5 - added) * 10) / 10
     return baseRating;

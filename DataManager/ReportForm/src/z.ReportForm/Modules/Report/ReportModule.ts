@@ -41,7 +41,7 @@ export class ReportModule extends ReportFormModule {
     }
 
     public noticeReportPost(message: string): void {
-        if (this.configuration.line.reportPostNoticeEnabled) {
+        if (this.configuration.runtime.lineNoticeUnitReportEnabled) {
             this.lineModule.pushNoticeMessage([message]);
         }
     }

@@ -1,31 +1,22 @@
-import { ReportFormWebsiteController, ReportFormWebsiteParameter } from "./@ReportFormController";
-import { RoutingNode } from "../../Router/RoutingNode";
-import { DIProperty } from "../../DIProperty/DIProperty";
-import { VersionModule } from "../Modules/VersionModule";
 import { getAppVersion } from "../../@app";
+import { RoutingNode } from "../../Router/RoutingNode";
+import { VersionModule } from "../Modules/VersionModule";
 import { Role } from "../Role";
-import { ReportFormConfiguration } from "../Configurations/@ReportFormConfiguration";
-import { ReportFormModule } from "../Modules/@ReportFormModule";
-import { Router } from "../../Router/Router";
-import { InProgressListWebsiteController } from "./InProgressListWebsiteController";
-import { RoutingController } from "../../Router/RoutingController";
+import { ReportFormWebsiteController, ReportFormWebsiteParameter } from "./@ReportFormController";
+import { LevelReportListWebsiteController } from "./LevelReport/LevelReportListWebsiteController";
+import { UnitReportGroupListWebsiteController } from "./UnitReportGroup/UnitReportGroupListWebsiteController";
+import { UnitReportListWebsiteController } from "./UnitReport/UnitReportListWebsiteController";
+import { UnverifiedListByLevelWebsiteController } from "./UnverifiedList/UnverifiedListByLevelWebsiteController";
+import { UnverifiedListByGenreWebsiteController } from "./UnverifiedList/UnverifiedListByGenreWebsiteController";
 
 export interface TopWebsiteParameter extends ReportFormWebsiteParameter {
 }
 
 export class TopWebsiteController extends ReportFormWebsiteController<TopWebsiteParameter> {
-    @DIProperty.inject(ReportFormConfiguration)
-    private readonly configuration: ReportFormConfiguration;
 
-    @DIProperty.inject(ReportFormModule)
-    private readonly module: ReportFormModule;
+    private get versionModule() { return this.getModule(VersionModule); }
 
-    @DIProperty.inject(Router)
-    private readonly router: Router;
-
-    private get versionModule() { return this.module.getModule(VersionModule); }
-
-    call(parameter: Readonly<TopWebsiteParameter>, node: RoutingNode): GoogleAppsScript.HTML.HtmlOutput {
+    protected callInternal(parameter: Readonly<TopWebsiteParameter>, node: RoutingNode): GoogleAppsScript.HTML.HtmlOutput {
         const versionText = this.versionModule.getVersionConfig(parameter.version).displayVersionName;
 
         let source = this.readHtml("Resources/Page/top/main");
@@ -35,17 +26,13 @@ export class TopWebsiteController extends ReportFormWebsiteController<TopWebsite
 
         source = this.replaceWipContainer(source, this.configuration.role);
 
-        source = this.replacePageLink(source, parameter, InProgressListWebsiteController);
+        source = this.replacePageLink(source, parameter, UnitReportListWebsiteController);
+        source = this.replacePageLink(source, parameter, UnitReportGroupListWebsiteController);
+        source = this.replacePageLink(source, parameter, LevelReportListWebsiteController);
+        source = this.replacePageLink(source, parameter, UnverifiedListByGenreWebsiteController);
+        source = this.replacePageLink(source, parameter, UnverifiedListByLevelWebsiteController);
 
         return this.createHtmlOutput(source);
-    }
-
-    private replacePageLink(source: string, parameter: ReportFormWebsiteParameter, targetController: { prototype: RoutingController; name: string }) {
-        const node = this.router.findNodeByName(targetController.name);
-        const path = node.getFullPath(parameter);
-        const url = this.configuration.rootUrl + path;
-        const linkTarget = new RegExp(`%link:${targetController.name}%`, 'g');
-        return source ? source.replace(linkTarget, url) : "";
     }
 
     private replaceWipContainer(source: string, role: Role): string {

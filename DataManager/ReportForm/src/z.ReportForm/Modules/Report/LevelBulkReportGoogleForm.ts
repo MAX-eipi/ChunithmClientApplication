@@ -11,7 +11,7 @@ export class LevelBulkReportGoogleForm {
     private _form: GoogleAppsScript.Forms.Form;
     public get form(): GoogleAppsScript.Forms.Form {
         if (!this._form) {
-            const formId = this._module.configuration.report.bulkReportFormId;
+            const formId = this._module.configuration.global.bulkReportFormId;
             if (!formId) {
                 CustomLogManager.log(LogLevel.Error, `bulkReportFormId is not set.`);
                 return null;
@@ -38,7 +38,7 @@ export class LevelBulkReportGoogleForm {
         }
         CustomLogManager.log(LogLevel.Info, `フォームに送信された回答の削除が完了しました`);
         const versionConfig = this._module.getModule(VersionModule).getVersionConfig(versionName);
-        if (this._module.configuration.common.environment === Environment.Release) {
+        if (this._module.configuration.environment === Environment.Release) {
             form.setTitle(`譜面定数 一括検証報告 ${versionConfig.displayVersionName}`);
         }
         else {
@@ -72,12 +72,12 @@ export class LevelBulkReportGoogleForm {
                 .requireNumberBetween(0, 100)
                 .build());
         }
-        CustomLogManager.log(LogLevel, `パラメータ記入画面の作成が完了しました`);
+        CustomLogManager.log(LogLevel.Info, `パラメータ記入画面の作成が完了しました`);
         // 検証画像を添付してください
         // 特定のファイル形式のみ許可
         //  - 画像
         // ファイルの最大数 1
         // 最大ファイルサイズ 10MB
-        CustomLogManager.log(LogLevel, `一括報告フォームの構築が完了しました`);
+        CustomLogManager.log(LogLevel.Info, `一括報告フォームの構築が完了しました`);
     }
 }

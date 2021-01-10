@@ -11,11 +11,11 @@ interface LINECommandFactory {
 }
 
 interface LINEPostEvent {
-    type: string,
+    type: string;
     message: {
-        type: string,
-        text: string,
-    },
+        type: string;
+        text: string;
+    };
 }
 
 interface LINECommandHandler {
@@ -35,9 +35,9 @@ export class LINEModule extends ReportFormModule {
             };
         });
         const streams: UrlFetchStream[] = [];
-        for (const target of this.configuration.properties.global.lineNoticeTargetIdList) {
+        for (const target of this.configuration.global.lineNoticeTargetIdList) {
             const stream = new LINEMessagePushStream({
-                channelAccessToken: this.configuration.properties.global.lineChannelAccessToken,
+                channelAccessToken: this.configuration.global.lineChannelAccessToken,
                 to: target,
                 messages: textMessages,
             });
@@ -54,7 +54,7 @@ export class LINEModule extends ReportFormModule {
             };
         });
         const stream = new LINEMessageReplyStream({
-            channelAccessToken: this.configuration.properties.global.lineChannelAccessToken,
+            channelAccessToken: this.configuration.global.lineChannelAccessToken,
             replyToken: replyToken,
             messages: textMessages,
         });
@@ -72,16 +72,16 @@ export class LINEModule extends ReportFormModule {
             return null;
         }
 
-        let event = postRequest.events[0];
-        if (event.type != "message" || event.message.type != "text") {
+        const event = postRequest.events[0];
+        if (event.type !== "message" || event.message.type !== "text") {
             return null;
         }
-        var messageText: string = event.message.text;
-        if (messageText.indexOf(":") != 0) {
+        const messageText: string = event.message.text;
+        if (messageText.indexOf(":") !== 0) {
             return null;
         }
-        let commandText = messageText.substring(1);
-        let command = this.getCommand(commandText);
+        const commandText = messageText.substring(1);
+        const command = this.getCommand(commandText);
         if (!command) {
             return this.createMissingCommandHandler(commandText);
         }
@@ -94,7 +94,7 @@ export class LINEModule extends ReportFormModule {
     }
 
     private getCommand(commandText: string): LINECommand {
-        for (let command of this._commands) {
+        for (const command of this._commands) {
             if (command.called(commandText)) {
                 return command;
             }
@@ -103,7 +103,7 @@ export class LINEModule extends ReportFormModule {
     }
 
     private createMissingCommandHandler(commandText: string): LINECommandHandler {
-        let self = this;
+        const self = this;
         return {
             invoke() {
                 self.lineModule.pushNoticeMessage([`存在しないコマンド:${commandText}`]);

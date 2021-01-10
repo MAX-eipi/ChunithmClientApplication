@@ -1,5 +1,5 @@
-import { GoogleFormBulkReport } from "./GoogleFormBulkReport";
-import { ReportStatus } from "./ReportStatus";
+import { ReportStatus } from "../ReportStatus";
+import { GoogleFormLevelBulkReport } from "./GoogleFormLevelBulkReport";
 
 export class LevelBulkReport {
     private _reportId: number;
@@ -24,7 +24,7 @@ export class LevelBulkReport {
         );
     }
 
-    public static createByGoogleFormBulkReport(reportId: number, bulkReport: GoogleFormBulkReport, musicCount: number, reportDate: Date, reportStatus: ReportStatus): LevelBulkReport {
+    public static createByGoogleFormBulkReport(reportId: number, bulkReport: GoogleFormLevelBulkReport, musicCount: number, reportDate: Date, reportStatus: ReportStatus): LevelBulkReport {
         return new LevelBulkReport(
             reportId,
             bulkReport.targetLevel,

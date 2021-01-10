@@ -10,8 +10,8 @@ export class TwitterModule extends ReportFormModule {
     private _connector: TwitterConnector;
     public get connector(): TwitterConnector {
         if (!this._connector) {
-            let apiToken = this.configuration.properties.global.twitterApiToken;
-            let secretKey = this.configuration.properties.global.twitterSecretKey;
+            const apiToken = this.configuration.global.twitterApiToken;
+            const secretKey = this.configuration.global.twitterSecretKey;
             if (!apiToken || !secretKey) {
                 const message = `[TwitterModule]Instantiation failed. ${JSON.stringify({
                     apiToken: apiToken,
@@ -26,10 +26,10 @@ export class TwitterModule extends ReportFormModule {
     }
 
     public postTweet(message: string): any {
-        if (!this.runtimeConfiguration.properties.postTweetEnabled || !this.connector) {
+        if (!this.configuration.runtime.postTweetEnabled || !this.connector) {
             return null;
         }
-        if (this.module.configuration.common.environment == Environment.Develop) {
+        if (this.module.configuration.environment === Environment.Develop) {
             message = "FROM DEV\n" + message;
         }
         return this.connector.postTweet(message);

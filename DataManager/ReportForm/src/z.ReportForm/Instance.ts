@@ -1,4 +1,4 @@
-import { getConstValues } from "../@const";
+import { getConstValues, getStaticConfig, getRuntimeConfiguration } from "../@const";
 import { Configuration } from "../Configuration/Configuration";
 import { JsonConfigurationFactory } from "../Configuration/JsonConfigurationFactory";
 import { JsonFileRuntimeConfiguration } from "../Configuration/JsonFileRuntimeConfiguration";
@@ -19,8 +19,15 @@ import { PageDI } from "./Dependencies/Page";
 import { PostCommandDI } from "./Dependencies/PostCommand";
 import { ReportFormModule } from "./Modules/@ReportFormModule";
 import { WebhookModule, WebhookSettingsManager } from "./Modules/WebhookModule";
-import { InProgressListWebsiteController, InProgressListWebsiteParameter } from "./WebsiteControllers/InProgressListWebsiteController";
+import { LevelReportListWebsiteController, LevelReportListWebsiteParameter } from "./WebsiteControllers/LevelReport/LevelReportListWebsiteController";
+import { LevelReportWebsiteController, LevelReportWebsiteParameter } from "./WebsiteControllers/LevelReport/LevelReportWebsiteController";
 import { TopWebsiteController, TopWebsiteParameter } from "./WebsiteControllers/TopWebsiteController";
+import { UnitReportListWebsiteController, UnitReportListWebsiteParameter } from "./WebsiteControllers/UnitReport/UnitReportListWebsiteController";
+import { UnitReportWebsiteController, UnitReportWebsiteParameter } from "./WebsiteControllers/UnitReport/UnitReportWebsiteController";
+import { UnitReportGroupListWebsiteController, UnitReportGroupListWebsiteParameter } from "./WebsiteControllers/UnitReportGroup/UnitReportGroupListWebsiteController";
+import { UnitReportGroupWebsiteController, UnitReportGroupWebsiteParameter } from "./WebsiteControllers/UnitReportGroup/UnitReportGroupWebsiteController";
+import { UnverifiedListByGenreWebsiteController, UnverifiedListByGenreWebsiteParameter } from "./WebsiteControllers/UnverifiedList/UnverifiedListByGenreWebsiteController";
+import { UnverifiedListByLevelWebsiteController, UnverifiedListByLevelWebsiteParameter } from "./WebsiteControllers/UnverifiedList/UnverifiedListByLevelWebsiteController";
 
 export class Instance {
     private static _instance: Instance = null;
@@ -79,31 +86,65 @@ export class Instance {
         const router = new Router();
         const topNode = router.getOrCreateNodeWithType<TopWebsiteParameter>(`version:${RoutingParameterType.TEXT}`, TopWebsiteController);
         topNode.bindController(() => new TopWebsiteController(e));
-        topNode.getOrCreateNodeWithType<InProgressListWebsiteParameter>("inProgress", InProgressListWebsiteController)
-            .bindController(() => new InProgressListWebsiteController(e));
+
+        topNode.getOrCreateNodeWithType<UnitReportListWebsiteParameter>("unitReportList", UnitReportListWebsiteController)
+            .bindController(() => new UnitReportListWebsiteController(e));
+        topNode.getOrCreateNodeWithType<UnitReportWebsiteParameter>(`unitReport/reportId:${RoutingParameterType.TEXT}`, UnitReportWebsiteController)
+            .bindController(() => new UnitReportWebsiteController(e));
+
+        topNode.getOrCreateNodeWithType<UnitReportGroupListWebsiteParameter>("unitReportGroupList", UnitReportGroupListWebsiteController)
+            .bindController(() => new UnitReportGroupListWebsiteController(e));
+        topNode.getOrCreateNodeWithType<UnitReportGroupWebsiteParameter>(`unitReportGroup/groupId:${RoutingParameterType.TEXT}`, UnitReportGroupWebsiteController)
+            .bindController(() => new UnitReportGroupWebsiteController(e));
+
+        topNode.getOrCreateNodeWithType<LevelReportListWebsiteParameter>("levelReportList", LevelReportListWebsiteController)
+            .bindController(() => new LevelReportListWebsiteController(e));
+        topNode.getOrCreateNodeWithType<LevelReportWebsiteParameter>(`levelReport/reportId:${RoutingParameterType.TEXT}`, LevelReportWebsiteController)
+            .bindController(() => new LevelReportWebsiteController(e));
+
+        topNode.getOrCreateNodeWithType<UnverifiedListByGenreWebsiteParameter>("unverifiedListByGenre", UnverifiedListByGenreWebsiteController)
+            .bindController(() => new UnverifiedListByGenreWebsiteController(e));
+        topNode.getOrCreateNodeWithType<UnverifiedListByLevelWebsiteParameter>("unverifiedListByLevel", UnverifiedListByLevelWebsiteController)
+            .bindController(() => new UnverifiedListByLevelWebsiteController(e));
+
         DIProperty.register(Router, router);
     }
 
     private static createReportFormConfiguration(propTable: { [key: string]: string }, props: GoogleAppsScript.Properties.Properties) {
-        let config: Configuration<ReportFormConfigurationSchema> = null;
-        switch (getConstValues().configurationSourceType) {
-            case ConfigurationSourceType.ScriptProperties:
-                config = JsonConfigurationFactory.create(propTable['config']);
-                break;
-            case ConfigurationSourceType.Json:
-                config = JsonConfigurationFactory.createByFile(getConstValues().configurationJsonFileId);
-                break;
-        }
-        let runtimeConfig: RuntimeConfiguration<RuntimeConfigurationSchema> = null;
-        switch (getConstValues().runtimeConfigurationSourceType) {
-            case ConfigurationSourceType.ScriptProperties:
-                runtimeConfig = new ScriptPropertyRuntimeConfiguration(props, 'runtime_config');
-                break;
-            case ConfigurationSourceType.Json:
-                runtimeConfig = JsonFileRuntimeConfiguration.createByFileId(getConstValues().runtimeConfigurationJsonFileId);
-                break;
-        }
+        const config = this.createStaticConfiguration(propTable);
+        const runtimeConfig = this.createRuntimeConfiguration(props);
         const reportFormConfig = new ReportFormConfiguration(config, runtimeConfig);
         return reportFormConfig;
+    }
+
+    private static createStaticConfiguration(propTable: { [key: string]: string }): Configuration<ReportFormConfigurationSchema> {
+
+        return JsonConfigurationFactory.create(JSON.stringify(getStaticConfig()));
+
+        switch (getConstValues().configurationSourceType) {
+            case ConfigurationSourceType.ScriptProperties:
+                return JsonConfigurationFactory.create(propTable['config']);
+            case ConfigurationSourceType.Json:
+                return JsonConfigurationFactory.createByFile(getConstValues().configurationJsonFileId);
+        }
+    }
+
+    private static createRuntimeConfiguration(props: GoogleAppsScript.Properties.Properties): RuntimeConfiguration<RuntimeConfigurationSchema> {
+
+        const properties = getRuntimeConfiguration();
+        return {
+            properties: properties,
+            hasProperty: key => key in properties,
+            getProperty: (key, dv) => key in properties ? properties[key] : dv,
+            setProperty: (key, v) => properties[key] = v,
+            apply: () => { }
+        };
+
+        switch (getConstValues().runtimeConfigurationSourceType) {
+            case ConfigurationSourceType.ScriptProperties:
+                return new ScriptPropertyRuntimeConfiguration(props, 'runtime_config');
+            case ConfigurationSourceType.Json:
+                return JsonFileRuntimeConfiguration.createByFileId(getConstValues().runtimeConfigurationJsonFileId);
+        }
     }
 }

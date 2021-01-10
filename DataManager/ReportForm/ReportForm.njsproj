@@ -55,17 +55,15 @@
     <Content Include="src\Resources\Page\group_approval\unverified_list_item.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\Resources\Page\top\main.html" />
+    <Content Include="src\Resources\Page\top\wip_list_container.html" />
     <Content Include="src\Resources\Page\wip_bulk_report_list\main.html" />
     <Content Include="src\Resources\Page\bulk_approval\rejected_form_container.html" />
     <Content Include="src\Resources\Page\bulk_approval\resoved_form_container.html" />
     <Content Include="src\Resources\Page\bulk_approval\wip_form_container.html" />
     <Content Include="src\Resources\Page\wip_list\main.html" />
     <Content Include="src\Resources\Page\report_group_list\main.html" />
-    <Content Include="src\Resources\Page\top\main.html" />
     <Content Include="src\Resources\Page\common\unverified_list.css.html" />
-    <Content Include="src\Resources\Page\top\wip_list_container.html">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="src\Resources\Page\unverified_list_genre\main.html" />
     <Content Include="src\Resources\Page\unverified_list_level\main.html" />
     <Content Include="tsconfig.json" />
@@ -80,6 +78,7 @@
     <Folder Include="src\DIProperty\" />
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="Dependencies\" />
+    <Folder Include="src\Resources\Page\top\" />
     <Folder Include="src\z.ReportForm\Modules\Notice\" />
     <Folder Include="src\z.ReportForm\WebsiteControllers\" />
     <Folder Include="src\z.ReportForm\Repository\" />
@@ -120,8 +119,11 @@
     <Folder Include="src\Resources\Page\wip_list\" />
     <Folder Include="src\Resources\Page\unverified_list_level\" />
     <Folder Include="src\Resources\Page\unverified_list_genre\" />
-    <Folder Include="src\Resources\Page\top\" />
     <Folder Include="src\Resources\Page\report_group_list\" />
+    <Folder Include="src\z.ReportForm\WebsiteControllers\LevelReport\" />
+    <Folder Include="src\z.ReportForm\WebsiteControllers\UnitReportGroup\" />
+    <Folder Include="src\z.ReportForm\WebsiteControllers\UnverifiedList\" />
+    <Folder Include="src\z.ReportForm\WebsiteControllers\UnitReport\" />
     <Folder Include="test\" />
     <Folder Include="src\" />
   </ItemGroup>
@@ -315,7 +317,19 @@
     <TypeScriptCompile Include="src\z.ReportForm\Modules\WebhookModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\InProgressListWebsiteController.ts">
+    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\LevelReport\LevelReportListWebsiteController.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\LevelReport\LevelReportWebsiteController.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\UnitReportGroup\UnitReportGroupWebsiteController.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\UnitReport\UnitReportListWebsiteController.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\UnitReportGroup\UnitReportGroupListWebsiteController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\TopWebsiteController.ts">
@@ -372,6 +386,13 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\z.ReportForm\Configurations\ConfigurationSchema.ts" />
     <TypeScriptCompile Include="src\z.ReportForm\Configurations\ConfigurationSourceType.ts" />
+    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\UnitReport\UnitReportWebsiteController.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\UnverifiedList\UnverifiedListByLevelWebsiteController.ts" />
+    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\UnverifiedList\UnverifiedListByGenreWebsiteController.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="test\MusicDataTable.spec.ts" />
     <TypeScriptCompile Include="test\Rating.spec.ts" />
   </ItemGroup>

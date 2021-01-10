@@ -8,8 +8,8 @@ export class PostTweetEnabledSetCommand extends LINECommand {
     public invoke(command: string, event: any, postData: any): void {
         const value = command.replace("post-tweet-enabled=", "") === "true";
         const result = value ? "ON" : "OFF";
-        this.module.runtimeConfiguration.properties.postTweetEnabled = value;
-        this.module.runtimeConfiguration.apply();
+        this.module.configuration.runtime.postTweetEnabled = value;
+        this.module.configuration.applyRuntimeConfiguration();
         this.replyMessage(event.replyToken, [`Twitterへの通知を${result}にしました`]);
     }
 }

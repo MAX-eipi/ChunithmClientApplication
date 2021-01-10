@@ -1,15 +1,15 @@
-import { ReportForm } from "./ReportForm/ReportForm";
+import { ReportForm } from "./z.ReportForm/ReportForm";
 
 const VERSION = "0.4.0.0";
 export function getAppVersion(): string {
     return VERSION;
 }
 
-function doGet(e: any): any {
+function doGet(e: GoogleAppsScript.Events.DoGet): any {
     return ReportForm.doGet(e);
 }
 
-function doPost(e: any): any {
+function doPost(e: GoogleAppsScript.Events.DoPost): any {
     return ReportForm.doPost(e);
 }
 
