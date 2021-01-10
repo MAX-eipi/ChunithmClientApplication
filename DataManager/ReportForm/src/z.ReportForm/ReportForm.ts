@@ -8,7 +8,6 @@ import { LINEModule } from "./Modules/LINEModule";
 import { NoticeModule } from "./Modules/Notice/NoticeModule";
 import { PostCommandModule } from "./Modules/PostCommandModule";
 import { ReportModule } from "./Modules/Report/ReportModule";
-import { RoutingModule } from "./Modules/Router";
 import { GoogleFormReport } from "./Report/GoogleFormReport";
 import { GoogleFormLevelBulkReport } from "./Report/LevelBulkReport/GoogleFormLevelBulkReport";
 import { ReportStatus } from "./Report/ReportStatus";
@@ -28,7 +27,7 @@ export class ReportForm {
         }
         catch (error) {
             CustomLogManager.exception(error);
-            return new ErrorWebsiteController(e).call({ version: e.parameter.versionName, message: error.message }, null);
+            return new ErrorWebsiteController(e).call({ version: Instance.instance.module.configuration.defaultVersionName, message: error.message }, null);
         }
     }
 
