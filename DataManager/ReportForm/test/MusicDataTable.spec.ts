@@ -1,5 +1,5 @@
-import { MusicData } from "../src/MusicDataTable/MusicData";
-import { MusicDataTable } from "../src/MusicDataTable/MusicDataTable";
+import { MusicData } from "../src/Product/ReportForm/Layer2/MusicDataTable/MusicData";
+import { MusicDataTable } from "../src/Product/ReportForm/Layer2/MusicDataTable/MusicDataTable";
 
 
 function createTestMusicDataTable(musicDatas: MusicData[]): MusicDataTable {

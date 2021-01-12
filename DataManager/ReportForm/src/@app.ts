@@ -1,4 +1,4 @@
-import { ReportForm } from "./ReportForm/ReportForm";
+import { ReportForm } from "./Product/ReportForm/ReportForm";
 
 const VERSION = "0.4.0.0";
 export function getAppVersion(): string {
