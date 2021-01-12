@@ -22,7 +22,7 @@ export class ReportForm {
             if (!e.parameter.versionName) {
                 e.parameter.versionName = Instance.instance.module.configuration.defaultVersionName;
             }
-            Instance.instance.setupWebsiteControllers(e);
+            Instance.instance.bindWebsiteControllers(e);
             return DIProperty.resolve(Router).call(e.pathInfo);
         }
         catch (error) {

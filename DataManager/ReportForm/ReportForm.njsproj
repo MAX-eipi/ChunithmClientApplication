@@ -79,9 +79,9 @@
     <Folder Include="src\MusicDataTable\" />
     <Folder Include="Dependencies\" />
     <Folder Include="src\Resources\Page\top\" />
-    <Folder Include="src\z.ReportForm\Modules\Notice\" />
-    <Folder Include="src\z.ReportForm\WebsiteControllers\" />
-    <Folder Include="src\z.ReportForm\Repository\" />
+    <Folder Include="src\ReportForm\Modules\Notice\" />
+    <Folder Include="src\ReportForm\WebsiteControllers\" />
+    <Folder Include="src\ReportForm\Repository\" />
     <Folder Include="src\Repository\" />
     <Folder Include="src\Router\" />
     <Folder Include="src\Spreadsheet\" />
@@ -95,21 +95,20 @@
     <Folder Include="src\UrlFetch.Slack\API\Chat\" />
     <Folder Include="src\UrlFetch.Slack\API\Chat\PostMessage\" />
     <Folder Include="src\UrlFetch\" />
-    <Folder Include="src\z.ReportForm\Modules\" />
-    <Folder Include="src\z.ReportForm\Logger\" />
-    <Folder Include="src\z.ReportForm\Configurations\" />
-    <Folder Include="src\z.ReportForm\Dependencies\" />
-    <Folder Include="src\z.ReportForm\LineCommand\" />
-    <Folder Include="src\z.ReportForm\Modules\Report\" />
-    <Folder Include="src\z.ReportForm\Report\" />
-    <Folder Include="src\z.ReportForm\Page\" />
-    <Folder Include="src\z.ReportForm\Report\BulkReport\" />
-    <Folder Include="src\z.ReportForm\Report\LevelBulkReport\" />
+    <Folder Include="src\ReportForm\Modules\" />
+    <Folder Include="src\ReportForm\Logger\" />
+    <Folder Include="src\ReportForm\Configurations\" />
+    <Folder Include="src\ReportForm\Dependencies\" />
+    <Folder Include="src\ReportForm\LineCommand\" />
+    <Folder Include="src\ReportForm\Modules\Report\" />
+    <Folder Include="src\ReportForm\Report\" />
+    <Folder Include="src\ReportForm\Report\BulkReport\" />
+    <Folder Include="src\ReportForm\Report\LevelBulkReport\" />
     <Folder Include="src\Resources\Page\bulk_approval\" />
     <Folder Include="src\Resources\Page\wip_bulk_report_list\" />
     <Folder Include="src\Twitter\" />
-    <Folder Include="src\z.ReportForm\" />
-    <Folder Include="src\z.ReportForm\PostCommand\" />
+    <Folder Include="src\ReportForm\" />
+    <Folder Include="src\ReportForm\PostCommand\" />
     <Folder Include="src\Resources\" />
     <Folder Include="src\Resources\Page\" />
     <Folder Include="src\Resources\Page\common\" />
@@ -120,10 +119,10 @@
     <Folder Include="src\Resources\Page\unverified_list_level\" />
     <Folder Include="src\Resources\Page\unverified_list_genre\" />
     <Folder Include="src\Resources\Page\report_group_list\" />
-    <Folder Include="src\z.ReportForm\WebsiteControllers\LevelReport\" />
-    <Folder Include="src\z.ReportForm\WebsiteControllers\UnitReportGroup\" />
-    <Folder Include="src\z.ReportForm\WebsiteControllers\UnverifiedList\" />
-    <Folder Include="src\z.ReportForm\WebsiteControllers\UnitReport\" />
+    <Folder Include="src\ReportForm\WebsiteControllers\LevelReport\" />
+    <Folder Include="src\ReportForm\WebsiteControllers\UnitReportGroup\" />
+    <Folder Include="src\ReportForm\WebsiteControllers\UnverifiedList\" />
+    <Folder Include="src\ReportForm\WebsiteControllers\UnitReport\" />
     <Folder Include="test\" />
     <Folder Include="src\" />
   </ItemGroup>
@@ -155,55 +154,52 @@
     <TypeScriptCompile Include="src\CustomLogger\CustomLogger.ts" />
     <TypeScriptCompile Include="src\CustomLogger\CustomLogManager.ts" />
     <TypeScriptCompile Include="src\DIProperty\DIProperty.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Configurations\ReportConfiguration.ts">
+    <TypeScriptCompile Include="src\ReportForm\Configurations\ReportConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Configurations\RuntimeConfigurationSchema.ts">
+    <TypeScriptCompile Include="src\ReportForm\Configurations\RuntimeConfigurationSchema.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\%40ReportFormController.ts">
+    <TypeScriptCompile Include="src\ReportForm\WebsiteControllers\%40ReportFormController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Dependencies\LINECommand.ts">
+    <TypeScriptCompile Include="src\ReportForm\Dependencies\LINECommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Dependencies\Logger.ts">
+    <TypeScriptCompile Include="src\ReportForm\Dependencies\Logger.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Dependencies\Page.ts">
+    <TypeScriptCompile Include="src\ReportForm\Dependencies\PostCommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Dependencies\PostCommand.ts">
+    <TypeScriptCompile Include="src\ReportForm\Dependencies\WebhookEventDefinition.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Dependencies\WebhookEventDefinition.ts">
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\BulkReportFormBuildCommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\BulkReportFormBuildCommand.ts">
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\BulkReportFormUrlGetCommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\BulkReportFormUrlGetCommand.ts">
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\GlobalConfigValueGetCommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\GlobalConfigValueGetCommand.ts">
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\ReportFormBuildCommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\ReportFormBuildCommand.ts">
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\TargetLevelMusicCountGetCommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\TargetLevelMusicCountGetCommand.ts">
+    <TypeScriptCompile Include="src\ReportForm\Modules\ApprovalModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\ApprovalModule.ts">
+    <TypeScriptCompile Include="src\ReportForm\Modules\ChunirecModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\ChunirecModule.ts">
+    <TypeScriptCompile Include="src\ReportForm\Modules\LINEModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\LINEModule.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\%40ReportFormModule.ts">
+    <TypeScriptCompile Include="src\ReportForm\Modules\%40ReportFormModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\MusicDataTable\MusicData.ts" />
@@ -212,130 +208,113 @@
     <TypeScriptCompile Include="src\MusicDataTable\MusicDataTableWriter.ts" />
     <TypeScriptCompile Include="src\MusicDataTable\Difficulty.ts" />
     <TypeScriptCompile Include="src\%40app.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Configurations\%40ReportFormConfiguration.ts">
+    <TypeScriptCompile Include="src\ReportForm\Configurations\%40ReportFormConfiguration.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Environment.ts">
+    <TypeScriptCompile Include="src\ReportForm\Environment.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\%40LINECommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Configurations\ConfigurationEditor.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Instance.ts">
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\%40LINECommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Configurations\ConfigurationEditor.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Instance.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\DefaultGameVersionGetCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\EnvironmentGetCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\FormUrlGetCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\LatestGameVersionGetCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\PostTweetEnabledGetCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\PostTweetEnabledSetCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\ReportPostNoticeEnabledGetCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\ReportPostNoticeEnabledSetCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\TestCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\TopUrlGetCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\LineCommand\VersionGetCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\MusicDataModule.ts">
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\DefaultGameVersionGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\EnvironmentGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\FormUrlGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\LatestGameVersionGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\PostTweetEnabledGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\PostTweetEnabledSetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\ReportPostNoticeEnabledGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\ReportPostNoticeEnabledSetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\TestCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\TopUrlGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\LineCommand\VersionGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Modules\MusicDataModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\Report\LevelBulkReportGoogleForm.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\Report\ReportGoogleForm.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\TwitterModule.ts">
+    <TypeScriptCompile Include="src\ReportForm\Modules\Report\LevelBulkReportGoogleForm.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Modules\Report\ReportGoogleForm.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Modules\TwitterModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\VersionModule.ts">
+    <TypeScriptCompile Include="src\ReportForm\Modules\VersionModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\Notice\NoticeModule.ts">
+    <TypeScriptCompile Include="src\ReportForm\Modules\Notice\NoticeModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\Notice\NoticeQueue.ts">
+    <TypeScriptCompile Include="src\ReportForm\Modules\Notice\NoticeQueue.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Page\ApprovalPage.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Page\LevelBulkApprovalPage.ts">
+    <TypeScriptCompile Include="src\ReportForm\Modules\PostCommandModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Page\LevelBulkReportListPage.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport\BulkReportTable.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Page\ErrorPage.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Page\GroupApprovalPage.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Page\InProgressListPage.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Page\%40ReportFormPage.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport\BulkReportTableContainer.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Page\ReportGroupListPage.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Page\TopPage.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Page\UnverifiedListByGenrePage.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Page\UnverifiedListByLevelPage.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\PostCommandModule.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport\BulkReportTableHeader.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport\BulkReportTableRow.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Report\BulkReport\BulkReportTable.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport\BulkReportTableReader.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Report\BulkReport\BulkReportTableContainer.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\BulkReport\BulkReportTableWriter.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Report\BulkReport\BulkReportTableHeader.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Report\BulkReport\BulkReportTableRow.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\IMusicDataReport.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\IReport.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReport\LevelBulkReport.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Report\BulkReport\BulkReportTableReader.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReport\LevelBulkReportSheet.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Report\BulkReport\BulkReportTableWriter.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\LevelBulkReport\GoogleFormLevelBulkReport.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Report\IMusicDataReport.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Report\IReport.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Report\LevelBulkReport\LevelBulkReport.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\GoogleFormReport.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Report\LevelBulkReport\LevelBulkReportSheet.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\MusicDataReport.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\MusicDataReportGroup.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Report\LevelBulkReport\GoogleFormLevelBulkReport.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\MusicDataReportGroupContainer.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Report\GoogleFormReport.ts">
+    <TypeScriptCompile Include="src\ReportForm\Report\Report.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\ReportInputFormat.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\ReportStatus.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Report\ReportStorage.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Report\MusicDataReport.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Report\MusicDataReportGroup.ts">
+    <TypeScriptCompile Include="src\ReportForm\Modules\WebhookModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Report\MusicDataReportGroupContainer.ts">
+    <TypeScriptCompile Include="src\ReportForm\WebsiteControllers\ErrorWebsiteController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Report\Report.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Report\ReportInputFormat.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Report\ReportStatus.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Report\ReportStorage.ts">
+    <TypeScriptCompile Include="src\ReportForm\WebsiteControllers\LevelReport\LevelReportListWebsiteController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\WebhookModule.ts">
+    <TypeScriptCompile Include="src\ReportForm\WebsiteControllers\LevelReport\LevelReportWebsiteController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\ErrorWebsiteController.ts">
+    <TypeScriptCompile Include="src\ReportForm\WebsiteControllers\UnitReportGroup\UnitReportGroupWebsiteController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\LevelReport\LevelReportListWebsiteController.ts">
+    <TypeScriptCompile Include="src\ReportForm\WebsiteControllers\UnitReport\UnitReportListWebsiteController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\LevelReport\LevelReportWebsiteController.ts">
+    <TypeScriptCompile Include="src\ReportForm\WebsiteControllers\UnitReportGroup\UnitReportGroupListWebsiteController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\UnitReportGroup\UnitReportGroupWebsiteController.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\UnitReport\UnitReportListWebsiteController.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\UnitReportGroup\UnitReportGroupListWebsiteController.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\TopWebsiteController.ts">
+    <TypeScriptCompile Include="src\ReportForm\WebsiteControllers\TopWebsiteController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="SRC\REPOSITORY\RepositoryInterface.ts" />
@@ -353,19 +332,18 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Twitter\TwitterConnector.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Approval.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Approval.ts" />
     <TypeScriptCompile Include="src\%40events.ts" />
     <TypeScriptCompile Include="src\%40operations.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\PostCommand\%40PostCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\PostCommand\TableGetCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\PostCommand\TableUpadateCommand.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Rating.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\Report\ReportModule.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Role.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Modules\Router.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Logger\SpreadSheetLogger.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Utility.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\ReportForm.ts" />
+    <TypeScriptCompile Include="src\ReportForm\PostCommand\%40PostCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\PostCommand\TableGetCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\PostCommand\TableUpadateCommand.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Rating.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Modules\Report\ReportModule.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Role.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Logger\SpreadSheetLogger.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Utility.ts" />
+    <TypeScriptCompile Include="src\ReportForm\ReportForm.ts" />
     <TypeScriptCompile Include="src\UrlFetch.LINE\API\LINEPayload.ts" />
     <TypeScriptCompile Include="src\UrlFetch.LINE\API\MessageObjects.ts" />
     <TypeScriptCompile Include="src\UrlFetch.LINE\API\Message\Push\Payload.ts" />
@@ -387,13 +365,13 @@
     <TypeScriptCompile Include="src\UrlFetch\UrlFetchStreamStatus.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\Configurations\ConfigurationSchema.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\Configurations\ConfigurationSourceType.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\UnitReport\UnitReportWebsiteController.ts">
+    <TypeScriptCompile Include="src\ReportForm\Configurations\ConfigurationSchema.ts" />
+    <TypeScriptCompile Include="src\ReportForm\Configurations\ConfigurationSourceType.ts" />
+    <TypeScriptCompile Include="src\ReportForm\WebsiteControllers\UnitReport\UnitReportWebsiteController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\UnverifiedList\UnverifiedListByLevelWebsiteController.ts" />
-    <TypeScriptCompile Include="src\z.ReportForm\WebsiteControllers\UnverifiedList\UnverifiedListByGenreWebsiteController.ts">
+    <TypeScriptCompile Include="src\ReportForm\WebsiteControllers\UnverifiedList\UnverifiedListByLevelWebsiteController.ts" />
+    <TypeScriptCompile Include="src\ReportForm\WebsiteControllers\UnverifiedList\UnverifiedListByGenreWebsiteController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="test\MusicDataTable.spec.ts" />

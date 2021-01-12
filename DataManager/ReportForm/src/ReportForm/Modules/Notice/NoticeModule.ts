@@ -1,6 +1,7 @@
 import { CustomCacheProvider } from "../../../CustomCacheProvider/CustomCacheProvider";
 import { DIProperty } from "../../../DIProperty/DIProperty";
 import { Difficulty } from "../../../MusicDataTable/Difficulty";
+import { Router } from "../../../Router/Router";
 import { LINEMessagePushStream } from "../../../UrlFetch.LINE/API/Message/Push/Stream";
 import { TextMessage } from "../../../UrlFetch.LINE/API/MessageObjects";
 import { Block } from "../../../UrlFetch.Slack/API/Blocks";
@@ -9,13 +10,14 @@ import { SlackBlockFactory } from "../../../UrlFetch.Slack/BlockFactory";
 import { SlackCompositionObjectFactory } from "../../../UrlFetch.Slack/CompositionObjectFactory";
 import { UrlFetchStream } from "../../../UrlFetch/UrlFetch";
 import { UrlFetchManager } from "../../../UrlFetch/UrlFetchManager";
-import { ApprovalPage } from "../../Page/ApprovalPage";
 import { IReport } from "../../Report/IReport";
 import { LevelBulkReport } from "../../Report/LevelBulkReport/LevelBulkReport";
 import { Utility } from "../../Utility";
+import { ReportFormWebsiteController } from "../../WebsiteControllers/@ReportFormController";
+import { LevelReportWebsiteController } from "../../WebsiteControllers/LevelReport/LevelReportWebsiteController";
+import { UnitReportWebsiteController } from "../../WebsiteControllers/UnitReport/UnitReportWebsiteController";
 import { ReportFormModule } from "../@ReportFormModule";
 import { ReportModule } from "../Report/ReportModule";
-import { RoutingModule } from "../Router";
 import { TwitterModule } from "../TwitterModule";
 import { VersionModule } from "../VersionModule";
 import { NoticeQueue } from "./NoticeQueue";
@@ -23,13 +25,15 @@ import { NoticeQueue } from "./NoticeQueue";
 export class NoticeModule extends ReportFormModule {
     public static readonly moduleName = 'notice';
 
-    private get router(): RoutingModule { return this.getModule(RoutingModule); }
     private get reportModule(): ReportModule { return this.getModule(ReportModule); }
     private get twitterModule(): TwitterModule { return this.getModule(TwitterModule); }
     private get versionModule(): VersionModule { return this.getModule(VersionModule); }
 
     @DIProperty.inject('CacheProvider')
     private readonly _cacheProvider: CustomCacheProvider;
+
+    @DIProperty.inject(Router)
+    private readonly _router: Router;
 
     private _queue: NoticeQueue;
     public getQueue(): NoticeQueue {
@@ -66,7 +70,7 @@ export class NoticeModule extends ReportFormModule {
             ));
             for (const r of reports) {
                 const diffText = Utility.toDifficultyTextLowerCase(r.difficulty);
-                const url = this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId);
+                const url = ReportFormWebsiteController.getFullPath(this.configuration, this._router, UnitReportWebsiteController, { version: versionName, reportId: r.reportId.toString() });
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`<${url}|:chunithm_difficulty_${diffText}: ${r.musicName}>`)
                 ));
@@ -98,7 +102,7 @@ export class NoticeModule extends ReportFormModule {
                     text: `[単曲検証報告]
 楽曲名:${r.musicName}
 難易度:${Utility.toDifficultyText(r.difficulty)}
-URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId)}`
+URL: ${ReportFormWebsiteController.getFullPath(this.configuration, this._router, UnitReportWebsiteController, { version: versionName, reportId: r.reportId.toString() })}`
                 };
                 for (const target of this.configuration.global.lineNoticeTargetIdList) {
                     streams.push(new LINEMessagePushStream({
@@ -161,7 +165,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
                 ));
                 for (const r of reports) {
                     const diffText = Utility.toDifficultyTextLowerCase(r.difficulty);
-                    const url = this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId);
+                    const url = ReportFormWebsiteController.getFullPath(this.configuration, this._router, UnitReportWebsiteController, { version: versionName, reportId: r.reportId.toString() });
                     blocks.push(SlackBlockFactory.section(
                         SlackCompositionObjectFactory.markdownText(`<${url}|:chunithm_difficulty_${diffText}: ${r.musicName}>`)
                     ));
@@ -217,7 +221,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
 楽曲名:${r.musicName}
 難易度:${Utility.toDifficultyText(r.difficulty)}
 譜面定数:${r.calcBaseRating().toFixed(1)}
-URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId)}`
+URL:${ReportFormWebsiteController.getFullPath(this.configuration, this._router, UnitReportWebsiteController, { version: versionName, reportId: r.reportId.toString() })}`
                 };
                 for (const target of this.configuration.global.lineNoticeTargetIdList) {
                     streams.push(new LINEMessagePushStream({
@@ -265,7 +269,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
             ));
             for (const r of reports) {
                 const diffText = Utility.toDifficultyTextLowerCase(r.difficulty);
-                const url = this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId);
+                const url = ReportFormWebsiteController.getFullPath(this.configuration, this._router, UnitReportWebsiteController, { version: versionName, reportId: r.reportId.toString() })
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`<${url}|:chunithm_difficulty_${diffText}: ${r.musicName}>`)
                 ));
@@ -297,7 +301,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
                     text: `✖️[検証結果 却下]✖️
 楽曲名:${r.musicName}
 難易度:${Utility.toDifficultyText(r.difficulty)}
-URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId)}`
+URL:${ReportFormWebsiteController.getFullPath(this.configuration, this._router, UnitReportWebsiteController, { version: versionName, reportId: r.reportId.toString() })}`
                 };
                 for (const target of this.configuration.global.lineNoticeTargetIdList) {
                     streams.push(new LINEMessagePushStream({
@@ -378,7 +382,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
             for (const r of reports) {
                 const difficulty = r.targetLevel >= 4 ? Difficulty.Advanced : Difficulty.Basic;
                 const diffText = Utility.toDifficultyTextLowerCase(difficulty);
-                const url = this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId);
+                const url = ReportFormWebsiteController.getFullPath(this.configuration, this._router, LevelReportWebsiteController, { version: versionName, reportId: r.reportId.toString() });
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`<${url}|:chunithm_difficulty_${diffText}: Lv.${r.targetLevel} (${r.musicCount}曲)>`)
                 ));
@@ -398,32 +402,6 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
         }
 
         // LINEグループに対しては低難易度帯の報告を投げない
-        // line
-        //        if (this.config.line.reportPostNoticeEnabled) {
-        //            const streams: LINEMessagePushStream[] = [];
-        //            for (const r of reports) { 
-        //                const message: TextMessage = {
-        //                    type: 'text',
-        //                    text: `[レベル検証報告]
-        //対象レベル:${r.targetLevel}
-        //楽曲数:${r.musicCount}
-        //URL:${this.module.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, r.reportId)}`
-        //                };
-        //                for (const target of this.config.global.lineNoticeTargetIdList) {
-        //                    streams.push(new LINEMessagePushStream({
-        //                        channelAccessToken: this.config.global.lineChannelAccessToken,
-        //                        to: target,
-        //                        messages: [message]
-        //                    }));
-        //                }
-        //            }
-        //            try {
-        //                UrlFetchManager.execute(streams);
-        //            }
-        //            catch (e) {
-        //                errors.push(e);
-        //            }
-        //        }
 
         this.noticeMissingLevelReports(missingReportIds);
         this.noticeErrors(errors);
@@ -459,7 +437,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
                 for (const r of reports) {
                     const difficulty = r.targetLevel >= 4 ? Difficulty.Advanced : Difficulty.Basic;
                     const diffText = Utility.toDifficultyTextLowerCase(difficulty);
-                    const url = this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId);
+                    const url = ReportFormWebsiteController.getFullPath(this.configuration, this._router, LevelReportWebsiteController, { version: versionName, reportId: r.reportId.toString() });
                     blocks.push(SlackBlockFactory.section(
                         SlackCompositionObjectFactory.markdownText(`<${url}|:chunithm_difficulty_${diffText}: Lv.${r.targetLevel} (${r.musicCount}曲)>`)
                     ));
@@ -503,32 +481,6 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
         }
 
         // LINEグループに対しては低難易度帯の報告を投げない
-        // line
-        //        if (this.config.line.reportPostNoticeEnabled) {
-        //            const streams: LINEMessagePushStream[] = [];
-        //            for (const r of reports) {
-        //                const message: TextMessage = {
-        //                    type: 'text',
-        //                    text: `⭕️[レベル検証報告 承認]⭕️
-        //対象レベル:${r.targetLevel}
-        //楽曲数:${r.musicCount}
-        //URL:${this.module.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, r.reportId)}`
-        //                };
-        //                for (const target of this.config.global.lineNoticeTargetIdList) {
-        //                    streams.push(new LINEMessagePushStream({
-        //                        channelAccessToken: this.config.global.lineChannelAccessToken,
-        //                        to: target,
-        //                        messages: [message]
-        //                    }));
-        //                }
-        //            }
-        //            try {
-        //                UrlFetchManager.execute(streams);
-        //            }
-        //            catch (e) {
-        //                errors.push(e);
-        //            }
-        //        }
 
         this.noticeMissingLevelReports(missingReportIds);
         this.noticeErrors(errors);
@@ -561,7 +513,7 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
             for (const r of reports) {
                 const difficulty = r.targetLevel >= 4 ? Difficulty.Advanced : Difficulty.Basic;
                 const diffText = Utility.toDifficultyTextLowerCase(difficulty);
-                const url = this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId);
+                const url = ReportFormWebsiteController.getFullPath(this.configuration, this._router, LevelReportWebsiteController, { version: versionName, reportId: r.reportId.toString() });
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`<${url}|:chunithm_difficulty_${diffText}: Lv.${r.targetLevel} (${r.musicCount}曲)>`)
                 ));
@@ -582,32 +534,6 @@ URL:${this.router.getPage(ApprovalPage).getReportPageUrl(versionName, r.reportId
         }
 
         // LINEグループに対しては低難易度帯の報告を投げない
-        // line
-        //        if (this.config.line.reportPostNoticeEnabled) {
-        //            const streams: LINEMessagePushStream[] = [];
-        //            for (const r of reports) {
-        //                const message: TextMessage = {
-        //                    type: 'text',
-        //                    text: `×[レベル検証報告 却下]×
-        //対象レベル:${r.targetLevel}
-        //楽曲数:${r.musicCount}
-        //URL:${this.module.router.getPage(LevelBulkApprovalPage).getReportPageUrl(versionName, r.reportId)}`
-        //                };
-        //                for (const target of this.config.global.lineNoticeTargetIdList) {
-        //                    streams.push(new LINEMessagePushStream({
-        //                        channelAccessToken: this.config.global.lineChannelAccessToken,
-        //                        to: target,
-        //                        messages: [message]
-        //                    }));
-        //                }
-        //            }
-        //            try {
-        //                UrlFetchManager.execute(streams);
-        //            }
-        //            catch (e) {
-        //                errors.push(e);
-        //            }
-        //        }
 
         this.noticeMissingLevelReports(missingReportIds);
         this.noticeErrors(errors);

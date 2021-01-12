@@ -1,4 +1,4 @@
-import { getConstValues, getStaticConfig, getRuntimeConfiguration } from "../@const";
+import { getConstValues, getRuntimeConfiguration, getStaticConfig } from "../@const";
 import { Configuration } from "../Configuration/Configuration";
 import { JsonConfigurationFactory } from "../Configuration/JsonConfigurationFactory";
 import { JsonFileRuntimeConfiguration } from "../Configuration/JsonFileRuntimeConfiguration";
@@ -8,6 +8,7 @@ import { ScriptCacheProvider } from "../CustomCacheProvider/ScriptCacheProvider"
 import { CustomLogManager } from "../CustomLogger/CustomLogManager";
 import { DIProperty } from "../DIProperty/DIProperty";
 import { Router } from "../Router/Router";
+import { RoutingControllerWithType } from "../Router/RoutingController";
 import { RoutingParameterType } from "../Router/RoutingParameterType";
 import { ReportFormConfiguration } from "./Configurations/@ReportFormConfiguration";
 import { ReportFormConfigurationSchema } from "./Configurations/ConfigurationSchema";
@@ -15,10 +16,10 @@ import { ConfigurationSourceType } from "./Configurations/ConfigurationSourceTyp
 import { RuntimeConfigurationSchema } from "./Configurations/RuntimeConfigurationSchema";
 import { LINECommandDI } from "./Dependencies/LINECommand";
 import { LoggerDI } from "./Dependencies/Logger";
-import { PageDI } from "./Dependencies/Page";
 import { PostCommandDI } from "./Dependencies/PostCommand";
 import { ReportFormModule } from "./Modules/@ReportFormModule";
 import { WebhookModule, WebhookSettingsManager } from "./Modules/WebhookModule";
+import { ReportFormWebsiteParameter, ReportFormWebsiteController } from "./WebsiteControllers/@ReportFormController";
 import { LevelReportListWebsiteController, LevelReportListWebsiteParameter } from "./WebsiteControllers/LevelReport/LevelReportListWebsiteController";
 import { LevelReportWebsiteController, LevelReportWebsiteParameter } from "./WebsiteControllers/LevelReport/LevelReportWebsiteController";
 import { TopWebsiteController, TopWebsiteParameter } from "./WebsiteControllers/TopWebsiteController";
@@ -59,7 +60,6 @@ export class Instance {
 
         this.setupDIContainer(module);
         LoggerDI.initialize(module.configuration);
-        PageDI.setPageFactories(this._module);
         LINECommandDI.setCommandFactories(this._module);
         PostCommandDI.setCommandFactories(this._module);
 
@@ -80,34 +80,37 @@ export class Instance {
         const cacheProvider = new ScriptCacheProvider();
         cacheProvider.expirationInSeconds = 3600;
         DIProperty.register('CacheProvider', cacheProvider);
-    }
 
-    public setupWebsiteControllers(e: GoogleAppsScript.Events.DoGet & { pathInfo: string }): void {
         const router = new Router();
         const topNode = router.getOrCreateNodeWithType<TopWebsiteParameter>(`version:${RoutingParameterType.TEXT}`, TopWebsiteController);
-        topNode.bindController(() => new TopWebsiteController(e));
 
         topNode.getOrCreateNodeWithType<UnitReportListWebsiteParameter>("unitReportList", UnitReportListWebsiteController)
-            .bindController(() => new UnitReportListWebsiteController(e));
         topNode.getOrCreateNodeWithType<UnitReportWebsiteParameter>(`unitReport/reportId:${RoutingParameterType.TEXT}`, UnitReportWebsiteController)
-            .bindController(() => new UnitReportWebsiteController(e));
 
         topNode.getOrCreateNodeWithType<UnitReportGroupListWebsiteParameter>("unitReportGroupList", UnitReportGroupListWebsiteController)
-            .bindController(() => new UnitReportGroupListWebsiteController(e));
         topNode.getOrCreateNodeWithType<UnitReportGroupWebsiteParameter>(`unitReportGroup/groupId:${RoutingParameterType.TEXT}`, UnitReportGroupWebsiteController)
-            .bindController(() => new UnitReportGroupWebsiteController(e));
 
         topNode.getOrCreateNodeWithType<LevelReportListWebsiteParameter>("levelReportList", LevelReportListWebsiteController)
-            .bindController(() => new LevelReportListWebsiteController(e));
         topNode.getOrCreateNodeWithType<LevelReportWebsiteParameter>(`levelReport/reportId:${RoutingParameterType.TEXT}`, LevelReportWebsiteController)
-            .bindController(() => new LevelReportWebsiteController(e));
 
         topNode.getOrCreateNodeWithType<UnverifiedListByGenreWebsiteParameter>("unverifiedListByGenre", UnverifiedListByGenreWebsiteController)
-            .bindController(() => new UnverifiedListByGenreWebsiteController(e));
         topNode.getOrCreateNodeWithType<UnverifiedListByLevelWebsiteParameter>("unverifiedListByLevel", UnverifiedListByLevelWebsiteController)
-            .bindController(() => new UnverifiedListByLevelWebsiteController(e));
 
         DIProperty.register(Router, router);
+    }
+
+    public bindWebsiteControllers(e: GoogleAppsScript.Events.DoGet): void {
+        const router = DIProperty.resolve(Router);
+
+        router.findNodeByName(TopWebsiteController).bindController(() => new TopWebsiteController(e));
+        router.findNodeByName(UnitReportListWebsiteController).bindController(() => new UnitReportListWebsiteController(e));
+        router.findNodeByName(UnitReportWebsiteController).bindController(() => new UnitReportWebsiteController(e));
+        router.findNodeByName(UnitReportGroupListWebsiteController).bindController(() => new UnitReportGroupListWebsiteController(e));
+        router.findNodeByName(UnitReportGroupWebsiteController).bindController(() => new UnitReportGroupWebsiteController(e));
+        router.findNodeByName(LevelReportListWebsiteController).bindController(() => new LevelReportListWebsiteController(e));
+        router.findNodeByName(LevelReportWebsiteController).bindController(() => new LevelReportWebsiteController(e));
+        router.findNodeByName(UnverifiedListByGenreWebsiteController).bindController(() => new UnverifiedListByGenreWebsiteController(e));
+        router.findNodeByName(UnverifiedListByLevelWebsiteController).bindController(() => new UnverifiedListByLevelWebsiteController(e));
     }
 
     private static createReportFormConfiguration(propTable: { [key: string]: string }, props: GoogleAppsScript.Properties.Properties) {
@@ -146,5 +149,11 @@ export class Instance {
             case ConfigurationSourceType.Json:
                 return JsonFileRuntimeConfiguration.createByFileId(getConstValues().runtimeConfigurationJsonFileId);
         }
+    }
+
+    public getPageUrl<TParam extends ReportFormWebsiteParameter>(targetController: { prototype: RoutingControllerWithType<TParam>; name: string }, parameter: TParam): string {
+        const configuration = DIProperty.resolve(ReportFormConfiguration);
+        const router = DIProperty.resolve(Router);
+        return ReportFormWebsiteController.getFullPath(configuration, router, targetController, parameter);
     }
 }

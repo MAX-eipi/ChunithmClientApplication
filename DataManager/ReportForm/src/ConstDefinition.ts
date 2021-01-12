@@ -1,5 +1,5 @@
-import { ConfigurationSourceType } from "./z.ReportForm/Configurations/ConfigurationSourceType";
-import { Environment } from "./z.ReportForm/Environment";
+import { ConfigurationSourceType } from "./ReportForm/Configurations/ConfigurationSourceType";
+import { Environment } from "./ReportForm/Environment";
 
 export interface ConstDefinition {
     environment: Environment;

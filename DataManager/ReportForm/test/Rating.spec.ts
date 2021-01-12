@@ -1,4 +1,4 @@
-import { getBorderScore, getRating, Rank, getOverPower, calcBaseRating, ComboStatus } from "../src/z.ReportForm/Rating";
+import { getBorderScore, getRating, Rank, getOverPower, calcBaseRating, ComboStatus } from "../src/ReportForm/Rating";
 
 function checkCommon(expectedRating: number, baseRating: number, score: number): void {
     const actualRating = getRating(baseRating, score);

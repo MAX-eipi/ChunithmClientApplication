@@ -2,7 +2,7 @@ import { LogLevel } from "../../CustomLogger/CustomLogger";
 import { CustomLogManager } from "../../CustomLogger/CustomLogManager";
 import { DIProperty } from "../../DIProperty/DIProperty";
 import { Router } from "../../Router/Router";
-import { RoutingController, RoutingControllerWithType } from "../../Router/RoutingController";
+import { RoutingControllerWithType } from "../../Router/RoutingController";
 import { RoutingNode } from "../../Router/RoutingNode";
 import { ReportFormConfiguration } from "../Configurations/@ReportFormConfiguration";
 import { ReportFormModule } from "../Modules/@ReportFormModule";
@@ -55,19 +55,23 @@ export class ReportFormWebsiteController<TParameter extends ReportFormWebsitePar
             .getContent();
     }
 
-    protected replacePageLink(source: string, parameter: ReportFormWebsiteParameter, targetController: { prototype: RoutingController; name: string }) {
+    protected replacePageLink<TParam extends ReportFormWebsiteParameter>(source: string, parameter: TParam, targetController: { prototype: RoutingControllerWithType<TParam>; name: string }) {
         const url = this.getFullPath(parameter, targetController);
         const linkTarget = new RegExp(`%link:${targetController.name}%`, 'g');
         return source ? source.replace(linkTarget, url) : "";
     }
 
-    protected getFullPath(parameter: ReportFormWebsiteParameter, targetController: { prototype: RoutingController; name: string }): string {
-        const path = this.getRelativePath(parameter, targetController);
-        return this.configuration.rootUrl + path;
+    protected getFullPath<TParam extends ReportFormWebsiteParameter>(parameter: TParam, targetController: { prototype: RoutingControllerWithType<TParam>; name: string }): string {
+        return ReportFormWebsiteController.getFullPath(this.configuration, this.router, targetController, parameter)
     }
 
-    protected getRelativePath(parameter: ReportFormWebsiteParameter, targetController: { prototype: RoutingController; name: string }): string {
-        const node = this.router.findNodeByName(targetController.name);
+    public static getFullPath<TParam extends ReportFormWebsiteParameter>(configuration: ReportFormConfiguration, router: Router, targetController: { prototype: RoutingControllerWithType<TParam>; name: string }, parameter: TParam): string {
+        const path = this.getRelativePath(router, targetController, parameter);
+        return configuration.rootUrl + path;
+    }
+
+    public static getRelativePath<TParam extends ReportFormWebsiteParameter>(router: Router, targetController: { prototype: RoutingControllerWithType<TParam>; name: string }, parameter: TParam): string {
+        const node = router.findNodeByName(targetController.name);
         const path = node.getFullPath(parameter);
         return path;
     }
@@ -76,5 +80,9 @@ export class ReportFormWebsiteController<TParameter extends ReportFormWebsitePar
         const htmlOutput = HtmlService.createHtmlOutput(source).setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
         htmlOutput.setTitle('譜面定数 検証報告 管理ツール');
         return htmlOutput;
+    }
+
+    public static includeStylesheet(fileName: string): string {
+        return HtmlService.createHtmlOutputFromFile(`Resources/Page/${fileName}`).getContent();
     }
 }

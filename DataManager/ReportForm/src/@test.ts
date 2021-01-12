@@ -1,5 +1,5 @@
-import { Instance } from "./z.ReportForm/Instance";
-import { ReportForm } from "./z.ReportForm/ReportForm";
+import { Instance } from "./ReportForm/Instance";
+import { ReportForm } from "./ReportForm/ReportForm";
 
 // implements test core here
 function checkInitialize() {

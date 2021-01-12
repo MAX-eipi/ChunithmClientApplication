@@ -12,7 +12,6 @@ import { ChunirecModule } from "./ChunirecModule";
 import { MusicDataModule } from "./MusicDataModule";
 import { NoticeModule } from "./Notice/NoticeModule";
 import { ReportModule } from "./Report/ReportModule";
-import { VersionModule } from "./VersionModule";
 import { WebhookModule } from "./WebhookModule";
 
 export class ApprovalError implements Error {
@@ -31,7 +30,6 @@ export class ApprovalModule extends ReportFormModule {
     public static readonly moduleName = "approval";
 
     private get musicDataModule(): MusicDataModule { return this.getModule(MusicDataModule); }
-    private get versionModule(): VersionModule { return this.getModule(VersionModule); }
     private get noticeModule(): NoticeModule { return this.getModule(NoticeModule); }
     private get reportModule(): ReportModule { return this.getModule(ReportModule); }
     private get chunirecModule(): ChunirecModule { return this.getModule(ChunirecModule); }

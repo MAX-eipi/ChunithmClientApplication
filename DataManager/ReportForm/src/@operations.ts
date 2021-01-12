@@ -5,19 +5,18 @@ import { SlackChatPostMessageStream } from "./UrlFetch.Slack/API/Chat/PostMessag
 import { SlackBlockFactory } from "./UrlFetch.Slack/BlockFactory";
 import { SlackCompositionObjectFactory } from "./UrlFetch.Slack/CompositionObjectFactory";
 import { UrlFetchManager } from "./UrlFetch/UrlFetchManager";
-import { Instance } from "./z.ReportForm/Instance";
-import { ConfigurationEditor } from "./z.ReportForm/Configurations/ConfigurationEditor";
-import { ReportModule } from "./z.ReportForm/Modules/Report/ReportModule";
-import { TwitterModule } from "./z.ReportForm/Modules/TwitterModule";
-import { MusicDataModule } from "./z.ReportForm/Modules/MusicDataModule";
-import { NoticeModule } from "./z.ReportForm/Modules/Notice/NoticeModule";
-import { ReportStatus } from "./z.ReportForm/Report/ReportStatus";
-import { RoutingModule } from "./z.ReportForm/Modules/Router";
-import { InProgressListPage } from "./z.ReportForm/Page/InProgressListPage";
-import { LevelBulkReportListPage } from "./z.ReportForm/Page/LevelBulkReportListPage";
-import { VersionModule } from "./z.ReportForm/Modules/VersionModule";
-import { BulkReportTableReader } from "./z.ReportForm/Report/BulkReport/BulkReportTableReader";
-import { BulkReportTableWriter } from "./z.ReportForm/Report/BulkReport/BulkReportTableWriter";
+import { ConfigurationEditor } from "./ReportForm/Configurations/ConfigurationEditor";
+import { Instance } from "./ReportForm/Instance";
+import { MusicDataModule } from "./ReportForm/Modules/MusicDataModule";
+import { NoticeModule } from "./ReportForm/Modules/Notice/NoticeModule";
+import { ReportModule } from "./ReportForm/Modules/Report/ReportModule";
+import { TwitterModule } from "./ReportForm/Modules/TwitterModule";
+import { VersionModule } from "./ReportForm/Modules/VersionModule";
+import { BulkReportTableReader } from "./ReportForm/Report/BulkReport/BulkReportTableReader";
+import { BulkReportTableWriter } from "./ReportForm/Report/BulkReport/BulkReportTableWriter";
+import { ReportStatus } from "./ReportForm/Report/ReportStatus";
+import { LevelReportListWebsiteController } from "./ReportForm/WebsiteControllers/LevelReport/LevelReportListWebsiteController";
+import { UnitReportListWebsiteController } from "./ReportForm/WebsiteControllers/UnitReport/UnitReportListWebsiteController";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {
     const ret = ConfigurationEditor.store();
@@ -177,7 +176,7 @@ export function notifyUnverified() {
                 SlackCompositionObjectFactory.markdownText('*[定期]未検証 件数報告*')
             ));
             if (wipReportCount > 0) {
-                const wipReportsUrl = Instance.instance.module.getModule(RoutingModule).getPage(InProgressListPage).getPageUrl(versionName);
+                const wipReportsUrl = Instance.instance.getPageUrl(UnitReportListWebsiteController, { version: versionName });
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`:page_with_curl:未承認の単曲検証報告が${wipReportCount}件あります
 <${wipReportsUrl}|検証報告一覧(単曲)ページへ>`)
@@ -185,7 +184,7 @@ export function notifyUnverified() {
                 blocks.push(SlackBlockFactory.divider());
             }
             if (wipBulkReportCount > 0) {
-                const wipBulkReporturl = Instance.instance.module.getModule(RoutingModule).getPage(LevelBulkReportListPage).getPageUrl(versionName);
+                const wipBulkReporturl = Instance.instance.getPageUrl(LevelReportListWebsiteController, { version: versionName });
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`:page_with_curl:未承認のレベル別検証報告が${wipBulkReportCount}件あります
 <${wipBulkReporturl}|検証報告一覧(レベル別)ページへ>`)
