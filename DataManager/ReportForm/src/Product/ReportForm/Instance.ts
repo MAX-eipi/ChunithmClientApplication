@@ -55,8 +55,7 @@ export class Instance {
             const props = PropertiesService.getScriptProperties();
             const propTable = props.getProperties();
             const config = this.createReportFormConfiguration(propTable, props);
-            const module = ReportFormModule.instantiate(config);
-            this._instance = new Instance(module);
+            this._instance = new Instance(config);
         }
         return this._instance;
     }
@@ -65,41 +64,32 @@ export class Instance {
         this.instance;
     }
 
-    // TODO: ここが気になる. DI-Containerを実装する
-    private _module: ReportFormModule = null;
-    public get module(): ReportFormModule { return this._module; }
+    public get config() { return DIProperty.resolve(ReportFormConfiguration); }
+    public get module() { return DIProperty.resolve(ReportFormModule); }
 
-    public get config(): ReportFormConfiguration {
-        return DIProperty.resolve(ReportFormConfiguration);
-    }
+    public get linePostCommandManager() { return DIProperty.resolve(LINEPostCommandManager); }
+    public get postCommandManager() { return DIProperty.resolve(PostCommandManager); }
 
-    public get linePostCommandManager(): LINEPostCommandManager {
-        return DIProperty.resolve(LINEPostCommandManager);
-    }
+    private constructor(config: ReportFormConfiguration) {
+        this.setupDIContainer(config);
 
-    public get postCommandManager(): PostCommandManager {
-        return DIProperty.resolve(PostCommandManager);
-    }
+        LoggerDI.initialize(config);
 
-    private constructor(module: ReportFormModule) {
-        this._module = module;
-
-        this.setupDIContainer(module);
-        LoggerDI.initialize(module.configuration);
-
-        const webhookConfig = this.config.webhook;
-        this.module.getModule(WebhookModule).settingsManager = WebhookSettingsManager.readBySheet(
-            webhookConfig.settingsSpreadsheetId,
-            webhookConfig.settingsWorksheetName);
+        //const webhookConfig = this.config.webhook;
+        //this.module.getModule(WebhookModule).settingsManager = WebhookSettingsManager.readBySheet(
+        //    webhookConfig.settingsSpreadsheetId,
+        //    webhookConfig.settingsWorksheetName);
     }
 
     public static exception(error: Error): void {
         CustomLogManager.exception(error);
     }
 
-    private setupDIContainer(module: ReportFormModule): void {
+    private setupDIContainer(config: ReportFormConfiguration): void {
+        DIProperty.register(ReportFormConfiguration, config);
+
+        const module = ReportFormModule.instantiate(config);
         DIProperty.register(ReportFormModule, module);
-        DIProperty.register(ReportFormConfiguration, module.configuration);
 
         const cacheProvider = new ScriptCacheProvider();
         cacheProvider.expirationInSeconds = 3600;
@@ -121,14 +111,23 @@ export class Instance {
         topNode.getOrCreateNodeWithType<UnverifiedListByLevelWebsiteParameter>("unverifiedListByLevel", UnverifiedListByLevelWebsiteController)
 
         DIProperty.register(Router, router);
+    }
 
-        const postCommandManager = new PostCommandManager();
+    public bindWebsiteControllers(e: GoogleAppsScript.Events.DoGet): void {
+        const router = DIProperty.resolve(Router);
 
-        postCommandManager.bindEquals("table/get", TableGetCommandController);
-        postCommandManager.bindEquals("table/update", TableUpdateCommand);
+        router.findNodeByName(TopWebsiteController).bindController(() => new TopWebsiteController(e));
+        router.findNodeByName(UnitReportListWebsiteController).bindController(() => new UnitReportListWebsiteController(e));
+        router.findNodeByName(UnitReportWebsiteController).bindController(() => new UnitReportWebsiteController(e));
+        router.findNodeByName(UnitReportGroupListWebsiteController).bindController(() => new UnitReportGroupListWebsiteController(e));
+        router.findNodeByName(UnitReportGroupWebsiteController).bindController(() => new UnitReportGroupWebsiteController(e));
+        router.findNodeByName(LevelReportListWebsiteController).bindController(() => new LevelReportListWebsiteController(e));
+        router.findNodeByName(LevelReportWebsiteController).bindController(() => new LevelReportWebsiteController(e));
+        router.findNodeByName(UnverifiedListByGenreWebsiteController).bindController(() => new UnverifiedListByGenreWebsiteController(e));
+        router.findNodeByName(UnverifiedListByLevelWebsiteController).bindController(() => new UnverifiedListByLevelWebsiteController(e));
+    }
 
-        DIProperty.register(PostCommandManager, postCommandManager);
-
+    public setupLINEPostCommandControllers(): void {
         const linePostCommandManager = new LINEPostCommandManager();
 
         linePostCommandManager.bindStartWith('build-bulk-report-form<<', BulkReportFormBuildLINEPostCommandController);
@@ -151,18 +150,13 @@ export class Instance {
         DIProperty.register(LINEPostCommandManager, linePostCommandManager);
     }
 
-    public bindWebsiteControllers(e: GoogleAppsScript.Events.DoGet): void {
-        const router = DIProperty.resolve(Router);
+    public setupPostCommandControllers(): void {
+        const postCommandManager = new PostCommandManager();
 
-        router.findNodeByName(TopWebsiteController).bindController(() => new TopWebsiteController(e));
-        router.findNodeByName(UnitReportListWebsiteController).bindController(() => new UnitReportListWebsiteController(e));
-        router.findNodeByName(UnitReportWebsiteController).bindController(() => new UnitReportWebsiteController(e));
-        router.findNodeByName(UnitReportGroupListWebsiteController).bindController(() => new UnitReportGroupListWebsiteController(e));
-        router.findNodeByName(UnitReportGroupWebsiteController).bindController(() => new UnitReportGroupWebsiteController(e));
-        router.findNodeByName(LevelReportListWebsiteController).bindController(() => new LevelReportListWebsiteController(e));
-        router.findNodeByName(LevelReportWebsiteController).bindController(() => new LevelReportWebsiteController(e));
-        router.findNodeByName(UnverifiedListByGenreWebsiteController).bindController(() => new UnverifiedListByGenreWebsiteController(e));
-        router.findNodeByName(UnverifiedListByLevelWebsiteController).bindController(() => new UnverifiedListByLevelWebsiteController(e));
+        postCommandManager.bindEquals("table/get", TableGetCommandController);
+        postCommandManager.bindEquals("table/update", TableUpdateCommand);
+
+        DIProperty.register(PostCommandManager, postCommandManager);
     }
 
     private static createReportFormConfiguration(propTable: { [key: string]: string }, props: GoogleAppsScript.Properties.Properties) {

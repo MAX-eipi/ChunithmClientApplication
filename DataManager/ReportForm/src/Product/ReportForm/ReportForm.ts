@@ -13,15 +13,12 @@ import { PostLocation } from "./Layer2/Report/ReportStorage";
 import { Utility } from "./Layer2/Utility";
 import { ErrorWebsiteController } from "./Layer3/WebsiteControllers/ErrorWebsiteController";
 
-export type DoGet = GoogleAppsScript.Events.DoGet & { parameter: { versionName?: string }; pathInfo: string };
+export type DoGet = GoogleAppsScript.Events.DoGet & { pathInfo: string };
 
 export class ReportForm {
     public static doGet(e: DoGet): GoogleAppsScript.HTML.HtmlOutput {
         try {
             Instance.initialize();
-            if (!e.parameter.versionName) {
-                e.parameter.versionName = Instance.instance.module.configuration.defaultVersionName;
-            }
             Instance.instance.bindWebsiteControllers(e);
             return DIProperty.resolve(Router).call(e.pathInfo);
         }
@@ -57,11 +54,12 @@ export class ReportForm {
             Instance.initialize();
 
             if (!postData.versionName) {
-                postData.versionName = Instance.instance.module.configuration.defaultVersionName;
+                postData.versionName = Instance.instance.config.defaultVersionName;
             }
 
             const from: string = e.parameter['from'];
             if (from === 'line') {
+                Instance.instance.setupLINEPostCommandControllers();
                 const lineCommand = Instance.instance.linePostCommandManager.findController(postData);
                 if (lineCommand) {
                     lineCommand.invoke();
@@ -69,6 +67,7 @@ export class ReportForm {
                 }
             }
             else {
+                Instance.instance.setupPostCommandControllers();
                 const postCommand = Instance.instance.postCommandManager.findController(postData.API);
                 if (postCommand) {
                     const response = postCommand.invoke(postData);
