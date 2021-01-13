@@ -2,18 +2,13 @@ import { notifyUnverified } from "../../../../@operations";
 import { LogLevel } from "../../../../Packages/CustomLogger/CustomLogger";
 import { CustomLogManager } from "../../../../Packages/CustomLogger/CustomLogManager";
 import { TwitterModule } from "../../Layer2/Modules/TwitterModule";
-import { LINECommand } from "./@LINECommand";
-
-export class TestCommand extends LINECommand {
-    public called(command: string): boolean {
-        return command.indexOf("test-") == 0;
-    }
-
-    public invoke(command: string, event: any, postData: any): void {
-        let subCommand = command.replace("test-", "");
+import { LINEPostCommandController } from "./@LINEPostCommandController";
+export class TestLINEPostCommandController extends LINEPostCommandController {
+    public invoke(): void {
+        const subCommand = this.commandText.replace("test-", "");
         switch (subCommand) {
             case "reply":
-                this.replyMessage(event.replyToken, ['テスト:リプライ']);
+                this.replyMessage(this.event.replyToken, ['テスト:リプライ']);
                 break;
             case "notice":
                 this.pushMessage(['テスト:通知']);
@@ -32,7 +27,7 @@ export class TestCommand extends LINECommand {
                 }
                 break;
             default:
-                this.replyMessage(event.replyToken, [`未知のコマンドです\n${command}`]);
+                this.replyMessage(this.event.replyToken, [`未知のコマンドです\n${this.commandText}`]);
                 break;
         }
     }

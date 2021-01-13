@@ -9,14 +9,15 @@ function checkInitialize() {
 }
 
 function doGetTest() {
-    type DoGet = GoogleAppsScript.Events.DoGet & { pathInfo?: string };
-    const e: DoGet = {
+    const e = {
         contentLength: -1,
         pathInfo: "Dev4",
         contextPath: "",
         queryString: "",
         parameters: {},
-        parameter: {},
+        parameter: {
+            versionName: null
+        },
     };
 
     ReportForm.doGet(e);

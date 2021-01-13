@@ -103,7 +103,7 @@
     <Folder Include="src\Product\ReportForm\Layer2\Logger\" />
     <Folder Include="src\Product\ReportForm\Layer1\Configurations\" />
     <Folder Include="src\Product\ReportForm\Dependencies\" />
-    <Folder Include="src\Product\ReportForm\Layer3\LineCommand\" />
+    <Folder Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\" />
     <Folder Include="src\Product\ReportForm\Layer2\Modules\Report\" />
     <Folder Include="src\Product\ReportForm\Layer2\Report\" />
     <Folder Include="src\Product\ReportForm\Layer2\Report\BulkReport\" />
@@ -112,7 +112,7 @@
     <Folder Include="src\Resources\Page\wip_bulk_report_list\" />
     <Folder Include="src\Product\ReportForm\Layer2\Twitter\" />
     <Folder Include="src\Product\ReportForm\" />
-    <Folder Include="src\Product\ReportForm\Layer3\PostCommand\" />
+    <Folder Include="src\Product\ReportForm\Layer3\PostCommandControllers\" />
     <Folder Include="src\Resources\" />
     <Folder Include="src\Resources\Page\" />
     <Folder Include="src\Resources\Page\common\" />
@@ -192,37 +192,38 @@
     <TypeScriptCompile Include="src\Product\ReportForm\Layer1\Configurations\RuntimeConfigurationSchema.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\BulkReportFormBuildLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\BulkReportFormUrlGetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\DefaultGameVersionGetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\EnvironmentGetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\FormUrlGetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\GlobalConfigValueGetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\LatestGameVersionGetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\PostTweetEnabledGetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\PostTweetEnabledSetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\ReportFormBuildLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\ReportPostNoticeEnabledGetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\ReportPostNoticeEnabledSetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\TargetLevelMusicCountGetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\TestLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\TopUrlGetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\VersionGetLINEPostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\Managers\LINEPostCommandManager.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\Product\ReportForm\Layer3\Managers\NoticeManager.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\Managers\PostCommandManager.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Product\ReportForm\Layer3\WebsiteControllers\%40ReportFormController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Product\ReportForm\Dependencies\LINECommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\Product\ReportForm\Dependencies\Logger.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Product\ReportForm\Dependencies\PostCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\Product\ReportForm\Dependencies\WebhookEventDefinition.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\BulkReportFormBuildCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\BulkReportFormUrlGetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\GlobalConfigValueGetCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\ReportFormBuildCommand.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\TargetLevelMusicCountGetCommand.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Product\ReportForm\Layer2\Modules\ApprovalModule.ts">
@@ -249,22 +250,11 @@
     <TypeScriptCompile Include="src\Product\ReportForm\Layer1\Environment.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\%40LINECommand.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\%40LINEPostCommandController.ts" />
     <TypeScriptCompile Include="src\Product\ReportForm\Layer1\Configurations\ConfigurationEditor.ts" />
     <TypeScriptCompile Include="src\Product\ReportForm\Instance.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\DefaultGameVersionGetCommand.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\EnvironmentGetCommand.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\FormUrlGetCommand.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\LatestGameVersionGetCommand.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\PostTweetEnabledGetCommand.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\PostTweetEnabledSetCommand.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\ReportPostNoticeEnabledGetCommand.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\ReportPostNoticeEnabledSetCommand.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\TestCommand.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\TopUrlGetCommand.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LineCommand\VersionGetCommand.ts" />
     <TypeScriptCompile Include="src\Product\ReportForm\Layer2\Modules\MusicDataModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -280,9 +270,6 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Product\ReportForm\Layer2\Modules\Notice\NoticeQueue.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer2\Modules\PostCommandModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Product\ReportForm\Layer2\Report\BulkReport\BulkReportTable.ts">
@@ -356,9 +343,9 @@
     <TypeScriptCompile Include="src\Product\ReportForm\Approval.ts" />
     <TypeScriptCompile Include="src\%40events.ts" />
     <TypeScriptCompile Include="src\%40operations.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\PostCommand\%40PostCommand.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\PostCommand\TableGetCommand.ts" />
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\PostCommand\TableUpadateCommand.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\PostCommandControllers\%40PostCommandController.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\PostCommandControllers\TableGetCommand.ts" />
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer3\PostCommandControllers\TableUpadateCommand.ts" />
     <TypeScriptCompile Include="src\Product\ReportForm\Layer1\Rating.ts" />
     <TypeScriptCompile Include="src\Product\ReportForm\Layer2\Modules\Report\ReportModule.ts" />
     <TypeScriptCompile Include="src\Product\ReportForm\Layer1\Role.ts" />

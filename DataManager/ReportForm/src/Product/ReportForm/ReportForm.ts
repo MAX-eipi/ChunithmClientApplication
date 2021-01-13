@@ -4,9 +4,7 @@ import { CustomLogManager } from "../../Packages/CustomLogger/CustomLogManager";
 import { DIProperty } from "../../Packages/DIProperty/DIProperty";
 import { Router } from "../../Packages/Router/Router";
 import { Instance } from "./Instance";
-import { LINEModule } from "./Layer2/Modules/LINEModule";
 import { NoticeModule } from "./Layer2/Modules/Notice/NoticeModule";
-import { PostCommandModule } from "./Layer2/Modules/PostCommandModule";
 import { ReportModule } from "./Layer2/Modules/Report/ReportModule";
 import { GoogleFormReport } from "./Layer2/Report/GoogleFormReport";
 import { GoogleFormLevelBulkReport } from "./Layer2/Report/LevelBulkReport/GoogleFormLevelBulkReport";
@@ -15,8 +13,10 @@ import { PostLocation } from "./Layer2/Report/ReportStorage";
 import { Utility } from "./Layer2/Utility";
 import { ErrorWebsiteController } from "./Layer3/WebsiteControllers/ErrorWebsiteController";
 
+export type DoGet = GoogleAppsScript.Events.DoGet & { parameter: { versionName?: string }; pathInfo: string };
+
 export class ReportForm {
-    public static doGet(e: any): any {
+    public static doGet(e: DoGet): GoogleAppsScript.HTML.HtmlOutput {
         try {
             Instance.initialize();
             if (!e.parameter.versionName) {
@@ -31,25 +31,25 @@ export class ReportForm {
         }
     }
 
-    private static getStoreConfigRequest(postData: any): any {
+    private static isStoreConfigRequest(postData: { events: { type: string; message: { type: string; text: string } }[] }): boolean {
         if (!postData.events) {
-            return null;
+            return false;
         }
-        for (var i = 0; i < postData.events.length; i++) {
-            let event = postData.events[i];
-            if (event.type == "message" && event.message.type == "text" && event.message.text == ":store-config") {
-                return event;
+        for (const e of postData.events) {
+            if (e.type === "message" && e.message.type === "text" && e.message.text === ":store-config") {
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
-    public static doPost(e: any): any {
+    public static doPost(e: GoogleAppsScript.Events.DoPost): GoogleAppsScript.Content.TextOutput {
         try {
-            let postData = JSON.parse(e.postData.getDataAsString());
+            CustomLogManager.log(LogLevel.Info, e);
 
-            let storeConfigRequest = this.getStoreConfigRequest(postData);
-            if (storeConfigRequest) {
+            const postData = JSON.parse(e.postData.contents);
+
+            if (this.isStoreConfigRequest(postData)) {
                 storeConfig();
                 return this.getSuccessResponseContent();
             }
@@ -60,18 +60,21 @@ export class ReportForm {
                 postData.versionName = Instance.instance.module.configuration.defaultVersionName;
             }
 
-            let lineCommand = Instance.instance.module.getModule(LINEModule).findCommand(postData);
-            if (lineCommand) {
-                lineCommand.invoke();
-                return this.getSuccessResponseContent();
+            const from: string = e.parameter['from'];
+            if (from === 'line') {
+                const lineCommand = Instance.instance.linePostCommandManager.findController(postData);
+                if (lineCommand) {
+                    lineCommand.invoke();
+                    return this.getSuccessResponseContent();
+                }
             }
-
-            let postCommand = Instance.instance.module.getModule(PostCommandModule).findCommand(postData);
-            if (postCommand) {
-                let response = postCommand.invoke();
-                return this.getSuccessResponseContent(response);
+            else {
+                const postCommand = Instance.instance.postCommandManager.findController(postData.API);
+                if (postCommand) {
+                    const response = postCommand.invoke(postData);
+                    return this.getSuccessResponseContent(response);
+                }
             }
-
             return this.getSuccessResponseContent();
         }
         catch (error) {
@@ -92,7 +95,7 @@ export class ReportForm {
         return ContentService.createTextOutput(JSON.stringify(response)).setMimeType(ContentService.MimeType.JSON);
     }
 
-    public static onPost(e: { response: GoogleAppsScript.Forms.FormResponse }, versionName: string = ""): void {
+    public static onPost(e: { response: GoogleAppsScript.Forms.FormResponse }, versionName = ""): void {
         try {
             Instance.initialize();
             if (!versionName) {

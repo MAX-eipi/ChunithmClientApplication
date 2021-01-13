@@ -10,17 +10,13 @@ import { TwitterModule } from "../../Layer2/Modules/TwitterModule";
 import { VersionModule } from "../../Layer2/Modules/VersionModule";
 import { WebhookModule } from "../../Layer2/Modules/WebhookModule";
 import { MusicData, MusicDataParameter } from "../../Layer2/MusicDataTable/MusicData";
-import { PostCommand, PostCommandParameter } from "./@PostCommand";
+import { PostCommandController, PostCommandParameter } from "./@PostCommandController";
 
 interface TableUpdateCommandParameter extends PostCommandParameter {
     MusicDatas: MusicDataParameter[];
 }
 
-export class TableUpdateCommand extends PostCommand {
-    called(api: string): boolean {
-        return api == "table/update";
-    }
-
+export class TableUpdateCommand extends PostCommandController {
     private get musicDataModule(): MusicDataModule { return this.module.getModule(MusicDataModule); }
     private get lineModule(): LINEModule { return this.module.getModule(LINEModule); }
     private get twitterModule(): TwitterModule { return this.module.getModule(TwitterModule); }
@@ -28,10 +24,10 @@ export class TableUpdateCommand extends PostCommand {
     private get versionModule(): VersionModule { return this.module.getModule(VersionModule); }
     private get webhookModule(): WebhookModule { return this.module.getModule(WebhookModule); }
 
-    invoke(api: string, postData: TableUpdateCommandParameter): any {
-        let oldMusicDatas = this.musicDataModule.getTable(postData.versionName).datas;
-        let musicDataTable = this.musicDataModule.updateTable(postData.versionName, postData.MusicDatas);
-        let response = {
+    public invoke(postData: TableUpdateCommandParameter): any {
+        const oldMusicDatas = this.musicDataModule.getTable(postData.versionName).datas;
+        const musicDataTable = this.musicDataModule.updateTable(postData.versionName, postData.MusicDatas);
+        const response = {
             MusicDataTable: {
                 MusicDatas: musicDataTable.getTable(),
             }
@@ -118,32 +114,31 @@ ${genre}: ${musicCounts[genre]}曲`;
     }
 
     private getAddedMusicDatas(oldMusicDatas: MusicData[], newMusicDatas: MusicData[]): MusicData[] {
-        let oldMusicIds: { [key: string]: boolean } = {};
-        for (var i = 0; i < oldMusicDatas.length; i++) {
-            oldMusicIds[oldMusicDatas[i].Id.toString()] = true;
+        const oldMusicIds: { [key: string]: boolean } = {};
+        for (const md of oldMusicDatas) {
+            oldMusicIds[md.Id.toString()] = true;
         }
 
-        var added: MusicData[] = [];
-        for (var i = 0; i < newMusicDatas.length; i++) {
-            let musicData = newMusicDatas[i];
-            if (!oldMusicIds[musicData.Id.toString()]) {
-                added.push(musicData);
+        const added: MusicData[] = [];
+        for (const md of newMusicDatas) {
+            if (!oldMusicIds[md.Id.toString()]) {
+                added.push(md);
             }
         }
         return added;
     }
 
     private setMusicList(versionName: string, musicDatas: MusicData[]): { [genre: string]: number } {
-        var form = this.reportModule.reportGoogleForm;
-        var list = form.getItems(FormApp.ItemType.LIST);
+        const form = this.reportModule.reportGoogleForm;
+        const list = form.getItems(FormApp.ItemType.LIST);
 
-        let genres = this.versionModule.getVersionConfig(versionName).genres;
+        const genres = this.versionModule.getVersionConfig(versionName).genres;
         genres.push("ALL");
-        let musicCounts: { [genre: string]: number } = {};
-        for (var i = 0; i < genres.length; i++) {
-            let genre = genres[i];
-            let musicList = list[i + 1].asListItem();
-            let filteredMusicDatas = musicDatas.filter(function (m) { return genre == "ALL" ? true : m.Genre == genre; });
+        const musicCounts: { [genre: string]: number } = {};
+        for (let i = 0; i < genres.length; i++) {
+            const genre = genres[i];
+            const musicList = list[i + 1].asListItem();
+            const filteredMusicDatas = musicDatas.filter(function (m) { return genre === "ALL" ? true : m.Genre === genre; });
             if (filteredMusicDatas.length > 0) {
                 musicList.setChoiceValues(filteredMusicDatas.map(function (m) { return m.Name; }));
             }
