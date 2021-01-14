@@ -8,7 +8,6 @@ import { UrlFetchManager } from "./Packages/UrlFetch/UrlFetchManager";
 import { Instance } from "./Product/ReportForm/Instance";
 import { ConfigurationEditor } from "./Product/ReportForm/Layer1/Configurations/ConfigurationEditor";
 import { MusicDataModule } from "./Product/ReportForm/Layer2/Modules/MusicDataModule";
-import { NoticeModule } from "./Product/ReportForm/Layer2/Modules/Notice/NoticeModule";
 import { ReportModule } from "./Product/ReportForm/Layer2/Modules/Report/ReportModule";
 import { TwitterModule } from "./Product/ReportForm/Layer2/Modules/TwitterModule";
 import { VersionModule } from "./Product/ReportForm/Layer2/Modules/VersionModule";
@@ -84,69 +83,69 @@ function getGenres(): string[] {
 }
 
 export function noticeCreatedUnitReports() {
-    execute(instance => {
-        const versionName = getDefaultVersionName(instance);
-        const notice = instance.module.getModule(NoticeModule);
-        const reportIds = notice.getQueue().dequeueCreateUnitReport(10);
-        if (reportIds.length > 0) {
-            notice.noticeCreateUnitReport(versionName, reportIds);
-        }
-    });
+    const queue = Instance.getNoticeQueue();
+    const reportIds = queue.dequeueCreateUnitReport(10);
+    if (reportIds.length > 0) {
+        execute(instance => {
+            const versionName = getDefaultVersionName(instance);
+            instance.noticeManager.noticeCreateUnitReport(versionName, reportIds);
+        });
+    }
 }
 
 export function noticeApprovedUnitReports() {
-    execute(instance => {
-        const versionName = getDefaultVersionName(instance);
-        const notice = instance.module.getModule(NoticeModule);
-        const reportIds = notice.getQueue().dequeueApproveUnitReport(10);
-        if (reportIds.length > 0) {
-            notice.noticeApproveUnitReport(versionName, reportIds);
-        }
-    });
+    const queue = Instance.getNoticeQueue();
+    const reportIds = queue.dequeueApproveUnitReport(10);
+    if (reportIds.length > 0) {
+        execute(instance => {
+            const versionName = getDefaultVersionName(instance);
+            instance.noticeManager.noticeApproveUnitReport(versionName, reportIds);
+        });
+    }
 }
 
 export function noticeRejectedUnitReports() {
-    execute(instance => {
-        const versionName = getDefaultVersionName(instance);
-        const notice = instance.module.getModule(NoticeModule);
-        const reportIds = notice.getQueue().dequeueRejectUnitReport(10);
-        if (reportIds.length > 0) {
-            notice.noticeRejectUnitReport(versionName, reportIds);
-        }
-    });
+    const queue = Instance.getNoticeQueue();
+    const reportIds = queue.dequeueRejectUnitReport(10);
+    if (reportIds.length > 0) {
+        execute(instance => {
+            const versionName = getDefaultVersionName(instance);
+            instance.noticeManager.noticeRejectUnitReport(versionName, reportIds);
+        });
+    }
 }
 
 export function noticeCreatedLevelReports() {
-    execute(instance => {
-        const versionName = getDefaultVersionName(instance);
-        const notice = instance.module.getModule(NoticeModule);
-        const reportIds = notice.getQueue().dequeueCreateLevelReport(10);
-        if (reportIds.length > 0) {
-            notice.noticeCreateLevelReport(versionName, reportIds);
-        }
-    });
+    const queue = Instance.getNoticeQueue();
+    const reportIds = queue.dequeueCreateLevelReport(10);
+    if (reportIds.length > 0) {
+        execute(instance => {
+            const versionName = getDefaultVersionName(instance);
+            instance.noticeManager.noticeCreateLevelReport(versionName, reportIds);
+        });
+    }
 }
 
 export function noticeApprovedLevelReports() {
-    execute(instance => {
-        const versionName = getDefaultVersionName(instance);
-        const notice = instance.module.getModule(NoticeModule);
-        const reportIds = notice.getQueue().dequeueApproveLevelReport(10);
-        if (reportIds.length > 0) {
-            notice.noticeApproveLevelReport(versionName, reportIds);
-        }
-    });
+    const queue = Instance.getNoticeQueue();
+    const reportIds = queue.dequeueApproveLevelReport(10);
+    if (reportIds.length > 0) {
+        execute(instance => {
+            const versionName = getDefaultVersionName(instance);
+            instance.noticeManager.noticeApproveLevelReport(versionName, reportIds);
+        });
+    }
 }
 
 export function noticeRejectedLevelReports() {
-    execute(instance => {
-        const versionName = getDefaultVersionName(instance);
-        const notice = instance.module.getModule(NoticeModule);
-        const reportIds = notice.getQueue().dequeueRejectLevelReport(10);
-        if (reportIds.length > 0) {
-            notice.noticeRejectLevelReport(versionName, reportIds);
-        }
-    })
+    const queue = Instance.getNoticeQueue();
+    const reportIds = queue.dequeueRejectLevelReport(10);
+    if (reportIds.length > 0) {
+        execute(instance => {
+            const versionName = getDefaultVersionName(instance);
+            instance.noticeManager.noticeRejectLevelReport(versionName, reportIds);
+        });
+    }
 }
 
 export function notifyUnverified() {

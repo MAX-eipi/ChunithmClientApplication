@@ -1,5 +1,6 @@
 import { LogLevel } from "../../../../Packages/CustomLogger/CustomLogger";
 import { CustomLogManager } from "../../../../Packages/CustomLogger/CustomLogManager";
+import { DIProperty } from "../../../../Packages/DIProperty/DIProperty";
 import { WebhookEventName } from "../../Dependencies/WebhookEventDefinition";
 import { Environment } from "../../Layer1/Environment";
 import { Difficulty } from "../MusicDataTable/Difficulty";
@@ -10,7 +11,7 @@ import { Utility } from "../Utility";
 import { ReportFormModule } from "./@ReportFormModule";
 import { ChunirecModule } from "./ChunirecModule";
 import { MusicDataModule } from "./MusicDataModule";
-import { NoticeModule } from "./Notice/NoticeModule";
+import { NoticeQueue } from "../@NoticeQueue";
 import { ReportModule } from "./Report/ReportModule";
 import { WebhookModule } from "./WebhookModule";
 
@@ -27,13 +28,13 @@ export class ApprovalError implements Error {
 }
 
 export class ApprovalModule extends ReportFormModule {
-    public static readonly moduleName = "approval";
-
     private get musicDataModule(): MusicDataModule { return this.getModule(MusicDataModule); }
-    private get noticeModule(): NoticeModule { return this.getModule(NoticeModule); }
     private get reportModule(): ReportModule { return this.getModule(ReportModule); }
     private get chunirecModule(): ChunirecModule { return this.getModule(ChunirecModule); }
     private get webhookModule(): WebhookModule { return this.getModule(WebhookModule); }
+
+    @DIProperty.inject(NoticeQueue)
+    private readonly noticeQueue: NoticeQueue;
 
     public approve(versionName: string, reportId: number) {
         const report = this.reportModule.getReport(versionName, reportId);
@@ -85,9 +86,8 @@ export class ApprovalModule extends ReportFormModule {
                 'baseRating': baseRating.toFixed(1),
             });
 
-        const noticeQueue = this.noticeModule.getQueue();
-        noticeQueue.enqueueApproveUnitReport(report);
-        noticeQueue.save();
+        this.noticeQueue.enqueueApproveUnitReport(report);
+        this.noticeQueue.save();
     }
 
     public reject(versionName: string, reportId: number): void {
@@ -111,9 +111,8 @@ export class ApprovalModule extends ReportFormModule {
                 'baseRating': baseRating.toFixed(1),
             });
 
-        const noticeQueue = this.noticeModule.getQueue();
-        noticeQueue.enqueueRejectUnitReport(report);
-        noticeQueue.save();
+        this.noticeQueue.enqueueRejectUnitReport(report);
+        this.noticeQueue.save();
     }
 
     public approveGroup(versionName: string, reportGroupId: string): void {
@@ -176,11 +175,11 @@ export class ApprovalModule extends ReportFormModule {
                     'baseRating': baseRating.toFixed(1),
                 });
 
-            this.noticeModule.getQueue().enqueueApproveUnitReport(report);
+            this.noticeQueue.enqueueApproveUnitReport(report);
         }
 
         this.requestChunirecUpdateMusics(approvedReports);
-        this.noticeModule.getQueue().save();
+        this.noticeQueue.save();
         this.webhookModule.invoke(WebhookEventName.ON_APPROVE);
 
         this.reportModule.noticeReportPost(`検証報告グループが一括承認されました
@@ -239,8 +238,8 @@ export class ApprovalModule extends ReportFormModule {
                 targetLevel: bulkReport.targetLevel,
             });
 
-        this.noticeModule.getQueue().enqueueApproveLevelReport(bulkReport);
-        this.noticeModule.getQueue().save();
+        this.noticeQueue.enqueueApproveLevelReport(bulkReport);
+        this.noticeQueue.save();
 
         this.webhookModule.invoke(WebhookEventName.ON_APPROVE);
     }
@@ -260,8 +259,8 @@ export class ApprovalModule extends ReportFormModule {
                 targetLevel: bulkReport.targetLevel,
             });
 
-        this.noticeModule.getQueue().enqueueRejectLevelReport(bulkReport);
-        this.noticeModule.getQueue().save();
+        this.noticeQueue.enqueueRejectLevelReport(bulkReport);
+        this.noticeQueue.save();
     }
 
 }

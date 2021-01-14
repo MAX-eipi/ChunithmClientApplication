@@ -5,8 +5,6 @@ import { Difficulty } from "../MusicDataTable/Difficulty";
 import { ReportFormModule } from "./@ReportFormModule";
 
 export class ChunirecModule extends ReportFormModule {
-    public static readonly moduleName = 'chunirec';
-
     private _apiHost: string = null;
     public get apiHost(): string {
         if (!this._apiHost) {

@@ -1,6 +1,6 @@
-import { CustomCacheProvider } from "../../../../../Packages/CustomCacheProvider/CustomCacheProvider";
-import { IReport } from "../../Report/IReport";
-import { LevelBulkReport } from "../../Report/LevelBulkReport/LevelBulkReport";
+import { CustomCacheProvider } from "../../../Packages/CustomCacheProvider/CustomCacheProvider";
+import { IReport } from "./Report/IReport";
+import { LevelBulkReport } from "./Report/LevelBulkReport/LevelBulkReport";
 
 export class NoticeQueue {
     public constructor(private readonly _cacheProvider: CustomCacheProvider) { }

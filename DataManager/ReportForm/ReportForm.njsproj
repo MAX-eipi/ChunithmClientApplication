@@ -97,7 +97,6 @@
     <Folder Include="src\Product\ReportForm\Layer2\" />
     <Folder Include="src\Product\ReportForm\Layer3\" />
     <Folder Include="src\Resources\Page\top\" />
-    <Folder Include="src\Product\ReportForm\Layer2\Modules\Notice\" />
     <Folder Include="src\Product\ReportForm\Layer3\WebsiteControllers\" />
     <Folder Include="src\Product\ReportForm\Layer2\Modules\" />
     <Folder Include="src\Product\ReportForm\Layer2\Logger\" />
@@ -192,6 +191,9 @@
     <TypeScriptCompile Include="src\Product\ReportForm\Layer1\Configurations\RuntimeConfigurationSchema.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer2\Modules\RatingDataAnalysisModule.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\BulkReportFormBuildLINEPostCommandController.ts" />
     <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\BulkReportFormUrlGetLINEPostCommandController.ts" />
     <TypeScriptCompile Include="src\Product\ReportForm\Layer3\LINEPostCommandControllers\DefaultGameVersionGetLINEPostCommandController.ts" />
@@ -266,10 +268,7 @@
     <TypeScriptCompile Include="src\Product\ReportForm\Layer2\Modules\VersionModule.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer2\Modules\Notice\NoticeModule.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\Product\ReportForm\Layer2\Modules\Notice\NoticeQueue.ts">
+    <TypeScriptCompile Include="src\Product\ReportForm\Layer2\%40NoticeQueue.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\Product\ReportForm\Layer2\Report\BulkReport\BulkReportTable.ts">

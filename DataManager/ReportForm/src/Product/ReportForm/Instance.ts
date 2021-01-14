@@ -4,6 +4,7 @@ import { JsonConfigurationFactory } from "../../Packages/Configuration/JsonConfi
 import { JsonFileRuntimeConfiguration } from "../../Packages/Configuration/JsonFileRuntimeConfiguration";
 import { RuntimeConfiguration } from "../../Packages/Configuration/RuntimeConfiguration";
 import { ScriptPropertyRuntimeConfiguration } from "../../Packages/Configuration/ScriptPropertyRuntimeConfiguration";
+import { CustomCacheProvider } from "../../Packages/CustomCacheProvider/CustomCacheProvider";
 import { ScriptCacheProvider } from "../../Packages/CustomCacheProvider/ScriptCacheProvider";
 import { CustomLogManager } from "../../Packages/CustomLogger/CustomLogManager";
 import { DIProperty } from "../../Packages/DIProperty/DIProperty";
@@ -16,7 +17,7 @@ import { ReportFormConfigurationSchema } from "./Layer1/Configurations/Configura
 import { ConfigurationSourceType } from "./Layer1/Configurations/ConfigurationSourceType";
 import { RuntimeConfigurationSchema } from "./Layer1/Configurations/RuntimeConfigurationSchema";
 import { ReportFormModule } from "./Layer2/Modules/@ReportFormModule";
-import { WebhookModule, WebhookSettingsManager } from "./Layer2/Modules/WebhookModule";
+import { NoticeQueue } from "./Layer2/@NoticeQueue";
 import { BulkReportFormBuildLINEPostCommandController } from "./Layer3/LINEPostCommandControllers/BulkReportFormBuildLINEPostCommandController";
 import { BulkReportFormUrlGetLINEPostCommandController } from "./Layer3/LINEPostCommandControllers/BulkReportFormUrlGetLINEPostCommandController";
 import { DefaultGameVersionGetLINEPostCommandController } from "./Layer3/LINEPostCommandControllers/DefaultGameVersionGetLINEPostCommandController";
@@ -47,6 +48,7 @@ import { UnitReportGroupListWebsiteController, UnitReportGroupListWebsiteParamet
 import { UnitReportGroupWebsiteController, UnitReportGroupWebsiteParameter } from "./Layer3/WebsiteControllers/UnitReportGroup/UnitReportGroupWebsiteController";
 import { UnverifiedListByGenreWebsiteController, UnverifiedListByGenreWebsiteParameter } from "./Layer3/WebsiteControllers/UnverifiedList/UnverifiedListByGenreWebsiteController";
 import { UnverifiedListByLevelWebsiteController, UnverifiedListByLevelWebsiteParameter } from "./Layer3/WebsiteControllers/UnverifiedList/UnverifiedListByLevelWebsiteController";
+import { NoticeManager } from "./Layer3/Managers/NoticeManager";
 
 export class Instance {
     private static _instance: Instance = null;
@@ -69,6 +71,17 @@ export class Instance {
 
     public get linePostCommandManager() { return DIProperty.resolve(LINEPostCommandManager); }
     public get postCommandManager() { return DIProperty.resolve(PostCommandManager); }
+    public get noticeManager() { return DIProperty.resolve(NoticeManager); }
+
+    public static createCacheProvider(): CustomCacheProvider {
+        const cacheProvider = new ScriptCacheProvider();
+        cacheProvider.expirationInSeconds = 3600;
+        return cacheProvider;
+    }
+
+    public static getNoticeQueue(): NoticeQueue {
+        return new NoticeQueue(this.createCacheProvider());
+    }
 
     private constructor(config: ReportFormConfiguration) {
         this.setupDIContainer(config);
@@ -91,9 +104,7 @@ export class Instance {
         const module = ReportFormModule.instantiate(config);
         DIProperty.register(ReportFormModule, module);
 
-        const cacheProvider = new ScriptCacheProvider();
-        cacheProvider.expirationInSeconds = 3600;
-        DIProperty.register('CacheProvider', cacheProvider);
+        DIProperty.register('CacheProvider', Instance.createCacheProvider());
 
         const router = new Router();
         const topNode = router.getOrCreateNodeWithType<TopWebsiteParameter>(`version:${RoutingParameterType.TEXT}`, TopWebsiteController);
@@ -111,6 +122,9 @@ export class Instance {
         topNode.getOrCreateNodeWithType<UnverifiedListByLevelWebsiteParameter>("unverifiedListByLevel", UnverifiedListByLevelWebsiteController)
 
         DIProperty.register(Router, router);
+
+        DIProperty.bind(NoticeQueue, () => Instance.getNoticeQueue());
+        DIProperty.bind(NoticeManager, () => new NoticeManager());
     }
 
     public bindWebsiteControllers(e: GoogleAppsScript.Events.DoGet): void {
@@ -168,7 +182,7 @@ export class Instance {
 
     private static createStaticConfiguration(propTable: { [key: string]: string }): Configuration<ReportFormConfigurationSchema> {
 
-        return JsonConfigurationFactory.create(JSON.stringify(getStaticConfig()));
+        //return JsonConfigurationFactory.create(JSON.stringify(getStaticConfig()));
 
         switch (getConstValues().configurationSourceType) {
             case ConfigurationSourceType.ScriptProperties:
@@ -180,14 +194,14 @@ export class Instance {
 
     private static createRuntimeConfiguration(props: GoogleAppsScript.Properties.Properties): RuntimeConfiguration<RuntimeConfigurationSchema> {
 
-        const properties = getRuntimeConfiguration();
-        return {
-            properties: properties,
-            hasProperty: key => key in properties,
-            getProperty: (key, dv) => key in properties ? properties[key] : dv,
-            setProperty: (key, v) => properties[key] = v,
-            apply: () => { }
-        };
+        //const properties = getRuntimeConfiguration();
+        //return {
+        //    properties: properties,
+        //    hasProperty: key => key in properties,
+        //    getProperty: (key, dv) => key in properties ? properties[key] : dv,
+        //    setProperty: (key, v) => properties[key] = v,
+        //    apply: () => { }
+        //};
 
         switch (getConstValues().runtimeConfigurationSourceType) {
             case ConfigurationSourceType.ScriptProperties:

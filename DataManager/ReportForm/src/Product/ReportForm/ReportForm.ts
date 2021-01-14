@@ -4,7 +4,6 @@ import { CustomLogManager } from "../../Packages/CustomLogger/CustomLogManager";
 import { DIProperty } from "../../Packages/DIProperty/DIProperty";
 import { Router } from "../../Packages/Router/Router";
 import { Instance } from "./Instance";
-import { NoticeModule } from "./Layer2/Modules/Notice/NoticeModule";
 import { ReportModule } from "./Layer2/Modules/Report/ReportModule";
 import { GoogleFormReport } from "./Layer2/Report/GoogleFormReport";
 import { GoogleFormLevelBulkReport } from "./Layer2/Report/LevelBulkReport/GoogleFormLevelBulkReport";
@@ -112,7 +111,7 @@ export class ReportForm {
                 };
                 CustomLogManager.log(LogLevel.Info, data);
 
-                Instance.instance.module.getModule(NoticeModule).getQueue().enqueueCreateUnitReport(report);
+                Instance.getNoticeQueue().enqueueCreateUnitReport(report);
             }
         }
         catch (error) {
@@ -137,7 +136,7 @@ export class ReportForm {
                     opRatio: bulkReport.opRatio,
                 };
                 CustomLogManager.log(LogLevel.Info, data);
-                Instance.instance.module.getModule(NoticeModule).getQueue().enqueueCreateLevelReport(bulkReport);
+                Instance.getNoticeQueue().enqueueCreateLevelReport(bulkReport);
             }
         }
         catch (error) {

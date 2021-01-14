@@ -13,15 +13,15 @@ export class ReportFormModule {
 
     private _modules: { [key: string]: ReportFormModule } = {};
 
-    public getModule<TModule extends ReportFormModule>(factory: { moduleName: string; new(): TModule }): TModule {
-        if (factory.moduleName in this._root._modules) {
-            return this._root._modules[factory.moduleName] as TModule;
+    public getModule<TModule extends ReportFormModule>(factory: { name: string; new(): TModule }): TModule {
+        if (factory.name in this._root._modules) {
+            return this._root._modules[factory.name] as TModule;
         }
         const module = new factory();
         module._root = this._root;
         module._config = this._config;
         module.initialize();
-        this._root._modules[factory.moduleName] = module;
+        this._root._modules[factory.name] = module;
         return module;
     }
 

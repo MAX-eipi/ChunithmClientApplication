@@ -5,8 +5,6 @@ import { ReportFormModule } from "./@ReportFormModule";
 import { VersionModule } from "./VersionModule";
 
 export class MusicDataModule extends ReportFormModule {
-    public static readonly moduleName = 'musicData';
-
     private get versionModule(): VersionModule { return this.getModule(VersionModule); }
 
     private _tables: { [key: string]: MusicDataTable } = {};

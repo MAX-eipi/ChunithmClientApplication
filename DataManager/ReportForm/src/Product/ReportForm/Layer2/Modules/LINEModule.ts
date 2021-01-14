@@ -6,8 +6,6 @@ import { UrlFetchManager } from "../../../../Packages/UrlFetch/UrlFetchManager";
 import { ReportFormModule } from "./@ReportFormModule";
 
 export class LINEModule extends ReportFormModule {
-    public static readonly moduleName = 'line';
-
     public pushNoticeMessage(messages: string[]): Result {
         const textMessages: TextMessage[] = messages.map(m => {
             return {
