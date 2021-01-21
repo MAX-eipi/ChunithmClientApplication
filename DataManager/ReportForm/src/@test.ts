@@ -1,5 +1,6 @@
 import { Instance } from "./Product/ReportForm/Instance";
 import { ReportForm } from "./Product/ReportForm/ReportForm";
+import { RatingDataAnalysisModule } from "./Product/ReportForm/Layer2/Modules/RatingDataAnalysisModule";
 
 // implements test core here
 function checkInitialize() {
@@ -21,4 +22,9 @@ function doGetTest() {
     };
 
     ReportForm.doGet(e);
+}
+
+function writeRatingDataTest() {
+    Instance.initialize();
+    Instance.instance.module.getModule(RatingDataAnalysisModule).test();
 }

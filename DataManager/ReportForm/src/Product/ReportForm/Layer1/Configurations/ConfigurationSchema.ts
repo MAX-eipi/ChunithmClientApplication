@@ -41,6 +41,8 @@ export interface VersionConfigurationSchema {
     readonly bulkReportWorksheetName: string;
     readonly bulkReportSpreadsheetId: string;
     readonly nextVersionBulkReportSpreadsheetId: string;
+    readonly ratingDataForAnalysisSpreadsheetId: string;
+    readonly ratingDataForAnalysisWorksheetName: string;
 }
 
 export interface WebhookConfigurationSchema {
