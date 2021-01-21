@@ -1,4 +1,4 @@
-import { getConstValues, getRuntimeConfiguration, getStaticConfig } from "../../@const";
+import { getConstValues } from "../../@const";
 import { Configuration } from "../../Packages/Configuration/Configuration";
 import { JsonConfigurationFactory } from "../../Packages/Configuration/JsonConfigurationFactory";
 import { JsonFileRuntimeConfiguration } from "../../Packages/Configuration/JsonFileRuntimeConfiguration";
@@ -16,8 +16,8 @@ import { ReportFormConfiguration } from "./Layer1/Configurations/@ReportFormConf
 import { ReportFormConfigurationSchema } from "./Layer1/Configurations/ConfigurationSchema";
 import { ConfigurationSourceType } from "./Layer1/Configurations/ConfigurationSourceType";
 import { RuntimeConfigurationSchema } from "./Layer1/Configurations/RuntimeConfigurationSchema";
-import { ReportFormModule } from "./Layer2/Modules/@ReportFormModule";
 import { NoticeQueue } from "./Layer2/@NoticeQueue";
+import { ReportFormModule } from "./Layer2/Modules/@ReportFormModule";
 import { BulkReportFormBuildLINEPostCommandController } from "./Layer3/LINEPostCommandControllers/BulkReportFormBuildLINEPostCommandController";
 import { BulkReportFormUrlGetLINEPostCommandController } from "./Layer3/LINEPostCommandControllers/BulkReportFormUrlGetLINEPostCommandController";
 import { DefaultGameVersionGetLINEPostCommandController } from "./Layer3/LINEPostCommandControllers/DefaultGameVersionGetLINEPostCommandController";
@@ -35,6 +35,7 @@ import { TestLINEPostCommandController } from "./Layer3/LINEPostCommandControlle
 import { TopUrlGetLINEPostCommandController } from "./Layer3/LINEPostCommandControllers/TopUrlGetLINEPostCommandController";
 import { VersionGetLINEPostCommandController } from "./Layer3/LINEPostCommandControllers/VersionGetLINEPostCommandController";
 import { LINEPostCommandManager } from "./Layer3/Managers/LINEPostCommandManager";
+import { NoticeManager } from "./Layer3/Managers/NoticeManager";
 import { PostCommandManager } from "./Layer3/Managers/PostCommandManager";
 import { TableGetCommandController } from "./Layer3/PostCommandControllers/TableGetCommand";
 import { TableUpdateCommand } from "./Layer3/PostCommandControllers/TableUpadateCommand";
@@ -48,7 +49,6 @@ import { UnitReportGroupListWebsiteController, UnitReportGroupListWebsiteParamet
 import { UnitReportGroupWebsiteController, UnitReportGroupWebsiteParameter } from "./Layer3/WebsiteControllers/UnitReportGroup/UnitReportGroupWebsiteController";
 import { UnverifiedListByGenreWebsiteController, UnverifiedListByGenreWebsiteParameter } from "./Layer3/WebsiteControllers/UnverifiedList/UnverifiedListByGenreWebsiteController";
 import { UnverifiedListByLevelWebsiteController, UnverifiedListByLevelWebsiteParameter } from "./Layer3/WebsiteControllers/UnverifiedList/UnverifiedListByLevelWebsiteController";
-import { NoticeManager } from "./Layer3/Managers/NoticeManager";
 
 export class Instance {
     private static _instance: Instance = null;
@@ -181,9 +181,6 @@ export class Instance {
     }
 
     private static createStaticConfiguration(propTable: { [key: string]: string }): Configuration<ReportFormConfigurationSchema> {
-
-        //return JsonConfigurationFactory.create(JSON.stringify(getStaticConfig()));
-
         switch (getConstValues().configurationSourceType) {
             case ConfigurationSourceType.ScriptProperties:
                 return JsonConfigurationFactory.create(propTable['config']);
@@ -193,16 +190,6 @@ export class Instance {
     }
 
     private static createRuntimeConfiguration(props: GoogleAppsScript.Properties.Properties): RuntimeConfiguration<RuntimeConfigurationSchema> {
-
-        //const properties = getRuntimeConfiguration();
-        //return {
-        //    properties: properties,
-        //    hasProperty: key => key in properties,
-        //    getProperty: (key, dv) => key in properties ? properties[key] : dv,
-        //    setProperty: (key, v) => properties[key] = v,
-        //    apply: () => { }
-        //};
-
         switch (getConstValues().runtimeConfigurationSourceType) {
             case ConfigurationSourceType.ScriptProperties:
                 return new ScriptPropertyRuntimeConfiguration(props, 'runtime_config');
