@@ -1,27 +1,25 @@
-import { Block } from "./Slack/API/Blocks";
-import { SlackChatPostMessageStream } from "./Slack/API/Chat/PostMessage/Stream";
-import { SlackBlockFactory } from "./Slack/BlockFactory";
-import { SlackCompositionObjectFactory } from "./Slack/CompositionObjectFactory";
-import { UrlFetchManager } from "./UrlFetch/UrlFetchManager";
-import { CommonConfiguration } from "./ReportForm/Configurations/CommonConfiguration";
-import { ConfigurationEditor } from "./ReportForm/Configurations/ConfigurationEditor";
-import { Debug } from "./ReportForm/Debug";
-import { Instance } from "./ReportForm/Instance";
-import { MusicDataModule } from "./ReportForm/Modules/MusicDataModule";
-import { NoticeModule } from "./ReportForm/Modules/Notice/NoticeModule";
-import { ReportModule } from "./ReportForm/Modules/Report/ReportModule";
-import { TwitterModule } from "./ReportForm/Modules/TwitterModule";
-import { VersionModule } from "./ReportForm/Modules/VersionModule";
-import { InProgressListPage } from "./ReportForm/Page/InProgressListPage";
-import { LevelBulkReportListPage } from "./ReportForm/Page/LevelBulkReportListPage";
-import { BulkReportTableReader } from "./ReportForm/Report/BulkReport/BulkReportTableReader";
-import { BulkReportTableWriter } from "./ReportForm/Report/BulkReport/BulkReportTableWriter";
-import { ReportStatus } from "./ReportForm/Report/ReportStatus";
-import { Router } from "./ReportForm/Modules/Router";
+import { LogLevel } from "./Packages/CustomLogger/CustomLogger";
+import { CustomLogManager } from "./Packages/CustomLogger/CustomLogManager";
+import { Block } from "./Packages/UrlFetch.Slack/API/Blocks";
+import { SlackChatPostMessageStream } from "./Packages/UrlFetch.Slack/API/Chat/PostMessage/Stream";
+import { SlackBlockFactory } from "./Packages/UrlFetch.Slack/BlockFactory";
+import { SlackCompositionObjectFactory } from "./Packages/UrlFetch.Slack/CompositionObjectFactory";
+import { UrlFetchManager } from "./Packages/UrlFetch/UrlFetchManager";
+import { Instance } from "./Product/ReportForm/Instance";
+import { ConfigurationEditor } from "./Product/ReportForm/Layer1/Configurations/ConfigurationEditor";
+import { MusicDataModule } from "./Product/ReportForm/Layer2/Modules/MusicDataModule";
+import { ReportModule } from "./Product/ReportForm/Layer2/Modules/Report/ReportModule";
+import { TwitterModule } from "./Product/ReportForm/Layer2/Modules/TwitterModule";
+import { VersionModule } from "./Product/ReportForm/Layer2/Modules/VersionModule";
+import { BulkReportTableReader } from "./Product/ReportForm/Layer2/Report/BulkReport/BulkReportTableReader";
+import { BulkReportTableWriter } from "./Product/ReportForm/Layer2/Report/BulkReport/BulkReportTableWriter";
+import { ReportStatus } from "./Product/ReportForm/Layer2/Report/ReportStatus";
+import { LevelReportListWebsiteController } from "./Product/ReportForm/Layer3/WebsiteControllers/LevelReport/LevelReportListWebsiteController";
+import { UnitReportListWebsiteController } from "./Product/ReportForm/Layer3/WebsiteControllers/UnitReport/UnitReportListWebsiteController";
 
 export function storeConfig(): GoogleAppsScript.Properties.Properties {
     const ret = ConfigurationEditor.store();
-    Debug.log(ret.getProperties());
+    CustomLogManager.log(LogLevel.Info, ret.getProperties());
     return ret;
 }
 
@@ -36,7 +34,7 @@ export function execute<T>(action: (instance: Instance) => T) {
 }
 
 function getDefaultVersionName(instance: Instance): string {
-    return instance.module.config.common.defaultVersionName;
+    return instance.module.configuration.defaultVersionName;
 }
 
 function setupForm() {
@@ -62,7 +60,7 @@ function authCallback(request) {
 }
 
 function getGenres(): string[] {
-     return execute(instance => {
+    return execute(instance => {
         const versionName = getDefaultVersionName(instance);
         const genres: string[] = [];
         const musicDatas = Instance.instance.module.getModule(MusicDataModule).getTable(versionName).datas;
@@ -73,86 +71,88 @@ function getGenres(): string[] {
             }
         }
 
-        Debug.log(JSON.stringify({
-            versionName: versionName,
-            genres: genres,
-        }));
+        CustomLogManager.log(
+            LogLevel.Info,
+            {
+                versionName: versionName,
+                genres: genres,
+            });
 
         return genres;
     });
 }
 
 export function noticeCreatedUnitReports() {
-    execute(instance => {
-        const versionName = getDefaultVersionName(instance);
-        const notice = instance.module.getModule(NoticeModule);
-        const reportIds = notice.getQueue().dequeueCreateUnitReport(10);
-        if (reportIds.length > 0) {
-            notice.noticeCreateUnitReport(versionName, reportIds);
-        }
-    });
+    const queue = Instance.getNoticeQueue();
+    const reportIds = queue.dequeueCreateUnitReport(10);
+    if (reportIds.length > 0) {
+        execute(instance => {
+            const versionName = getDefaultVersionName(instance);
+            instance.noticeManager.noticeCreateUnitReport(versionName, reportIds);
+        });
+    }
 }
 
 export function noticeApprovedUnitReports() {
-    execute(instance => {
-        const versionName = getDefaultVersionName(instance);
-        const notice = instance.module.getModule(NoticeModule);
-        const reportIds = notice.getQueue().dequeueApproveUnitReport(10);
-        if (reportIds.length > 0) {
-            notice.noticeApproveUnitReport(versionName, reportIds);
-        }
-    });
+    const queue = Instance.getNoticeQueue();
+    const reportIds = queue.dequeueApproveUnitReport(10);
+    if (reportIds.length > 0) {
+        execute(instance => {
+            const versionName = getDefaultVersionName(instance);
+            instance.noticeManager.noticeApproveUnitReport(versionName, reportIds);
+        });
+    }
 }
 
 export function noticeRejectedUnitReports() {
-    execute(instance => {
-        const versionName = getDefaultVersionName(instance);
-        const notice = instance.module.getModule(NoticeModule);
-        const reportIds = notice.getQueue().dequeueRejectUnitReport(10);
-        if (reportIds.length > 0) {
-            notice.noticeRejectUnitReport(versionName, reportIds);
-        }
-    });
+    const queue = Instance.getNoticeQueue();
+    const reportIds = queue.dequeueRejectUnitReport(10);
+    if (reportIds.length > 0) {
+        execute(instance => {
+            const versionName = getDefaultVersionName(instance);
+            instance.noticeManager.noticeRejectUnitReport(versionName, reportIds);
+        });
+    }
 }
 
 export function noticeCreatedLevelReports() {
-    execute(instance => {
-        const versionName = getDefaultVersionName(instance);
-        const notice = instance.module.getModule(NoticeModule);
-        const reportIds = notice.getQueue().dequeueCreateLevelReport(10);
-        if (reportIds.length > 0) {
-            notice.noticeCreateLevelReport(versionName, reportIds);
-        }
-    });
+    const queue = Instance.getNoticeQueue();
+    const reportIds = queue.dequeueCreateLevelReport(10);
+    if (reportIds.length > 0) {
+        execute(instance => {
+            const versionName = getDefaultVersionName(instance);
+            instance.noticeManager.noticeCreateLevelReport(versionName, reportIds);
+        });
+    }
 }
 
 export function noticeApprovedLevelReports() {
-    execute(instance => {
-        const versionName = getDefaultVersionName(instance);
-        const notice = instance.module.getModule(NoticeModule);
-        const reportIds = notice.getQueue().dequeueApproveLevelReport(10);
-        if (reportIds.length > 0) {
-            notice.noticeApproveLevelReport(versionName, reportIds);
-        }
-    });
+    const queue = Instance.getNoticeQueue();
+    const reportIds = queue.dequeueApproveLevelReport(10);
+    if (reportIds.length > 0) {
+        execute(instance => {
+            const versionName = getDefaultVersionName(instance);
+            instance.noticeManager.noticeApproveLevelReport(versionName, reportIds);
+        });
+    }
 }
 
 export function noticeRejectedLevelReports() {
-    execute(instance => {
-        const versionName = getDefaultVersionName(instance);
-        const notice = instance.module.getModule(NoticeModule);
-        const reportIds = notice.getQueue().dequeueRejectLevelReport(10);
-        if (reportIds.length > 0) {
-            notice.noticeRejectLevelReport(versionName, reportIds);
-        }
-    })
+    const queue = Instance.getNoticeQueue();
+    const reportIds = queue.dequeueRejectLevelReport(10);
+    if (reportIds.length > 0) {
+        execute(instance => {
+            const versionName = getDefaultVersionName(instance);
+            instance.noticeManager.noticeRejectLevelReport(versionName, reportIds);
+        });
+    }
 }
 
 export function notifyUnverified() {
     try {
         Instance.initialize();
 
-        const versionName = Instance.instance.module.config.common.defaultVersionName;
+        const versionName = Instance.instance.module.configuration.defaultVersionName;
         const reports = Instance.instance.module.getModule(ReportModule).getReports(versionName);
         let wipReportCount = 0;
         for (let i = 0; i < reports.length; i++) {
@@ -175,7 +175,7 @@ export function notifyUnverified() {
                 SlackCompositionObjectFactory.markdownText('*[定期]未検証 件数報告*')
             ));
             if (wipReportCount > 0) {
-                const wipReportsUrl = Instance.instance.module.getModule(Router).getPage(InProgressListPage).getPageUrl(versionName);
+                const wipReportsUrl = Instance.instance.getPageUrl(UnitReportListWebsiteController, { version: versionName });
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`:page_with_curl:未承認の単曲検証報告が${wipReportCount}件あります
 <${wipReportsUrl}|検証報告一覧(単曲)ページへ>`)
@@ -183,7 +183,7 @@ export function notifyUnverified() {
                 blocks.push(SlackBlockFactory.divider());
             }
             if (wipBulkReportCount > 0) {
-                const wipBulkReporturl = Instance.instance.module.getModule(Router).getPage(LevelBulkReportListPage).getPageUrl(versionName);
+                const wipBulkReporturl = Instance.instance.getPageUrl(LevelReportListWebsiteController, { version: versionName });
                 blocks.push(SlackBlockFactory.section(
                     SlackCompositionObjectFactory.markdownText(`:page_with_curl:未承認のレベル別検証報告が${wipBulkReportCount}件あります
 <${wipBulkReporturl}|検証報告一覧(レベル別)ページへ>`)
@@ -191,8 +191,8 @@ export function notifyUnverified() {
                 blocks.push(SlackBlockFactory.divider());
             }
             UrlFetchManager.execute([new SlackChatPostMessageStream({
-                token: Instance.instance.module.config.global.slackApiToken,
-                channel: Instance.instance.module.config.global.slackChannelIdTable['noticeWipReportCount'],
+                token: Instance.instance.module.configuration.global.slackApiToken,
+                channel: Instance.instance.module.configuration.global.slackChannelIdTable['noticeWipReportCount'],
                 text: '[定期]未承認 件数報告',
                 blocks: blocks,
             })]);
@@ -206,10 +206,10 @@ export function notifyUnverified() {
 function importBulkReportSheet() {
     try {
         Instance.initialize();
-        Debug.log("開始: importBulkReportSheet");
-        const versionName = Instance.instance.module.config.getConfig(CommonConfiguration).defaultVersionName;
+        CustomLogManager.log(LogLevel.Info, "開始: importBulkReportSheet");
+        const versionName = Instance.instance.module.configuration.defaultVersionName;
         Instance.instance.module.getModule(ReportModule).importBulkReport(versionName);
-        Debug.log("完了: importBulkReportSheet");
+        CustomLogManager.log(LogLevel.Info, "完了: importBulkReportSheet");
     }
     catch (e) {
         Instance.exception(e);
@@ -220,9 +220,9 @@ function updateCurrentVersionBulkReportTable() {
     try {
         Instance.initialize();
 
-        Debug.log("開始: updateCurrentVersionBulkReportSheet");
+        CustomLogManager.log(LogLevel.Info, "開始: updateCurrentVersionBulkReportSheet");
 
-        const config = Instance.instance.module.config.getConfig(CommonConfiguration);
+        const config = Instance.instance.module.configuration;
         const versionName = config.defaultVersionName;
         const prevVersionName = config.getPreviousVersionName(versionName);
 
@@ -237,7 +237,7 @@ function updateCurrentVersionBulkReportTable() {
         const writer = new BulkReportTableWriter();
         writer.write(spreadsheetId, container);
 
-        Debug.log("完了: updateCurrentVersionBulkReportSheet");
+        CustomLogManager.log(LogLevel.Info, "完了: updateCurrentVersionBulkReportSheet");
     }
     catch (e) {
         Instance.exception(e);
@@ -248,9 +248,9 @@ function updateNextVersionBulkReportTable() {
     try {
         Instance.initialize();
 
-        Debug.log("開始: updateNextVersionBulkReportTable");
+        CustomLogManager.log(LogLevel.Info, "開始: updateNextVersionBulkReportTable");
 
-        const config = Instance.instance.module.config.getConfig(CommonConfiguration);
+        const config = Instance.instance.module.configuration;
         const versionName = config.defaultVersionName;
 
         const spreadsheetId = Instance.instance.module.getModule(VersionModule)
@@ -263,7 +263,7 @@ function updateNextVersionBulkReportTable() {
         const writer = new BulkReportTableWriter();
         writer.write(spreadsheetId, container);
 
-        Debug.log("完了: updateNextVersionBulkReportTable");
+        CustomLogManager.log(LogLevel.Info, "完了: updateNextVersionBulkReportTable");
     }
     catch (e) {
         Instance.exception(e);
