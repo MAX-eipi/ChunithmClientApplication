@@ -75,6 +75,9 @@ export class ReportFormWebsiteController<TParameter extends ReportFormWebsitePar
     }
 
     protected getFullPath<TParam extends ReportFormWebsiteParameter>(parameter: TParam, targetController: { prototype: RoutingControllerWithType<TParam>; name: string }): string {
+        if (!parameter.version) {
+            parameter.version = this.targetGameVersion;
+        }
         return ReportFormWebsiteController.getFullPath(this.configuration, this.router, targetController, parameter)
     }
 
