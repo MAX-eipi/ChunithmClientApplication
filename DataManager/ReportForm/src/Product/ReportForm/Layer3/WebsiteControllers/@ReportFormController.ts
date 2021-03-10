@@ -32,11 +32,24 @@ export class ReportFormWebsiteController<TParameter extends ReportFormWebsitePar
         return true;
     }
 
+    private _targetGameVersion: string = null;
+    protected get targetGameVersion(): string {
+        return this._targetGameVersion;
+    }
+
     public call(parameter: Readonly<TParameter>, node: RoutingNode): GoogleAppsScript.HTML.HtmlOutput {
         if (!this.isAccessale(this.configuration.role)) {
             CustomLogManager.log(LogLevel.Error, `権限のないページにアクセスされました\n対象ページ: ${node.getFullPath(parameter)}`);
             throw new Error("存在しないページが指定されました");
         }
+
+        if (parameter.version) {
+            this._targetGameVersion = parameter.version;
+        }
+        else {
+            this._targetGameVersion = this.configuration.defaultVersionName;
+        }
+
         return this.callInternal(parameter, node);
     }
 
@@ -44,7 +57,7 @@ export class ReportFormWebsiteController<TParameter extends ReportFormWebsitePar
         throw new Error("Method not implemented.");
     }
 
-    protected getModule<T extends ReportFormModule>(module: { new(): T; moduleName: string }): T {
+    protected getModule<T extends ReportFormModule>(module: { new(): T }): T {
         return this.module.getModule(module);
     }
 
@@ -62,6 +75,9 @@ export class ReportFormWebsiteController<TParameter extends ReportFormWebsitePar
     }
 
     protected getFullPath<TParam extends ReportFormWebsiteParameter>(parameter: TParam, targetController: { prototype: RoutingControllerWithType<TParam>; name: string }): string {
+        if (!parameter.version) {
+            parameter.version = this.targetGameVersion;
+        }
         return ReportFormWebsiteController.getFullPath(this.configuration, this.router, targetController, parameter)
     }
 

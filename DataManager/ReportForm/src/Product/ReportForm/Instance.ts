@@ -49,6 +49,7 @@ import { UnitReportGroupListWebsiteController, UnitReportGroupListWebsiteParamet
 import { UnitReportGroupWebsiteController, UnitReportGroupWebsiteParameter } from "./Layer3/WebsiteControllers/UnitReportGroup/UnitReportGroupWebsiteController";
 import { UnverifiedListByGenreWebsiteController, UnverifiedListByGenreWebsiteParameter } from "./Layer3/WebsiteControllers/UnverifiedList/UnverifiedListByGenreWebsiteController";
 import { UnverifiedListByLevelWebsiteController, UnverifiedListByLevelWebsiteParameter } from "./Layer3/WebsiteControllers/UnverifiedList/UnverifiedListByLevelWebsiteController";
+import { RoutingNodeHandler } from "../../Packages/Router/RoutingNodeHandler";
 
 export class Instance {
     private static _instance: Instance = null;
@@ -139,6 +140,16 @@ export class Instance {
         router.findNodeByName(LevelReportWebsiteController).bindController(() => new LevelReportWebsiteController(e));
         router.findNodeByName(UnverifiedListByGenreWebsiteController).bindController(() => new UnverifiedListByGenreWebsiteController(e));
         router.findNodeByName(UnverifiedListByLevelWebsiteController).bindController(() => new UnverifiedListByLevelWebsiteController(e));
+
+        router.getOrCreateNode("/").bindController(() => new TopWebsiteController(e));
+        router.getOrCreateNode("/unitReportList").bindController(() => new UnitReportListWebsiteController(e));
+        router.getOrCreateNode(`/unitReport/reportId:${RoutingParameterType.TEXT}`).bindController(() => new UnitReportWebsiteController(e));
+        router.getOrCreateNode("/unitReportGroupList").bindController(() => new UnitReportGroupListWebsiteController(e));
+        router.getOrCreateNode(`/unitReportGroup/groupId:${RoutingParameterType.TEXT}`).bindController(() => new UnitReportGroupWebsiteController(e));
+        router.getOrCreateNode("/levelReportList").bindController(() => new LevelReportListWebsiteController(e));
+        router.getOrCreateNode(`/levelReport/reportId:${RoutingParameterType.TEXT}`).bindController(() => new LevelReportWebsiteController(e));
+        router.getOrCreateNode("/unverifiedListByGenre").bindController(() => new UnverifiedListByGenreWebsiteController(e));
+        router.getOrCreateNode("/unverifiedListByLevel").bindController(() => new UnverifiedListByLevelWebsiteController(e));
     }
 
     public setupLINEPostCommandControllers(): void {
