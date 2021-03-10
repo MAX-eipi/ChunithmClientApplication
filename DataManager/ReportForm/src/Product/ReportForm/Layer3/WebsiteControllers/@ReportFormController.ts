@@ -32,11 +32,24 @@ export class ReportFormWebsiteController<TParameter extends ReportFormWebsitePar
         return true;
     }
 
+    private _targetGameVersion: string = null;
+    protected get targetGameVersion(): string {
+        return this._targetGameVersion;
+    }
+
     public call(parameter: Readonly<TParameter>, node: RoutingNode): GoogleAppsScript.HTML.HtmlOutput {
         if (!this.isAccessale(this.configuration.role)) {
             CustomLogManager.log(LogLevel.Error, `権限のないページにアクセスされました\n対象ページ: ${node.getFullPath(parameter)}`);
             throw new Error("存在しないページが指定されました");
         }
+
+        if (parameter.version) {
+            this._targetGameVersion = parameter.version;
+        }
+        else {
+            this._targetGameVersion = this.configuration.defaultVersionName;
+        }
+
         return this.callInternal(parameter, node);
     }
 
