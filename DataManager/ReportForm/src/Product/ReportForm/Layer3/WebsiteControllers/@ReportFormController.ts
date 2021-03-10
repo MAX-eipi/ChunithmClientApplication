@@ -57,7 +57,7 @@ export class ReportFormWebsiteController<TParameter extends ReportFormWebsitePar
         throw new Error("Method not implemented.");
     }
 
-    protected getModule<T extends ReportFormModule>(module: { new(): T; moduleName: string }): T {
+    protected getModule<T extends ReportFormModule>(module: { new(): T }): T {
         return this.module.getModule(module);
     }
 
